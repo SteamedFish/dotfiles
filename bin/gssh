@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# ssh server with GBK locale
+
+echo -e "\033]50;SetProfile=GBK\a"
+echo -e "\033]6;1;bg;blue;brightness;256\a"
+ssh $@
+echo -e "\033]50;SetProfile=UTF-8\a"
+echo -e "\033]6;1;bg;blue;brightness;128\a"
+echo -e "\033]6;1;bg;green;brightness;128\a"
+echo -e "\033]6;1;bg;red;brightness;128\a"

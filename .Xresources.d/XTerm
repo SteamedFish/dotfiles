@@ -1,0 +1,14 @@
+! vim: filetype=xdefaults:
+
+XTerm.termName:              xterm-256color
+XTerm.vt100.locale:          true
+XTerm.vt100.metaSendsEscape: true
+XTerm.vt100.backarrowKey:    false
+XTerm.ttyModes:              erase ^?
+XTerm.vt100.geometry:        80x32
+
+XTerm.menuLocale:   zh_CN.UTF-8
+XTerm.title:        Xterm
+XTerm.cjkWidth:     true
+XTerm.locale:       true
+XTerm.utf8:         1

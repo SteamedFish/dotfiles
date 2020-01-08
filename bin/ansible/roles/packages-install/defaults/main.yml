@@ -1,0 +1,21 @@
+---
+homebrew_taps:
+    - homebrew/cask-drivers
+    - homebrew/cask-fonts
+    - homebrew/cask-versions
+    - homebrew/services
+packages: []
+
+packages_macpip: []
+
+packages_linux: []
+
+packages_mac: []
+
+packages_cask: []
+
+packages_arch: []
+
+packages_debian: []
+
+packages_snap: []

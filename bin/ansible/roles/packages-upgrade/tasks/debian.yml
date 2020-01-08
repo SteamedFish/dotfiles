@@ -1,0 +1,9 @@
+---
+- name: 升级 apt
+  become: yes
+  apt:
+      autoclean: yes
+      autoremove: yes
+      update_cache: yes
+      upgrade: safe
+      install_recommends: no

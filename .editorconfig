@@ -1,0 +1,23 @@
+# http://EditorConfig.org
+root = true
+
+# indent_style  tab or space
+# end_of_line lf/cr/crlf
+# charset
+
+[*]
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_size = 4
+tab_width = 4
+indent_style = space
+
+[*.json,*.yml]
+indent_size = 2
+tab_width = 2
+
+[*.el]
+indent_size = 2
+
+[Makefile]
+indent_style = tab

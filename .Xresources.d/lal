@@ -1,0 +1,8 @@
+! vim: filetype=xdefaults:
+
+lal*font:       Arial
+lal*fontsize:   12
+lal*bold:       true
+lal*color:      #ffffff
+lal*width:      150
+lal*format:     %a %b %d %l:%M%P

@@ -1,0 +1,5 @@
+---
+- name: 刷新 opkg
+  command: /opt/bin/opkg update
+- name: 升级 opkg
+  command: /opt/bin/opkg upgrade

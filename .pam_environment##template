@@ -1,0 +1,10 @@
+GTK_IM_MODULE=fcitx
+QT_IM_MODULE=fcitx
+XMODIFIERS=@im=fcitx
+XIM=fcitx
+XIM_PROGRAM="fcitx"
+
+{% if yadm.class == "home" %}
+SSH_AUTH_SOCK DEFAULT="${XDG_RUNTIME_DIR}/ssh-agent.socket"
+{% else %}
+{% endif %}

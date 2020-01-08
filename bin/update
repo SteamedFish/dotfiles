@@ -1,0 +1,264 @@
+#!/bin/bash -e
+
+cd "$HOME"
+
+run() {
+    echo "start running $@ at $(pwd)" >&2
+    if ! "$@"; then
+        echo "run $@ failed!" >&2
+    fi
+}
+
+get_sudo() {
+    if [ -z "$(command -v sudo)" ]; then
+        return
+    fi
+    echo "please input sudo password"
+    sudo -v
+    while true; do
+        # sudo gives access for 300 seconds
+        sleep 290
+        sudo -v
+    done &
+}
+
+update_context() {
+    echo "updating ConTeXt"
+    _POSSIBLE_PATH="/Volumes/DATA/ConTeXt /Volumes/MacData/ConTeXt /Volumes/SteamedFish/ConTeXt $HOME/ConTeXt"
+    for _CONTEXT_PATH in ${_POSSIBLE_PATH}; do
+        if [ -d "${_CONTEXT_PATH}" ]; then
+            cd "${_CONTEXT_PATH}"
+            run rsync -av rsync://contextgarden.net/minimals/setup/first-setup.sh .
+            run bash first-setup.sh --modules=all
+        fi
+    done
+    run mtxrun --scripts fonts --reload
+    unset _POSSIBLE_PATH
+    unset _CONTEXT_PATH
+}
+
+update_mac_system() {
+    echo "updating system"
+    run sudo softwareupdate -i -a
+}
+
+update_linux_system() {
+    if  [[ -f /etc/arch-release ]]; then
+        run yay -Syu
+        run yay -Scc --noconfirm
+    elif [[ -f /etc/debian_version ]]; then
+        run sudo apt update
+        run sudo apt upgrade
+        run sudo apt autoremove
+        run sudo apt clean
+    elif  [[ -f /etc/gentoo-release ]]; then
+        if [ -n "$(command -v layman)" ]; then
+            run sudo layman -S
+        fi
+        if [ -n "$(command -v eix-sync)" ]; then
+            run sudo eix-sync
+        else
+            run sudo emerge --sync
+        fi
+        run sudo emerge -avuUDN --with-bdeps=y --keep-going --quiet-build @system @world @preserved-rebuild
+        run sudo emerge -avc --exclude="sys-kernel/gentoo-sources"
+        if [ -n "$(command -v eclean)" ]; then
+            run sudo eclean -d distfiles
+            run sudo eclean -d packages
+        fi
+    elif [[ $(uname -o) == "Android" ]]; then
+        run apt update
+        run apt upgrade
+        run pkg upgrade
+    fi
+}
+
+update_zsh() {
+    if [ -f "$HOME/.zplugin/bin/zplugin.zsh" ]; then
+        cd "$HOME/.zplugin/bin" && run git pull
+        run zsh -c "source $HOME/.zplugin/bin/zplugin.zsh; zplugin self-update; zplugin update --all"
+    fi
+}
+
+update_mas() {
+    echo "updating mac appstore"
+    run mas outdated
+    run mas upgrade
+}
+
+update_homebrew() {
+    echo "Updating HomeBrew"
+    cd "$HOME/dotfiles"
+    run brew update
+    run brew bundle --global check
+    run brew bundle --global install
+    run brew upgrade
+    echo "updating cask"
+    run brew cask upgrade --greedy
+    run brew cleanup
+}
+
+update_macports() {
+    if [ ! -f "/opt/local/bin/port" ]; then
+        return
+    fi
+    echo "updating macports"
+    run sudo port selfupdate
+    run sudo port upgrade outdated
+    run sudo port uninstall inactive
+}
+
+update_linuxbrew() {
+    if [ -d "/home/linuxbrew/.linuxbrew" ] || [ -d "$HOME/.linuxbrew" ]; then
+        echo "Updating LinuxBrew"
+        run brew update
+        run brew upgrade
+        run brew cleanup
+    fi
+}
+
+update_snap() {
+    if [ -d "/snap" ] ; then
+        echo "Updating snap"
+        run sudo snap refresh
+    fi
+}
+
+update_pip() {
+    echo "Updating Pip"
+    run pip2 list --format=columns | tail -n +3 | cut -d ' ' -f 1 | run xargs -n1 pip2 install -U
+    run pip3 list --format=columns | tail -n +3 | cut -d ' ' -f 1 | run xargs -n1 pip3 install -U
+}
+
+
+update_gem() {
+    echo "Updating ruby gems"
+    if [[ -x "/usr/local/opt/ruby/bin/gem" ]]; then
+        run /usr/local/opt/ruby/bin/gem update
+    else
+        run gem update
+    fi
+}
+
+
+update_go() {
+    echo "Updating go packages"
+    run go get -u all
+}
+
+
+self_update() {
+    echo "updating yadm"
+    if [ -n "$(command -v yadm)" ]; then
+        run yadm pull
+        run yadm alt
+    fi
+    echo "updating git repo"
+    for repo in dotfiles .password-store .gnupg; do
+        if [ -d "$HOME/$repo" ]; then
+            cd "$HOME/$repo"
+            run git pull
+            run git submodule update --recursive --remote
+            # run git commit -a -m "daily update"
+            run git push
+        fi
+    done
+}
+
+update_vim() {
+    echo "updating vim"
+    cd "$HOME/.vim" && run git pull && run git submodule update --recursive --init
+    cd "$HOME/.config/nvim" && run git pull && run git submodule update --recursive --init
+    # TODO not working currectly
+    # run vim +SPUpdate +qall
+}
+
+
+update_emacs() {
+    if [ -f "$HOME/.emacs.d/bin/doom" ]; then
+        # Doom Emacs
+        echo "updating Doom Emacs"
+        cd "$HOME/.emacs.d/"
+        # use git pull insted of doom upgrade
+        # to prevent the local repo too much behind
+        run git pull
+        #run "$HOME"/.emacs.d/bin/doom -y upgrade
+        run "$HOME"/.emacs.d/bin/doom -y clean
+        run "$HOME"/.emacs.d/bin/doom -y refresh
+        run "$HOME"/.emacs.d/bin/doom -y update
+    fi
+    for _PROJECT in "$HOME"/emacs-distros/*; do
+        if [ -d "${_PROJECT}/.git" ]; then
+            cd "${_PROJECT}"
+            run git pull
+            run git submodule update --remote --recursive
+        fi
+    done
+}
+
+
+update_optools() {
+    echo "updating optools"
+    for _DIR in "work"; do
+        if [ -d "$HOME/${_DIR}" ]; then
+            for _PROJECT in "$HOME/${_DIR}"/*; do
+                if [ -d "${_PROJECT}/.git/svn" ]; then
+                    cd "${_PROJECT}"
+                    run git svn fetch
+                elif [ -d "${_PROJECT}/.git" ]; then
+                    cd "${_PROJECT}"
+                    run git pull
+                    run git submodule update --remote --recursive
+                fi
+            done
+        fi
+    done
+}
+
+update() {
+    if [[ $(uname -o) != "Android" ]]; then
+        get_sudo
+    fi
+    case $OSTYPE in
+        linux*)
+            self_update
+            update_zsh
+            update_linux_system
+            update_linuxbrew
+            update_snap
+            update_vim
+            update_emacs
+            ;;
+        darwin*)
+            self_update
+            update_zsh
+            update_context
+            update_mac_system
+            update_mas
+            update_homebrew
+            update_macports
+            update_pip
+            update_gem
+            update_go
+            update_vim
+            update_emacs
+            update_optools
+            ;;
+        cygwin*)
+            echo "unsupported os type $OSTYPE"
+            ;;
+        *)
+            echo "unsupported os type $OSTYPE"
+            ;;
+    esac
+}
+
+main() {
+    if [ "$#" -eq 0 ]; then
+        update
+    else
+        eval "update_$1"
+    fi
+}
+
+main "$@"

@@ -1,0 +1,14 @@
+---
+version: 2
+profile: UTF-8
+broadcast: true
+forward-agent: true
+iterm2: true
+clusters:
+  vps:
+    hosts:
+      - 192.168.1.30
+      - steamedfish.org
+      - sa.steamedfish.org
+      - mc.steamedfish.org
+      - tc.steamedfish.org

@@ -1,0 +1,23 @@
+---
+- name: 配置 /etc/paths.d
+  block:
+      - name: 清空 /etc/paths
+        copy:
+            content: '# empty file'
+            dest: /etc/paths
+            force: yes
+            owner: 'root'
+            group: 'wheel'
+      - name: 配置 /etc/paths.d 里面的文件
+        copy:
+            src: "files/mac-paths/{{ item }}"
+            dest: "/etc/paths.d/{{ item }}"
+            force: yes
+            owner: 'root'
+            group: 'wheel'
+        # lookup needs extra plugin
+        # loop: "{{ lookup('file', 'files/mac-paths/') }}"
+        loop:
+            - 'ConTeXt'
+            - 'HomeBrew'
+  become: yes

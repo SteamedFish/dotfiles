@@ -1,0 +1,11 @@
+! vim: filetype=xdefaults:
+
+*.font: xft:NotoMono Nerd Font:pixelsize=13,xft:Sarasa Mono SC:pixelsize=13:hinting=false:antialias=false
+
+Xft.rgba:       rgb
+Xft.antialias:  true
+Xft.hinting:    true
+Xft.hintstyle:  hintslight
+Xft.autohint:   true
+!Xft.dpi:        122
+Xft.lcdfilter:  lcddefault

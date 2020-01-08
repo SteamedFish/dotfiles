@@ -1,0 +1,4 @@
+! vim: filetype=xdefaults:
+
+Xcursor*theme:  oxygen-white
+!Xcursor.size:  32

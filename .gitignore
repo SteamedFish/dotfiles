@@ -1,0 +1,5 @@
+.DS_Store
+.spacemacs.d/.spacemacs.env
+.spacemacs.d/emacs-custom.el
+*.elc
+bin/auth.conf

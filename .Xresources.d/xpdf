@@ -1,0 +1,9 @@
+! vim: filetype=xdefaults:
+
+xpdf*Foreground:      #888888
+xpdf*Background:      #222222
+xpdf.rgba:            none
+xpdf*enableFreetype:    yes
+xpdf*antialias:         yes
+xpdf*urlCommand:        /usr/bin/firefox %s
+xpdf*viKeys: on

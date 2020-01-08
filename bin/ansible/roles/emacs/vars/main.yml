@@ -1,0 +1,27 @@
+---
+homebrew_taps:
+    - railwaycat/emacsmacport
+    - twlz0ne/ccls
+packages:
+    - ripgrep
+    - cscope
+    - ctags
+    - coreutils
+    - make
+    - cmake
+    - pandoc
+    - git
+    - shellcheck
+    - hugo
+    - plantuml
+packages_mac:
+    - ccls
+    - dbus
+    - fcitx-remote-for-osx
+    - libvterm
+packages_arch:
+    - emacs-git
+    - ccls-git
+    - libvterm
+packages_debian:
+    - emacs-nox

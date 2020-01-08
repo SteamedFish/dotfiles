@@ -1,0 +1,39 @@
+---
+- name: 初始化 homebrew
+  block:
+      - name: 判断 homebrew 是否已经安装
+        stat:
+            path: /usr/local/bin/brew
+        register: brew_command_path
+      - name: 记录 homebrew 安装情况
+        set_fact:
+            homebrew_installed: "{{ brew_command_path.stat.exists }}"
+      # - name: 安装 homebrew
+      #   # TODO: 脚本需要用户确认，因此无法使用 ansible 执行
+      #   shell: /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+      #   args:
+      #       executable: /bin/bash
+      #   retries: 100
+      #   delay: 5
+      #   register: result
+      #   until: not result.failed
+      #   when: homebrew_installed
+      #   poll: 5
+
+- name: 升级 homebrew
+  when: homebrew_installed
+  block:
+      - name: 升级 homebrew core
+        homebrew:
+            update_homebrew: yes
+            upgrade_all: yes
+      - name: 升级 homebrew cask
+        # homebrew_cask 不知道为何有问题，实际上不能升级，改用命令
+        # homebrew_cask:
+        #     greedy: yes
+        #     upgrade_all: yes
+        #     update_homebrew: yes
+        command: /usr/local/bin/brew cask upgrade --greedy
+      - name: 执行 brew cleanup
+        command: /usr/local/bin/brew cleanup
+        changed_when: false

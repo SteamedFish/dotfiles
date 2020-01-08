@@ -1,0 +1,10 @@
+---
+- import_tasks: macos.yml
+  when: ansible_distribution == "MacOSX"
+- import_tasks: arch.yml
+  when: ansible_distribution == "Archlinux"
+- import_tasks: debian.yml
+  when: ansible_distribution == "Debian"
+- import_tasks: opkg.yml
+  when: ansible_distribution == "QNAP" or
+        (ansible_distribution == "OtherLinux" and ansible_architecture == "armv7l")

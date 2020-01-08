@@ -1,0 +1,192 @@
+#!/bin/bash
+
+go_apps=(
+github.com/rogpeppe/godef
+golang.org/x/tools/cmd/guru
+golang.org/x/tools/cmd/gorename
+golang.org/x/tools/cmd/goimports
+github.com/zmb3/gogetdoc
+github.com/cweill/gotests/...
+github.com/haya14busa/gopkgs/cmd/gopkgs
+github.com/davidrjenni/reftools/cmd/fillstruct
+github.com/josharian/impl
+)
+
+pip_apps=(
+    ansible
+    ansible-runner
+    beancount
+    flake8
+    isort
+    jedi
+    neovim
+    pyflakes
+    pylint
+    python-language-server
+    yapf
+)
+
+linux_apps=(
+    htop
+    lftp
+    bash-completion
+    dos2unix
+    figlet
+    git
+    hugo
+    exa
+    ripgrep
+    telnet
+    tree
+    unrar
+    unzip
+    wget
+    rsync
+    dstat
+    dnsutils
+    diffutils
+    dmidecode
+    dnsutils
+    ansible
+)
+
+arch_apps=(
+    bind-tools
+    youtube-dl
+    you-get
+    fd
+    lsd
+)
+
+debian_apps=(
+    bsdutils
+    bind9-host
+    build-essential
+)
+
+# get sudo access
+get_sudo() {
+    echo "please input sudo password"
+    sudo -v
+    while true; do
+        # sudo gives access for 300 seconds
+        sleep 290
+        sudo -v
+    done &
+}
+
+install_xcode() {
+    # install xcode commandline tools
+    # if ! [ -d "/Library/Developer/CommandLineTools" ]; then
+    if ! /usr/sbin/pkgutil --pkg-info com.apple.pkg.CLTools_Executables; then
+        echo "install Xcode CommandLine Tools"
+        # This file prompts that Command Line Tools should be installed
+        sudo /usr/bin/touch /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
+        sudo /usr/sbin/softwareupdate -i "$(/usr/sbin/softwareupdate -l | /usr/bin/grep -B 1 -E "Command Line (Developer|Tools)" | /usr/bin/awk -F"*" '/^ +\\*/ {print $2}' | /usr/bin/sed 's/^ *//' | /usr/bin/tail -n1)"
+        sudo /bin/rm -f /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
+        # sudo /usr/bin/xcode-select --switch /Library/Developer/CommandLineTools
+    fi
+
+    # if ! [ -d "/Library/Developer/CommandLineTools" ]; then
+    if ! /usr/sbin/pkgutil --pkg-info com.apple.pkg.CLTools_Executables; then
+        echo "install Xcode CommandLine Tools failed, Please install it manually"
+        sudo /usr/bin/xcode-select --install
+    fi
+
+    # accept Xcode license
+    sudo xcodebuild -license accept
+}
+
+install_homebrew() {
+
+    # install homebrew
+    if ! [ -f "/usr/local/bin/brew" ]; then
+        /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    fi
+
+    brew bundle --global install
+
+}
+
+install_goapps() {
+    for apps in "${go_apps[@]}"; do
+        GOLANG="$HOME/.go" go get -u -v "$apps"
+    done
+}
+
+setup_mac_system() {
+    # iTerm shell integration
+    if ! [ -f "$HOME/.iterm2_shell_integration.zsh" ]; then
+        curl -L https://iterm2.com/shell_integration/install_shell_integration_and_utilities.sh | bash
+    fi
+
+    if [[ "$(kextstat | grep "FakeSMC")" != "" ]]; then
+        # disable computer sleep
+        sudo pmset -a sleep 0
+    fi
+}
+
+install_zplugin() {
+    if ! [ -d "$HOME/.zplugin/bin" ]; then
+        mkdir -p "$HOME/.zplugin/"
+        git clone https://github.com/zdharma/zplugin.git "$HOME/.zplugin/bin"
+        zsh -c "source $HOME/.zplugin/bin/zplugin.zsh; zplugin self-update; zplugin update --all"
+    fi
+}
+
+install_doomemacs() {
+    if ! [ -d "$HOME/.emacs.d" ]; then
+        git clone -b develop https://github.com/hlissner/doom-emacs.git "$HOME/.emacs.d"
+        "$HOME/.emacs.d/bin/doom" install
+    fi
+}
+
+install_spacevim() {
+    if ! [ -d "$HOME/.vim" ]; then
+        git clone https://github.com/SpaceVim/SpaceVim.git "$HOME/.vim"
+    fi
+}
+
+install_pip() {
+    for apps in "${pip_apps[@]}"; do
+        pip3 install "$apps"
+    done
+}
+
+install_linux_packages() {
+    if  [[ -f /etc/arch-release ]]; then
+        sudo pacman -Sy
+        for apps in "${linux_apps[@]}"; do
+            sudo pacman -S --needed "$apps"
+        done
+        for apps in "${arch_apps[@]}"; do
+            sudo pacman -S --needed "$apps"
+        done
+    elif [[ -f /etc/debian_version ]]; then
+        sudo apt update
+        for apps in "${linux_apps[@]}"; do
+            sudo apt install "$apps"
+        done
+        for apps in "${arch_apps[@]}"; do
+            sudo apt install "$apps"
+        done
+    fi
+}
+
+main() {
+    get_sudo
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        install_xcode
+        install_homebrew
+        setup_mac_system
+        install_pip
+    elif [[ "$OSTYPE" == "linux-gnu" ]]; then
+        install_linux_packages
+    fi
+    install_goapps
+    install_zplugin
+    install_doomemacs
+    install_spacevim
+}
+
+main

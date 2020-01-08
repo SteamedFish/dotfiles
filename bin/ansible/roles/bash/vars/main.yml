@@ -1,0 +1,7 @@
+---
+packages:
+    - bash-completion
+packages_macpip:
+    - powerline-status
+packages_arch:
+    - powerline

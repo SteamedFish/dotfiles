@@ -1,0 +1,4 @@
+---
+- name: 安装 ConTeXt 所需依赖包
+  include_role:
+      name: packages-install

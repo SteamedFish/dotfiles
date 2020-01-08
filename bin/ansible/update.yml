@@ -1,0 +1,14 @@
+---
+- name: 升级整个系统
+  hosts: all
+  roles:
+      - { role: dotfiles }
+      - { role: bash }
+      - { role: packages-upgrade }
+      - { role: system }
+      - { role: emacs }
+      - { role: vim }
+      - { role: context }
+  ignore_errors: yes
+  environment:
+      PATH: /opt/bin:/usr/local/bin:/usr/local/sbin:{{ ansible_env.PATH }}

@@ -1,0 +1,6 @@
+---
+- name: 升级 pacman
+  become: yes
+  pacman:
+      update_cache: yes
+      upgrade: yes

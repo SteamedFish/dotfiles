@@ -1,0 +1,6 @@
+! vim: filetype=xdefaults:
+
+xclock*update:            1
+xclock*analog:            false
+xclock*Foreground:        white
+xclock*background:        black

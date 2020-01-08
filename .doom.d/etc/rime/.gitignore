@@ -1,0 +1,7 @@
+build/
+installation.yaml
+luna_pinyin.userdb*
+user.yaml
+.idea
+*.log
+tmp/

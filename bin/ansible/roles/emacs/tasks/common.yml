@@ -1,0 +1,40 @@
+---
+- name: 配置 Doom Emacs
+  block:
+      - name: 配置 Doom Emacs 的 git
+        git:
+            clone: yes
+            dest: ~/.emacs.d
+            force: no
+            version: develop
+            repo: https://github.com/hlissner/doom-emacs.git
+            recursive: yes
+            track_submodules: yes
+            update: yes
+      - name: 配置 .doom.d
+        file:
+            force: yes
+            path: ~/.doom.d
+            src: dotfiles/.doom.d
+            state: link
+      - name: 配置 bash emacs.sh
+        file:
+            force: yes
+            path: ~/.bashrc.d/emacs.sh
+            src: ../dotfiles/.bashrc.d/emacs.sh
+            state: link
+
+- name: 更新 Doom Emacs
+  # Debian 暂时有问题，无法运行
+  when: ansible_distribution != 'Debian'
+  environment:
+      PATH: /usr/local/bin:{{ ansible_env.PATH }}
+  block:
+      - name: 执行 Doom update
+        command: ~/.emacs.d/bin/doom -y update
+      - name: 执行 Doom refresh
+        command: ~/.emacs.d/bin/doom -y refresh
+      - name: 执行 Doom recompile
+        command: ~/.emacs.d/bin/doom -y recompile
+
+# TODO: 更新 chemacs 和其他发行版

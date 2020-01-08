@@ -1,0 +1,7 @@
+! vim: filetype=xdefaults:
+
+#include ".Xresources.d/Xft"
+#include ".Xresources.d/nord"
+#include ".Xresources.d/XTerm"
+#include ".Xresources.d/URxvt"
+#include ".Xresources.d/Emacs"

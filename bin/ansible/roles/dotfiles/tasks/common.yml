@@ -1,0 +1,17 @@
+---
+- name: 配置配置文件
+  block:
+      - name: 配置 dotfiles
+        git:
+            clone: yes
+            dest: ~/dotfiles
+            force: no
+            repo: git@github.com:SteamedFish/dotfiles.git
+            recursive: yes
+            track_submodules: yes
+            update: yes
+      - name: 配置 .config
+        file:
+            force: yes
+            path: ~/.config
+            state: directory

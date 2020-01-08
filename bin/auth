@@ -1,0 +1,12 @@
+#!/bin/bash
+
+source ~/dotfiles/bin/auth.conf
+
+if [ ! -f /tmp/cookie.txt ]; then
+    curl -k -s -c /tmp/cookie.txt -o /dev/null https://ita.netease.com:444/ac_portal/default/pc.html?tabs=pwd
+    curl -k -s -b /tmp/cookie.txt -o /dev/null -d "opr=pwdLogin&userName=${userName}&pwd=${password}&rememberPwd=0" https://ita.netease.com:444/ac_portal/login.php
+    rm -rf /tmp/cookie.txt
+fi
+
+unset userName
+unset password

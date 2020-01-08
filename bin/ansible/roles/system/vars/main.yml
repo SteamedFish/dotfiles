@@ -1,0 +1,119 @@
+---
+packages:
+    - htop
+    - lftp
+    - bash
+    - bash-completion
+    - dos2unix
+    - figlet
+    - git
+    - hugo
+    - exa
+    - p7zip
+    - ripgrep
+    - telnet
+    - tree
+    - unrar
+    - unzip
+    - wget
+    - rsync
+
+packages_macpip:
+    - ansible
+    - neovim
+
+packages_linux:
+    - dstat
+    - dnsutils
+    - busybox
+    - diffutils
+    - dmidecode
+    - dnsutils
+    - ansible
+
+packages_mac:
+    - csshx
+    - python
+    - python@2
+    - youtube-dl
+    - you-get
+    - ipcalc
+    - fd
+    - lsd
+    - util-linux
+
+packages_cask:
+    - android-platform-tools
+    - alfred
+    - alacritty
+    - copyq
+    - dash
+    - discord
+    - docker
+    - dropbox
+    - firefox
+    - flash-npapi
+    - flash-ppapi
+    - font-fira-code
+    - font-fira-mono
+    - font-fira-sans
+    - font-noto-sans-cjk-sc
+    - font-sarasa-gothic
+    - font-symbola
+    - google-chrome
+    - gpg-suite
+    - iina
+    - iterm2
+    - java
+    - keycastr
+    - kindle
+    - language-switcher
+    - minecraft
+    - neteasemusic
+    - popo
+    - provisionql
+    - qlcolorcode
+    - qlmarkdown
+    - qlprettypatch
+    - qlstephen
+    - qlvideo
+    - qsync-client
+    - quicklook-csv
+    - quicklook-json
+    - quicklook-pat
+    - quicklookapk
+    - quicklookase
+    - qutebrowser
+    - shadowsocksx-ng
+    - slack
+    - sourcetree
+    - squirrel
+    - steam
+    - teensy
+    - telegram
+    - tor-browser
+    - tunnelblick
+    - visual-studio-code
+    - webquicklook
+    - wechat
+    - wireshark
+    - x-lite
+    - xquartz
+    - yed
+    - zoomus
+
+packages_arch:
+    - bind-tools
+    - youtube-dl
+    - you-get
+    - fd
+    - lsd
+
+packages_debian:
+    - bsdutils
+    - bind9-host
+    - build-essential
+    - snapd
+
+packages_snap:
+    - lsd

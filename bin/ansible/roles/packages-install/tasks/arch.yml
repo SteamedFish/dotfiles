@@ -1,0 +1,8 @@
+---
+- name: 安装基础软件包
+  block:
+      - name: 安装基础软件包
+        pacman:
+            name: "{{ packages + packages_linux + packages_arch }}"
+            state: present
+        become: yes

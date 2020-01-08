@@ -1,0 +1,10 @@
+---
+- name: 安装 xcode commandline tools
+  when: ansible_distribution == "MacOSX"
+  block:
+      - name: 判断 xcode commandline tools 有没有被安装
+        command: /usr/sbin/pkgutil --pkg-info com.apple.pkg.CLTools_Executables
+        register: pkgutil_output
+      - name: 如果已经安装则退出
+        set_fact:
+            xcode_commandline_installed: "{{ not pkgutil_output.failed }}"

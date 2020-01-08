@@ -1,0 +1,24 @@
+[user]
+    name = SteamedFish
+    email = i@steamedfish.org
+    signingkey = 7BD83D6E2E868CC8
+[github]
+    user = SteamedFish
+[grep]
+    lineNumber = true
+[magithub]
+	online = false
+[magithub "status"]
+	includeStatusHeader = false
+	includePullRequestsSection = false
+	includeIssuesSection = false
+[commit]
+	gpgsign = true
+[gitflow "release.branch"]
+	sign = true
+[gitflow "release.finish"]
+	sign = true
+[gitflow "hotfix.finish"]
+	sign = true
+[core]
+	excludesfile = /Users/steamedfish/.gitignore_global

@@ -1,0 +1,13 @@
+---
+- name: 安装基础软件包
+  block:
+      - name: 安装基础软件包
+        apt:
+            name: "{{ packages + packages_linux }}"
+            state: present
+        become: yes
+      - name: 安装 snap 软件包
+        snap:
+            name: "{{ packages_snap }}"
+            state: present
+        become: yes

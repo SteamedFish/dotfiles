@@ -1,0 +1,7 @@
+! vim: filetype=xdefaults:
+
+Emacs.toolBar: 0
+Emacs.menuBar: 0
+Emacs.verticalScrollBars: off
+!Emacs.font: Ubuntu Mono 14
+Emacs*useXIM: true

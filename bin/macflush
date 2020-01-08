@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# flush mac DNS cache
+
+echo "sudo killall -HUP mDNSResponder"
+sudo dscacheutil -flushcache
+sudo killall -HUP mDNSResponder

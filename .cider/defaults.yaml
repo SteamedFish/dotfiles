@@ -1,0 +1,55 @@
+NSGlobalDomain:
+    # Expand save panel by default
+    NSNavPanelExpandedStateForSaveMode: true
+    NSNavPanelExpandedStateForSaveMode2: true
+    # Expand print panel by default
+    PMPrintingExpandedStateForPrint: true
+    PMPrintingExpandedStateForPrint2: true
+    # Save to disk instead of iCloud by default
+    PMPrintingExpandedStateForPrint: true
+    # Display ASCII control characters
+    NSTextShowsControlCharacters: true
+    # Disable "smart" substitution
+    NSAutomaticDashSubstitutionEnabled: false
+    NSAutomaticCapitalizationEnabled: false
+    NSAutomaticPeriodSubstitutionEnabled: false
+    NSAutomaticQuoteSubstitutionEnabled: false
+    NSAutomaticSpellingCorrectionEnabled: false
+    NSAutomaticTextCompletionEnabled: false
+    # natual trackpad scrolling
+    com.apple.swipescrolldirection: true
+    AppleInterfaceTheme: 'Dark'
+com.apple.dock:
+    orientation: 'left'
+    magnification: true
+com.apple.desktopservices:
+    # Dont write DS_store
+    DSDontWriteNetworkStores: true
+com.apple.systempreferences:
+    # no resume windows when boot
+    NSQuitAlwaysKeepsWindows: false
+com.apple.finder:
+    ShowPathbar: true
+    ShowPreviewPane: true
+    ShowSidebar: true
+    ShowStatusBar: true
+    PathBarRootAtHome: true
+    QuitMenuItem: true
+com.apple.Safari:
+    AutoOpenSafeDownloads: false
+    AutoFillCreditCardData: false
+    AutoFillFromAddressBook: false
+    AutoFillMiscellaneousForms: false
+    AutoFillPasswords: false
+    IncludeInternalDebugMenu: true
+    IncludeDevelopMenu: true
+    ShowFullURLInSmartSearchField: true
+    ShowOverlayStatusBar: true
+    AlwaysRestoreSessionAtLaunch: true
+    AlwaysShowTabBar: true
+    SendDoNotTrackHTTPHeader: true
+    WebKitDefaultTextEncodingName: "utf-8"
+org.gnu.Emacs:
+    Emacs.ToolBar: 'no'
+    Emacs.ScrollBar: 'no'
+    Emacs.MenuBar: 'no'

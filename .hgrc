@@ -1,0 +1,7 @@
+[ui]
+username = SteamedFish <steamedfish@hotmail.com>
+tweakdefaults = true
+interface = curses
+[diff]
+git = true
+showfunc = true

@@ -1,0 +1,29 @@
+---
+packages:
+    - ripgrep
+    - cscope
+    - ctags
+    - coreutils
+    - make
+    - cmake
+    - git
+    - shellcheck
+packages_mac:
+    - python
+    - ccls
+    - dbus
+    - fcitx-remote-for-osx
+    - libvterm
+packages_cask:
+    - macvim
+packages_macpip:
+    - neovim
+packages_linux:
+    - neovim
+    - python-neovim
+packages_arch:
+    - vim
+    - python-neovim
+packages_debian:
+    - vim-nox
+    - python3-neovim

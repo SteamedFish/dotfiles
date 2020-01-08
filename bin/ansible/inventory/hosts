@@ -1,0 +1,8 @@
+localhost ansible_connection=local
+192.168.1.30
+mc.steamedfish.org
+tc.steamedfish.org
+sa.steamedfish.org
+steamedfish.org
+i.steamedfish.org ansible_python_interpreter=/opt/bin/python ansible_user=admin
+192.168.1.1 ansible_python_interpreter=/opt/bin/python ansible_shell_executable=/opt/bin/bash

@@ -1,0 +1,26 @@
+---
+- name: 安装基础软件包
+  block:
+      - name: 配置 homebrew 的 tap
+        homebrew_tap:
+            name: "{{ homebrew_taps }}"
+            state: present
+      - name: 安装基础软件包
+        homebrew:
+            name: "{{ item }}"
+            state: present
+        loop: "{{ packages + packages_mac }}"
+      - name: 安装 cask 软件包
+        homebrew_cask:
+            name: "{{ item }}"
+            state: present
+        loop: "{{ packages_cask }}"
+      - name: 安装 pip 软件包
+        environment:
+            PATH: /usr/local/bin:/usr/local/opt/python/libexec/bin:{{ ansible_env.PATH }}
+        pip:
+            name: "{{ item }}"
+            state: present
+            executable: pip3
+        loop: "{{ packages_macpip }}"
+

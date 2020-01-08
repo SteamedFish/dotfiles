@@ -1,0 +1,33 @@
+---
+- name: 安装 Emacs
+  block:
+      - name: 配置 emacs-mac 的 tap
+        homebrew_tap:
+            name: railwaycat/emacsmacport
+            state: present
+      - name: 安装 emacs-mac
+        homebrew:
+            install_options: with-dbus,with-modules,with-xml2,with-rsvg
+            name: emacs-mac
+            state: present
+      - name: 配置 emacs-mac 的链接
+        file:
+            force: no
+            path: /Applications/Emacs.app
+            src: /usr/local/opt/emacs-mac/Emacs.app
+            state: link
+- name: 配置 emacs-mac 的 osx-defaults
+  when: ansible_distribution == "MacOSX"
+  block:
+      - osx_defaults:
+          domain: org.gnu.Emacs
+          key: Emacs.ToolBar
+          value: "no"
+      - osx_defaults:
+          domain: org.gnu.Emacs
+          key: Emacs.ScrollBar
+          value: "no"
+      - osx_defaults:
+          domain: org.gnu.Emacs
+          key: Emacs.MenuBar
+          value: "no"
