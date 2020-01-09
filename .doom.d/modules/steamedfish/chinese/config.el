@@ -101,7 +101,7 @@
                   pyim-probe-program-mode
                   pyim-probe-org-structure-template
                   ;; detect if current point is at button
-                  lambda () (button-at (point))))
+                  (lambda () (button-at (point)))))
 
   (setq-default pyim-punctuation-half-width-functions
                 '(pyim-probe-punctuation-line-beginning
