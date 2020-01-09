@@ -54,6 +54,11 @@
         nyan-wavy-trail t)
   (nyan-mode t))
 
+(after! evil
+  ;; create split window at the more correct place
+  (setq evil-split-window-below t
+        evil-vsplit-window-right t))
+
 (use-package! doom-themes
   :init
   (setq doom-theme 'doom-nord
