@@ -96,12 +96,27 @@
   ;; 3. 使用 C-S-M-s-SPC 快捷键，强制将光标前的拼音字符串转换为中文。
   ;; 4. 当光标在按钮上时，切换到英文输入。
   (setq-default pyim-english-input-switch-functions
-                '(pyim-probe-dynamic-english
-                  pyim-probe-isearch-mode
+                '(pyim-probe-isearch-mode
                   pyim-probe-program-mode
                   pyim-probe-org-structure-template
+                  pyim-probe-evil-normal-mode
+                  pyim-probe-org-speed-commands
                   ;; detect if current point is at button
                   (lambda () (button-at (point)))))
+
+  (add-hook! 'prog-mode-hook
+    (add-to-list 'pyim-english-input-switch-functions
+                 'pyim-probe-dynamic-english))
+
+  (add-hook! 'text-mode-hook
+    (add-to-list 'pyim-english-input-switch-functions
+                 'pyim-probe-auto-english))
+
+  (add-hook! '(text-mode-hook prog-mode-hook)
+    ;; active pyim by default
+    ;; for some unknown reason directly calling `active-input-method'
+    ;; is not working, but it works with `run-at-time'
+    ((lambda () (run-at-time nil nil 'activate-input-method "pyim"))))
 
   (setq-default pyim-punctuation-half-width-functions
                 '(pyim-probe-punctuation-line-beginning

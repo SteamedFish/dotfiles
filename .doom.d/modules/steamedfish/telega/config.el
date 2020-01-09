@@ -70,8 +70,8 @@
       ;; is not working, but it works with `run-at-time'
       ((lambda () (run-at-time nil nil 'activate-input-method "pyim")))
       ;; don't do dynamic english, we always want chinese here
-      (setq pyim-english-input-switch-functions
-            (delete 'pyim-probe-dynamic-english pyim-english-input-switch-functions))))
+      (add-to-list 'pyim-english-input-switch-functions
+                   'pyim-probe-auto-english)))
 
   (after! all-the-icons
     (add-to-list 'all-the-icons-mode-icon-alist
