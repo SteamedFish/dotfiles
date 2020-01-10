@@ -221,7 +221,6 @@
        (:if (not (or IS-WINDOWS IS-ANDROID))
         chinese)
        coding
-       imenu-list
        irc
        keybindings
        orgmode
