@@ -31,3 +31,8 @@
       :g "M-p" 'symbol-overlay-switch-backward
       :g "<f7>" 'symbol-overlay-mode
       :g "<f8>" 'symbol-overlay-remove-all)
+
+(use-package! ssh-deploy
+  :init
+  (push '(ssh-deploy-on-explicit-save . t)
+        safe-local-variable-values))
