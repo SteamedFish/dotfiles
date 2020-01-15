@@ -152,8 +152,10 @@
 ;; Input prefix ';' to match pinyin
 ;; Refer to  https://github.com/abo-abo/swiper/issues/919 and
 ;; https://github.com/pengpengxp/swiper/wiki/ivy-support-chinese-pinyin
+;; I use it only for telega channel search
+;; see module telega
 (use-package! pinyinlib
-  :commands pinyinlib-build-regexp-string
+  :commands (pinyinlib-build-regexp-string ivy--regex-pinyin)
   :init
   (with-no-warnings
     (defun ivy--regex-pinyin (str)
@@ -186,21 +188,4 @@
                              (replace-regexp-in-string ";" "" str)
                              "")))
              "")))
-        (t nil)))
-
-    ;; TODO: this is not working
-    ;; (mapcar
-    ;;   (lambda (item)
-    ;;     (let ((key (car item))
-    ;;            (value (cdr item)))
-    ;;       (when (member value '(+ivy-prescient-non-fuzzy
-    ;;                              +ivy--regex-plus
-    ;;                              +ivy--regex-ignore-order
-    ;;                              ivy-prescient-re-builder))
-    ;;         (setf (alist-get key ivy-re-builders-alist)
-    ;;           #'ivy--regex-pinyin))))
-    ;;   ivy-re-builders-alist)
-
-    (setq ivy-re-builders-alist
-      '(
-         (t . ivy--regex-pinyin)))))
+        (t nil)))))

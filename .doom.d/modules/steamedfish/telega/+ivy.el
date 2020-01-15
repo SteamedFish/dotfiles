@@ -26,3 +26,7 @@
               :caller 'ivy-telega-chat-with)))
 
 (setq telega-completing-read-function 'ivy-completing-read)
+
+;; support chinese pinyin search
+(push '(ivy-telega-chat-with . ivy--regex-pinyin)
+      ivy-re-builders-alist)
