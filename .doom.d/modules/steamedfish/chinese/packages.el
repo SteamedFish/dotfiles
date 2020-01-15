@@ -16,3 +16,4 @@
               :host github
               :repo "merrickluo/liberime"
               :files ("CMakeLists.txt" "Makefile" "src" "liberime-config.el"))))
+(package! pinyinlib)
