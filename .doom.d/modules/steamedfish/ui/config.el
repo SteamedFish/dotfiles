@@ -28,6 +28,11 @@
   (when (member "Hiragino Sans GB" (font-family-list))
     (setq doom-unicode-font (font-spec :family "Hiragino Sans GB" :size 14.5)))
 
+  (when (member "Noto Color Emoji" (font-family-list))
+    (set-fontset-font 't 'symbol
+      (font-spec :family "Noto Color Emoji")
+      nil 'prepend))
+
   (add-hook 'window-setup-hook #'toggle-frame-maximized)
   (add-hook 'window-setup-hook #'+ui/toggle-transparency))
 
