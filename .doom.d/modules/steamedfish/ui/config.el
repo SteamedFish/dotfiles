@@ -33,6 +33,14 @@
       (font-spec :family "Noto Color Emoji")
       nil 'prepend))
 
+  (cl-loop for font in '("Hiragino Sans GB"
+                         "Sarasa Mono SC"
+                         "Noto Sans CJK SC"
+                         "Source Han Sans SC")
+           if (member font (font-family-list))
+           return
+           (set-fontset-font t 'han (font-spec :family font) nil 'prepend))
+
   (add-hook 'window-setup-hook #'toggle-frame-maximized)
   (add-hook 'window-setup-hook #'+ui/toggle-transparency))
 
