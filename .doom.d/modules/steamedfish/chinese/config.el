@@ -186,14 +186,14 @@
                             (replace-regexp-in-string ";" "" str)
                             "")))
             ""))
-        (t nil)))
+        (t nil)))))
 
-    (mapcar
-      (lambda (item)
-        (let ((key (car item))
-               (value (cdr item)))
-          (when (member value '(+ivy-prescient-non-fuzzy
-                                 ivy--regex-plus))
-            (setf (alist-get key ivy-re-builders-alist)
-              #'ivy--regex-pinyin))))
-      ivy-re-builders-alist)))
+    ;; (mapcar
+    ;;   (lambda (item)
+    ;;     (let ((key (car item))
+    ;;            (value (cdr item)))
+    ;;       (when (member value '(+ivy-prescient-non-fuzzy
+    ;;                              ivy--regex-plus))
+    ;;         (setf (alist-get key ivy-re-builders-alist)
+    ;;           #'ivy--regex-pinyin))))
+    ;;   ivy-re-builders-alist)))
