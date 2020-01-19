@@ -8,17 +8,17 @@
   (telega-mode-line-mode 1)
 
   (set-popup-rule! (regexp-quote telega-root-buffer-name)
-    :side 'right :size 60 :quit nil :modeline t :select t)
+    :side 'right :size 50 :quit nil :modeline t :select t)
   (set-popup-rule! "^◀[[({<].*[\])>}]$"
-    :side 'right :size 60 :quit nil :modeline t :select t)
+    :side 'right :size 50 :quit nil :modeline t :select t)
 
   (setq telega-use-tracking-for t
         telega-known-inline-bots '("@shufmbot")
         telega-sticker-set-download t
         telega-chat-button-width 28
         ;;telega-root-fill-column 48
-        telega-chat-fill-column 47
-        telega-chat-button-width 47)
+        telega-chat-fill-column 37
+        telega-chat-button-width 37)
 
   ;; copied from https://github.com/sarg/dotfiles/
   ;; use ivy to choose different chats
