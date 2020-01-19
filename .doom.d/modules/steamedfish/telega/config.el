@@ -12,7 +12,7 @@
   (set-popup-rule! "^◀[[({<].*[\])>}]$"
     :side 'right :size 50 :quit nil :modeline t :select t)
 
-  (setq telega-use-tracking-for t
+  (setq telega-use-tracking-for nil
         telega-known-inline-bots '("@shufmbot")
         telega-sticker-set-download t
         telega-chat-button-width 28
