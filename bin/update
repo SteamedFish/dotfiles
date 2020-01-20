@@ -11,25 +11,22 @@ run () {
     # execute any programs
     # -r, --retry    retry time when execute fail. default 0
     # -n, --dry-run  perform a trial run with no changes made
-    # -l, --logfile  save all the output to a logfile
-    # example: run -r 3 -l somefile.log df -h
+    # example: run -r 3 df -h
     # WARNING: any unrecognized option will be treated as command.
     # for example, `run -n 3' will execute `3' with dry-run option.
 
     local retry=0
     local dry_run=false
-    local logfile="${logfile:=/dev/null}"
     local retcode
 
     local params
-    params="$(getopt -n run -o '+r:nl:' -l 'retry:,dry-run,logfile:' -- "$@")"
+    params="$(getopt -n run -o '+r:n' -l 'retry:,dry-run' -- "$@")"
     if ! eval set -- "$params"; then
         echo "Incorrect options provided to $0"
         cat << EOF
 run: execute any programs
     -r, --retry    retry time when execute fail. default 0
     -n, --dry-run  perform a trial run with no changes made
-    -l, --logfile  save all the output to a logfile
 
     example: run -r 3 -l somefile.log df -h
 EOF
@@ -46,10 +43,6 @@ EOF
                 dry_run=true
                 shift
                 ;;
-            -l|--logfile)
-                logfile=$2
-                shift 2
-                ;;
             --)
                 shift
                 break
@@ -61,38 +54,35 @@ EOF
         esac
     done
 
-    echo " =========================================================" | tee -a "$logfile"
+    echo " ========================================================="
     while true; do
         echo "$(date "+%F %T") RUNNING: $* "
-        echo "$(date "+%F %T") RUNNING: $*" >> "$logfile"
 
         if $dry_run; then
-            echo "DRY-RUN: running $*" | tee -a "$logfile"
+            echo "DRY-RUN: running $*"
             return 0
         fi
 
-        "$@" 2>&1 | tee -a "$logfile"
-
-        retcode="${PIPESTATUS[0]}"
+	"$@"
+	retcode="$?"
 
         if [ "$retcode" -eq 0 ]; then
-            echo "$(date "+%F %T") run $* successfully!" | tee -a "$logfile"
+            echo "$(date "+%F %T") run $* successfully!"
             return "$retcode"
         fi
 
-        echo "$(date "+%F %T") run $* failed!" | tee -a "$logfile"
+        echo "$(date "+%F %T") run $* failed!"
 
         retry=$((retry - 1))
 
 
         if [ "$retry" -le 0 ]; then
-            echo "no more retry" | tee -a "$logfile"
+            echo "no more retry"
             echo "run $* failed! Please check it " >&2
-            echo "run $* failed! Please check it" >> "$logfile"
             return "$retcode"
         fi
 
-        echo "retry time left: $retry" | tee -a "$logfile"
+        echo "retry time left: $retry"
 
     done
 
