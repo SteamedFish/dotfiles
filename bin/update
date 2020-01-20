@@ -1,5 +1,10 @@
 #!/bin/bash -e
 
+set -e
+set -o pipefail
+set -u
+set -E
+
 cd "$HOME"
 
 run () {
