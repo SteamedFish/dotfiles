@@ -46,9 +46,6 @@ run () {
                 echo "Unrecognized Options" >&2
                 exit 1
                 ;;
-            #*)
-            #    break
-            #    ;;
         esac
     done
 
