@@ -249,7 +249,7 @@ self_update() {
     fi
     echo "updating git repo"
     for repo in dotfiles .password-store .gnupg; do
-        if [ -d "$HOME/$repo" ]; then
+        if [ -d "$HOME/$repo/.git" ]; then
             cd "$HOME/$repo"
             run git pull
             run git submodule update --recursive --remote
