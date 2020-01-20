@@ -2,12 +2,96 @@
 
 cd "$HOME"
 
-run() {
-    echo "start running $@ at $(pwd)" >&2
-    if ! "$@"; then
-        echo "run $@ failed!" >&2
+run () {
+    # execute any programs
+    # -r, --retry    retry time when execute fail. default 0
+    # -n, --dry-run  perform a trial run with no changes made
+    # -l, --logfile  save all the output to a logfile
+    # example: run -r 3 -l somefile.log df -h
+    # WARNING: any unrecognized option will be treated as command.
+    # for example, `run -n 3' will execute `3' with dry-run option.
+
+    local retry=0
+    local dry_run=false
+    local logfile="${logfile:=/dev/null}"
+    local retcode
+
+    local params
+    params="$(getopt -n run -o '+r:nl:' -l 'retry:,dry-run,logfile:' -- "$@")"
+    if ! eval set -- "$params"; then
+        echo "Incorrect options provided to $0"
+        # TODO: print help
+        exit 1
     fi
+
+    while true; do
+        case "$1" in
+            -r|--retry)
+                retry=$2
+                shift 2
+                ;;
+            -n|--dry-run)
+                dry_run=true
+                shift
+                ;;
+            -l|--logfile)
+                logfile=$2
+                shift 2
+                ;;
+            --)
+                shift
+                break
+                ;;
+            *)
+                echo "Unrecognized Options" >&2
+                exit 1
+                ;;
+            #*)
+            #    break
+            #    ;;
+        esac
+    done
+
+    echo " =========================================================" | tee -a "$logfile"
+    while true; do
+        echo "$(date "+%F %T") RUNNING: $* "
+        echo "$(date "+%F %T") RUNNING: $*" >> "$logfile"
+
+        if $dry_run; then
+            echo "DRY-RUN: running $*" | tee -a "$logfile"
+            return 0
+        fi
+
+        "$@" 2>&1 | tee -a "$logfile"
+
+        retcode="${PIPESTATUS[0]}"
+
+        if [ "$retcode" -eq 0 ]; then
+            echo "$(date "+%F %T") run $* successfully!" | tee -a "$logfile"
+            return "$retcode"
+        fi
+
+        echo "$(date "+%F %T") run $* failed!" | tee -a "$logfile"
+
+        retry=$((retry - 1))
+
+
+        if [ "$retry" -le 0 ]; then
+            echo "no more retry" | tee -a "$logfile"
+            echo "run $* failed! Please check it " >&2
+            echo "run $* failed! Please check it" >> "$logfile"
+            return "$retcode"
+        fi
+
+        echo "retry time left: $retry" | tee -a "$logfile"
+
+    done
+
+    # should never go here
+    echo "Internal Error!" >&2
+    exit 2
 }
+
 
 get_sudo() {
     if [ -z "$(command -v sudo)" ]; then
