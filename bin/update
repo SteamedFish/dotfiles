@@ -20,7 +20,14 @@ run () {
     params="$(getopt -n run -o '+r:nl:' -l 'retry:,dry-run,logfile:' -- "$@")"
     if ! eval set -- "$params"; then
         echo "Incorrect options provided to $0"
-        # TODO: print help
+        cat << EOF
+run: execute any programs
+    -r, --retry    retry time when execute fail. default 0
+    -n, --dry-run  perform a trial run with no changes made
+    -l, --logfile  save all the output to a logfile
+
+    example: run -r 3 -l somefile.log df -h
+EOF
         exit 1
     fi
 
