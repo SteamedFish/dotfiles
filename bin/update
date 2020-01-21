@@ -20,10 +20,8 @@ run () {
     local retcode
 
     if getopt -T; then
-        # old getopt
-        # TODO handle it correctly
-        "$@"
-        return "$?"
+        echo "You are using old style getopt" >&2
+        exit 1
     fi
 
     local params
