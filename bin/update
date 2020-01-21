@@ -19,6 +19,13 @@ run () {
     local dry_run=false
     local retcode
 
+    if getopt -T; then
+        # old getopt
+        # TODO handle it correctly
+        "$@"
+        return "$?"
+    fi
+
     local params
     params="$(getopt -n run -o '+r:n' -l 'retry:,dry-run' -- "$@")"
     if ! eval set -- "$params"; then
