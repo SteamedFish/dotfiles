@@ -178,7 +178,6 @@ update_mas() {
 
 update_homebrew() {
     echo "Updating HomeBrew"
-    cd "$HOME/dotfiles"
     run brew update
     run brew bundle --global check
     run brew bundle --global install
