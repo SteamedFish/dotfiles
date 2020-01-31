@@ -222,5 +222,4 @@ mas "Numbers", id: 409203825
 mas "Pages", id: 409201541
 mas "Pixelmator", id: 407963104
 mas "PopClip", id: 445189367
-mas "Tweetbot", id: 557168941
 mas "Xcode", id: 497799835
