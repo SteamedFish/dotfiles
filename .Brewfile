@@ -136,7 +136,6 @@ brew "railwaycat/emacsmacport/emacs-mac", args: ["with-dbus", "with-modules", "w
 brew "srkomodo/tap/shadowfox-updater"
 brew "twlz0ne/ccls/ccls"
 brew "vitorgalvao/tiny-scripts/cask-repair"
-cask "adoptopenjdk"
 cask "alacritty"
 cask "alfred"
 cask "android-platform-tools"
