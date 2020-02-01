@@ -154,6 +154,11 @@ update_linux_system() {
             run sudo eclean -d distfiles
             run sudo eclean -d packages
         fi
+    elif  [[ -f /etc/redhat-release ]]; then
+      run sudo dnf update
+      run sudo dnf upgrade
+      run sudo dnf autoremove
+      run sudo dnf clean all
     elif [[ $(uname -o) == "Android" ]]; then
         run apt update
         run apt upgrade
