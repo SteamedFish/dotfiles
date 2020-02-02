@@ -118,9 +118,9 @@ update_context() {
             cd "${_CONTEXT_PATH}"
             run rsync -av rsync://contextgarden.net/minimals/setup/first-setup.sh .
             run bash first-setup.sh --modules=all
+            run mtxrun --scripts fonts --reload
         fi
     done
-    run mtxrun --scripts fonts --reload
     unset _POSSIBLE_PATH
     unset _CONTEXT_PATH
 }
