@@ -218,8 +218,12 @@ update_snap() {
 
 update_pip() {
     echo "Updating Pip"
-    run pip2 list --format=columns | tail -n +3 | cut -d ' ' -f 1 | run xargs -n1 pip2 install -U
-    run pip3 list --format=columns | tail -n +3 | cut -d ' ' -f 1 | run xargs -n1 pip3 install -U
+    if [ -n "$(command -v pip2)" ]; then
+        pip2 list --format=columns | tail -n +3 | cut -d ' ' -f 1 | grep -v 'pip' | run xargs -n1 pip2 install -U
+    fi
+    if [ -n "$(command -v pip3)" ]; then
+        pip3 list --format=columns | tail -n +3 | cut -d ' ' -f 1 | grep -v 'pip' | run xargs -n1 pip3 install -U
+    fi
 }
 
 
