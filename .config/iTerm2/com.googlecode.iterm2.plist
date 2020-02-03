@@ -455,7 +455,7 @@
 	<key>NSWindow Frame NSNavPanelAutosaveName</key>
 	<string>586 456 799 448 0 0 1920 1057 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>52 5 1865 1052 0 0 1920 1057 </string>
+	<string>57 0 1868 1057 0 0 1920 1057 </string>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -720,7 +720,7 @@
 			<key>Badge Right Margin</key>
 			<real>10</real>
 			<key>Badge Text</key>
-			<string>UTF-8\n\(session.name)\n\(session.username)@\(session.hostname)</string>
+			<string>\(session.name)\n\(session.username)@\(session.hostname)</string>
 			<key>Badge Top Margin</key>
 			<real>10</real>
 			<key>Blink Allowed</key>
@@ -1450,7 +1450,7 @@
 			<key>Thin Strokes</key>
 			<integer>3</integer>
 			<key>Title Components</key>
-			<integer>387</integer>
+			<integer>386</integer>
 			<key>Transparency</key>
 			<real>0.26590260152284267</real>
 			<key>Unlimited Scrollback</key>
@@ -1492,17 +1492,24 @@
 	</array>
 	<key>NoSyncCommandHistoryHasEverBeenUsed</key>
 	<true/>
+	<key>NoSyncFrame_SessionsPreferences</key>
+	<dict>
+		<key>screenFrame</key>
+		<string>{{0, 0}, {1920, 1080}}</string>
+		<key>topLeft</key>
+		<string>{683, 922}</string>
+	</dict>
 	<key>NoSyncFrame_SharedPreferences</key>
 	<dict>
 		<key>screenFrame</key>
 		<string>{{0, 0}, {1920, 1080}}</string>
 		<key>topLeft</key>
-		<string>{625, 792}</string>
+		<string>{668, 849}</string>
 	</dict>
 	<key>NoSyncInstallationId</key>
 	<string>6FECF12A-388D-48AF-A46C-95191BA6E92B</string>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>5</integer>
+	<integer>7</integer>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
@@ -1875,6 +1882,14 @@
 			</dict>
 			<dict>
 				<key>isTerminal</key>
+				<true/>
+				<key>name</key>
+				<string>currentTab.currentSession.terminalWindowName</string>
+				<key>nonterminalContext</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
 				<false/>
 				<key>name</key>
 				<string>currentTab</string>
@@ -1886,6 +1901,14 @@
 				<true/>
 				<key>name</key>
 				<string>currentTab.currentSession</string>
+				<key>nonterminalContext</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
+				<true/>
+				<key>name</key>
+				<string>currentTab.window</string>
 				<key>nonterminalContext</key>
 				<integer>0</integer>
 			</dict>
@@ -2089,6 +2112,14 @@
 				<true/>
 				<key>name</key>
 				<string>currentSession.lastCommand</string>
+				<key>nonterminalContext</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
+				<true/>
+				<key>name</key>
+				<string>window</string>
 				<key>nonterminalContext</key>
 				<integer>0</integer>
 			</dict>
