@@ -247,7 +247,6 @@ self_update() {
     echo "updating yadm"
     if [ -n "$(command -v yadm)" ]; then
         run yadm pull
-        run yadm decrypt
         run yadm alt
     fi
     echo "updating git repo"
