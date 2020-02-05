@@ -9,7 +9,7 @@ if [ -n "$BASH" ]; then
 fi
 
 # type dir name without cd
-setopt AUTO_CD
+setopt NO_AUTO_CD
 # list completions the bash way
 setopt BASH_AUTO_LIST
 # do not give bad glob pattern error
@@ -17,7 +17,7 @@ setopt NO_BAD_PATTERN
 # ask to correct commands
 setopt CORRECT
 # ask to correct all arguments
-setopt CORRECT_ALL
+setopt NO_CORRECT_ALL
 
 # History
 export HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
