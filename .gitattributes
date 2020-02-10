@@ -1,1 +1,2 @@
 .ssh/config##template filter=git-crypt diff=git-crypt
+.mbsyncrc filter=git-crypt diff=git-crypt
