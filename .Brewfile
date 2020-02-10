@@ -223,3 +223,4 @@ mas "Pages", id: 409201541
 mas "Pixelmator", id: 407963104
 mas "PopClip", id: 445189367
 mas "Xcode", id: 497799835
+mas "WireGuard", id: 1451685025
