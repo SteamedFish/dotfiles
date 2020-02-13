@@ -148,7 +148,7 @@ update_linux_system() {
         else
             run -r 5 sudo emerge --sync
         fi
-        run sudo http_proxy=http://192.168.1.97:1087 https_proxy=http://192.168.1.97:1087 emerge -avuUDN --with-bdeps=y --keep-going --quiet-build @system @world @preserved-rebuild
+        run sudo emerge -avuUDN --with-bdeps=y --keep-going --quiet-build @system @world @preserved-rebuild
         run sudo emerge -avc --exclude="sys-kernel/gentoo-sources"
         if [ -n "$(command -v eclean)" ]; then
             run sudo eclean -d distfiles
