@@ -141,12 +141,12 @@ update_linux_system() {
         run sudo apt clean
     elif  [[ -f /etc/gentoo-release ]]; then
         if [ -n "$(command -v layman)" ]; then
-            run sudo layman -S
+            run -r 5 sudo layman -S
         fi
         if [ -n "$(command -v eix-sync)" ]; then
-            run sudo eix-sync
+            run -r 5 sudo eix-sync
         else
-            run sudo emerge --sync
+            run -r 5 sudo emerge --sync
         fi
         run sudo emerge -avuUDN --with-bdeps=y --keep-going --quiet-build @system @world @preserved-rebuild
         run sudo emerge -avc --exclude="sys-kernel/gentoo-sources"
@@ -246,15 +246,15 @@ update_go() {
 self_update() {
     echo "updating yadm"
     if [ -n "$(command -v yadm)" ]; then
-        run yadm pull
+        run -r 5 yadm pull
         run yadm alt
     fi
     echo "updating git repo"
     for repo in dotfiles .password-store .gnupg; do
         if [ -d "$HOME/$repo/.git" ]; then
             cd "$HOME/$repo"
-            run git pull
-            run git submodule update --recursive --remote
+            run -r 5 git pull
+            run -r 5 git submodule update --recursive --remote
             # run git commit -a -m "daily update"
             run git push
         fi
@@ -263,8 +263,8 @@ self_update() {
 
 update_vim() {
     echo "updating vim"
-    cd "$HOME/.vim" && run git pull && run git submodule update --recursive --init
-    cd "$HOME/.config/nvim" && run git pull && run git submodule update --recursive --init
+    cd "$HOME/.vim" && run -r 5 git pull && run -r 5 git submodule update --recursive --init
+    cd "$HOME/.config/nvim" && run -r 5 git pull && run -r 5 git submodule update --recursive --init
     # TODO not working currectly
     # run vim +SPUpdate +qall
 }
@@ -277,11 +277,11 @@ update_emacs() {
         cd "$HOME/.emacs.d/"
         # use git pull insted of doom upgrade
         # to prevent the local repo too much behind
-        run git pull
+        run git -r 5 pull
         #run "$HOME"/.emacs.d/bin/doom -y upgrade
         run "$HOME"/.emacs.d/bin/doom -y clean
         run "$HOME"/.emacs.d/bin/doom -y refresh
-        run "$HOME"/.emacs.d/bin/doom -y update
+        run -r 5 "$HOME"/.emacs.d/bin/doom -y update
     fi
     for _PROJECT in "$HOME"/emacs-distros/*; do
         if [ -d "${_PROJECT}/.git" ]; then
