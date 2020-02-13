@@ -1,9 +1,9 @@
 #!/bin/bash -e
 
 #set -e
-set -o pipefail
-set -u
-set -E
+#set -o pipefail
+#set -u
+#set -E
 
 cd "$HOME"
 
@@ -148,7 +148,7 @@ update_linux_system() {
         else
             run -r 5 sudo emerge --sync
         fi
-        run sudo emerge -avuUDN --with-bdeps=y --keep-going --quiet-build @system @world @preserved-rebuild
+        run sudo http_proxy=http://192.168.1.97:1087 https_proxy=http://192.168.1.97:1087 emerge -avuUDN --with-bdeps=y --keep-going --quiet-build @system @world @preserved-rebuild
         run sudo emerge -avc --exclude="sys-kernel/gentoo-sources"
         if [ -n "$(command -v eclean)" ]; then
             run sudo eclean -d distfiles
@@ -277,7 +277,7 @@ update_emacs() {
         cd "$HOME/.emacs.d/"
         # use git pull insted of doom upgrade
         # to prevent the local repo too much behind
-        run git -r 5 pull
+        run -r 5 git pull
         #run "$HOME"/.emacs.d/bin/doom -y upgrade
         run "$HOME"/.emacs.d/bin/doom -y clean
         run "$HOME"/.emacs.d/bin/doom -y refresh
