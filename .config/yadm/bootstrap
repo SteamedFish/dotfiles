@@ -48,6 +48,8 @@ linux_apps=(
     dmidecode
     dnsutils
     ansible
+    isync
+    mu
 )
 
 arch_apps=(
