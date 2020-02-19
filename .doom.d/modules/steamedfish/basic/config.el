@@ -49,3 +49,5 @@
   (dolist (dir '("~/work/" "~/dumbo/" "~/Dropbox/" "~/Qsync/Work/" "~/dotfiles/"))
     (when (file-directory-p dir)
       (add-to-list 'projectile-project-search-path dir))))
+
+(load! "email.el")
