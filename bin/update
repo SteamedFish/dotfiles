@@ -1,9 +1,9 @@
 #!/bin/bash -e
 
-#set -e
-#set -o pipefail
-#set -u
-#set -E
+set -e
+set -o pipefail
+set -u
+set -E
 
 cd "$HOME"
 
@@ -68,8 +68,10 @@ EOF
             return 0
         fi
 
-	"$@"
-	retcode="$?"
+        set +e
+        "$@"
+        retcode="$?"
+        set -e
 
         if [ "$retcode" -eq 0 ]; then
             echo "$(date "+%F %T") run $* successfully!"
@@ -84,7 +86,8 @@ EOF
         if [ "$retry" -le 0 ]; then
             echo "no more retry"
             echo "run $* failed! Please check it " >&2
-            return "$retcode"
+            #return "$retcode"
+            return 0
         fi
 
         echo "retry time left: $retry"
