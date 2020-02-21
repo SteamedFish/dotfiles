@@ -6,6 +6,8 @@
 	<true/>
 	<key>AppleAntiAliasingThreshold</key>
 	<integer>1</integer>
+	<key>ApplePressAndHoldEnabled</key>
+	<false/>
 	<key>AppleScrollAnimationEnabled</key>
 	<integer>0</integer>
 	<key>AppleSmoothFixedFontsSizeThreshold</key>
@@ -409,8 +411,12 @@
 	<true/>
 	<key>NSNavLastRootDirectory</key>
 	<string>~/Documents</string>
+	<key>NSNavLastUserSetHideExtensionButtonState</key>
+	<true/>
 	<key>NSNavPanelExpandedSizeForOpenMode</key>
 	<string>{799, 448}</string>
+	<key>NSNavPanelExpandedSizeForSaveMode</key>
+	<string>{712, 448}</string>
 	<key>NSQuotedKeystrokeBinding</key>
 	<string></string>
 	<key>NSRepeatCountBinding</key>
@@ -453,9 +459,9 @@
 		<integer>1</integer>
 	</dict>
 	<key>NSWindow Frame NSNavPanelAutosaveName</key>
-	<string>586 456 799 448 0 0 1920 1057 </string>
+	<string>812 657 347 181 0 0 1920 1057 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>57 0 1868 1057 0 0 1920 1057 </string>
+	<string>52 0 1868 1057 0 0 1920 1057 </string>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -1138,7 +1144,7 @@
 			<key>Non-ASCII Ligatures</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>FuraCodeNerdFontComplete-Regular 13</string>
+			<string>FiraCodeNerdFontComplete-Regular 11</string>
 			<key>Only The Default BG Color Uses Transparency</key>
 			<false/>
 			<key>Open Toolbelt</key>
@@ -1482,13 +1488,14 @@
 	<key>NoSyncAllAppVersions</key>
 	<array>
 		<string>3.3.7</string>
+		<string>3.3.8</string>
 	</array>
 	<key>NoSyncBFPRecents</key>
 	<array>
+		<string>FiraCode Nerd Font</string>
+		<string>Menlo</string>
 		<string>Sarasa Mono SC</string>
-		<string>FuraCode Nerd Font</string>
 		<string>FuraMono Nerd Font</string>
-		<string>FuraCode Nerd Font Mono</string>
 	</array>
 	<key>NoSyncCommandHistoryHasEverBeenUsed</key>
 	<true/>
@@ -1509,15 +1516,17 @@
 	<key>NoSyncInstallationId</key>
 	<string>6FECF12A-388D-48AF-A46C-95191BA6E92B</string>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>7</integer>
+	<integer>10</integer>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
 	<integer>0</integer>
 	<key>NoSyncNextAnnoyanceTime</key>
-	<real>602356135.34112895</real>
+	<real>602472016.76842201</real>
 	<key>NoSyncOnboardingWindowHasBeenShown</key>
 	<true/>
+	<key>NoSyncPermissionToShowTip</key>
+	<false/>
 	<key>NoSyncRecordedVariables</key>
 	<dict>
 		<key>0</key>
@@ -2248,6 +2257,8 @@
 			</dict>
 		</array>
 	</dict>
+	<key>NoSyncSaveDocumentAsPathSet_saveDocumentAs:</key>
+	<true/>
 	<key>NoSyncTipOfTheDayEligibilityBeganTime</key>
 	<real>602183335.34100497</real>
 	<key>OpenTmuxWindowsIn</key>
@@ -2353,6 +2364,6 @@
 	<key>findMode_iTerm</key>
 	<integer>0</integer>
 	<key>iTerm Version</key>
-	<string>3.3.7</string>
+	<string>3.3.8</string>
 </dict>
 </plist>
