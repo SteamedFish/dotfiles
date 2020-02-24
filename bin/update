@@ -144,8 +144,10 @@ update_linux_system() {
         if [ -n "$(command -v powerpill)" ]; then
             run "${PACMAN_CMD}" -Sy
             run sudo powerpill --powerpill-clean -Suw
+            run "${PACMAN_CMD}" -Su
+        else
+            run "${PACMAN_CMD}" -Syu
         fi
-        run "${PACMAN_CMD}" -Syu
         run "${PACMAN_CMD}" -Scc --noconfirm
     elif [[ -f /etc/debian_version ]]; then
         run sudo apt update
