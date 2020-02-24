@@ -55,7 +55,7 @@ define_keymap(lambda wm_class: wm_class not in ("Emacs", "URxvt", "konsole"), {
     K("C-slash"): [K("C-z"), set_mark(False)],
     K("C-Shift-ro"): K("C-z"),
     # Mark
-    K("C-space"): set_mark(True),
+    #K("C-space"): set_mark(True),
     K("C-M-space"): with_or_set_mark(K("C-right")),
     # Search
     K("C-s"): K("F3"),
