@@ -135,21 +135,18 @@ update_mac_system() {
 
 update_linux_system() {
     if  [[ -f /etc/arch-release ]]; then
-        if [ -n "$(command -v powerpill)" ]; then
-            if [ -n "$(command -v yay)" ]; then
-                run yay -Sy
-            else
-                run sudo pacman -Sy
-            fi
-            run sudo powerpill --powerpill-clean -Su
-        fi
         if [ -n "$(command -v yay)" ]; then
-            run yay -Syu
-            run yay -Scc --noconfirm
+            PACMAN_CMD="yay"
         else
-            run sudo pacman -Syu
-            run sudo pacman -Scc --noconfirm
+            PACMAN_CMD="sudo pacman"
         fi
+
+        if [ -n "$(command -v powerpill)" ]; then
+            run "${PACMAN_CMD}" -Sy
+            run sudo powerpill --powerpill-clean -Suw
+        fi
+        run "${PACMAN_CMD}" -Syu
+        run "${PACMAN_CMD}" -Scc --noconfirm
     elif [[ -f /etc/debian_version ]]; then
         run sudo apt update
         run sudo apt upgrade
