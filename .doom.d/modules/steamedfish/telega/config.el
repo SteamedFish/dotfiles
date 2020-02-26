@@ -40,8 +40,9 @@
   (when (featurep! :editor evil)
     (map!
      (:map telega-msg-button-map
-       "k" nil
-       "l" nil)))
+       "j" #'telega-button-forward
+       "k" #'telega-button-backward
+       "K" #'telega-msg-delete-marked-or-at-point)))
 
   ;; use RET to add newline and C-RET to send
   (when (featurep! :config default)
