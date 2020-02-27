@@ -50,6 +50,7 @@ linux_apps=(
     ansible
     isync
     mu
+    zsh
 )
 
 arch_apps=(
