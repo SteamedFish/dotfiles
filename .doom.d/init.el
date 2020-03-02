@@ -224,6 +224,7 @@
        irc
        keybindings
        orgmode
+       email
        nov-mode
        speed-type
        (:if (not (or IS-WINDOWS IS-ANDROID))
