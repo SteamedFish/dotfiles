@@ -25,7 +25,8 @@ if $CLICOLOR ;then
 fi
 
 # bash-completion
-if [ -n "$BASH_VERSION" -a -z "$BASH_COMPLETION" ]; then
+# shellcheck disable=1091
+if [ -n "$BASH_VERSION" ] && [ -z "$BASH_COMPLETION" ]; then
     if [ -r /usr/local/etc/bash_completion ]; then
         . /usr/local/etc/bash_completion
     fi
@@ -35,12 +36,14 @@ if [ -n "$BASH_VERSION" -a -z "$BASH_COMPLETION" ]; then
     if [ -r /usr/share/bash-completion/bash_completion ]; then
         . /usr/share/bash-completion/bash_completion
     fi
-    if [ -r $HOME/.bash_completion ]; then
-        . $HOME/.bash_completion
+    if [ -r "$HOME/.bash_completion" ]; then
+        # shellcheck source=.bash_completion
+        . "$HOME/.bash_completion"
     fi
     if [ -n "$(command -v pandoc)" ];then
         eval "$(pandoc --bash-completion)"
     fi
 fi
 
+# shellcheck disable=1090
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash

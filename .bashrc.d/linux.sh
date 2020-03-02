@@ -22,7 +22,8 @@ if [ -f "$HOME"/.ssh/id_rsa ]; then
     export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/ssh-agent.socket"
 fi
 
-export GPG_TTY=$(tty)
+GPG_TTY=$(tty)
+export GPG_TTY
 
 # extra PATHs
 for i in /home/linuxbrew/.linuxbrew $HOME/.linuxbrew /snap/bin; do

@@ -21,23 +21,23 @@ function emacs {
         fi
         return
     fi
-    args=($*)
+    args=("$*")
     for ((i=0; i <= ${#args}; i++)); do
         local a=${args[i]}
         # NOTE: -c for creating new frame
         if [[ ${a:0:1} == '-' && ${a} != '-c' && ${a} != '--' ]]; then
             if [[ "$OSTYPE" == "darwin"* ]]; then
-                /Applications/Emacs.app/Contents/MacOS/Emacs ${args[*]}
+                /Applications/Emacs.app/Contents/MacOS/Emacs "${args[*]}"
             elif [[ "$OSTYPE" == "linux-gnu" ]]; then
-                /usr/bin/emacs ${args[*]}
+                /usr/bin/emacs "${args[*]}"
             fi
             return
         fi
     done
     if [[ "$OSTYPE" == "darwin"* ]]; then
-        emacsclient -n -a /Applications/Emacs.app/Contents/MacOS/Emacs ${args[*]}
+        emacsclient -n -a /Applications/Emacs.app/Contents/MacOS/Emacs "${args[*]}"
     elif [[ "$OSTYPE" == "linux-gnu" ]]; then
-        setsid emacsclient -n -a /usr/bin/emacs ${args[*]}
+        setsid emacsclient -n -a /usr/bin/emacs "${args[*]}"
     fi
 }
 

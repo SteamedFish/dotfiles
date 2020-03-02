@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [ "$(basename $SHELL)" != "zsh" ]; then
+if [ "$(basename "$SHELL")" != "zsh" ]; then
     return
 fi
 
@@ -49,11 +49,13 @@ setopt EMACS
 alias -s log="nvim"
 
 for _ext in txt yml yaml py sh el md org diff patch go sql h c cc cpp; do
-    alias -s "${_ext}"="emacs"
+    # shellcheck disable=2139
+    alias -s "${_ext}=emacs"
 done
 unset _ext
 
 if [ -f "$HOME/.zplugin/bin/zplugin.zsh" ]; then
+    # shellcheck source=../.zplugin/bin/zplugin.zsh
     source "$HOME/.zplugin/bin/zplugin.zsh"
     zplugin ice wait blockf atpull'zplugin creinstall -q .'
     zplugin light zsh-users/zsh-completions
@@ -74,4 +76,5 @@ if [ -f "$HOME/.zplugin/bin/zplugin.zsh" ]; then
     zplugin light romkatv/powerlevel10k
 fi
 
+# shellcheck disable=1090
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

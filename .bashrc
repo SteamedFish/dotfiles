@@ -25,9 +25,17 @@ fi
 
 if $CLICOLOR ;then
     if [ -x /usr/bin/dircolors ]; then
-        test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+        if [ -r ~/.dircolors ]; then
+            eval "$(dircolors -b ~/.dircolors)"
+        else
+            eval "$(dircolors -b)"
+        fi
     elif [ -x /usr/local/bin/gdircolors ]; then
-        test -r ~/.dircolors && eval "$(gdircolors -b ~/.dircolors)" || eval "$(gdircolors -b)"
+        if [ -r ~/.dircolors ]; then
+            eval "$(gdircolors -b ~/.dircolors)"
+        else
+            eval "$(gdircolors -b)"
+        fi
     fi
 fi
 
@@ -53,9 +61,10 @@ if [ -n "$(command -v nvim)" ];then
 fi
 
 if [ -e "$HOME/.bashrc.d" ]; then
-    for i in $HOME/.bashrc.d/*.sh; do
-        if [ -r $i ]; then
-            source $i
+    for i in "$HOME/.bashrc.d/"*.sh; do
+        if [ -r "$i" ]; then
+            # shellcheck disable=SC1090
+            source "$i"
         fi
     done
     unset i
