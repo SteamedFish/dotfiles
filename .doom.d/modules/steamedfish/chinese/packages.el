@@ -10,10 +10,8 @@
 (package! pangu-spacing
   :disable t)
 (package! posframe)
-(when IS-LINUX
-  (package! liberime-config
-    :recipe (
-              :host github
-              :repo "merrickluo/liberime"
-              :files ("CMakeLists.txt" "Makefile" "src" "liberime-config.el"))))
+(package! liberime
+  :recipe (:host github
+           :repo "merrickluo/liberime"
+           :files ("CMakeLists.txt" "Makefile" "src" "liberime.el" "liberime-config.el")))
 (package! pinyinlib)

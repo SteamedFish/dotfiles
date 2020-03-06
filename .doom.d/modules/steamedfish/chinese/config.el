@@ -64,30 +64,32 @@
                            cal-china-x-general-holidays)))
 
 (use-package! pyim
+  :after liberime
   :commands pyim-convert-string-at-point
+  :after-call after-find-file pre-command-hook
   :bind
   (("C-S-M-s-SPC" . pyim-convert-string-at-point) ;与 pyim-probe-dynamic-english 配合
-   ("C-;" . pyim-delete-word-from-personal-buffer))
+    ("C-;" . pyim-delete-word-from-personal-buffer))
   :config
   (if (display-graphic-p)
-      (setq pyim-page-tooltip 'posframe)
+    (setq pyim-page-tooltip 'posframe)
     (setq pyim-page-tooltip 'popup))
 
   (map! :map 'pyim-mode-map
-        "." #'pyim-page-next-page
-        "," #'pyim-page-previous-page)
+    "." #'pyim-page-next-page
+    "," #'pyim-page-previous-page)
 
-  (if IS-LINUX
-      (setq pyim-default-scheme 'rime)
-    (setq pyim-default-scheme 'quanpin))
+  (if (or IS-LINUX IS-MAC)
+    (setq pyim-default-scheme 'rime)
+   (setq pyim-default-scheme 'quanpin))
 
   (setq default-input-method "pyim"
-        pyim-page-length 9
-        pyim-dicts
-        `((:name
-           "pyim-bigdict"
-           :file
-           ,(expand-file-name (concat doom-private-dir "etc/pyim/pyim-bigdict.pyim.gz")))))
+    pyim-page-length 9
+    pyim-dicts
+    `((:name
+        "pyim-bigdict"
+        :file
+        ,(expand-file-name (concat doom-private-dir "etc/pyim/pyim-bigdict.pyim.gz")))))
 
   ;; 设置 pyim 探针设置，这是 pyim 高级功能设置，可以实现 *无痛* 中英文切换 :-)
   ;; 我自己使用的中英文动态切换规则是：
@@ -96,21 +98,21 @@
   ;; 3. 使用 C-S-M-s-SPC 快捷键，强制将光标前的拼音字符串转换为中文。
   ;; 4. 当光标在按钮上时，切换到英文输入。
   (setq-default pyim-english-input-switch-functions
-                '(pyim-probe-isearch-mode
-                  pyim-probe-program-mode
-                  pyim-probe-org-structure-template
-                  pyim-probe-evil-normal-mode
-                  pyim-probe-org-speed-commands
-                  ;; detect if current point is at button
-                  (lambda () (button-at (point)))))
+    '(pyim-probe-isearch-mode
+       pyim-probe-program-mode
+       pyim-probe-org-structure-template
+       pyim-probe-evil-normal-mode
+       pyim-probe-org-speed-commands
+       ;; detect if current point is at button
+       (lambda () (button-at (point)))))
 
   (add-hook! 'prog-mode-hook
     (add-to-list 'pyim-english-input-switch-functions
-                 'pyim-probe-dynamic-english))
+      'pyim-probe-dynamic-english))
 
   (add-hook! 'text-mode-hook
     (add-to-list 'pyim-english-input-switch-functions
-                 'pyim-probe-auto-english))
+      'pyim-probe-auto-english))
 
   (add-hook! '(text-mode-hook prog-mode-hook)
     ;; active pyim by default
@@ -119,9 +121,9 @@
     ((lambda () (run-at-time nil nil 'activate-input-method "pyim"))))
 
   (setq-default pyim-punctuation-half-width-functions
-                '(pyim-probe-punctuation-line-beginning
-                  pyim-probe-punctuation-after-punctuation
-                  +chinese/pyim-probe-punctuation-after-english-letter))
+    '(pyim-probe-punctuation-line-beginning
+       pyim-probe-punctuation-after-punctuation
+       +chinese/pyim-probe-punctuation-after-english-letter))
 
   ;; pyim will reset all local variables in this list for some reason,
   ;; but we don't want some of them to be reseted everytime pyim is
@@ -129,7 +131,7 @@
   ;; different buffers.
   ;; https://github.com/tumashu/pyim/issues/342
   (setq pyim-local-variable-list
-        (delete 'pyim-english-input-switch-functions pyim-local-variable-list))
+    (delete 'pyim-english-input-switch-functions pyim-local-variable-list))
 
   ;; 开启拼音搜索功能
   (pyim-isearch-mode 1)
@@ -139,14 +141,22 @@
     (add-hook! '(text-mode-hook prog-mode-hook)
       'toggle-input-method)))
 
-(use-package! liberime-config
-  :when IS-LINUX
+(use-package! liberime
+  :when (or IS-LINUX IS-MAC)
   :init
-  (setq liberime-user-data-dir (concat doom-private-dir "etc/rime"))
-  (add-hook 'after-liberime-load-hook
-    (lambda () (liberime-select-schema "luna_pinyin_simp")))
+  (setq liberime-user-data-dir (concat doom-local-dir "rime/"))
+  (when IS-LINUX
+    (setq liberime-shared-data-dir (expand-file-name "~/.config/fcitx/rime/")))
+  (when IS-MAC
+    (setq liberime-shared-data-dir (expand-file-name "~/Library/Rime/")))
+  (setq pyim-title "ㄓ")
+  ;; (add-hook! 'liberime-after-start-hook
+  ;;   (lambda () (liberime-select-schema "luna_pinyin_simp")))
+  (add-hook! 'after-init-hook
+    #'liberime-sync)
   :config
-  (setq pyim-title "ㄓ"))
+  (unless (file-exists-p (liberime-get-module-file))
+    (liberime-build)))
 
 ;; Support pinyin in Ivy
 ;; Input prefix ';' to match pinyin
