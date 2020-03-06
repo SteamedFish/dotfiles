@@ -18,7 +18,8 @@
         telega-chat-button-width 28
         ;;telega-root-fill-column 48
         telega-chat-fill-column 37
-        telega-chat-button-width 37)
+        telega-chat-button-width 37
+        telega-chat-show-deleted-messages-for '(all))
 
   ;; copied from https://github.com/sarg/dotfiles/
   ;; use ivy to choose different chats
