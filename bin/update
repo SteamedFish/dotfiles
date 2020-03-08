@@ -184,9 +184,9 @@ update_linux_system() {
 }
 
 update_zsh() {
-    if [ -f "$HOME/.zplugin/bin/zplugin.zsh" ]; then
-        cd "$HOME/.zplugin/bin" && run git pull
-        run zsh -c "source $HOME/.zplugin/bin/zplugin.zsh; zplugin self-update; zplugin update --all"
+    if [ -f "$HOME/.zinit/bin/zinit.zsh" ]; then
+        cd "$HOME/.zinit/bin" && run git pull
+        run zsh -c "source $HOME/.zinit/bin/zinit.zsh; zinit self-update; zinit update --all"
     fi
 }
 

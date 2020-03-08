@@ -54,26 +54,26 @@ for _ext in txt yml yaml py sh el md org diff patch go sql h c cc cpp; do
 done
 unset _ext
 
-if [ -f "$HOME/.zplugin/bin/zplugin.zsh" ]; then
-    # shellcheck source=../.zplugin/bin/zplugin.zsh
-    source "$HOME/.zplugin/bin/zplugin.zsh"
-    zplugin ice wait blockf atpull'zplugin creinstall -q .'
-    zplugin light zsh-users/zsh-completions
+if [ -f "$HOME/.zinit/bin/zinit.zsh" ]; then
+    # shellcheck source=../.zinit/bin/zinit.zsh
+    source "$HOME/.zinit/bin/zinit.zsh"
+    zinit ice wait blockf atpull'zinit creinstall -q .'
+    zinit light zsh-users/zsh-completions
 
-    zplugin ice wait atinit"zpcompinit; zpcdreplay"
-    zplugin light zdharma/fast-syntax-highlighting
+    #zinit ice wait atinit"zpcompinit; zpcdreplay"
+    #zinit light zdharma/fast-syntax-highlighting
 
-    zplugin ice wait atload"_zsh_autosuggest_start"
-    zplugin light zsh-users/zsh-autosuggestions
+    zinit ice wait atload"_zsh_autosuggest_start"
+    zinit light zsh-users/zsh-autosuggestions
 
-    zplugin ice wait lucid
-    zplugin load hlissner/zsh-autopair
+    zinit ice wait lucid
+    zinit load hlissner/zsh-autopair
 
-    zplugin ice wait"1" lucid
-    zplugin load psprint/zsh-navigation-tools
+    zinit ice wait"1" lucid
+    zinit load psprint/zsh-navigation-tools
 
-    zplugin ice wait'!' lucid atload'source ~/.p10k.zsh; _p9k_precmd' nocd
-    zplugin light romkatv/powerlevel10k
+    zinit ice wait'!' lucid atload'source ~/.p10k.zsh; _p9k_precmd' nocd
+    zinit light romkatv/powerlevel10k
 fi
 
 # shellcheck disable=1090

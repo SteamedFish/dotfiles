@@ -125,10 +125,10 @@ setup_mac_system() {
 }
 
 install_zplugin() {
-    if ! [ -d "$HOME/.zplugin/bin" ]; then
-        mkdir -p "$HOME/.zplugin/"
-        git clone https://github.com/zdharma/zplugin.git "$HOME/.zplugin/bin"
-        zsh -c "source $HOME/.zplugin/bin/zplugin.zsh; zplugin self-update; zplugin update --all"
+    if ! [ -d "$HOME/.zinit/bin" ]; then
+        mkdir -p "$HOME/.zinit/"
+        git clone https://github.com/zdharma/zinit.git "$HOME/.zinit/bin"
+        zsh -c "source $HOME/.zinit/bin/zinit.zsh; zinit self-update; zinit update --all"
     fi
 }
 
