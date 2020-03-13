@@ -99,6 +99,14 @@ EOF
     exit 2
 }
 
+gitpull() {
+    if [ -d .git ]; then
+        run git reset --hard origin/master
+        run -r 5 git pull
+        run -r 5 git submodule update --recursive --init
+    fi
+}
+
 
 get_sudo() {
     if [ -z "$(command -v sudo)" ]; then
@@ -185,7 +193,7 @@ update_linux_system() {
 
 update_zsh() {
     if [ -f "$HOME/.zinit/bin/zinit.zsh" ]; then
-        cd "$HOME/.zinit/bin" && run git pull
+        cd "$HOME/.zinit/bin" && gitpull
         run zsh -c "source $HOME/.zinit/bin/zinit.zsh; zinit self-update; zinit update --all"
     fi
 }
@@ -271,7 +279,7 @@ self_update() {
         if [ -d "$HOME/$repo/.git" ]; then
             cd "$HOME/$repo"
             run -r 5 git pull
-            run -r 5 git submodule update --recursive --remote
+            run -r 5 git submodule update --recursive --init
             # run git commit -a -m "daily update"
             run git push
         fi
@@ -280,8 +288,8 @@ self_update() {
 
 update_vim() {
     echo "updating vim"
-    cd "$HOME/.vim" && run -r 5 git pull && run -r 5 git submodule update --recursive --init
-    cd "$HOME/.config/nvim" && run -r 5 git pull && run -r 5 git submodule update --recursive --init
+    cd "$HOME/.vim" && gitpull
+    cd "$HOME/.config/nvim" && gitpull
     # TODO not working currectly
     # run vim +SPUpdate +qall
 }
@@ -294,7 +302,7 @@ update_emacs() {
         cd "$HOME/.emacs.d/"
         # use git pull insted of doom upgrade
         # to prevent the local repo too much behind
-        run -r 5 git pull
+        run -r 5 gitpull
         #run "$HOME"/.emacs.d/bin/doom -y upgrade
         run "$HOME"/.emacs.d/bin/doom -y clean
         run "$HOME"/.emacs.d/bin/doom -y refresh
@@ -303,8 +311,7 @@ update_emacs() {
     for _PROJECT in "$HOME"/emacs-distros/*; do
         if [ -d "${_PROJECT}/.git" ]; then
             cd "${_PROJECT}"
-            run git pull
-            run git submodule update --remote --recursive
+            run gitpull
         fi
     done
 }
