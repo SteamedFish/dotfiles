@@ -150,12 +150,14 @@
   (when IS-MAC
     (setq liberime-shared-data-dir (expand-file-name "~/Library/Rime/")))
   (setq pyim-title "ㄓ")
-  ;; (add-hook! 'liberime-after-start-hook
-  ;;   (lambda () (liberime-select-schema "luna_pinyin_simp")))
-  (add-hook! 'after-init-hook
-    #'liberime-sync)
+  (add-hook! 'liberime-after-start-hook
+    (lambda () (liberime-select-schema "luna_pinyin_simp")))
+  ;; (add-hook! 'after-init-hook
+  ;;  #'liberime-sync)
   :config
-  (unless (file-exists-p (liberime-get-module-file))
+  (unless (file-exists-p (concat (liberime-get-library-directory)
+                               "build/liberime-core"
+                               module-file-suffix))
     (liberime-build)))
 
 ;; Support pinyin in Ivy
