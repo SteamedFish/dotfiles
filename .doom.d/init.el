@@ -230,4 +230,5 @@
        (:if (not (or IS-WINDOWS IS-ANDROID))
         telega)
        ui
+       tools
        beancount)
