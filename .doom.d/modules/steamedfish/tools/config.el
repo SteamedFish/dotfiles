@@ -19,6 +19,7 @@
   :config
   (defalias 'browse-web #'eaf-open-browser)
   (setq
+    eaf-config-location (concat (doom-local-dir "eaf/"))
     browse-url-browser-function #'eaf-open-browser
     eaf-browser-default-search-engine 'duckduckgo)
   (eaf-setq eaf-browser-dark-mode "true")
