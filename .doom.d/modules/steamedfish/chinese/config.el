@@ -144,16 +144,12 @@
 (use-package! liberime
   :when (or IS-LINUX IS-MAC)
   :init
-  (setq liberime-user-data-dir (concat doom-local-dir "rime/"))
+  (setq liberime-user-data-dir (expand-file-name (concat doom-private-dir "/etc/rime/")))
   (when IS-LINUX
     (setq liberime-shared-data-dir (expand-file-name "~/.config/fcitx/rime/")))
   (when IS-MAC
     (setq liberime-shared-data-dir (expand-file-name "~/Library/Rime/")))
   (setq pyim-title "ㄓ")
-  (add-hook! 'liberime-after-start-hook
-    (lambda ()
-      (run-with-timer 5 1
-        (liberime-select-schema "luna_pinyin_simp"))))
   (add-hook! 'after-init-hook
    #'liberime-sync)
   :config
