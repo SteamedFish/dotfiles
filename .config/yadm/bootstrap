@@ -171,6 +171,12 @@ install_linux_packages() {
     fi
 }
 
+misc_stuff() {
+    if [ -n "$(command -v balooctl)" ]; then
+        balooctl disable
+    fi
+}
+
 main() {
     get_sudo
     if [[ "$OSTYPE" == "darwin"* ]]; then
@@ -185,6 +191,7 @@ main() {
     install_zplugin
     install_doomemacs
     install_spacevim
+    misc_stuff
 }
 
 main
