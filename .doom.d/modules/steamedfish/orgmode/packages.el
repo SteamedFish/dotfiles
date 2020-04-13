@@ -2,3 +2,4 @@
 ;;; steamedfish/orgmode/packages.el
 
 (package! org-noter)
+(package! ob-mermaid)

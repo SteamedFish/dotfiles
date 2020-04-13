@@ -45,6 +45,9 @@
           "/usr/share/java/plantuml/plantuml.jar"))
         org-plantuml-jar-path plantuml-jar-path))
 
+(after! ob-mermaid
+  (setq ob-mermaid-cli-path (expand-file-name (concat doom-private-dir "etc/node_modules/.bin/mmdc"))))
+
 (use-package! org-noter
   :commands (org-noter org-noter-insert-note)
   :init
