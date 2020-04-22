@@ -2,7 +2,6 @@
 
 (use-package! telega
   :commands (telega)
-  :hook (telega-chat-mode . doom-mark-buffer-as-real-h)
   :config
 
   (telega-mode-line-mode 1)
