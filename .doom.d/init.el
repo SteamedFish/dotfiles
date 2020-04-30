@@ -1,11 +1,11 @@
 ;;; init.el -*- lexical-binding: t; -*-
 
-;; This file controls what Doom modules are enabled and what order they load in.
-;; Remember to run 'doom sync' after modifying it!
+;; This file controls what Doom modules are enabled and what order they load
+;; in. Remember to run 'doom sync' after modifying it!
 
 ;; NOTE Press 'SPC h d h' (or 'C-h d h' for non-vim users) to access Doom's
-;;      documentation. There you'll find information about all of Doom's modules
-;;      and what flags they support.
+;;      documentation. There you'll find information about all of Doom's
+;;      modules and what flags they support.
 
 ;; NOTE Move your cursor over a module's name (or its flags) and press 'K' (or
 ;;      'C-c g k' for non-vim users) to view its documentation. This works on
@@ -129,11 +129,9 @@
        terraform         ; infrastructure as code
        tmux              ; an API for interacting with tmux
        upload            ; map local to remote projects via ssh/ftp
-       ;;wakatime
 
        :lang
        ;;agda              ; types of types of types of types...
-       assembly          ; assembly for fun or debugging
        (cc               ; C/C++/Obj-C madness
         +lsp)
        ;;clojure           ; java with a lisp
@@ -156,6 +154,7 @@
        ;;(haskell +donte)  ; a language that's lazier than I am
        ;;hy                ; readability of scheme w/ speed of python
        ;;idris             ;
+       json              ; At least it ain't XML
        ;;(java +meghanada) ; the poster child for carpal tunnel syndrome
        javascript        ; all(hope(abandon(ye(who(enter(here))))))
        ;;julia             ; a better, faster MATLAB
@@ -163,7 +162,7 @@
        latex             ; writing papers in Emacs has never been so fun
        ;;lean
        ;;factor
-       ;;ledger            ; an accounting system in Emacs
+       ledger            ; an accounting system in Emacs
        ;;lua               ; one-based indices? one-based indices
        markdown          ; writing docs for people to ignore
        ;;nim               ; python + lisp at the speed of c
@@ -201,6 +200,7 @@
        ;;swift             ; who asked for emoji variables?
        ;;terra             ; Earth and Moon in alignment for performance.
        web               ; the tubes
+       yaml              ; JSON, but readable
 
        :email
        (mu4e +gmail)
@@ -212,7 +212,6 @@
        irc               ; how neckbeards socialize
        (rss +org)        ; emacs as an RSS reader
        twitter           ; twitter client https://twitter.com/vnought
-       regex
 
        :config
        ;;literate
