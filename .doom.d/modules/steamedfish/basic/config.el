@@ -8,10 +8,7 @@
  calendar-longitude 113.3612
  calendar-location-name "Tianhe, Guangzhou"
  message-log-max 10000
- delete-by-moving-to-trash t
- ;; undo-tree-auto-save is said unstable
- ;; enable it just for testing
- undo-tree-auto-save-history t)
+ delete-by-moving-to-trash t)
 
 (when IS-MAC
   (setq mac-system-move-file-to-trash-use-finder t))
