@@ -2,4 +2,5 @@
 .spacemacs.d/.spacemacs.env
 .spacemacs.d/emacs-custom.el
 *.elc
+*.~undo-tree~
 bin/auth.conf
