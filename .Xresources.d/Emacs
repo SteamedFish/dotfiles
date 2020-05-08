@@ -3,5 +3,6 @@
 Emacs.toolBar: 0
 Emacs.menuBar: 0
 Emacs.verticalScrollBars: off
-!Emacs.font: Ubuntu Mono 14
-Emacs*useXIM: true
+Emacs.font: Sarasa Mono SC:pixelsize=13:hinting=false:antialias=false
+Emacs.FontBackend: xft
+Emacs*useXIM: false
