@@ -1,0 +1,7 @@
+[Desktop Entry]
+Comment=xinit
+Exec=/bin/bash /home/steamedfish/.xinitrc
+Path=/home/steamedfish/
+StartupNotify=false
+Terminal=true
+Type=Application
