@@ -1,6 +1,6 @@
 ! vim: filetype=xdefaults:
 
-*.font: xft:NotoMono Nerd Font:pixelsize=13,xft:Sarasa Mono SC:pixelsize=13:hinting=false:antialias=false
+*.font: xft:NotoMono Nerd Font:pixelsize=13,xft:Sarasa Mono SC:pixelsize=13:hinting=false:antialias=true
 
 Xft.rgba:       rgb
 Xft.antialias:  true

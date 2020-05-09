@@ -1,14 +1,19 @@
 ! vim: filetype=xdefaults:
 
 XTerm.termName:              xterm-256color
+XTerm.iconHint:              xterm-color
+XTerm.ttyModes:              erase ^? eof ^d
+
 XTerm.vt100.locale:          true
 XTerm.vt100.metaSendsEscape: true
 XTerm.vt100.backarrowKey:    false
-XTerm.ttyModes:              erase ^?
 XTerm.vt100.geometry:        80x32
+XTerm.vt100.cursorBlink:     true
+XTerm.vt100.saveLines:       1024000
+XTerm.vt100.visualBell:      true
 
 XTerm.menuLocale:   zh_CN.UTF-8
-XTerm.title:        Xterm
+XTerm.title:        XTerm
 XTerm.cjkWidth:     true
 XTerm.locale:       true
 XTerm.utf8:         1
