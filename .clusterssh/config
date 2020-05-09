@@ -1,7 +1,7 @@
 #auto_close=5
 #auto_quit=yes
 #auto_wm_decoration_offsets=no
-#cols=-1
+cols=4
 #command=
 #comms=ssh
 #console=console
@@ -64,7 +64,7 @@
 #terminal_reserve_left=5
 #terminal_reserve_right=0
 #terminal_reserve_top=5
-#terminal_size=80x24
+terminal_size=78x24
 #terminal_title_opt=-T
 #title=CSSH
 #unique_servers=0
