@@ -17,3 +17,7 @@ XTerm.title:        XTerm
 XTerm.cjkWidth:     true
 XTerm.locale:       true
 XTerm.utf8:         1
+
+XTerm*faceName:   NotoMono Nerd Font
+XTerm*faceSize:   9
+XTerm*renderFont: true
