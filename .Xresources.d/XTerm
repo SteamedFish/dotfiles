@@ -2,7 +2,7 @@
 
 XTerm.termName:              xterm-256color
 XTerm.iconHint:              xterm-color
-XTerm.ttyModes:              erase ^? eof ^d
+XTerm.ttyModes:              intr ^c erase ^? kill ^u eof ^d
 
 XTerm.vt100.locale:          true
 XTerm.vt100.metaSendsEscape: true
