@@ -47,6 +47,7 @@
        hl-todo           ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
        hydra
        indent-guides     ; highlighted indent columns
+       minimap           ; show a map of the code on the side
        modeline          ; snazzy, Atom-inspired modeline, plus API
        nav-flash         ; blink the current line after jumping
        ;;neotree           ; a project drawer, like NERDTree for vim
@@ -127,6 +128,7 @@
        pdf               ; pdf enhancements
        prodigy           ; FIXME managing external services & code builders
        rgb               ; creating color strings
+       taskrunner        ; taskrunner for all your projects
        terraform         ; infrastructure as code
        tmux              ; an API for interacting with tmux
        upload            ; map local to remote projects via ssh/ftp
@@ -170,14 +172,17 @@
        ;;nix               ; I hereby declare "nix geht mehr!"
        ;;ocaml             ; an objective camel
        (org              ; organize your plain life in plain text
+        +brain
         +dragndrop       ; file drag & drop support
         +gnuplot
         +hugo           ; use Emacs for hugo blogging
+        +journal
         +jupyter        ; ipython/jupyter support for babel
+        +noter
         +pandoc          ; pandoc integration into org's exporter
         +pomodoro        ; be fruitful with the tomato technique
         +present         ; using Emacs for presentations
-        +journal)
+        +roam)
        perl              ; write code no one else can comprehend
        php               ; perl's insecure younger brother
        (:if (not IS-ANDROID)
@@ -191,7 +196,7 @@
        ;;racket            ; a DSL for DSLs
        rest              ; Emacs as a REST client
        ;;rst               ; ReST in peace
-       ;;ruby              ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
+       ;;(ruby +rails)     ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
        ;;rust              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
        ;;scala             ; java, but good
        ;;scheme            ; a fully conniving family of lisps
