@@ -307,13 +307,13 @@ update_emacs() {
         # there's currently a bug that requires to
         # update melpa repo manually and clean
         # straight build cache before refresh
-        if [ -d "$HOME/.emacs.d/.local/straight/repos/melpa" ]; then
-            cd "$HOME/.emacs.d/.local/straight/repos/melpa"
-            run -r 5 gitpull
-        fi
-        if [ -f "$HOME/.emacs.d/.local/straight/build-cache.el" ]; then
-            rm -v "$HOME/.emacs.d/.local/straight/build-cache.el"
-        fi
+        # if [ -d "$HOME/.emacs.d/.local/straight/repos/melpa" ]; then
+        #     cd "$HOME/.emacs.d/.local/straight/repos/melpa"
+        #     run -r 5 gitpull
+        # fi
+        # if [ -f "$HOME/.emacs.d/.local/straight/build-cache.el" ]; then
+        #     rm -v "$HOME/.emacs.d/.local/straight/build-cache.el"
+        # fi
 
         #run "$HOME"/.emacs.d/bin/doom -y upgrade
         run "$HOME"/.emacs.d/bin/doom -y clean
