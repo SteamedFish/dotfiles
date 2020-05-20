@@ -1,0 +1,6 @@
+[MASTER]
+disable=
+    # invalid-name,
+    # Argument name should conform to snake_case naming style
+    # Constant name should conform to UPPER_CASE naming style
+    C0103,
