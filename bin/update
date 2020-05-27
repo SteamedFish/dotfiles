@@ -317,7 +317,7 @@ update_emacs() {
 
         #run "$HOME"/.emacs.d/bin/doom -y upgrade
         run "$HOME"/.emacs.d/bin/doom -y clean
-        run "$HOME"/.emacs.d/bin/doom -y refresh
+        run "$HOME"/.emacs.d/bin/doom -y sync
         run -r 5 "$HOME"/.emacs.d/bin/doom -y update
     fi
     for _PROJECT in "$HOME"/emacs-distros/*; do
