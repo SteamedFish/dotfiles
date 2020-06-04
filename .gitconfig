@@ -22,3 +22,6 @@
 	sign = true
 [core]
 	excludesfile = /Users/steamedfish/.gitignore_global
+[pull]
+	ff = only
+	rebase = merge
