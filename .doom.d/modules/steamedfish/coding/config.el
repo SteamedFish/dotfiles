@@ -36,3 +36,8 @@
   :init
   (push '(ssh-deploy-on-explicit-save . t)
         safe-local-variable-values))
+
+(use-package! imenu-list
+  :commands (imenu-list-smart-toggle)
+  :config
+  (imenu-list-minor-mode))

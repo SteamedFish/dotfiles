@@ -2,3 +2,4 @@
 ;;; steamedfish/coding/packages.el
 
 (package! symbol-overlay)
+(package! imenu-list)
