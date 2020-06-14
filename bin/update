@@ -354,6 +354,15 @@ update_optools() {
     done
 }
 
+update_backup() {
+    # backup the whole system
+    if [ -n "$(command -v systemctl)" ]; then
+        if systemctl list-unit-files | grep -qE '\bbackup.service\b'; then
+            run sudo systemctl start backup.service
+        fi
+    fi
+}
+
 update() {
     if [[ $(uname -o) != "Android" ]]; then
         get_sudo
@@ -367,6 +376,7 @@ update() {
             update_snap
             update_vim
             update_emacs
+            update_backup
             ;;
         darwin*)
             self_update
