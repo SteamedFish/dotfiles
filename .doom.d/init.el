@@ -4,14 +4,14 @@
 ;; in. Remember to run 'doom sync' after modifying it!
 
 ;; NOTE Press 'SPC h d h' (or 'C-h d h' for non-vim users) to access Doom's
-;;      documentation. There you'll find information about all of Doom's
-;;      modules and what flags they support.
+;;      documentation. There you'll find a "Module Index" link where you'll find
+;;      a comprehensive list of Doom's modules and what flags they support.
 
 ;; NOTE Move your cursor over a module's name (or its flags) and press 'K' (or
-;;      'C-c g k' for non-vim users) to view its documentation. This works on
+;;      'C-c c k' for non-vim users) to view its documentation. This works on
 ;;      flags as well (those symbols that start with a plus).
 ;;
-;;      Alternatively, press 'gd' (or 'C-c g d') on a module to browse its
+;;      Alternatively, press 'gd' (or 'C-c c d') on a module to browse its
 ;;      directory (for easy access to its source code).
 
 (defconst IS-ANDROID
@@ -49,7 +49,7 @@
        indent-guides     ; highlighted indent columns
        minimap           ; show a map of the code on the side
        modeline          ; snazzy, Atom-inspired modeline, plus API
-       nav-flash         ; blink the current line after jumping
+       nav-flash         ; blink cursor line after big motions
        ;;neotree           ; a project drawer, like NERDTree for vim
        ophints           ; highlight the region an operation acts on
        (popup            ; tame sudden yet inevitable temporary windows
@@ -94,11 +94,11 @@
        vc                ; version-control and Emacs, sitting in a tree
 
        :term
-       eshell            ; a consistent, cross-platform shell (WIP)
-       shell             ; a terminal REPL for Emacs
-       ;;term              ; terminals in Emacs
-       (:if (not (or IS-WINDOWS IS-ANDROID))
-        vterm)             ; another terminals in Emacs
+       eshell            ; the elisp shell that works everywhere
+       shell             ; simple shell REPL for Emacs
+       ;;term              ; basic terminal emulator for Emacs
+       (:if (not (or IS-WINDOWS IS-ANDROID)))
+       vterm             ; the best terminal emulation in Emacs
 
        :checkers
        (syntax              ; tasing you for every semicolon you forget
@@ -152,9 +152,9 @@
        ;;faust             ; dsp, but you get to keep your soul
        ;;fsharp           ; ML stands for Microsoft's Language
        ;;fstar             ; (dependent) types and (monadic) effects and Z3
-       (go                ; the hipster dialect
-        +lsp)
-       ;;(haskell +donte)  ; a language that's lazier than I am
+       ;;gdscript          ; the language you waited for
+       (go +lsp)         ; the hipster dialect
+       ;;(haskell +dante)  ; a language that's lazier than I am
        ;;hy                ; readability of scheme w/ speed of python
        ;;idris             ;
        json              ; At least it ain't XML
@@ -183,7 +183,6 @@
         +pomodoro        ; be fruitful with the tomato technique
         +present         ; using Emacs for presentations
         +roam)
-       perl              ; write code no one else can comprehend
        php               ; perl's insecure younger brother
        (:if (not IS-ANDROID)
         plantuml)          ; diagrams for confusing people more
@@ -196,6 +195,7 @@
         +cython)
        ;;qt                ; the 'cutest' gui framework ever
        ;;racket            ; a DSL for DSLs
+       raku              ; the artist formerly known as perl6
        rest              ; Emacs as a REST client
        ;;rst               ; ReST in peace
        ;;(ruby +rails)     ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
