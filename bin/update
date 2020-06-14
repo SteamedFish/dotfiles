@@ -192,6 +192,10 @@ update_linux_system() {
         run apt upgrade
         run pkg upgrade
     fi
+    if [ -n "$(command -v kbuildsycoca5)" ]; then
+        # update kde menu cache
+        run kbuildsycoca5
+    fi
 }
 
 update_zsh() {
