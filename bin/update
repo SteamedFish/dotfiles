@@ -175,6 +175,9 @@ update_linux_system() {
         fi
         run sudo emerge -avuUDN --with-bdeps=y --keep-going --quiet-build @system @world @preserved-rebuild
         run sudo emerge -avc --exclude="sys-kernel/gentoo-sources"
+        if [ -n "$(command -v smart-live-rebuild)" ]; then
+            run sudo smart-live-rebuild
+        fi
         if [ -n "$(command -v eclean)" ]; then
             run sudo eclean -d distfiles
             run sudo eclean -d packages
