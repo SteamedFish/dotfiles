@@ -376,6 +376,7 @@ update() {
             update_snap
             update_vim
             update_emacs
+            update_optools
             update_backup
             ;;
         darwin*)
