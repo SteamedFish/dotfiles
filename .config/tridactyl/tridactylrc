@@ -53,6 +53,12 @@ autocmd DocStart mail.google.com mode ignore
 " command line, so set an option to move the status bar to the right.
 guiset_quiet hoverlink right
 
+" find
+bind / fillcmdline find
+bind ? fillcmdline find -?
+bind n findnext 1
+bind N findnext -1
+
 " firefox stuff
 setpref browser.search.region "US"
 setpref browser.shell.checkDefaultBrowser false
