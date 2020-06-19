@@ -309,7 +309,9 @@ update_emacs() {
         cd "$HOME/.emacs.d/"
         # use git pull insted of doom upgrade
         # to prevent the local repo too much behind
-        run -r 5 gitpull
+        run git reset --hard origin/develop
+        run -r 5 git pull
+        run -r 5 git submodule update --recursive --init
 
         # there's currently a bug that requires to
         # update melpa repo manually and clean
