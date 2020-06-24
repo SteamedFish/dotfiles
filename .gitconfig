@@ -20,8 +20,6 @@
 	sign = true
 [gitflow "hotfix.finish"]
 	sign = true
-[core]
-	excludesfile = $HOME/.gitignore_global
 [pull]
 	ff = only
 	rebase = false
