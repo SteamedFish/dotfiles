@@ -4,3 +4,4 @@
 *.elc
 *.~undo-tree~
 bin/auth.conf
+.git-credentials
