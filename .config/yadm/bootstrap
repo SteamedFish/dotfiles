@@ -115,6 +115,7 @@ install_goapps() {
     for apps in "${go_apps[@]}"; do
         GOLANG="$HOME/.go" go get -u -v "$apps"
     done
+    curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.27.0
 }
 
 setup_mac_system() {
