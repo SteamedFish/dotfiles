@@ -38,6 +38,7 @@ packages_mac:
     - youtube-dl
     - you-get
     - ipcalc
+    - iproute2mac
     - fd
     - lsd
     - util-linux
