@@ -227,6 +227,7 @@
 
        :steamedfish
        ansible
+       puppet
        basic
        (:if (not (or IS-WINDOWS IS-ANDROID))
         chinese)
