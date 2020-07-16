@@ -105,11 +105,11 @@ ForegroundVisited=127,140,141
 [General]
 ColorScheme=Breeze Dark
 Name=Breeze Dark
-font=Sans Serif,10,-1,5,50,0,0,0,0,0
-menuFont=Sans Serif,10,-1,5,50,0,0,0,0,0
+font=Noto Sans CJK SC,10,-1,5,50,0,0,0,0,0,Regular
+menuFont=Noto Sans CJK SC,10,-1,5,50,0,0,0,0,0,Regular
 shadeSortColumn=true
-smallestReadableFont=Sans Serif,8,-1,5,50,0,0,0,0,0
-toolBarFont=Sans Serif,9,-1,5,50,0,0,0,0,0
+smallestReadableFont=Noto Sans CJK SC,9,-1,5,50,0,0,0,0,0,Regular
+toolBarFont=Noto Sans CJK SC,10,-1,5,50,0,0,0,0,0,Regular
 widgetStyle=Breeze
 
 [Icons]
