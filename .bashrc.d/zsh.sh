@@ -48,7 +48,7 @@ setopt EMACS
 # suffix alias: how to open files with extension
 alias -s log="nvim"
 
-for _ext in txt yml yaml py sh el md org diff patch go sql h c cc cpp; do
+for _ext in txt yml yaml el md org diff patch go sql h c cc cpp; do
     # shellcheck disable=2139
     alias -s "${_ext}=emacs"
 done
