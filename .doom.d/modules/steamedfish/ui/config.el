@@ -12,7 +12,8 @@
           ns-use-fullscreen-animation t))
 
   ;; fonts
-  (cl-loop for font in '("Operator Mono Lig"
+  (cl-loop for font in '("mononoki Nerd Font"
+                         "Operator Mono Lig"
                          "Operator Mono"
                          "Fira Mono"
                          "Fira Code")
@@ -77,7 +78,8 @@
   (setq doom-theme 'doom-nord
     fancy-splash-image "~/.doom.d/banner/ue-colorful.png")
   :config
-  (if (member "OperatorMono Nerd Font" (font-family-list))
+  (if (or (member "OperatorMono Nerd Font" (font-family-list))
+        (member "mononoki Nerd Font" (font-family-list)))
       (custom-set-faces!
        '((font-lock-comment-face
           font-lock-constant-face
