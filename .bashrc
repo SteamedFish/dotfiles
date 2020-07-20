@@ -55,6 +55,10 @@ elif [ -n "$(command -v exa)" ];then
     alias ls='exa --git --extended'
     alias tree='exa --tree --git --extended'
 fi
+if [ -n "$(command -v fdfind)" ];then
+    # Debian use this name
+    alias fd='fdfind'
+fi
 if [ -n "$(command -v nvim)" ];then
     alias vim='nvim'
     alias vi='nvim'
