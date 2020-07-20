@@ -188,7 +188,7 @@
         plantuml)          ; diagrams for confusing people more
        ;;purescript        ; javascript, but functional
        (python             ; beautiful is better than ugly
-        +pyenv
+        ;;+pyenv
         +lsp
         +conda
         +poetry
