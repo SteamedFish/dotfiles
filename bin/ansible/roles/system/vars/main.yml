@@ -115,6 +115,7 @@ packages_debian:
     - bind9-host
     - build-essential
     - snapd
+    - fd-find
 
 packages_snap:
     - lsd
