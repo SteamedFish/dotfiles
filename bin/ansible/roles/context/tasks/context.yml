@@ -19,12 +19,3 @@
         command: ~/ConTeXt/first-setup.sh --modules=all
         args:
             chdir: ~/ConTeXt/
-
-- name: 配置 ConTeXt 配置文件
-  block:
-      - name: 配置 bash context.sh
-        file:
-            force: yes
-            path: ~/.bashrc.d/context.sh
-            src: ../dotfiles/.bashrc.d/context.sh
-            state: link

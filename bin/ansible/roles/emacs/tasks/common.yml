@@ -11,18 +11,6 @@
             recursive: yes
             track_submodules: yes
             update: yes
-      - name: 配置 .doom.d
-        file:
-            force: yes
-            path: ~/.doom.d
-            src: dotfiles/.doom.d
-            state: link
-      - name: 配置 bash emacs.sh
-        file:
-            force: yes
-            path: ~/.bashrc.d/emacs.sh
-            src: ../dotfiles/.bashrc.d/emacs.sh
-            state: link
 
 - name: 更新 Doom Emacs
   # Debian 暂时有问题，无法运行

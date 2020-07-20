@@ -1,111 +1,18 @@
 ---
-- name: 配置 bash 配置文件
-  block:
-      - name: 配置 .bashrc.d
-        file:
-            force: yes
-            path: ~/.bashrc.d
-            state: directory
-      - name: 配置 .bashrc
-        file:
-            force: yes
-            path: ~/.bashrc
-            src: dotfiles/.bashrc
-            state: link
-      - name: 配置 .dircolors
-        file:
-            force: yes
-            path: ~/.dircolors
-            src: dotfiles/.dircolors
-            state: link
-      - name: 配置 .bash_profile
-        file:
-            force: yes
-            path: ~/.bash_profile
-            src: dotfiles/.bash_profile
-            state: link
-      - name: 配置 bash.sh
-        file:
-            force: yes
-            path: ~/.bashrc.d/bash.sh
-            src: ../dotfiles/.bashrc.d/bash.sh
-            state: link
-      - name: 配置 linux.sh
-        when: ansible_distribution == "Debian" or
-              ansible_distribution == "Archlinux"
-        file:
-            force: yes
-            path: ~/.bashrc.d/linux.sh
-            src: ../dotfiles/.bashrc.d/linux.sh
-            state: link
-      - name: 配置 mac.sh
-        when: ansible_distribution == "MacOSX"
-        file:
-            force: yes
-            path: ~/.bashrc.d/mac.sh
-            src: ../dotfiles/.bashrc.d/mac.sh
-            state: link
-      - name: 配置 wsl.sh
-        # TODO: add a when here
-        file:
-            force: yes
-            path: ~/.bashrc.d/wsl.sh
-            src: ../dotfiles/.bashrc.d/wsl.sh
-            state: link
-
 - name: 配置 zsh 配置文件
   block:
-      - name: 配置 .zplugin
+      - name: 配置 .zinit
         file:
             force: yes
-            path: ~/.zplugin
+            path: ~/.zinit
             state: directory
-      - name: 配置 .zshrc
-        file:
-            force: yes
-            path: ~/.zshrc
-            src: dotfiles/.zshrc
-            state: link
-      - name: 配置 .zprofile
-        file:
-            force: yes
-            path: ~/.zprofile
-            src: dotfiles/.zprofile
-            state: link
-      - name: 配置 zsh.sh
-        file:
-            force: yes
-            path: ~/.bashrc.d/zsh.sh
-            src: ../dotfiles/.bashrc.d/zsh.sh
-            state: link
-      - name: 配置 zplugin 的 git
+      - name: 配置 zinit 的 git
         git:
             clone: yes
-            dest: ~/.zplugin/bin
+            dest: ~/.zinit/bin
             force: no
             version: master
-            repo: https://github.com/zdharma/zplugin.git
+            repo: https://github.com/zdharma/zinit.git
             recursive: yes
             track_submodules: yes
             update: yes
-      - name: 配置 p10k
-        file:
-            force: yes
-            path: ~/.p10k.zsh
-            src: dotfiles/.p10k.zsh
-            state: link
-
-- name: powerline
-  block:
-      - name: 配置 powerline.sh
-        file:
-            force: yes
-            path: ~/.bashrc.d/powerline.sh
-            src: ../dotfiles/.bashrc.d/powerline.sh
-            state: link
-      - name: 配置 powerline config
-        file:
-            force: yes
-            path: ~/.config/powerline
-            src: ../dotfiles/.config/powerline
-            state: link
