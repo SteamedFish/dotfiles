@@ -28,7 +28,7 @@ GPG_TTY=$(tty)
 export GPG_TTY
 
 # extra PATHs
-for i in /home/linuxbrew/.linuxbrew $HOME/.linuxbrew /snap/bin; do
+for i in /home/linuxbrew/.linuxbrew $HOME/.linuxbrew /snap/bin /opt/puppetlabs/bin; do
     if [ -d "$i" ]; then
         export PATH="$i/bin:$i/sbin/$PATH"
     fi
