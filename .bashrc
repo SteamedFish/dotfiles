@@ -73,6 +73,14 @@ if [ -n "$(command -v nvim)" ];then
     alias vi='nvim'
 fi
 
+if [ -n "$(command -v direnv)" ]; then
+    if [ -n "$BASH" ]; then
+        eval "$(direnv hook bash)"
+    elif [ "$(basename "$SHELL")" = "zsh" ]; then
+        eval "$(direnv hook zsh)"
+    fi
+fi
+
 if [ -e "$HOME/.bashrc.d" ]; then
     for i in "$HOME/.bashrc.d/"*.sh; do
         if [ -r "$i" ]; then
