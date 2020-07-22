@@ -44,6 +44,15 @@ if $CLICOLOR; then
     alias grep='grep --color=auto'
     alias egrep='egrep --colour=auto'
     alias fgrep='fgrep --colour=auto'
+    alias ip='ip --color=auto'
+    alias diff='diff --color=auto'
+    if [ -n "$(command -v grc)" ]; then
+        if [ -n "$BASH" ] && [ -f "/etc/profile.d/grc.bashrc" ]; then
+            source "/etc/profile.d/grc.bashrc"
+        elif [ "$(basename "$SHELL")" = "zsh" ] && [ -f "/etc/grc.zsh" ]; then
+            source "/etc/grc.zsh"
+        fi
+    fi
 fi
 alias cp='cp -iv'
 alias mv='mv -iv'
