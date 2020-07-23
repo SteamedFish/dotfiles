@@ -47,10 +47,18 @@ if $CLICOLOR; then
     alias ip='ip --color=auto'
     alias diff='diff --color=auto'
     if [ -n "$(command -v grc)" ]; then
-        if [ -n "$BASH" ] && [ -f "/etc/profile.d/grc.bashrc" ]; then
-            source "/etc/profile.d/grc.bashrc"
-        elif [ "$(basename "$SHELL")" = "zsh" ] && [ -f "/etc/grc.zsh" ]; then
-            source "/etc/grc.zsh"
+        if [ -n "$BASH" ]; then
+            if [ -f "/etc/profile.d/grc.bashrc" ]; then
+                source "/etc/profile.d/grc.bashrc"
+            elif [ -f "/usr/share/grc/grc.bashrc" ]; then
+                source "/usr/share/grc/grc.bashrc"
+            fi
+        elif [ "$(basename "$SHELL")" = "zsh" ]; then
+            if [ -f "/etc/grc.zsh" ]; then
+                source "/etc/grc.zsh"
+            elif [ -f "/usr/share/grc/grc.zsh" ]; then
+                source "/usr/share/grc/grc.zsh"
+            fi
         fi
     fi
 fi
