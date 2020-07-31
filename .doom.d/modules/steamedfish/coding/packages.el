@@ -3,3 +3,4 @@
 
 (package! symbol-overlay)
 (package! imenu-list)
+(package! wakatime-mode)

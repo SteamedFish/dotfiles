@@ -74,6 +74,8 @@ if [ -f "$HOME/.zinit/bin/zinit.zsh" ]; then
 
     zinit ice wait'!' lucid atload'source ~/.p10k.zsh; _p9k_precmd' nocd
     zinit light romkatv/powerlevel10k
+
+    zinit light sobolevn/wakatime-zsh-plugin
 fi
 
 # shellcheck disable=1090

@@ -41,3 +41,7 @@
   :commands (imenu-list-smart-toggle)
   :config
   (imenu-list-minor-mode))
+
+(use-package! wakatime-mode
+  :config
+  (global-wakatime-mode))
