@@ -12,9 +12,9 @@
           ns-use-fullscreen-animation t))
 
   ;; fonts
-  (cl-loop for font in '("mononoki Nerd Font"
-                         "Operator Mono Lig"
+  (cl-loop for font in '("Operator Mono Lig"
                          "Operator Mono"
+                         "mononoki Nerd Font"
                          "Fira Mono"
                          "Fira Code")
            if (member font (font-family-list))
