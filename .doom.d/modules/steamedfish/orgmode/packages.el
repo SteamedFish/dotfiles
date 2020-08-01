@@ -3,3 +3,5 @@
 
 (package! org-noter)
 (package! ob-mermaid)
+(package! valign
+  :recipe (:host github :repo "casouri/valign"))

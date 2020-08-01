@@ -65,3 +65,9 @@
         org-noter-auto-save-last-location t
         org-noter-always-create-frame nil
         org-noter-insert-note-no-questions t))
+
+(use-package! valign
+  :after org
+  :commands valign-mode
+  :init
+  (add-hook 'org-mode-hook #'valign-mode))
