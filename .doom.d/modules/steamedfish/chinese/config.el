@@ -74,7 +74,7 @@
     rime-user-data-dir (concat doom-private-dir "etc/rime"))
   (when IS-MAC
     ;; manually install librime here
-    (rime-librime-root (concat doom-local-dir "librime/dist")))
+    (setq rime-librime-root (concat doom-local-dir "librime/dist")))
   (add-hook! '(text-mode-hook prog-mode-hook)
     ;; active rime by default
     ;; for some unknown reason directly calling `active-input-method'
