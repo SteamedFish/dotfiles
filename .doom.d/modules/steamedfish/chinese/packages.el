@@ -9,9 +9,10 @@
 (package! cal-china-x)
 (package! pangu-spacing
   :disable t)
+(package! pyim
+  :disable t)
+(package! fcitx
+  :disable t)
 (package! posframe)
-(package! liberime
-  :recipe (:host github
-           :repo "merrickluo/liberime"
-           :files ("CMakeLists.txt" "Makefile" "src" "liberime.el" "liberime-config.el")))
+(package! rime)
 (package! pinyinlib)
