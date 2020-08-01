@@ -66,13 +66,10 @@
   (when (featurep! :steamedfish chinese)
     ;; use chinese by default in telega
     (add-hook! 'telega-chat-mode-hook
-      ;; active pyim by default
+      ;; active rime by default
       ;; for some unknown reason directly calling `active-input-method'
       ;; is not working, but it works with `run-at-time'
-      ((lambda () (run-at-time nil nil 'activate-input-method "pyim")))
-      ;; don't do dynamic english, we always want chinese here
-      (add-to-list 'pyim-english-input-switch-functions
-                   'pyim-probe-auto-english)))
+      ((lambda () (run-at-time nil nil 'activate-input-method "rime")))))
 
   (after! all-the-icons
     (add-to-list 'all-the-icons-mode-icon-alist
