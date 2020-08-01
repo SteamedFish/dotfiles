@@ -70,4 +70,6 @@
   :after org
   :commands valign-mode
   :init
-  (add-hook 'org-mode-hook #'valign-mode))
+  (add-hook 'org-mode-hook #'valign-mode)
+  :config
+  (setq valign-fancy-bar t))
