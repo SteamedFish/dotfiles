@@ -64,6 +64,8 @@
                            cal-china-x-general-holidays)))
 
 (use-package! rime
+  :commands (rime-activate)
+  :bind
   (:map rime-mode-map
     ("C-M-S-s-SPC" . #'rime-force-enable))
   :init
@@ -78,23 +80,37 @@
     ;; for some unknown reason directly calling `active-input-method'
     ;; is not working, but it works with `run-at-time'
     ((lambda () (run-at-time nil nil 'activate-input-method default-input-method))))
+
+  (setq-default rime-disable-predicates
+    '(rime-predicate-prog-in-code-p
+       rime-predicate-evil-mode-p
+       rime-predicate-ace-window-p
+       rime-predicate-hydra-p
+       rime-predicate-org-in-src-block-p
+       rime-predicate-org-latex-mode-p
+       (lambda () (button-at (point)))
+       rime-predicate-current-uppercase-letter-p
+       rime-predicate-tex-math-or-command-p))
+
+  (add-hook! '(prog-mode-hook)
+    (setq-local rime-disable-predicates
+      (cons 'rime-predicate-after-alphabet-char-p rime-disable-predicates))
+    (setq-local rime-disable-predicates
+      (cons 'rime-predicate-after-ascii-char-p rime-disable-predicates))
+    (setq-local rime-disable-predicates
+      (cons 'rime-predicate-punctuation-after-ascii-p rime-disable-predicates))
+    (setq-local rime-disable-predicates
+      (cons 'rime-predicate-space-after-ascii-p rime-disable-predicates))
+    (setq-local rime-disable-predicates
+      (cons 'rime-predicate-space-after-cc-p rime-disable-predicates)))
+  (add-hook! '(text-mode-hook telega-chat-mode-hook)
+   (setq-local rime-disable-predicates
+         (cons 'rime-predicate-after-ascii-char-p rime-disable-predicates)))
   :config
   (setq
     rime-show-candidate 'posframe
     mode-line-mule-info '((:eval (rime-lighter)))
-    rime-inline-ascii-trigger 'shift-l
-    rime-disable-predicates
-    '(rime-predicate-after-alphabet-char-p
-       rime-predicate-after-ascii-char-p
-       rime-predicate-prog-in-code-p
-       rime-predicate-evil-mode-p
-       rime-predicate-ace-window-p
-       rime-predicate-hydra-p
-       rime-predicate-punctuation-after-ascii-p
-       rime-predicate-space-after-ascii-p
-       rime-predicate-space-after-cc-p
-       rime-predicate-current-uppercase-letter-p
-       rime-predicate-tex-math-or-command-p)))
+    rime-inline-ascii-trigger 'shift-l))
 
 
 ;; Support pinyin in Ivy
