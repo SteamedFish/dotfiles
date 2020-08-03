@@ -76,6 +76,10 @@ if [ -n "$(command -v fdfind)" ];then
     # Debian use this name
     alias fd='fdfind'
 fi
+if [ -n "$(command -v bat)" ];then
+    # Debian use this name
+    alias cat='bat'
+fi
 if [ -n "$(command -v nvim)" ];then
     alias vim='nvim'
     alias vi='nvim'
