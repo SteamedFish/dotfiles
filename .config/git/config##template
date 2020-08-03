@@ -27,8 +27,25 @@
 	helper = store
 [color]
 	ui = true
-{% if yadm.distro == "Gentoo" %}
-{% else %}
+{% if yadm.distro == "Arch" %}
+[color "diff-highlight"]
+	oldNormal = red bold
+	oldHighlight = red bold 52
+	newNormal = green bold
+	newHighlight = green bold 22
+[color "diff"]
+	meta = yellow
+	frag = magenta bold
+	commit = yellow bold
+	old = red bold
+	new = green bold
+	whitespace = red reverse
+[core]
+	pager = diff-so-fancy | less --tabs=4 -RFX
+[diff-so-fancy]
+	first-run = false
+{% endif %}
+{% if yadm.os == "Darwin" %}
 [color "diff-highlight"]
 	oldNormal = red bold
 	oldHighlight = red bold 52
