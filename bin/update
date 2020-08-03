@@ -278,6 +278,9 @@ update_rust() {
     if [ -n "$(command -v rustup)" ]; then
         run rustup update
     fi
+    if [ -n "$(command -v cargo-install-update)" ]; then
+       cargo-install-update install-update -a
+    fi
 }
 
 
