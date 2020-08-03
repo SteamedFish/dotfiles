@@ -14,7 +14,7 @@ export LESS="-R"
 export CVS_RSH=ssh
 export EDITOR="vim"
 export MYSQL_PS1="(\u@\h) [\d]> "
-export PATH=$PATH:$HOME/.go/bin:~/bin
+export PATH=$PATH:$HOME/.go/bin:$HOME/.cargo/bin:~/bin
 export GOPATH=$HOME/.go
 
 
