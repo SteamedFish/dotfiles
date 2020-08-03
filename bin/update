@@ -274,6 +274,12 @@ update_go() {
     run go get -u all
 }
 
+update_rust() {
+    if [ -n "$(command -v rustup)" ]; then
+        run rustup update
+    fi
+}
+
 
 self_update() {
     echo "updating yadm"
@@ -378,6 +384,7 @@ update() {
             update_linuxbrew
             update_snap
             update_vim
+            update_rust
             update_emacs
             update_optools
             update_backup
@@ -393,6 +400,7 @@ update() {
             update_pip
             update_gem
             update_go
+            update_rust
             update_vim
             update_emacs
             update_optools
