@@ -27,6 +27,14 @@ fi
 GPG_TTY=$(tty)
 export GPG_TTY
 
+# by default Linux don't show pings that don't get replied
+# we want to show that
+if [ -n "$(command -v grc)" ]; then
+    alias ping="grc --colour=auto ping -O"
+else
+    alias ping="ping -O"
+fi
+
 # extra PATHs
 for i in /home/linuxbrew/.linuxbrew $HOME/.linuxbrew /snap/bin /opt/puppetlabs/bin; do
     if [ -d "$i" ]; then
