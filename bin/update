@@ -250,12 +250,21 @@ update_snap() {
 
 update_pip() {
     echo "Updating Pip"
-    if [ -n "$(command -v pip2)" ]; then
-        pip2 list --format=columns | tail -n +3 | cut -d ' ' -f 1 | grep -v 'pip' | run xargs -n1 pip2 install -U
-    fi
-    if [ -n "$(command -v pip3)" ]; then
-        pip3 list --format=columns | tail -n +3 | cut -d ' ' -f 1 | grep -v 'pip' | run xargs -n1 pip3 install -U
-    fi
+    case $OSTYPE in
+        linux*)
+            if [ -n "$(command -v pip)" ]; then
+                pip list --user --format=columns | tail -n +3 | cut -d ' ' -f 1 | run xargs -n1 pip install --user -U
+            fi
+            ;;
+        darwin*)
+            if [ -n "$(command -v pip2)" ]; then
+                pip2 list --format=columns | tail -n +3 | cut -d ' ' -f 1 | grep -v 'pip' | run xargs -n1 pip2 install -U
+            fi
+            if [ -n "$(command -v pip3)" ]; then
+                pip3 list --format=columns | tail -n +3 | cut -d ' ' -f 1 | grep -v 'pip' | run xargs -n1 pip3 install -U
+            fi
+            ;;
+    esac
 }
 
 
@@ -387,6 +396,7 @@ update() {
             update_linuxbrew
             update_snap
             update_vim
+            update_pip
             update_rust
             update_emacs
             update_optools
