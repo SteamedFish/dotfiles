@@ -14,6 +14,7 @@
   ;; fonts
   (cl-loop for font in '("Operator Mono Lig"
                          "Operator Mono"
+                         "Roboto Mono"
                          "mononoki Nerd Font"
                          "Fira Mono"
                          "Fira Code")
