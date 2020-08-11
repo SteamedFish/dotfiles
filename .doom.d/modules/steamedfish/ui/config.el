@@ -78,13 +78,11 @@
   (setq doom-theme 'doom-nord
     fancy-splash-image "~/.doom.d/banner/ue-colorful.png")
   :config
-  (if (or (member "OperatorMono Nerd Font" (font-family-list))
-        (member "mononoki Nerd Font" (font-family-list)))
-      (custom-set-faces!
-       '((font-lock-comment-face
-          font-lock-constant-face
-          font-lock-keyword-face)
-         :slant italic))))
+  (custom-set-faces!
+    '((font-lock-comment-face
+        font-lock-constant-face
+        font-lock-keyword-face)
+       :slant italic)))
 
 (after! hl-fill-column
   ;; by default it uses `brightblack' as background, which is not recognized.
