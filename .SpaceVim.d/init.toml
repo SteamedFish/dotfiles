@@ -102,3 +102,7 @@
   name = "ui"
 [[layers]]
   name = "denite"
+
+[[custom_plugins]]
+    repo = "wakatime/vim-wakatime"
+    merged = false
