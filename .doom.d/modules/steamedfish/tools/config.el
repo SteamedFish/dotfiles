@@ -14,18 +14,19 @@
               eaf-open-this-from-dired
               eaf-describe-bindings eaf-open-bookmark eaf-open-external
               eaf-get-path-or-url eaf-toggle-fullscreen eaf-share-path-or-url)
-  :custom
-  (eaf-find-alternate-file-in-dired t)
   :config
   (defalias 'browse-web #'eaf-open-browser)
   (setq
     eaf-config-location (concat doom-local-dir "eaf/")
+    eaf-find-alternate-file-in-dired t
     browse-url-browser-function #'eaf-open-browser
+    eaf-browser-continue-where-left-off t
     eaf-browser-default-search-engine 'duckduckgo)
   (eaf-setq eaf-browser-dark-mode "true")
+  (eaf-setq eaf-terminal-dark-mode "true")
   (eaf-setq eaf-pdf-dark-mode "true")
   (eaf-setq eaf-mindmap-dark-mode "true")
-  (eaf-setq eaf-browse-blank-page-url "https://duckduckgo.com")
+  (eaf-setq eaf-browse-blank-page-url "https://duckduckgo.com/")
 
   (defun eaf-org-open-file (file &optional link)
     "An wrapper function on `eaf-open'."
@@ -33,3 +34,9 @@
 
   ;; use `emacs-application-framework' to open PDF file: link
   (add-to-list 'org-file-apps '("\\.pdf\\'" . eaf-org-open-file)))
+
+(use-package! eaf-evil
+  :after eaf)
+
+(use-package! eaf-org
+  :after eaf)
