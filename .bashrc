@@ -69,8 +69,8 @@ if [ -n "$(command -v lsd)" ];then
     alias ls='lsd'
     alias tree='lsd --tree'
 elif [ -n "$(command -v exa)" ];then
-    alias ls='exa --git --extended'
-    alias tree='exa --tree --git --extended'
+    alias ls='exa --git --icons --extended'
+    alias tree='exa --tree --git --icons --extended'
 fi
 if [ -n "$(command -v fdfind)" ];then
     # Debian use this name

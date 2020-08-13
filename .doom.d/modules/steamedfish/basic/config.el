@@ -16,6 +16,16 @@
 (add-hook! (prog-mode text-mode conf-mode)
   (setq show-trailing-whitespace t))
 
+(use-package! generic-x
+  :config
+  (setq generic-use-find-file-hook t)
+  (setq generic-extras-enable-list
+    (append generic-default-modes
+      generic-mswindows-modes
+      generic-unix-modes
+      generic-other-modes))
+  ;; must reload generic-x after setting extras-enable-list
+  (load "generic-x"))
 
 (when IS-ANDROID
   (setq browse-url-browser-function 'browse-url-xdg-open))
