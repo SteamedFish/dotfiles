@@ -57,8 +57,8 @@ if $CLICOLOR; then
                     source "/etc/grc.zsh"
                 fi
             fi
-            unset _dir
         done
+        unset _dir
     fi
 fi
 alias cp='cp -iv'
