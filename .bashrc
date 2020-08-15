@@ -52,11 +52,13 @@ if $CLICOLOR; then
                 if [ -f "${_dir}/grc.bashrc" ]; then
                     # shellcheck disable=SC1090
                     source "${_dir}/grc.bashrc"
+                    break
                 fi
             elif [ "$(basename "$SHELL")" = "zsh" ]; then
                 if [ -f "${_dir}/grc.zsh" ]; then
                     # shellcheck disable=SC1090
                     source "${_dir}/grc.zsh"
+                    break
                 fi
             fi
         done
