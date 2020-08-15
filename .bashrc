@@ -50,11 +50,13 @@ if $CLICOLOR; then
         for _dir in "/etc" "/etc/profile.d" "/usr/share/grc" "/usr/local/etc"; do
             if [ -n "$BASH" ]; then
                 if [ -f "${_dir}/grc.bashrc" ]; then
-                    source "/etc/profile.d/grc.bashrc"
+                    # shellcheck disable=SC1090
+                    source "${_dir}/grc.bashrc"
                 fi
             elif [ "$(basename "$SHELL")" = "zsh" ]; then
                 if [ -f "${_dir}/grc.zsh" ]; then
-                    source "/etc/grc.zsh"
+                    # shellcheck disable=SC1090
+                    source "${_dir}/grc.zsh"
                 fi
             fi
         done
