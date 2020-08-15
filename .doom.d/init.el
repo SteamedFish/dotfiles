@@ -55,9 +55,9 @@
        (popup            ; tame sudden yet inevitable temporary windows
         +all             ; catch all popups that start with an asterix
         +defaults)       ; default popup rules
-       (pretty-code)       ; replace bits of code with pretty symbols
+       (pretty-code)       ; ligatures or substitute text with pretty symbols
         ;;+fira)
-       ;;tabs              ; an tab bar for Emacs
+       ;;tabs              ; a tab bar for Emacs
        treemacs          ; a project drawer, like neotree but cooler
        ;;unicode         ; extended unicode support for various languages
        vc-gutter         ; vcs diff in the fringe
@@ -78,7 +78,7 @@
        ;;lispy             ; vim for lisp, for people who don't like vim
        multiple-cursors  ; editing in many places at once
        ;;objed             ; text object editing for the innocent
-       parinfer          ; turn lisp into python, sort of
+       ;;parinfer          ; turn lisp into python, sort of
        rotate-text       ; cycle region at point between text candidates
        snippets          ; my elves. They type so I don't have to
        word-wrap         ; soft wrapping with language-aware indent
@@ -116,7 +116,7 @@
        ;;ein               ; tame Jupyter notebooks with emacs
        (eval +overlay)     ; run code, run (also, repls)
        gist              ; interacting with github gists
-       (lookup           ; helps you navigate your code and documentation
+       (lookup           ; navigate your code and its documentation
         +docsets)        ; ...or in Dash docsets locally
        (:if (not (or IS-WINDOWS IS-ANDROID))
         lsp)
@@ -132,6 +132,9 @@
        terraform         ; infrastructure as code
        tmux              ; an API for interacting with tmux
        upload            ; map local to remote projects via ssh/ftp
+
+       :os
+       tty               ; improve the terminal Emacs experience
 
        :lang
        ;;agda              ; types of types of types of types...
