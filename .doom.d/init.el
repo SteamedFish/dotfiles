@@ -48,7 +48,8 @@
        hl-todo           ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
        hydra
        indent-guides     ; highlighted indent columns
-       ligatures         ; ligatures and symbols to make your code pretty again
+       (ligatures         ; ligatures and symbols to make your code pretty again
+        +extra)
        minimap           ; show a map of the code on the side
        modeline          ; snazzy, Atom-inspired modeline, plus API
        nav-flash         ; blink cursor line after big motions
@@ -66,7 +67,7 @@
         +switch-window
         +numbers)
        workspaces        ; tab emulation, persistence & separate workspaces
-       ;;zen               ; distraction-free coding or writing
+       zen               ; distraction-free coding or writing
 
        :editor
        (evil +everywhere); come to the dark side, we have cookies
@@ -103,23 +104,27 @@
        (syntax              ; tasing you for every semicolon you forget
         +childframe)
        (spell             ; tasing you for misspelling mispelling
-        +prog)
+        +everywhere)
        grammar           ; tasing grammar mistake every you make
 
        :tools
        ansible
-       debugger          ; FIXME stepping through code, to help you add bugs
+       (debugger          ; FIXME stepping through code, to help you add bugs
+        +lsp)
        direnv
        docker
        editorconfig      ; let someone else argue about tabs vs spaces
        ;;ein               ; tame Jupyter notebooks with emacs
-       (eval +overlay)     ; run code, run (also, repls)
+       (eval)               ; run code, run (also, repls)
+        ;+overlay)
        gist              ; interacting with github gists
        (lookup           ; navigate your code and its documentation
-        +docsets)        ; ...or in Dash docsets locally
+        +docsets        ; ...or in Dash docsets locally
+        +dictionary)
        (:if (not (or IS-WINDOWS IS-ANDROID))
         lsp)
-       magit             ; a git porcelain for Emacs
+       (magit             ; a git porcelain for Emacs
+        +forge)
        make              ; run make tasks from Emacs
        (pass             ; password manager for nerds
         +auth)
@@ -132,7 +137,7 @@
        upload            ; map local to remote projects via ssh/ftp
 
        :os
-       macos             ; improve compatibility with macOS
+       (:if IS-MAC macos)  ; improve compatibility with macOS
        tty               ; improve the terminal Emacs experience
 
        :lang
@@ -169,29 +174,32 @@
        ;;factor
        ledger            ; an accounting system in Emacs
        ;;lua               ; one-based indices? one-based indices
-       markdown          ; writing docs for people to ignore
+       (markdown)          ; writing docs for people to ignore
+        ;;+grip)
        ;;nim               ; python + lisp at the speed of c
        ;;nix               ; I hereby declare "nix geht mehr!"
        ;;ocaml             ; an objective camel
        (org              ; organize your plain life in plain text
-        +brain
+        +brain           ; org-brain integration
         +dragndrop       ; file drag & drop support
-        +gnuplot
-        +hugo           ; use Emacs for hugo blogging
-        +journal
-        +jupyter        ; ipython/jupyter support for babel
-        +noter
+        +gnuplot         ; gnuplot support
+        +hugo            ; use Emacs for hugo blogging
+        +journal         ; org-journal integration
+        +jupyter         ; ipython/jupyter support for babel
+        +noter           ; org-noter integration
         +pandoc          ; pandoc integration into org's exporter
         +pomodoro        ; be fruitful with the tomato technique
         +present         ; using Emacs for presentations
-        +roam)
-       php               ; perl's insecure younger brother
+        +pretty          ; pretty unicode symbols
+        +roam)           ; org-roam integration
+       ;;php               ; perl's insecure younger brother
        (:if (not IS-ANDROID)
         plantuml)          ; diagrams for confusing people more
        ;;purescript        ; javascript, but functional
        (python             ; beautiful is better than ugly
-        +pyenv
         +lsp
+        ;+pyright
+        ;+pyenv
         +conda
         +poetry
         +cython)
