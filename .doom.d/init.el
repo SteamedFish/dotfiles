@@ -23,6 +23,7 @@
        (:if (not (or IS-WINDOWS IS-ANDROID))
         chinese)
        ;;japanese
+       ;;layout            ; auie,ctsrnm is the superior home row
 
        :completion
        (company          ; the ultimate code completion backend
@@ -47,6 +48,7 @@
        hl-todo           ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
        hydra
        indent-guides     ; highlighted indent columns
+       ligatures         ; ligatures and symbols to make your code pretty again
        minimap           ; show a map of the code on the side
        modeline          ; snazzy, Atom-inspired modeline, plus API
        nav-flash         ; blink cursor line after big motions
@@ -55,8 +57,6 @@
        (popup            ; tame sudden yet inevitable temporary windows
         +all             ; catch all popups that start with an asterix
         +defaults)       ; default popup rules
-       (pretty-code)       ; ligatures or substitute text with pretty symbols
-        ;;+fira)
        ;;tabs              ; a tab bar for Emacs
        treemacs          ; a project drawer, like neotree but cooler
        ;;unicode         ; extended unicode support for various languages
@@ -72,8 +72,7 @@
        (evil +everywhere); come to the dark side, we have cookies
        file-templates    ; auto-snippets for empty files
        fold              ; (nigh) universal code folding
-       (format          ; automated prettiness
-        +onsave)
+       (format +onsave)  ; automated prettiness
        ;;god               ; run Emacs commands without modifier keys
        ;;lispy             ; vim for lisp, for people who don't like vim
        multiple-cursors  ; editing in many places at once
@@ -120,7 +119,6 @@
         +docsets)        ; ...or in Dash docsets locally
        (:if (not (or IS-WINDOWS IS-ANDROID))
         lsp)
-       macos             ; MacOS-specific commands
        magit             ; a git porcelain for Emacs
        make              ; run make tasks from Emacs
        (pass             ; password manager for nerds
@@ -134,6 +132,7 @@
        upload            ; map local to remote projects via ssh/ftp
 
        :os
+       macos             ; improve compatibility with macOS
        tty               ; improve the terminal Emacs experience
 
        :lang
@@ -153,7 +152,7 @@
        ;;erlang            ; an elegant language for a more civilized age
        ;;ess               ; emacs speaks statistics
        ;;faust             ; dsp, but you get to keep your soul
-       ;;fsharp           ; ML stands for Microsoft's Language
+       ;;fsharp            ; ML stands for Microsoft's Language
        ;;fstar             ; (dependent) types and (monadic) effects and Z3
        ;;gdscript          ; the language you waited for
        (go +lsp)         ; the hipster dialect
