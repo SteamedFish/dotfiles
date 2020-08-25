@@ -352,7 +352,7 @@ update_emacs() {
         run "$HOME"/.emacs.d/bin/doom -y sync -p -u
         run "$HOME"/.emacs.d/bin/doom -y purge
         run "$HOME"/.emacs.d/bin/doom -y build -r
-        run "$HOME"/.emacs.d/bin/doom -y compile -c -p
+        # run "$HOME"/.emacs.d/bin/doom -y compile -c -p
         run "$HOME"/.emacs.d/bin/doom env -a SSH_AUTH_SOCK
     fi
     for _PROJECT in "$HOME"/emacs-distros/*; do
