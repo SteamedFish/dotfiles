@@ -79,7 +79,7 @@
   (when IS-MAC
     ;; manually install librime here
     (setq rime-librime-root (concat doom-local-dir "librime/dist")))
-  (add-hook! '(text-mode-hook prog-mode-hook)
+  (add-hook! '(after-change-major-mode-hook)
     ((lambda () (activate-input-method default-input-method))))
 
   (setq-default rime-disable-predicates
@@ -88,6 +88,7 @@
        rime-predicate-ace-window-p
        rime-predicate-hydra-p
        rime-predicate-org-in-src-block-p
+       (lambda () (minibufferp))
        rime-predicate-org-latex-mode-p
        (lambda () (button-at (point)))
        rime-predicate-current-uppercase-letter-p
