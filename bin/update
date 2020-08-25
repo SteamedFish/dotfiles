@@ -163,7 +163,8 @@ update_linux_system() {
         elif [ -n "$(command -v etc-update)" ]; then
             run sudo etc-update
         fi
-        run "${PACMAN_CMD}" -Scc --noconfirm
+        # run "${PACMAN_CMD}" -Scc --noconfirm
+        yes | run "${PACMAN_CMD}" -Scc
     elif [[ -f /etc/debian_version ]]; then
         run sudo apt update
         run sudo apt upgrade
