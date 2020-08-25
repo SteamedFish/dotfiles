@@ -6,19 +6,20 @@
   (custom-set-faces!
    '(org-ellipsis :foreground nil))
   (setq org-directory (expand-file-name "~/work/org/")
-        diary-file (expand-file-name "~/work/org/diary")
-        ;; all files but later.org should be put in agenda
-        org-agenda-files
-        (delete (expand-file-name "~/work/org/later.org")
-                (file-expand-wildcards (concat org-directory "*.org")))
-        ;; one archive file instead of many
-        org-archive-location
-        (concat org-directory "archive.org::* From %s")
-        org-log-done 'time
-        org-log-done-with-time t
-        org-ellipsis (if (char-displayable-p ?⬎) "  ⬎" nil)
-        org-startup-with-inline-images t
-        org-html-validation-link nil)
+    org-roam-directory (file-name-as-directory (expand-file-name (concat org-directory "/roam")))
+    diary-file (expand-file-name (concat org-directory "/diary"))
+    ;; all files but later.org should be put in agenda
+    org-agenda-files
+    (delete (expand-file-name "~/work/org/later.org")
+      (file-expand-wildcards (concat org-directory "*.org")))
+    ;; one archive file instead of many
+    org-archive-location
+    (concat org-directory "archive.org::* From %s")
+    org-log-done 'time
+    org-log-done-with-time t
+    org-ellipsis (if (char-displayable-p ?⬎) "  ⬎" nil)
+    org-startup-with-inline-images t
+    org-html-validation-link nil)
 
   ;; refresh images after C-c C-c
   (add-hook 'org-babel-after-execute-hook 'org-redisplay-inline-images)
@@ -73,3 +74,8 @@
   (add-hook 'org-mode-hook #'valign-mode)
   :config
   (setq valign-fancy-bar t))
+
+(after! org-tree-slide
+  :config
+  (setq org-tree-slide-modeline-display 'outside
+    org-tree-slide-fold-subtrees-skipped nil))
