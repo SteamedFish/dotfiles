@@ -80,10 +80,7 @@
     ;; manually install librime here
     (setq rime-librime-root (concat doom-local-dir "librime/dist")))
   (add-hook! '(text-mode-hook prog-mode-hook)
-    ;; active rime by default
-    ;; for some unknown reason directly calling `active-input-method'
-    ;; is not working, but it works with `run-at-time'
-    ((lambda () (run-at-time nil nil 'activate-input-method default-input-method))))
+    ((lambda () (activate-input-method default-input-method))))
 
   (setq-default rime-disable-predicates
     '(rime-predicate-prog-in-code-p
@@ -96,7 +93,7 @@
        rime-predicate-current-uppercase-letter-p
        rime-predicate-tex-math-or-command-p))
 
-  (add-hook! '(prog-mode-hook)
+  (add-hook! '(prog-mode-hook minibuffer-setup-hook)
     (setq-local rime-disable-predicates
       (cons 'rime-predicate-after-alphabet-char-p rime-disable-predicates))
     (setq-local rime-disable-predicates
