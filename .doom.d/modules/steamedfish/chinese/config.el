@@ -68,6 +68,8 @@
   :bind
   (:map rime-mode-map
     ("C-M-S-s-SPC" . #'rime-force-enable))
+  (:map rime-active-mode-map
+    ("C-M-S-s-SPC" . #'rime-inline-ascii))
   :init
   (setq
     default-input-method "rime"
