@@ -66,6 +66,8 @@
 (use-package! rime
   :commands (rime-activate)
   :bind
+  ("C-M-S-s-SPC" . #'rime-force-enable)
+  ("C-M-S-s-j" . #'+chinese/rime-convert-string-at-point)
   (:map rime-mode-map
     ("C-M-S-s-SPC" . #'rime-force-enable))
   (:map rime-active-mode-map
