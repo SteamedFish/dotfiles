@@ -57,4 +57,9 @@
     (when (file-directory-p dir)
       (add-to-list 'projectile-project-search-path dir))))
 
+(after! evil
+  ;; do not quit emacs with those ex commands
+  (evil-ex-define-cmd "q[uit]" #'kill-buffer-and-window)
+  (evil-ex-define-cmd "x[it]" (lambda() (interactive) (save-buffer) (kill-buffer-and-window))))
+
 (load! "email.el")
