@@ -164,7 +164,8 @@ update_linux_system() {
             run sudo etc-update
         fi
         # run "${PACMAN_CMD}" -Scc --noconfirm
-        yes | run "${PACMAN_CMD}" -Scc
+        # this will exit with SIGPIPE error, we pass a true here
+        yes | run "${PACMAN_CMD}" -Scc || true
     elif [[ -f /etc/debian_version ]]; then
         run sudo apt update
         run sudo apt upgrade
