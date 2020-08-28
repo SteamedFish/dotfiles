@@ -375,7 +375,8 @@ update_optools() {
     for _DIR in "work"; do
         if [ -d "$HOME/${_DIR}" ]; then
             for _PROJECT in "$HOME/${_DIR}"/*; do
-                if [ -d "${_PROJECT}/.git/svn" ]; then
+                echo "updating ${_PROJECT}"
+                if [ -f "${_PROJECT}/.git/svn/.metadata" ]; then
                     cd "${_PROJECT}"
                     run git svn fetch
                 elif [ -d "${_PROJECT}/.git" ]; then
