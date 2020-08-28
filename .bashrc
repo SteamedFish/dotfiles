@@ -44,8 +44,10 @@ if $CLICOLOR; then
     alias grep='grep --color=auto'
     alias egrep='egrep --colour=auto'
     alias fgrep='fgrep --colour=auto'
-    alias ip='ip --color=auto'
-    alias diff='diff --color=auto'
+    if [[ $(uname -o) != "Android" ]]; then
+        alias ip='ip --color=auto'
+        alias diff='diff --color=auto'
+    fi
     if [ -n "$(command -v grc)" ]; then
         for _dir in "/etc" "/etc/profile.d" "/usr/share/grc" "/usr/local/etc"; do
             if [ -n "$BASH" ]; then
@@ -72,8 +74,13 @@ if [ -n "$(command -v lsd)" ];then
     alias ls='lsd'
     alias tree='lsd --tree'
 elif [ -n "$(command -v exa)" ];then
-    alias ls='exa --git --icons --extended'
-    alias tree='exa --tree --git --icons --extended'
+    if [[ $(uname -o) == "Android" ]]; then
+        alias ls='exa --git --extended'
+        alias tree='exa --tree --git --extended'
+    else
+        alias ls='exa --git --icons --extended'
+        alias tree='exa --tree --git --icons --extended'
+    fi
 fi
 if [ -n "$(command -v fdfind)" ];then
     # Debian use this name
