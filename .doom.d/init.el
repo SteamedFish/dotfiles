@@ -16,8 +16,7 @@
 
 (defconst IS-ANDROID
   ;; If running inside Android Termux
-  (and (equal (system-name) "localhost")
-       (not (equal user-login-name "steamedfish"))))
+  (string-match-p "-linux-android$" system-configuration))
 
 (doom! :input
        (:if (not (or IS-WINDOWS IS-ANDROID))
