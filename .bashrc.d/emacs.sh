@@ -11,6 +11,10 @@ if [ -n "$INSIDE_EMACS" ]; then
     alias emacs="emacsclient -n"
 fi
 
+if [[ $(uname -o) == "Android" ]]; then
+    return
+fi
+
 # https://wiki.archlinux.org/index.php/Emacs#Multiplexing_emacs_and_emacsclient
 function emacs {
     if [[ $# -eq 0 ]]; then
