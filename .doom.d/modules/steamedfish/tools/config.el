@@ -40,3 +40,6 @@
 
 (use-package! eaf-org
   :after eaf)
+
+(use-package! netease-cloud-music
+  :commands (netease-cloud-music netease-cloud-music-change-repeat-mode))

@@ -6,3 +6,6 @@
   :recipe (:host github
             :repo "manateelazycat/emacs-application-framework"
             :files ("*")))
+(package! netease-cloud-music
+  :recipe (:host github
+            :repo "SpringHan/netease-cloud-music.el"))
