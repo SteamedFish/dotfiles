@@ -79,11 +79,8 @@
   (setq doom-theme 'doom-nord
     fancy-splash-image "~/.doom.d/banner/ue-colorful.png")
   :config
-  (custom-set-faces!
-    '((font-lock-comment-face
-        font-lock-constant-face
-        font-lock-keyword-face)
-       :slant italic)))
+  (setq doom-themes-enable-bold t
+    doom-themes-enable-bold t))
 
 (after! hl-fill-column
   ;; by default it uses `brightblack' as background, which is not recognized.
