@@ -77,7 +77,8 @@
 (use-package! doom-themes
   :init
   (setq doom-theme 'doom-nord
-    fancy-splash-image "~/.doom.d/banner/ue-colorful.png")
+    fancy-splash-image "~/.doom.d/banner/ue-colorful.png"
+    doom-themes-treemacs-theme "doom-colors")
   :config
   (setq doom-themes-enable-bold t
     doom-themes-enable-bold t))
