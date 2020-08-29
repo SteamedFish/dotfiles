@@ -113,13 +113,13 @@
   (paradox-enable))
 
 ;; Display icons for all buffers in ibuffer.
-(use-package! all-the-icons-ivy-rich
-  :after ivy-rich
-  :init
-  (all-the-icons-ivy-rich-mode t))
+;; (use-package! all-the-icons-ivy-rich
+;;   :after ivy-rich
+;;   :init
+;;   (all-the-icons-ivy-rich-mode t))
 
 ;; Display icons for all buffers in ivy-rich.
-(use-package! all-the-icons-ibuffer
-  :after ibuffer
-  :init
-  (all-the-icons-ibuffer-mode t))
+;; (use-package! all-the-icons-ibuffer
+;;   :after ibuffer
+;;   :init
+;;   (all-the-icons-ibuffer-mode t))
