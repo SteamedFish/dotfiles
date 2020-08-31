@@ -187,7 +187,7 @@ update_linux_system() {
         run sudo emerge -avc --exclude="sys-kernel/gentoo-sources"
         if [ -n "$(command -v eclean-kernel)" ]; then
             # keep only 3 recent kernels
-            run sudo eclean-kernel -n 3
+            run sudo eclean-kernel -A -n 3
         fi
         if [ -n "$(command -v eclean)" ]; then
             run sudo eclean -d distfiles
