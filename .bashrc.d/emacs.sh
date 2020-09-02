@@ -11,8 +11,7 @@ if [ -n "$INSIDE_EMACS" ]; then
     alias emacs="emacsclient -n"
 fi
 
-# mac don't have uname -o
-if [[ "$(uname -o 2>&1 >/dev/null)" == "Android" ]]; then
+if [[ "$OSTYPE" == "linux-android" ]]; then
     return
 fi
 
