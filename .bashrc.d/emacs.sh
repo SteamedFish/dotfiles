@@ -11,7 +11,7 @@ if [ -n "$INSIDE_EMACS" ]; then
     alias emacs="emacsclient -n"
 fi
 
-if [[ $(uname -o) == "Android" ]]; then
+if [[ "$(uname -o 2>&1 >/dev/null)" == "Android" ]]; then
     return
 fi
 
