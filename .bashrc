@@ -44,8 +44,7 @@ if $CLICOLOR; then
     alias grep='grep --color=auto'
     alias egrep='egrep --colour=auto'
     alias fgrep='fgrep --colour=auto'
-    # mac's `uname' don't have -o option
-    if [[ "$(uname -o 2>&1 >/dev/null)" != "Android" ]]; then
+    if [[ "$(uname -s)" != "Darwin" ]] && [[ "$(uname -o)" != "Android" ]]; then
         alias ip='ip --color=auto'
         alias diff='diff --color=auto'
     fi
@@ -75,7 +74,7 @@ if [ -n "$(command -v lsd)" ];then
     alias ls='lsd'
     alias tree='lsd --tree'
 elif [ -n "$(command -v exa)" ];then
-    if [[ "$(uname -o 2>&1 >/dev/null)" == "Android" ]]; then
+    if [[ "$(uname -s)" == "Darwin" ]] || [[ "$(uname -o)" == "Android" ]]; then
         alias ls='exa --git --extended'
         alias tree='exa --tree --git --extended'
     else
