@@ -16,6 +16,6 @@ if [ -n "$(command -v grc)" ]; then
     if [ -n "$(command -v ip)" ]; then
         # mac by default don't have ip command
         # but we may install iproute2mac to have ip
-        alias ip='grc --color=auto ip'
+        alias ip='grc --colour=auto ip'
     fi
 fi
