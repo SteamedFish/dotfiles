@@ -47,6 +47,8 @@ if $CLICOLOR; then
     if [[ "$OSTYPE" != "linux-android" ]] && [[ "$OS" != "OSX" ]]; then
         alias ip='ip --color=auto'
         alias diff='diff --color=auto'
+    elif [[ "$OSTYPE" == "linux-android" ]]; then
+        alias ip='ip -color'
     fi
     if [ -n "$(command -v grc)" ]; then
         for _dir in "/etc" "/etc/profile.d" "/usr/share/grc" "/usr/local/etc"; do
