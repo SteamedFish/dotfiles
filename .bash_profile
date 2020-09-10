@@ -9,7 +9,7 @@ elif [ -n "$(command -v archey)" ];then
     archey -c -o
 fi
 
-if [ "${OSTYPE}" != "linux-android" ]; then
+if [ "${OSTYPE}" == "linux-android" ]; then
     return
 fi
 
