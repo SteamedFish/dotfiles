@@ -3,7 +3,7 @@
   enable_googlesuggest = false
   enable_statusline_mode = true
   max_column = 80
-  guifont = 'FuraCode Nerd Font:h12'
+  guifont = 'Rec Mono Casual:h12'
   relativenumber = false
   statusline_separator = 'arrow'
   enable_key_frequency = true
