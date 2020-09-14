@@ -17,8 +17,6 @@
                          "Rec Mono Doutone"
                          "Rec Mono SemiCasual"
                          "Rec Mono Linear"
-                         "Operator Mono Lig"
-                         "Operator Mono"
                          "Roboto Mono"
                          "mononoki Nerd Font"
                          "Fira Mono"
