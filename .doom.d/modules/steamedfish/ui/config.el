@@ -26,8 +26,8 @@
            (setq doom-font (font-spec :family font :size 12.5)
                  doom-big-font (font-spec :family font :size 21)))
 
-  (if (member "Operator SSm" (font-family-list))
-      (setq doom-variable-pitch-font (font-spec :family "Operator SSm"))
+  (if (member "Recursive Sans Casual Static" (font-family-list))
+      (setq doom-variable-pitch-font (font-spec :family "Recursive Sans Casual Static"))
     (when (member "Fira Sans" (font-family-list))
       (setq doom-variable-pitch-font (font-spec :family "Fira Sans"))))
   (when (member "Hiragino Sans GB" (font-family-list))
