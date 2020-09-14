@@ -1,6 +1,6 @@
 [Appearance]
 ColorScheme=nord
-Font=NotoMono Nerd Font,12,-1,5,50,0,0,0,0,0,Book
+Font=Rec Mono Duotone,12,-1,5,50,0,0,0,0,0
 
 [General]
 Name=SteamedFish
