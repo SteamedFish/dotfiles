@@ -12,7 +12,12 @@
           ns-use-fullscreen-animation t))
 
   ;; fonts
-  (cl-loop for font in '("Operator Mono Lig"
+  (cl-loop for font in '(
+                         "Rec Mono Casual"
+                         "Rec Mono Doutone"
+                         "Rec Mono SemiCasual"
+                         "Rec Mono Linear"
+                         "Operator Mono Lig"
                          "Operator Mono"
                          "Roboto Mono"
                          "mononoki Nerd Font"
