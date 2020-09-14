@@ -1,6 +1,6 @@
 [Appearance]
 ColorScheme=nord
-Font=Rec Mono Duotone,12,-1,5,50,0,0,0,0,0
+Font=Rec Mono Casual,12,-1,5,50,0,0,0,0,0
 
 [General]
 Name=SteamedFish
