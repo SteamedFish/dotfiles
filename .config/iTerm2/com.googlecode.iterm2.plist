@@ -457,7 +457,7 @@
 	<key>NSWindow Frame NSNavPanelAutosaveName</key>
 	<string>208 148 799 448 0 0 1280 777 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>62 7 1214 770 0 0 1280 777 </string>
+	<string>62 0 1218 777 0 0 1280 777 </string>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -705,16 +705,16 @@
 				<key>Alpha Component</key>
 				<real>0.7057952880859375</real>
 				<key>Blue Component</key>
-				<real>0.29600727558135986</real>
+				<real>0.29302557764473458</real>
 				<key>Color Space</key>
-				<string>Calibrated</string>
+				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.23046499490737915</real>
+				<real>0.023500448583945399</real>
 				<key>Red Component</key>
-				<real>0.20252507925033569</real>
+				<real>0.36862742900848389</real>
 			</dict>
 			<key>Badge Font</key>
-			<string>OperatorSSm-Bold</string>
+			<string>RecursiveSansCsl-Bold</string>
 			<key>Badge Max Height</key>
 			<real>0.20000000000000001</real>
 			<key>Badge Max Width</key>
@@ -1470,7 +1470,7 @@
 			<key>Use Non-ASCII Font</key>
 			<true/>
 			<key>Use Tab Color</key>
-			<false/>
+			<true/>
 			<key>Use Underline Color</key>
 			<false/>
 			<key>Vertical Spacing</key>
@@ -1499,7 +1499,7 @@
 	</array>
 	<key>NoSyncBFPRecents</key>
 	<array>
-		<string>FiraCode Nerd Font</string>
+		<string>Recursive</string>
 	</array>
 	<key>NoSyncCommandHistoryHasEverBeenUsed</key>
 	<true/>
@@ -1508,12 +1508,12 @@
 		<key>screenFrame</key>
 		<string>{{0, 0}, {1280, 800}}</string>
 		<key>topLeft</key>
-		<string>{152, 689}</string>
+		<string>{150, 666}</string>
 	</dict>
 	<key>NoSyncInstallationId</key>
 	<string>CB8F67DF-BAFB-43F8-BC1C-2532A059C4B1</string>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>215</integer>
+	<integer>216</integer>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
@@ -2360,5 +2360,9 @@
 	<integer>0</integer>
 	<key>iTerm Version</key>
 	<string>3.3.12</string>
+	<key>kCPKSelectionViewPreferredModeKey</key>
+	<integer>1</integer>
+	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
+	<false/>
 </dict>
 </plist>
