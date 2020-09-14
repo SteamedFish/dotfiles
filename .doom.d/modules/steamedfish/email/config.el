@@ -11,4 +11,5 @@
   (setq
     mu4e-compose-crypto-reply-plain-policy 'sign
     mu4e-compose-crypto-reply-encrypted-policy 'sign-and-encrypt
-    mu4e-compose-forward-as-attachment t))
+    mu4e-compose-forward-as-attachment t
+    mail-user-agent #'mu4e-user-agent))
