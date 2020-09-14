@@ -227,9 +227,7 @@ update_homebrew() {
     run brew update
     #run brew bundle --global check
     #run brew bundle --global install
-    run brew upgrade
-    echo "updating cask"
-    run brew cask upgrade --greedy
+    run brew upgrade --greedy
     run brew cleanup
 }
 
