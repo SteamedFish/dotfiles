@@ -8,8 +8,8 @@ clusters:
   vps:
     hosts:
       - 192.168.1.30
+      - 192.168.90.111
       - steamedfish.org
       - i.steamedfish.org
       - sa.steamedfish.org
-      - mc.steamedfish.org
       - tc.steamedfish.org
