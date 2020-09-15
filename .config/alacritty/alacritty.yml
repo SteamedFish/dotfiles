@@ -102,7 +102,7 @@ scrolling:
 # Font configuration
 font:
   normal:
-    family: FuraCode Nerd Font
+    family: Rec Mono Casual
     style: Regular
   bold:
     style: Bold
