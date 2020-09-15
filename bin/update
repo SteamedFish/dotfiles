@@ -353,7 +353,7 @@ update_emacs() {
 
         #run "$HOME"/.emacs.d/bin/doom -y upgrade
         #run "$HOME"/.emacs.d/bin/doom -y clean
-        run "$HOME"/.emacs.d/bin/doom -y sync -p -u
+        run -r 5 "$HOME"/.emacs.d/bin/doom -y sync -p -u
         run "$HOME"/.emacs.d/bin/doom -y purge
         run "$HOME"/.emacs.d/bin/doom -y build -r
         # run "$HOME"/.emacs.d/bin/doom -y compile -c -p
