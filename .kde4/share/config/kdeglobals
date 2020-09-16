@@ -105,11 +105,11 @@ ForegroundVisited=127,140,141
 [General]
 ColorScheme=Breeze Dark
 Name=Breeze Dark
-font=Recursive Sans Casual Static,10,-1,5,50,0,0,0,0,0
-menuFont=Recursive Sans Casual Static,10,-1,5,50,0,0,0,0,0
+font=Recursive,10,-1,5,50,0,0,0,0,0,Sans Casual
+menuFont=Recursive,10,-1,5,50,0,0,0,0,0,Sans Casual
 shadeSortColumn=true
-smallestReadableFont=Recursive Sans Casual Static,9,-1,5,50,1,0,0,0,0,Sans Casual Italic
-toolBarFont=Recursive Sans Casual Static,10,-1,5,50,0,0,0,0,0
+smallestReadableFont=Recursive,8,-1,5,50,0,0,0,0,0,Sans Casual
+toolBarFont=Recursive,10,-1,5,50,0,0,0,0,0,Sans Casual
 widgetStyle=Breeze
 
 [Icons]
