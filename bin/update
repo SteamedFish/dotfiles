@@ -181,6 +181,9 @@ update_linux_system() {
             run -r 5 sudo emerge --sync
         fi
         run sudo emerge -avuUDN --with-bdeps=y --keep-going --quiet-build @system @world @preserved-rebuild
+        if [ -n "$(command -v qlop)" ]; then
+            run qlop -tHmvl
+        fi
         if [ -n "$(command -v smart-live-rebuild)" ]; then
             run -r 5 sudo smart-live-rebuild
         fi
