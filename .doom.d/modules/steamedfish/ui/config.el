@@ -91,6 +91,13 @@
   ;; set to a static value instead.
   (set-face-background 'hl-fill-column-face "#555555"))
 
+(use-package! highlight-indent-guides
+  :init
+  ;; when use character, the default caracter ?\2502
+  ;; which is https://unicode-table.com/en/2502/ │
+  ;; may have wrong width with certain fonts
+  (setq highlight-indent-guides-method 'column))
+
 (use-package! paradox
   :after-call list-packages paradox-list-packages
   :init
