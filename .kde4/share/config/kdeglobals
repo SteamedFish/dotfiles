@@ -10,27 +10,27 @@ IntensityEffect=2
 [ColorEffects:Inactive]
 ChangeSelectionColor=true
 Color=112,111,110
-ColorAmount=0.025
+ColorAmount=0.025000000000000001
 ColorEffect=2
-ContrastAmount=0.1
+ContrastAmount=0.10000000000000001
 ContrastEffect=2
 Enable=false
 IntensityAmount=0
 IntensityEffect=0
 
 [Colors:Button]
-BackgroundAlternate=77,77,77
-BackgroundNormal=49,54,59
-DecorationFocus=61,174,233
-DecorationHover=61,174,233
+BackgroundAlternate=64,69,82
+BackgroundNormal=60,68,84
+DecorationFocus=143,188,187
+DecorationHover=143,188,187
 ForegroundActive=61,174,233
-ForegroundInactive=189,195,199
+ForegroundInactive=102,106,115
 ForegroundLink=41,128,185
-ForegroundNegative=218,68,83
-ForegroundNeutral=246,116,0
-ForegroundNormal=239,240,241
-ForegroundPositive=39,174,96
-ForegroundVisited=127,140,141
+ForegroundNegative=191,97,106
+ForegroundNeutral=208,135,112
+ForegroundNormal=216,222,233
+ForegroundPositive=163,190,140
+ForegroundVisited=82,148,226
 
 [Colors:Complementary]
 BackgroundAlternate=59,64,69
@@ -48,67 +48,67 @@ ForegroundVisited=61,174,230
 
 [Colors:Selection]
 BackgroundAlternate=29,153,243
-BackgroundNormal=61,174,233
-DecorationFocus=61,174,233
-DecorationHover=61,174,233
-ForegroundActive=252,252,252
-ForegroundInactive=239,240,241
+BackgroundNormal=143,188,187
+DecorationFocus=143,188,187
+DecorationHover=143,188,187
+ForegroundActive=46,52,64
+ForegroundInactive=46,52,64
 ForegroundLink=253,188,75
-ForegroundNegative=218,68,83
-ForegroundNeutral=246,116,0
-ForegroundNormal=239,240,241
-ForegroundPositive=39,174,96
+ForegroundNegative=191,97,106
+ForegroundNeutral=208,135,112
+ForegroundNormal=46,52,64
+ForegroundPositive=163,190,140
 ForegroundVisited=189,195,199
 
 [Colors:Tooltip]
-BackgroundAlternate=77,77,77
-BackgroundNormal=49,54,59
-DecorationFocus=61,174,233
-DecorationHover=61,174,233
+BackgroundAlternate=47,52,63
+BackgroundNormal=53,57,69
+DecorationFocus=143,188,187
+DecorationHover=143,188,187
 ForegroundActive=61,174,233
-ForegroundInactive=189,195,199
+ForegroundInactive=102,106,115
 ForegroundLink=41,128,185
-ForegroundNegative=218,68,83
-ForegroundNeutral=246,116,0
-ForegroundNormal=239,240,241
-ForegroundPositive=39,174,96
-ForegroundVisited=127,140,141
+ForegroundNegative=191,97,106
+ForegroundNeutral=208,135,112
+ForegroundNormal=211,218,227
+ForegroundPositive=163,190,140
+ForegroundVisited=82,148,226
 
 [Colors:View]
-BackgroundAlternate=49,54,59
-BackgroundNormal=35,38,41
-DecorationFocus=61,174,233
-DecorationHover=61,174,233
-ForegroundActive=61,174,233
-ForegroundInactive=189,195,199
-ForegroundLink=41,128,185
-ForegroundNegative=218,68,83
-ForegroundNeutral=246,116,0
-ForegroundNormal=239,240,241
-ForegroundPositive=39,174,96
-ForegroundVisited=127,140,141
+BackgroundAlternate=20,26,33
+BackgroundNormal=67,76,94
+DecorationFocus=143,188,187
+DecorationHover=143,188,187
+ForegroundActive=136,192,208
+ForegroundInactive=102,106,115
+ForegroundLink=94,129,172
+ForegroundNegative=191,97,106
+ForegroundNeutral=208,135,112
+ForegroundNormal=216,222,233
+ForegroundPositive=163,190,140
+ForegroundVisited=124,183,255
 
 [Colors:Window]
-BackgroundAlternate=77,77,77
-BackgroundNormal=49,54,59
-DecorationFocus=61,174,233
-DecorationHover=61,174,233
+BackgroundAlternate=47,52,63
+BackgroundNormal=59,66,82
+DecorationFocus=143,188,187
+DecorationHover=143,188,187
 ForegroundActive=61,174,233
-ForegroundInactive=189,195,199
+ForegroundInactive=102,106,115
 ForegroundLink=41,128,185
-ForegroundNegative=218,68,83
-ForegroundNeutral=246,116,0
-ForegroundNormal=239,240,241
-ForegroundPositive=39,174,96
-ForegroundVisited=127,140,141
+ForegroundNegative=191,97,106
+ForegroundNeutral=208,135,112
+ForegroundNormal=216,222,233
+ForegroundPositive=163,190,140
+ForegroundVisited=143,188,187
 
 [General]
-ColorScheme=Breeze Dark
-Name=Breeze Dark
+ColorScheme=Nordic
+Name=Nordic
 font=Recursive,10,-1,5,50,0,0,0,0,0,Sans Casual
 menuFont=Recursive,10,-1,5,50,0,0,0,0,0,Sans Casual
 shadeSortColumn=true
-smallestReadableFont=Recursive,8,-1,5,50,0,0,0,0,0,Sans Casual
+smallestReadableFont=Recursive,9,-1,5,50,0,0,0,0,0,Sans Casual
 toolBarFont=Recursive,10,-1,5,50,0,0,0,0,0,Sans Casual
 widgetStyle=Breeze
 
@@ -129,9 +129,9 @@ ToolButtonStyle=TextBesideIcon
 ToolButtonStyleOtherToolbars=TextBesideIcon
 
 [WM]
-activeBackground=49,54,59
-activeBlend=255,255,255
-activeForeground=239,240,241
-inactiveBackground=49,54,59
-inactiveBlend=75,71,67
-inactiveForeground=127,140,141
+activeBackground=47,52,63
+activeBlend=47,52,63
+activeForeground=211,218,227
+inactiveBackground=47,52,63
+inactiveBlend=47,52,63
+inactiveForeground=102,106,115
