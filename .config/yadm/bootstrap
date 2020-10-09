@@ -134,9 +134,9 @@ install_zplugin() {
 }
 
 install_doomemacs() {
-    if ! [ -d "$HOME/.emacs.d" ]; then
-        git clone -b develop https://github.com/hlissner/doom-emacs.git "$HOME/.emacs.d"
-        "$HOME/.emacs.d/bin/doom" install
+    if ! [ -d "$HOME/.config/emacs" ]; then
+        git clone -b develop https://github.com/hlissner/doom-emacs.git "$HOME/.config/emacs"
+        "$HOME/.config/emacs/bin/doom" install
     fi
 }
 

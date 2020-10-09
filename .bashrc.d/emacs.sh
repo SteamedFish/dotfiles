@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-if [ -d "$HOME/.emacs.d/bin" ]; then
+if [ -d "$HOME/.config/emacs/bin" ]; then
+    export PATH="$HOME/.config/emacs/bin:$PATH"
+elif [ -d "$HOME/.emacs.d/bin" ]; then
     export PATH="$HOME/.emacs.d/bin:$PATH"
 fi
 

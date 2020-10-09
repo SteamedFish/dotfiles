@@ -333,35 +333,42 @@ update_vim() {
 
 
 update_emacs() {
-    if [ -f "$HOME/.emacs.d/bin/doom" ]; then
-        # Doom Emacs
-        echo "updating Doom Emacs"
-        cd "$HOME/.emacs.d/"
-        # use git pull insted of doom upgrade
-        # to prevent the local repo too much behind
-        run git reset --hard origin/develop
-        run -r 5 git pull
-        run -r 5 git submodule update --recursive --init
-
-        # there's currently a bug that requires to
-        # update melpa repo manually and clean
-        # straight build cache before refresh
-        # if [ -d "$HOME/.emacs.d/.local/straight/repos/melpa" ]; then
-        #     cd "$HOME/.emacs.d/.local/straight/repos/melpa"
-        #     run -r 5 gitpull
-        # fi
-        # if [ -f "$HOME/.emacs.d/.local/straight/build-cache.el" ]; then
-        #     rm -v "$HOME/.emacs.d/.local/straight/build-cache.el"
-        # fi
-
-        #run "$HOME"/.emacs.d/bin/doom -y upgrade
-        #run "$HOME"/.emacs.d/bin/doom -y clean
-        run -r 5 "$HOME"/.emacs.d/bin/doom -y sync -p -u
-        run "$HOME"/.emacs.d/bin/doom -y purge
-        run "$HOME"/.emacs.d/bin/doom -y build -r
-        # run "$HOME"/.emacs.d/bin/doom -y compile -c -p
-        run "$HOME"/.emacs.d/bin/doom env -a SSH_AUTH_SOCK
+    local DOOMDIR
+    if [ -f "$HOME/.config/emacs/bin/doom" ]; then
+        DOOMDIR="$HOME/.config/emacs/"
+    elif [ -f "$HOME/.emacs.d/bin/doom" ]; then
+        DOOMDIR="$HOME/.emacs.d/"
+    else
+        echo "Cannot find doom emacs config"
+        return
     fi
+    # Doom Emacs
+    echo "updating Doom Emacs on $DOOMDIR"
+    cd "$DOOMDIR" || return
+    # use git pull insted of doom upgrade
+    # to prevent the local repo too much behind
+    run git reset --hard origin/develop
+    run -r 5 git pull
+    run -r 5 git submodule update --recursive --init
+
+    # there's currently a bug that requires to
+    # update melpa repo manually and clean
+    # straight build cache before refresh
+    # if [ -d "$DOOMDIR/.local/straight/repos/melpa" ]; then
+    #     cd "$DOOMDIR/.local/straight/repos/melpa"
+    #     run -r 5 gitpull
+    # fi
+    # if [ -f "$DOOMDIR/.local/straight/build-cache.el" ]; then
+    #     rm -v "$DOOMDIR/.local/straight/build-cache.el"
+    # fi
+
+    #run "$DOOMDIR"/bin/doom -y upgrade
+    #run "$DOOMDIR"/bin/doom -y clean
+    run -r 5 "$DOOMDIR"/bin/doom -y sync -p -u
+    run "$DOOMDIR"/bin/doom -y purge
+    run "$DOOMDIR"/bin/doom -y build -r
+    # run "$DOMDIR"/bin/doom -y compile -c -p
+    run "$DOOMDIR"/bin/doom env -a SSH_AUTH_SOCK
     for _PROJECT in "$HOME"/emacs-distros/*; do
         if [ -d "${_PROJECT}/.git" ]; then
             cd "${_PROJECT}"
