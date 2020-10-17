@@ -181,6 +181,7 @@ update_linux_system() {
             run -r 5 sudo emerge --sync
         fi
         run sudo emerge -avuUDN --with-bdeps=y --keep-going --quiet-build @system @world @preserved-rebuild
+        run sudo emerge -av --keep-going --quiet-build @preserved-rebuild
         if [ -n "$(command -v qlop)" ]; then
             run qlop -tHmvl
         fi
