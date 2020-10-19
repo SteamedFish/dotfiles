@@ -145,6 +145,9 @@ update_linux_system() {
     if  [[ -f /etc/arch-release ]]; then
         if [ -n "$(command -v yay)" ]; then
             PACMAN_CMD="yay"
+            # gendb is slow and only need to run once.
+            # I haven't figure out a way to detect if gendb is alraady run.
+            yay --gendb
         else
             PACMAN_CMD="sudo pacman"
         fi
