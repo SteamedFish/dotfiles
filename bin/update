@@ -163,7 +163,7 @@ update_linux_system() {
         fi
         if [ -n "$(command -v pikaur)" ]; then
             # update git packages
-            pikaur -Sua --devel --needed
+            run pikaur -Sua --devel --needed
         fi
         if [ -n "$(command -v pacdiff)" ]; then
             run sudo pacdiff # pacman-contrib
