@@ -13,6 +13,7 @@
 
   (setq telega-use-tracking-for nil
         telega-known-inline-bots '("@shufmbot")
+        telega-chat-history-limit 100
         telega-sticker-set-download t
         telega-chat-button-width 28
         ;;telega-root-fill-column 48
