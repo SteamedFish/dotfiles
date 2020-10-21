@@ -69,9 +69,9 @@
   ("C-M-S-s-SPC" . #'toggle-input-method)
   ("C-M-S-s-j" . #'+chinese/rime-convert-string-at-point)
   (:map rime-mode-map
-    ("C-M-S-s-SPC" . #'rime-force-enable))
+    ("C-M-S-s-f" . #'rime-force-enable))
   (:map rime-active-mode-map
-    ("C-M-S-s-SPC" . #'rime-inline-ascii))
+    ("C-M-S-s-f" . #'rime-inline-ascii))
   :init
   (setq
     default-input-method "rime"
