@@ -7,6 +7,7 @@ Search back from the current cursor for available string (if
 a ring is selected, use it) as the input code, call the current
 int scheme to convert to Chinese."
   (interactive)
+  (rime-force-enable)
   (let ((string (if mark-active
                   (buffer-substring-no-properties
                     (region-beginning) (region-end))
