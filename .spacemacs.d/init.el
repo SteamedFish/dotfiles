@@ -41,6 +41,8 @@ This function should only modify configuration layer settings."
 
      ;; chat
      erc
+     ;;jabber
+     ;;rcirc
      slack
 
      ;; checkers
@@ -56,6 +58,7 @@ This function should only modify configuration layer settings."
       auto-completion-enable-snippets-in-popup t
       auto-completion-enable-sort-by-usage t)
      helm
+     ;;ivy
      templates
 
      ;; emacs
@@ -63,6 +66,7 @@ This function should only modify configuration layer settings."
       :variables
       better-defaults-move-to-beginning-of-code-first t
       better-defaults-move-to-end-of-code-first t)
+     helpful
      (ibuffer
       :variables
       ibuffer-group-buffers-by 'projects)
@@ -74,19 +78,37 @@ This function should only modify configuration layer settings."
       org-enable-hugo-support t
       org-enable-trello-support t
       org-projectile-file "TODOs.org")
+     ;;outshine
      semantic
      ;;smex
+     ;;tabs
      typography
 
+     ;; E-mail
+     ;;gnus
+     mu4e
+     ;;notmuch
+
      ;; filetree
+     ;;neotree
      treemacs
+
+     ;; fonts
+     ;;unicode-fonts
 
      ;; frameworks
      django
+     ;;emberjs
+     ;;phoenix
+     ;;react
+     ;;ruby-on-rails
+     ;;vue
 
      ;; fun
      emoji
      games
+     ;;selectric
+     ;;xkcd
 
      ;; international support
      (chinese
@@ -94,100 +116,213 @@ This function should only modify configuration layer settings."
       chinese-enable-fcitx t
       chinese-enable-youdao-dict t
       :packages (not pyim chinese-wbim pangu-spacing))
+     ;;japanese
+     ;;keyboard-layout
 
      ;; programming
+     ;;agda
+     ;;alda
      asciidoc
+     ;;asm
+     ;;autohotkey
+     ;;bibtex
      (c-c++
       :variables
       c-c++-enable-clang-support t)
+     ;;clojure
+     ;;coffeescript
+     ;;common-lisp
+     ;;coq
+     ;;crystal
+     ;;csharp
      csv
+     ;;d
+     ;;dart
+     ;;dhall
+     ;;elixir
+     ;;elm
      emacs-lisp
+     ;;erlang
+     ;;ess
+     ;;extempore
+     ;;factor
+     ;;faust
+     ;;forth
+     ;;fsharp
      go
+     ;;gpu
      graphviz
+     ;;groovy
+     ;;haskell
      html
-     ipython-notebook
+     ;;hy
+     ;;idris
+     ;;java
      javascript
+     ;;jr
      json
+     ;;jsonnet
+     ;;julia
+     ;;kivy
+     ;;lotlin
      (latex
       :variables
       latex-enable-auto-fill t
       latex-enable-folding t)
-     lsp
+     ;;lua
      major-modes
      markdown
+     ;;mercury
+     ;;nim
+     ;;ocaml
+     ;;octave
+     ;;pact
+     ;;perl5
+     ;;perl6
+     ;;php
      plantuml
+     ;;prolog
+     ;;protobuf
+     ;;purescript
      (python
       :variables
       python-test-runner '(pytest nose)
       python-enable-yapf-format-on-save t
       python-sort-imports-on-save t)
+     ;;racket
+     ;;reasonml
+     restructuredtext
+     ;;ruby
      rust
+     ;;scala
+     ;;scheme
+     ;;semantic-web
      shell-scripts
+     ;;sml
      sql
+     ;;swift
+     ;;typescript
      vimscript
+     ;;windows-scripts
      yaml
+     ;;yang
+     ;;zig
 
-     ;; os
-     nixos
+     ;; Misc
+     copy-as-format
+     ;;dtrt-indent
+     ;;ietf
+     multiple-cursors
+     ;;nlinum
+     parinfer
+
+     ;; Music
+     ;;pianobar
+     ;;spotify
+     ;;tidalcycles
+
+     ;; Operating systemd
+     ;;nixos
      osx
+
+     ;; Pair programming
+     ;;floobits
+
+     ;; Readers
+     dash
+     deft
+     ;;elfeed
+     epub
+     pdf
+     speed-reading
 
      ;; source control
      (git
       :variables
       git-enable-magit-svn-plugin t)
      github
+     ;;perforce
      (version-control
       :variables
       version-control-global-margin t)
 
      ;; tags
      cscope
+     ;;gtags
 
      ;; themes
      (colors
       :variables
       colors-enable-nyan-cat-progress-bar t)
+     themes-megapack
+     theming
 
      ;; tools
      ansible
+     ;;bm
+     ;;cfengine
      chrome
      cmake
      command-log
-     dash
+     conda
+     dap
      debug
      docker
+     ;;dotnet
+     ;;elasticsearch
      fasd
-     finance
+     ;;finance
      (geolocation
       :variables
       geolocation-enable-location-service t
       geolocation-enable-weather-forecast t)
      imenu-list
+     ;;import-js
+     ipython-notebook
+     languagetool
+     lsp
+     ;;meson
      nginx
+     ;;node
      pandoc
-     pdf-tools
      pass
      prettier
+     ;;prodigy
      puppet
+     quickurl
      (ranger
       :variables
       ranger-show-preview t)
      restclient
-     salt
+     ;;sailfish-developer
+     ;;salt
      (shell
       :variables
       shell-default-shell 'eshell)
+     ;;sphinx
      systemd
+     ;;tern
+     terraform
+     ;;tide
      tmux
-     vagrant
-     ;;ycmd
+     ;;transmission
+     ;;vagrant
+     ;;web-beautify
+     xclipboard
 
      ;; vim
+     evil-commentary
+     evil-snipe
      vim-empty-lines
+     vinegar
 
-     ;; web
+     ;; web services
+     confluence
+     ;;evernote
      search-engine
+     ;;spotfy
      twitter
+     wakatime
 
      ;; my own layers
      sf-config)
