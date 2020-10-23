@@ -5,3 +5,4 @@
 (package! ob-mermaid)
 (package! valign
   :recipe (:host github :repo "casouri/valign"))
+(package! org-roam-server)
