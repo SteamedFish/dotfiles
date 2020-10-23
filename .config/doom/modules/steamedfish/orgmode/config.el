@@ -6,7 +6,7 @@
   (custom-set-faces!
    '(org-ellipsis :foreground nil))
   (setq org-directory (expand-file-name "~/work/org/")
-    org-roam-directory org-directory
+    org-roam-directory (file-name-as-directory (expand-file-name (concat org-directory "/roam")))
     org-roam-db-location (expand-file-name "org-roam.db" doom-cache-dir)
     diary-file (expand-file-name (concat org-directory "/diary"))
     ;; all files but later.org should be put in agenda
