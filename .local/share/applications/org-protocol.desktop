@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Org-Protocol
+Exec=emacsclient %u
+Icon=emacs-icon
+Type=Application
+Terminal=false
+MimeType=x-scheme-handler/org-protocol
+
+# Associate org-protocol:// links with the desktop application by running in your shell:
+# xdg-mime default org-protocol.desktop x-scheme-handler/org-protocol
