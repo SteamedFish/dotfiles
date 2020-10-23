@@ -37,7 +37,7 @@
     (add-hook 'telega-chat-mode-hook
               (lambda ()
                 (set (make-local-variable 'company-backends)
-                     (append '(telega-company-emoji
+                     (append '(telega-company-telegram-emoji
                                telega-company-username
                                telega-company-hashtag)
                              (when (telega-chat-bot-p telega-chatbuf--chat)
