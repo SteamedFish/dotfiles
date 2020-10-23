@@ -3,8 +3,12 @@
 (use-package! telega
   :commands (telega)
   :config
-
+  (add-hook 'telega-load-hook 'global-telega-url-shorten-mode)
   (telega-mode-line-mode 1)
+  (telega-notifications-mode 1)
+
+  ;; (require 'telega-mnz)
+  (add-hook 'telega-load-hook 'global-telega-mnz-mode)
 
   (set-popup-rule! (regexp-quote telega-root-buffer-name)
     :side 'right :size 50 :quit nil :modeline t :select t)
@@ -12,6 +16,8 @@
     :side 'right :size 50 :quit nil :modeline t :select t)
 
   (setq telega-use-tracking-for nil
+        telega-url-shorten-use-images t
+        telega-mnz-use-language-detection 10
         telega-known-inline-bots '("@shufmbot"
                                    "@jiebabot"
                                    "@toptoh_bot"
