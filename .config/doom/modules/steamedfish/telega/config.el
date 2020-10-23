@@ -12,7 +12,12 @@
     :side 'right :size 50 :quit nil :modeline t :select t)
 
   (setq telega-use-tracking-for nil
-        telega-known-inline-bots '("@shufmbot")
+        telega-known-inline-bots '("@shufmbot"
+                                   "@jiebabot"
+                                   "@toptoh_bot"
+                                   "@nasy_nautc_bot"
+                                   "@nasy_words_bot"
+                                   "@PythiaGataBot")
         telega-chat-history-limit 100
         telega-sticker-set-download t
         telega-chat-button-width 28
