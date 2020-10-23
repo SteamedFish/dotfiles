@@ -3,4 +3,5 @@
 
 (package! symbol-overlay)
 (package! imenu-list)
+(package! zeal-at-point)
 (package! wakatime-mode)

@@ -14,7 +14,7 @@
         lsp-ui-flycheck-enable t
         lsp-ui-sideline-ignore-duplicate t
         lsp-ui-sideline-update-mode 'point
-        lsp-ui-doc-enable t)
+        lsp-ui-doc-enable nil)
 
   (if (featurep 'xwidget-internal)
       (setq lsp-ui-doc-use-webkit t)))
@@ -41,6 +41,11 @@
   :commands (imenu-list-smart-toggle)
   :config
   (imenu-list-minor-mode))
+
+(use-package! zeal-at-point
+  :bind
+  ("C-M-S-s-k" . #'zeal-at-point)
+  :commands (zeal-at-point))
 
 (use-package! wakatime-mode
   :config
