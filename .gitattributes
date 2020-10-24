@@ -1,5 +1,5 @@
 .ssh/config##template filter=git-crypt diff=git-crypt
 .mbsyncrc filter=git-crypt diff=git-crypt
 .notmuch-config filter=git-crypt diff=git-crypt
-.doom.d/modules/steamedfish/basic/email.el filter=git-crypt diff=git-crypt
+.config/doom/modules/steamedfish/basic/email.el filter=git-crypt diff=git-crypt
 .wakatime.cfg filter=git-crypt diff=git-crypt
