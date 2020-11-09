@@ -9,3 +9,5 @@
 (package! netease-cloud-music
   :recipe (:host github
             :repo "SpringHan/netease-cloud-music.el"))
+(when (featurep! :completion ivy)
+  (package! counsel-tramp))

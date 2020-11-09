@@ -4,6 +4,9 @@
 (use-package! pinentry
   :config (pinentry-start))
 
+(after! treemacs
+  (treemacs-tag-follow-mode t))
+
 (use-package! eaf
   :when IS-LINUX
   :commands (eaf-open-browser eaf-open eaf-open-browser-with-history
@@ -34,6 +37,9 @@
 
   ;; use `emacs-application-framework' to open PDF file: link
   (add-to-list 'org-file-apps '("\\.pdf\\'" . eaf-org-open-file)))
+
+(use-package! counsel-tramp
+  :commands(counsel-tramp counsel-tramp-quit))
 
 (use-package! eaf-evil
   :after eaf)

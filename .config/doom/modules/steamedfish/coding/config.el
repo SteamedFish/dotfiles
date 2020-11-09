@@ -7,7 +7,8 @@
         lsp-enable-file-watchers nil
         lsp-eldoc-render-all t
         ;; experimental sementic highlighting
-        lsp-enable-semantic-highlighting t))
+        lsp-enable-semantic-highlighting t)
+  (lsp-treemacs-sync-mode 1))
 
 (after! lsp-ui
   (setq lsp-ui-doc-position 'at-point
@@ -36,6 +37,9 @@
   :init
   (push '(ssh-deploy-on-explicit-save . t)
         safe-local-variable-values))
+
+(after! imenu
+  (setq imenu-auto-rescan t))
 
 (use-package! imenu-list
   :commands (imenu-list-smart-toggle)
