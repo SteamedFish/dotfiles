@@ -15,6 +15,14 @@
     calendar-mark-holidays-flag t
     calendar-mark-diary-entries-flag t))
 
+(use-package! appt
+  :init
+  (appt-activate)
+  :config
+  (setq
+    appt-display-mode-line t
+    appt-display-diary t))
+
 (use-package! eaf
   :when IS-LINUX
   :commands (eaf-open-browser eaf-open eaf-open-browser-with-history
