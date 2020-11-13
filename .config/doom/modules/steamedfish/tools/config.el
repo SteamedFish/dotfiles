@@ -7,6 +7,14 @@
 (after! treemacs
   (treemacs-tag-follow-mode t))
 
+(after! calendar
+  (setq
+    calendar-latitude 23.1247
+    calendar-longitude 113.3612
+    calendar-location-name "Tianhe, Guangzhou"
+    calendar-mark-holidays-flag t
+    calendar-mark-diary-entries-flag t))
+
 (use-package! eaf
   :when IS-LINUX
   :commands (eaf-open-browser eaf-open eaf-open-browser-with-history
