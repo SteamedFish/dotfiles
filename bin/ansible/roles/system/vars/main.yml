@@ -53,8 +53,6 @@ packages_cask:
     - docker
     - dropbox
     - firefox
-    - flash-npapi
-    - flash-ppapi
     - font-fira-code
     - font-fira-mono
     - font-fira-sans
