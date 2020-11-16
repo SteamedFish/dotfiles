@@ -74,7 +74,7 @@ exec --no-startup-id fcitx
 exec --no-startup-id picom
 exec --no-startup-id flameshot
 exec --no-startup-id xscreensaver -nosplash
-exec --no-startup-id feh --recursive --randomize --bg-scale /usr/share/wallpapers/
+exec --no-startup-id feh --recursive --randomize --bg-scale /usr/share/wallpapers/ /usr/share/backgrounds/
 #exec --no-startup-id polybar -r main
 exec xautolock -time 2 -locker "xscreensaver-command -lock" -nowlocker "xscreensaver-command -lock"
 
