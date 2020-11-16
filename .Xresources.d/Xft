@@ -1,6 +1,10 @@
 ! vim: filetype=xdefaults:
 
-*.font: xft:NotoMono Nerd Font:pixelsize=13,xft:Sarasa Mono SC:pixelsize=13:hinting=false:antialias=true
+! see https://keithp.com/~keithp/render/Xft.tutorial
+! you can use long name format, or alias
+! for example, see /usr/share/fonts/100dpi/fonts.alias
+! you can use xfontsel to get the long format
+*.font:  -*-lucida sans unicode-*-r-normal-*-17-*-*-*-*-*-*-*
 
 Xft.rgba:       rgb
 Xft.antialias:  true
