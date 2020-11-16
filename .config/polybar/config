@@ -17,23 +17,47 @@
 ;==========================================================
 
 [colors]
-background = ${xrdb:color0:#222}
-;background = #222
+
+; nord0
+background = ${xrdb:background:#2E3440}
+nord1 = 3B4252
+nord2 = 434C5E
+; nord3
+buffer = #4c566a
+; nord4
+foreground = ${xrdb:foreground:#D8DEE9}
+nord5 = #E5E9F0
+nord6 = #ECEFF4
+nord7 = #8FBCBB
+nord8 = #88C0D0
+nord9 = #81A1C1
+nord10 = #5E81AC
+; nord11
+urgent = #BF616A
+; nord12
+warning = #D08770
+alert = #D08770
+; nord13
+notify = #EBCB8B
+; nord14
+success = #A3BE8C
+; nord15
+function = #B48EAD
+
+
 background-alt = ${xrdb:color2:#444}
-foreground = ${xrdb:color9:#222}
-;foreground = #dfdfdf
 foreground-alt = ${xrdb:color10:#555}
 primary = ${xrdb:color8:#ffb52a}
 secondary = ${xrdb:color9:#e60053}
-alert = ${xrdb:color15:#bd2c40}
 
-[bar/top]
+[bar/main]
+bottom = true
 ;monitor = ${env:MONITOR:HDMI-1}
 width = 100%
 height = 27
 ;offset-x = 1%
 ;offset-y = 1%
-radius = 6.0
+radius = 1.0
 fixed-center = false
 
 background = ${colors.background}
@@ -55,9 +79,9 @@ font-0 = fixed:pixelsize=10;1
 font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
 font-2 = siji:pixelsize=10;1
 
-modules-left = bspwm i3
-modules-center = memory cpu wlan eth temperature firesystem
-modules-right = xbacklight alsa pulseaudio xkeyboard date powermenu
+modules-left = i3
+modules-center = cpu memory wlan eth temperature firesystem
+modules-right = pulseaudio xkeyboard date
 
 tray-position = right
 tray-padding = 2
@@ -107,28 +131,6 @@ label-mounted = %{F#0a81f5}%mountpoint%%{F-}: %percentage_used%%
 label-unmounted = %mountpoint% not mounted
 label-unmounted-foreground = ${colors.foreground-alt}
 
-[module/bspwm]
-type = internal/bspwm
-
-label-focused = %index%
-label-focused-background = ${colors.background-alt}
-label-focused-underline= ${colors.primary}
-label-focused-padding = 2
-
-label-occupied = %index%
-label-occupied-padding = 2
-
-label-urgent = %index%!
-label-urgent-background = ${colors.alert}
-label-urgent-padding = 2
-
-label-empty = %index%
-label-empty-foreground = ${colors.foreground-alt}
-label-empty-padding = 2
-
-; Separator in between workspaces
-; label-separator = |
-
 [module/i3]
 type = internal/i3
 format = <label-state> <label-mode>
@@ -139,8 +141,8 @@ wrapping-scroll = false
 ;pin-workspaces = true
 
 label-mode-padding = 2
-label-mode-foreground = #000
-label-mode-background = ${colors.primary}
+label-mode-foreground = ${colors.foreground}
+label-mode-background = ${colors.background}
 
 ; focused = Active workspace on focused monitor
 label-focused = %index%
@@ -167,44 +169,9 @@ label-urgent-padding = 2
 ; label-separator = |
 
 
-[module/mpd]
-type = internal/mpd
-format-online = <label-song>  <icon-prev> <icon-stop> <toggle> <icon-next>
-
-icon-prev = 
-icon-stop = 
-icon-play = 
-icon-pause = 
-icon-next = 
-
-label-song-maxlen = 25
-label-song-ellipsis = true
-
-[module/xbacklight]
-type = internal/xbacklight
-
-format = <label> <bar>
-label = BL
-
-bar-width = 10
-bar-indicator = |
-bar-indicator-foreground = #fff
-bar-indicator-font = 2
-bar-fill = ─
-bar-fill-font = 2
-bar-fill-foreground = #9f78e1
-bar-empty = ─
-bar-empty-font = 2
-bar-empty-foreground = ${colors.foreground-alt}
-
-[module/backlight-acpi]
-inherit = module/xbacklight
-type = internal/backlight
-card = intel_backlight
-
 [module/cpu]
 type = internal/cpu
-interval = 2
+interval = 1
 format-prefix = " "
 format-prefix-foreground = ${colors.foreground-alt}
 format-underline = #f90000
@@ -212,7 +179,7 @@ label = %percentage:2%%
 
 [module/memory]
 type = internal/memory
-interval = 2
+interval = 1
 format-prefix = " "
 format-prefix-foreground = ${colors.foreground-alt}
 format-underline = #4bffdc
@@ -221,7 +188,7 @@ label = %percentage_used%%
 [module/wlan]
 type = internal/network
 interface = net1
-interval = 3.0
+interval = 1.0
 
 format-connected = <ramp-signal> <label-connected>
 format-connected-underline = #9f78e1
@@ -242,8 +209,8 @@ ramp-signal-foreground = ${colors.foreground-alt}
 
 [module/eth]
 type = internal/network
-interface = sit0
-interval = 3.0
+interface = enp6s0
+interval = 1.0
 
 format-connected-underline = #55aa55
 format-connected-prefix = " "
@@ -260,7 +227,7 @@ format-disconnected =
 type = internal/date
 interval = 5
 
-date =
+date = " %m-%d"
 date-alt = " %Y-%m-%d"
 
 time = %H:%M
@@ -299,67 +266,6 @@ bar-volume-empty = ─
 bar-volume-empty-font = 2
 bar-volume-empty-foreground = ${colors.foreground-alt}
 
-[module/alsa]
-type = internal/alsa
-
-format-volume = <label-volume> <bar-volume>
-label-volume = VOL
-label-volume-foreground = ${root.foreground}
-
-format-muted-prefix = " "
-format-muted-foreground = ${colors.foreground-alt}
-label-muted = sound muted
-
-bar-volume-width = 10
-bar-volume-foreground-0 = #55aa55
-bar-volume-foreground-1 = #55aa55
-bar-volume-foreground-2 = #55aa55
-bar-volume-foreground-3 = #55aa55
-bar-volume-foreground-4 = #55aa55
-bar-volume-foreground-5 = #f5a70a
-bar-volume-foreground-6 = #ff5555
-bar-volume-gradient = false
-bar-volume-indicator = |
-bar-volume-indicator-font = 2
-bar-volume-fill = ─
-bar-volume-fill-font = 2
-bar-volume-empty = ─
-bar-volume-empty-font = 2
-bar-volume-empty-foreground = ${colors.foreground-alt}
-
-[module/battery]
-type = internal/battery
-battery = BAT0
-adapter = ADP1
-full-at = 98
-
-format-charging = <animation-charging> <label-charging>
-format-charging-underline = #ffb52a
-
-format-discharging = <animation-discharging> <label-discharging>
-format-discharging-underline = ${self.format-charging-underline}
-
-format-full-prefix = " "
-format-full-prefix-foreground = ${colors.foreground-alt}
-format-full-underline = ${self.format-charging-underline}
-
-ramp-capacity-0 = 
-ramp-capacity-1 = 
-ramp-capacity-2 = 
-ramp-capacity-foreground = ${colors.foreground-alt}
-
-animation-charging-0 = 
-animation-charging-1 = 
-animation-charging-2 = 
-animation-charging-foreground = ${colors.foreground-alt}
-animation-charging-framerate = 750
-
-animation-discharging-0 = 
-animation-discharging-1 = 
-animation-discharging-2 = 
-animation-discharging-foreground = ${colors.foreground-alt}
-animation-discharging-framerate = 750
-
 [module/temperature]
 type = internal/temperature
 thermal-zone = 0
@@ -378,35 +284,6 @@ ramp-0 = 
 ramp-1 = 
 ramp-2 = 
 ramp-foreground = ${colors.foreground-alt}
-
-[module/powermenu]
-type = custom/menu
-
-expand-right = true
-
-format-spacing = 1
-
-label-open = 
-label-open-foreground = ${colors.secondary}
-label-close =  cancel
-label-close-foreground = ${colors.secondary}
-label-separator = |
-label-separator-foreground = ${colors.foreground-alt}
-
-menu-0-0 = reboot
-menu-0-0-exec = menu-open-1
-menu-0-1 = power off
-menu-0-1-exec = menu-open-2
-
-menu-1-0 = cancel
-menu-1-0-exec = menu-open-0
-menu-1-1 = reboot
-menu-1-1-exec = sudo reboot
-
-menu-2-0 = power off
-menu-2-0-exec = sudo poweroff
-menu-2-1 = cancel
-menu-2-1-exec = menu-open-0
 
 [settings]
 screenchange-reload = true
