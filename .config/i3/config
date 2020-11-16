@@ -30,7 +30,7 @@ set $ws10 "10"
 font pango:Rec Mono Duotone, Sarasa Mono SC, Noto Sans CJK SC 9
 
 # settings
-default_orientation vertical
+default_orientation horizontal
 # window title left|center|right
 title_align center
 focus_follows_mouse yes
