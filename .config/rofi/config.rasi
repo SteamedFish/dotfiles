@@ -1,6 +1,7 @@
 configuration {
     /* don't have ssh in modi, it may be very slow if known_hosts is large */
-    modi: "window,run,windowcd,drun,combi,keys,calc";
+    modi: "window,drun,windowcd,run,combi,keys,calc";
+    combi-modi: "window,drun,windowcd,run,keys,calc";
     font: "Rec Mono Doutone 12";
     terminal: "alacritty";
     theme: "~/.config/rofi/nord.rasi";
