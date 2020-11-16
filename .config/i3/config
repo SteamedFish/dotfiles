@@ -75,27 +75,43 @@ exec --no-startup-id picom
 exec --no-startup-id flameshot
 exec --no-startup-id xscreensaver -nosplash
 exec --no-startup-id feh --recursive --randomize --bg-scale /usr/share/wallpapers/
-exec --no-startup-id polybar -r main
+#exec --no-startup-id polybar -r main
 exec xautolock -time 2 -locker "xscreensaver-command -lock" -nowlocker "xscreensaver-command -lock"
 
-assign [class="Alacritty"] $ws1
-exec alacritty
+# KDE related configurations
+# see https://userbase.kde.org/Tutorials/Using_Other_Window_Managers_with_Plasma
+for_window [title="Desktop — Plasma"] kill; floating enable; border none
+for_window [class="plasmashell"] floating enable;
+for_window [class="Plasma"] floating enable; border none
+for_window [title="plasma-desktop"] floating enable; border none
+for_window [title="win7"] floating enable; border none
+for_window [class="krunner"] floating enable; border none
+for_window [class="Kmix"] floating enable; border none
+for_window [class="Klipper"] floating enable; border none
+for_window [class="Plasmoidviewer"] floating enable; border none
+for_window [class="(?i)*nextcloud*"] floating disable
+for_window [class="plasmashell" window_type="notification"] floating enable, border none, move right 700px, move down 450px
+no_focus [class="plasmashell" window_type="notification"]
+assign [class="kmail"] $ws5
 
-exec emacs
+assign [class="Alacritty"] $ws1
+#exec alacritty
+
+#exec emacs
 assign [class="Emacs"] $ws2
 
-exec firefox
+########exec firefox
 assign [class="firefox"] $ws3
 
-exec telegram-desktop
+########exec telegram-desktop
 for_window [class="TelegramDesktop"] floating enable
 assign [class="TelegramDesktop"] $ws4
 
-exec /opt/apps/com.qq.weixin.work.deepin/files/run.sh -u "WeChat Work"
+#exec /opt/apps/com.qq.weixin.work.deepin/files/run.sh -u "WeChat Work"
 for_window [instance="wxwork.exe" class="Wine"] floating enable
 assign [instance="wxwork.exe" class="Wine"] $ws4
 
-exec /opt/deepinwine/apps/Deepin-WeChat/run.sh -u WeChat
+#exec /opt/deepinwine/apps/Deepin-WeChat/run.sh -u WeChat
 for_window [instance="wechat.exe" class="Wine"] floating enable
 assign [instance="wechat.exe" class="Wine"] $ws4
 for_window [instance="wechat.exe" class="wechat.exe"] floating enable
@@ -111,11 +127,11 @@ bindsym Ctrl+Shift+Mod4+Mod1+l exec xscreensaver-command -lock
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+#exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
-exec --no-startup-id nm-applet
+#exec --no-startup-id nm-applet
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
