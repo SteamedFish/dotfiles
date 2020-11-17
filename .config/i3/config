@@ -97,6 +97,9 @@ assign [class="kmail"] $ws5
 assign [class="Alacritty"] $ws1
 #exec alacritty
 
+assign [class="kitty"] $ws1
+#exec kitty
+
 #exec emacs
 assign [class="Emacs"] $ws2
 
@@ -145,7 +148,7 @@ floating_modifier $mod
 
 # start a terminal
 #bindsym $mod+Return exec i3-sensible-terminal
-bindsym $mod+Return exec alacritty
+bindsym $mod+Return exec kitty
 
 # kill focused window
 bindsym $mod+Shift+q kill
