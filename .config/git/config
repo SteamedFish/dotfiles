@@ -1,0 +1,55 @@
+[user]
+    name = SteamedFish
+    email = i@steamedfish.org
+    signingkey = 7BD83D6E2E868CC8
+[github]
+    user = SteamedFish
+[grep]
+    lineNumber = true
+[magithub]
+	online = false
+[magithub "status"]
+	includeStatusHeader = false
+	includePullRequestsSection = false
+	includeIssuesSection = false
+[commit]
+	gpgsign = true
+[gitflow "release.branch"]
+	sign = true
+[gitflow "release.finish"]
+	sign = true
+[gitflow "hotfix.finish"]
+	sign = true
+[pull]
+	ff = only
+	rebase = false
+[credential]
+	helper = store
+[color]
+	ui = true
+[core]
+	pager = delta
+[delta]
+	plus-color = "#012800"
+	minus-color = "#340001"
+	syntax-theme = Nord
+	line-numbers = true
+	side-by-side = false
+	commit-style = raw
+	hunk-header-style = syntax
+	zero-style = syntax
+	commit-decoration-style = box
+	file-decoration-style =
+	hyperlinks = false
+	inspect-raw-lines = true
+	keep-plus-minus-markers = false
+	max-line-distance = 0.6
+	max-line-length = 512
+	navigate = false
+	paging = auto
+	side-by-side = false
+	syntax-theme = Nord
+	width = 79
+	tabs = 4
+[interactive]
+	diffFilter = delta --color-only
