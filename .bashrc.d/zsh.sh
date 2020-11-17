@@ -18,6 +18,8 @@ setopt NO_BAD_PATTERN
 setopt CORRECT
 # ask to correct all arguments
 setopt NO_CORRECT_ALL
+# don't kill background jobs
+setopt NO_HUP
 
 # History
 export HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
