@@ -11,3 +11,4 @@
             :repo "SpringHan/netease-cloud-music.el"))
 (when (featurep! :completion ivy)
   (package! counsel-tramp))
+(package! magit-delta)
