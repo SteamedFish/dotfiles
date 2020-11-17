@@ -80,8 +80,8 @@ elif [ -n "$(command -v exa)" ];then
         alias ls='exa --git --extended'
         alias tree='exa --tree --git --extended'
     else
-        alias ls='exa --git --icons --extended'
-        alias tree='exa --tree --git --icons --extended'
+        alias ls='exa --git --icons --extended --color=auto'
+        alias tree='exa --tree --git --icons --extended --color=auto'
     fi
 fi
 if [ -n "$(command -v fdfind)" ];then
