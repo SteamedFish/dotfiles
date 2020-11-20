@@ -12,3 +12,9 @@
 (when (featurep! :completion ivy)
   (package! counsel-tramp))
 (package! magit-delta)
+(package! grammarly
+  :recipe (:host github
+            :repo "jcs-elpa/grammarly"))
+(package! flycheck-grammarly
+  :recipe (:host github
+            :repo "jcs-elpa/flycheck-grammarly"))

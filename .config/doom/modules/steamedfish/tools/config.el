@@ -71,3 +71,13 @@
 
 (use-package! netease-cloud-music
   :commands (netease-cloud-music netease-cloud-music-change-repeat-mode))
+
+(use-package! grammarly
+  :after flycheck
+  :config
+  (setq
+    grammarly-username (+pass-get-user "grammarly.com")
+    grammarly-password (+pass-get-secret "grammarly.com")))
+
+(use-package! flycheck-grammarly
+  :after (flycheck grammarly))
