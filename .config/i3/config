@@ -76,7 +76,7 @@ exec --no-startup-id flameshot
 exec --no-startup-id xscreensaver -nosplash
 exec --no-startup-id feh --recursive --randomize --bg-scale /usr/share/wallpapers/ /usr/share/backgrounds/
 #exec --no-startup-id polybar -r main
-exec xautolock -time 2 -locker "xscreensaver-command -lock" -nowlocker "xscreensaver-command -lock"
+exec xautolock -time 20 -locker "xscreensaver-command -lock" -nowlocker "xscreensaver-command -lock"
 
 # KDE related configurations
 # see https://userbase.kde.org/Tutorials/Using_Other_Window_Managers_with_Plasma
