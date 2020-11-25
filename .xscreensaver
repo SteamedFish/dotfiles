@@ -1,11 +1,11 @@
 # XScreenSaver Preferences File
-# Written by xscreensaver-demo 5.44 for steamedfish on Mon Nov 16 12:25:28 2020.
+# Written by xscreensaver-demo 5.44 for steamedfish on Tue Nov 24 20:12:24 2020.
 # https://www.jwz.org/xscreensaver/
 
-timeout:	1:00:00
-cycle:		0:10:00
+timeout:	0:15:00
+cycle:		0:05:00
 lock:		True
-lockTimeout:	0:01:00
+lockTimeout:	0:02:00
 passwdTimeout:	0:00:30
 visualID:	default
 installColormap:    True
@@ -24,7 +24,7 @@ fadeTicks:	20
 captureStderr:	True
 ignoreUninstalledPrograms:False
 font:		*-medium-r-*-140-*-m-*
-dpmsEnabled:	True
+dpmsEnabled:	False
 dpmsQuickOff:	False
 dpmsStandby:	2:00:00
 dpmsSuspend:	0:00:00
