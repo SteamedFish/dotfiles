@@ -94,11 +94,16 @@ for_window [class="plasmashell" window_type="notification"] floating enable, bor
 no_focus [class="plasmashell" window_type="notification"]
 assign [class="kmail"] $ws5
 
-assign [class="Alacritty"] $ws1
+#assign [class="Alacritty"] $ws1
 #exec alacritty
-
 assign [class="kitty"] $ws1
 #exec kitty
+
+## quick dropdown terminal
+exec --no-startup-id alacritty
+for_window [class="Alacritty"] floating enable;
+for_window [class="Alacritty"] move scratchpad; [class="Alacritty"] scratchpad show; move position 0px 0px; resize grow height 400px; resize grow width 983px; move scratchpad
+bindsym $mod+t [class="Alacritty"] scratchpad show
 
 #exec emacs
 assign [class="Emacs"] $ws2
