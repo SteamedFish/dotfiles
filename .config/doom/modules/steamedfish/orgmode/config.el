@@ -77,6 +77,9 @@
   :config
   (setq valign-fancy-bar t))
 
+(use-package! ftable
+  :commands (ftable-fill ftable-reformat))
+
 (after! org-tree-slide
   :config
   (setq org-tree-slide-modeline-display 'outside
