@@ -96,14 +96,14 @@ assign [class="kmail"] $ws5
 
 #assign [class="Alacritty"] $ws1
 #exec alacritty
-assign [class="kitty"] $ws1
-#exec kitty
+assign [class="Alacritty"] $ws1
+#exec alacritty
 
 ## quick dropdown terminal
-exec --no-startup-id alacritty
-for_window [class="Alacritty"] floating enable;
-for_window [class="Alacritty"] move scratchpad; [class="Alacritty"] scratchpad show; move position 0px 0px; resize grow height 400px; resize grow width 983px; move scratchpad
-bindsym $mod+t [class="Alacritty"] scratchpad show
+exec --no-startup-id kitty --name dropdown
+for_window [instance="dropdown" class="kitty"] floating enable;
+for_window [instance="dropdown" class="kitty"] move scratchpad; [class="Alacritty"] scratchpad show; move position 0px 0px; resize grow height 400px; resize grow width 983px; move scratchpad
+bindsym $mod+t [instance="dropdown" class="kitty"] scratchpad show
 
 #exec emacs
 assign [class="Emacs"] $ws2
@@ -153,7 +153,7 @@ floating_modifier $mod
 
 # start a terminal
 #bindsym $mod+Return exec i3-sensible-terminal
-bindsym $mod+Return exec kitty
+bindsym $mod+Return exec alacritty
 
 # kill focused window
 bindsym $mod+Shift+q kill
