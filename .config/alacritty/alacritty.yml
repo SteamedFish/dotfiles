@@ -8,7 +8,7 @@
 #import:
 #  - /path/to/alacritty.yml
 import:
-  - nord.yaml
+  - /home/steamedfish/.config/alacritty/nord.yml
 
 # Any items in the `env` entry below will be added as
 # environment variables. Some entries may override variables
