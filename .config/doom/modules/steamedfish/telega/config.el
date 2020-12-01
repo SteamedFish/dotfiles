@@ -60,7 +60,7 @@
   (when (featurep! :config default)
     (map! :map telega-chat-mode-map
       "RET"              #'+default/newline-below
-      "<s-return>"       #'telega-chatbuf-input-send))
+      "<C-return>"       #'telega-chatbuf-input-send))
 
   (add-hook 'telega-chat-mode-hook
     (visual-line-mode t))
