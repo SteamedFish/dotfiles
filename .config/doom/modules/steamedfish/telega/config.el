@@ -72,6 +72,7 @@
   (when (member "Sarasa Mono SC" (font-family-list))
     (make-face 'telega-align-by-sarasa)
     (set-face-font 'telega-align-by-sarasa (font-spec :family "Sarasa Mono SC"))
+    (set-fontset-font "fontset-default" ?༼ (font-spec :family "Noto Serif Tibetan" :size 1))
     (add-hook! '(telega-chat-mode-hook telega-root-mode-hook)
       (buffer-face-set 'telega-align-by-sarasa)))
 
