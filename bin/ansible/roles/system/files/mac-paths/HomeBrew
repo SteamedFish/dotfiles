@@ -2,6 +2,7 @@
 /usr/local/opt/ruby/bin
 /usr/local/opt/perl/bin
 /usr/local/opt/gnu-getopt/bin/
+/usr/local/opt/mysql-client/bin/
 /usr/local/bin
 /usr/local/sbin
 /usr/bin
