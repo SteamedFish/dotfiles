@@ -15,7 +15,7 @@
         lsp-ui-flycheck-enable t
         lsp-ui-sideline-ignore-duplicate t
         lsp-ui-sideline-update-mode 'point
-        lsp-ui-doc-enable nil)
+        lsp-ui-doc-enable t)
 
   (if (featurep 'xwidget-internal)
       (setq lsp-ui-doc-use-webkit t)))
