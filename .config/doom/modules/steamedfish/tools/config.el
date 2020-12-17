@@ -15,11 +15,11 @@
     calendar-mark-holidays-flag t
     calendar-mark-diary-entries-flag t))
 
-(use-package! magit-delta
-  :after magit
-  :commands magit-delta-mode
-  :init
-  (add-hook 'magit-mode-hook (lambda () (magit-delta-mode +1))))
+;; (use-package! magit-delta
+;;   :after magit
+;;   :commands magit-delta-mode
+;;   :init
+;;   (add-hook 'magit-mode-hook (lambda () (magit-delta-mode +1))))
 
 (use-package! appt
   :init

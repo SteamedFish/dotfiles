@@ -11,7 +11,7 @@
             :repo "SpringHan/netease-cloud-music.el"))
 (when (featurep! :completion ivy)
   (package! counsel-tramp))
-(package! magit-delta)
+;; (package! magit-delta)
 (package! grammarly
   :recipe (:host github
             :repo "jcs-elpa/grammarly"))
