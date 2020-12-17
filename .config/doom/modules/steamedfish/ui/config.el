@@ -65,12 +65,12 @@
         doom-modeline-enable-word-count t
         doom-modeline-indent-info t))
 
-(use-package! nyan-mode
-  :after doom-modeline
-  :init
-  (setq nyan-animate-nyancat t
-        nyan-wavy-trail t)
-  (nyan-mode t))
+;; (use-package! nyan-mode
+;;   :after doom-modeline
+;;   :init
+;;   (setq nyan-animate-nyancat t
+;;         nyan-wavy-trail t)
+;;   (nyan-mode t))
 
 (after! evil
   ;; create split window at the more correct place
