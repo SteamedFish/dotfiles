@@ -85,9 +85,14 @@
   (setq org-tree-slide-modeline-display 'outside
     org-tree-slide-fold-subtrees-skipped nil))
 
+(after! org-roam
+  ;; https://github.com/org-roam/org-roam-server/issues/115#issuecomment-730006834
+  (smartparens-global-mode -1)
+  (org-roam-server-mode)
+  (smartparens-global-mode +1))
+
 (use-package! org-roam-server
-  ;; roam server must start after emacs server
-  :after (org server)
+  :after org
   :config
   (setq org-roam-server-host "127.0.0.1"
         org-roam-server-port 8080
@@ -99,5 +104,4 @@
         org-roam-server-network-arrows nil
         org-roam-server-network-label-truncate t
         org-roam-server-network-label-truncate-length 60
-        org-roam-server-network-label-wrap-length 20)
-  (org-roam-server-mode +1))
+        org-roam-server-network-label-wrap-length 20))
