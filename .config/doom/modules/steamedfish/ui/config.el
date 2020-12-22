@@ -13,8 +13,8 @@
 
   ;; fonts
   (cl-loop for font in '(
+                         "Rec Mono Duotone"
                          "Rec Mono Casual"
-                         "Rec Mono Doutone"
                          "Rec Mono SemiCasual"
                          "Rec Mono Linear"
                          "Roboto Mono"
