@@ -16,3 +16,4 @@
 (package! posframe)
 (package! rime)
 (package! pinyinlib)
+(package! sis) ;; emacs-smart-input-source

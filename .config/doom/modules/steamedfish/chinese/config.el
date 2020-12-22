@@ -1,7 +1,7 @@
 ;;; steamedfish/chinese/config.el  -*- lexical-binding: t; -*-
 
-(if (eq window-system 'mac)
-    (mac-auto-ascii-mode t))
+;; (if (eq window-system 'mac)
+;;     (mac-auto-ascii-mode t))
 
 (use-package! youdao-dictionary
   :commands (youdao-dictionary-search-at-point-posframe
@@ -114,6 +114,17 @@
     mode-line-mule-info '((:eval (rime-lighter)))
     rime-inline-ascii-trigger 'shift-l))
 
+;; emacs-smart-input-source
+(use-package! sis
+  :when IS-MAC
+  :config
+  (sis-ism-lazyman-config
+    "com.apple.keylayout.US"
+    "im.rime.inputmethod.Squirrel.Rime")
+  (sis-global-cursor-color-mode t)
+  (sis-global-respect-mode t)
+  (sis-global-context-mode t)
+  (sis-global-inline-mode t))
 
 ;; Support pinyin in Ivy
 ;; Input prefix ';' to match pinyin
