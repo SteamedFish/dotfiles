@@ -1496,6 +1496,8 @@
 		<string>Paste History</string>
 		<string>Recent Directories</string>
 	</array>
+	<key>URLHandlersByGuid</key>
+	<dict/>
 	<key>Use background pattern indicator</key>
 	<true/>
 	<key>UseBorder</key>
