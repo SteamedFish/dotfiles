@@ -2,6 +2,7 @@
 ;;; steamedfish/tools/packages.el
 
 (package! pinentry)
+(package! rfc-mode)
 (package! eaf
   :recipe (:host github
             :repo "manateelazycat/emacs-application-framework"

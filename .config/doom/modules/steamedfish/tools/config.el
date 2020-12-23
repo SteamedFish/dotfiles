@@ -29,6 +29,11 @@
     appt-display-mode-line t
     appt-display-diary t))
 
+(use-package! rfc-mode
+  :commands (rfc-mode-browse rfc-mode-read)
+  :config
+  (setq rfc-mode-directory (concat doom-cache-dir "/rfc")))
+
 (use-package! eaf
   :when IS-LINUX
   :commands (eaf-open-browser eaf-open eaf-open-browser-with-history
