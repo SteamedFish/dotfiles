@@ -5,54 +5,54 @@
 
 (use-package! youdao-dictionary
   :commands (youdao-dictionary-search-at-point-posframe
-             youdao-dictionary-search-at-point
-             youdao-dictionary-search-at-point+
-             youdao-dictionary-search-from-input
-             youdao-dictionary-search-and-replace
-             youdao-dictionary-play-voice-at-point
-             youdao-dictionary-play-voice-from-input)
+              youdao-dictionary-search-at-point
+              youdao-dictionary-search-at-point+
+              youdao-dictionary-search-from-input
+              youdao-dictionary-search-and-replace
+              youdao-dictionary-play-voice-at-point
+              youdao-dictionary-play-voice-from-input)
   :init
   (map!
-   (:when (display-graphic-p)
-     :leader
-     :prefix ("l" . "lookup")
-     :desc "Lookup Youdao"
-     :n "y"  #'youdao-dictionary-search-at-point-posframe)
-   (:when (not (display-graphic-p))
-     :leader
-     :prefix ("l" . "lookup")
-     :desc "Lookup Youdao"
-     :n "y"  #'youdao-dictionary-search-at-point+)
-   :leader
-   :prefix ("l" . "lookup")
-   :desc "Lookup Youdao Input"
-   :n "Y"  #'youdao-dictionary-search-from-input)
+    (:when (display-graphic-p)
+      :leader
+      :prefix ("l" . "lookup")
+      :desc "Lookup Youdao"
+      :n "y"  #'youdao-dictionary-search-at-point-posframe)
+    (:when (not (display-graphic-p))
+      :leader
+      :prefix ("l" . "lookup")
+      :desc "Lookup Youdao"
+      :n "y"  #'youdao-dictionary-search-at-point+)
+    :leader
+    :prefix ("l" . "lookup")
+    :desc "Lookup Youdao Input"
+    :n "Y"  #'youdao-dictionary-search-from-input)
   :config
   (setq url-automatic-caching t
-        youdao-dictionary-search-history-file (concat doom-cache-dir "youdao.cache")
-        youdao-dictionary-use-chinese-word-segmentation t)
+    youdao-dictionary-search-history-file (concat doom-cache-dir "youdao.cache")
+    youdao-dictionary-use-chinese-word-segmentation t)
   (map!
-   :map youdao-dictionary-mode-map
-   :n "q" #'quit-window
-   :n "p" #'youdao-dictionary-play-voice-of-current-word
-   :n "y" #'youdao-dictionary-play-voice-at-point))
+    :map youdao-dictionary-mode-map
+    :n "q" #'quit-window
+    :n "p" #'youdao-dictionary-play-voice-of-current-word
+    :n "y" #'youdao-dictionary-play-voice-at-point))
 
 (use-package! sdcv
   :commands (sdcv-search-pointer
-             sdcv-search-pointer+
-             sdcv-search-input
-             sdcv-search-input+)
+              sdcv-search-pointer+
+              sdcv-search-input
+              sdcv-search-input+)
   :init
   (map!
-   :leader
-   :prefix ("l" . "lookup")
-   :n "d" #'sdcv-search-pointer+
-   :n "D" #'sdcv-search-input+)
+    :leader
+    :prefix ("l" . "lookup")
+    :n "d" #'sdcv-search-pointer+
+    :n "D" #'sdcv-search-input+)
   :config
   (setq sdcv-say-word-p nil
-        sdcv-dictionary-data-dir (concat (xdg-config-home) "/stardict")
-        sdcv-dictionary-simple-list '("简明英汉字典增强版")
-        sdcv-dictionary-complete-list '("简明英汉字典增强版")))
+    sdcv-dictionary-data-dir (concat (xdg-config-home) "/stardict")
+    sdcv-dictionary-simple-list '("简明英汉字典增强版")
+    sdcv-dictionary-complete-list '("简明英汉字典增强版")))
 
 (use-package! cal-china-x
   :after calendar
