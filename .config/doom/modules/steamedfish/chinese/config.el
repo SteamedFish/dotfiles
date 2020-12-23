@@ -37,6 +37,17 @@
     :n "p" #'youdao-dictionary-play-voice-of-current-word
     :n "y" #'youdao-dictionary-play-voice-at-point))
 
+(use-package! osx-dictionary
+  :commands osx-dictionary-search-word-at-point
+  :init
+  (map!
+    :leader
+    :prefix ("l" . "lookup")
+    :desc "Lookup macOS Dict"
+    :n "o"  #'osx-dictionary-search-word-at-point)
+  :config
+  (setq osx-dictionary-use-chinese-text-segmentation t))
+
 (use-package! sdcv
   :commands (sdcv-search-pointer
               sdcv-search-pointer+
