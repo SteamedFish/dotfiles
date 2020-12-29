@@ -131,6 +131,7 @@ brew "unar"
 brew "unzip"
 brew "util-linux"
 brew "vim", link: false
+brew "wakatime-cli"
 brew "watchman"
 brew "wget"
 brew "yadm"
