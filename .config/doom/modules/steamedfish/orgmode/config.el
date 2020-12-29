@@ -86,6 +86,12 @@
   (setq org-tree-slide-modeline-display 'outside
     org-tree-slide-fold-subtrees-skipped nil))
 
+(after! org-gcal
+  (setq org-gcal-client-id (+pass-get-user "shopee/gcal")
+    org-gcal-client-secret (+pass-get-secret "shopee/gcal")
+    org-gcal-fetch-file-alist `((,(+pass-get-user "shopee/email") .  "~/work/org/googlecalendar.org")))
+  (run-at-time "5 min", 300, #'org-gcal-sync t))
+
 (after! org-roam
   ;; https://github.com/org-roam/org-roam-server/issues/115#issuecomment-730006834
   (smartparens-global-mode -1)
