@@ -31,7 +31,7 @@
     (when (member "Fira Sans" (font-family-list))
       (setq doom-variable-pitch-font (font-spec :family "Fira Sans"))))
   (when (member "Hiragino Sans GB" (font-family-list))
-    (setq doom-unicode-font (font-spec :family "Hiragino Sans GB" :size 14.5)))
+    (setq doom-unicode-font (font-spec :family "Hiragino Sans GB")))
 
   (when (member "Noto Color Emoji" (font-family-list))
     (set-fontset-font 't 'symbol
