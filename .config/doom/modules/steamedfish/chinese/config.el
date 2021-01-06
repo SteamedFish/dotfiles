@@ -132,6 +132,9 @@
   (sis-ism-lazyman-config
     "com.apple.keylayout.US"
     "im.rime.inputmethod.Squirrel.Rime")
+  (setq sis-inline-tighten-head-rule 0
+    sis-inline-tighten-tail-rule 0
+    sis-inline-single-space-close t)
   (sis-global-cursor-color-mode t)
   (sis-global-respect-mode t)
   (sis-global-context-mode t)
