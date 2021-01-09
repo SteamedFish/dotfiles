@@ -189,6 +189,9 @@ update_linux_system() {
         fi
         run sudo emerge -avuUD --with-bdeps=y --keep-going --quiet-build @world
         run sudo emerge -av --keep-going --quiet-build @preserved-rebuild
+        if [ -n "$(command -v haskell-updater)" ]; then
+            run sudo haskell-updater
+        fi
         if [ -n "$(command -v qlop)" ]; then
             run qlop -tHmvl
         fi
