@@ -95,6 +95,11 @@
     org-gcal-client-secret (+pass-get-secret "shopee/gcal")
     org-gcal-fetch-file-alist `((,(+pass-get-user "shopee/email") . ,(expand-file-name "~/work/org/gcal.org")))))
 
+(use-package! org-alert
+  :commands (org-alert-enable org-alert-check org-alert-disable)
+  :config
+  (org-alert-enable))
+
 (after! org-roam
   ;; https://github.com/org-roam/org-roam-server/issues/115#issuecomment-730006834
   (smartparens-global-mode -1)
