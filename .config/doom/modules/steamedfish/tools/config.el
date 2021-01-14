@@ -86,3 +86,12 @@
 
 (use-package! flycheck-grammarly
   :after (flycheck grammarly))
+
+(after! alert
+  (setq
+    alert-log-messages nil
+    alert-default-style
+    (cond
+      (IS-MAC 'osx-notifier)
+      (IS-LINUX 'libnotify)
+      (t 'message))))
