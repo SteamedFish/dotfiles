@@ -17,6 +17,7 @@
                          "Rec Mono Casual"
                          "Rec Mono SemiCasual"
                          "Rec Mono Linear"
+                         "Victor Mono"
                          "Roboto Mono"
                          "mononoki Nerd Font"
                          "Fira Mono"
