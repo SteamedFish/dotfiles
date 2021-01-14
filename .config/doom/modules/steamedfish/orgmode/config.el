@@ -86,11 +86,14 @@
   (setq org-tree-slide-modeline-display 'outside
     org-tree-slide-fold-subtrees-skipped nil))
 
-(after! org-gcal
+(use-package! org-gcal
+  :commands org-gcal-sync
+  :init
+  (run-at-time "5 min" 300 #'org-gcal-sync t)
+  :config
   (setq org-gcal-client-id (+pass-get-user "shopee/gcal")
     org-gcal-client-secret (+pass-get-secret "shopee/gcal")
-    org-gcal-fetch-file-alist `((,(+pass-get-user "shopee/email") .  "~/work/org/googlecalendar.org")))
-  (run-at-time "5 min", 300, #'org-gcal-sync t))
+    org-gcal-fetch-file-alist `((,(+pass-get-user "shopee/email") . ,(expand-file-name "~/work/org/gcal.org")))))
 
 (after! org-roam
   ;; https://github.com/org-roam/org-roam-server/issues/115#issuecomment-730006834
