@@ -1,18 +1,19 @@
 ;;; steamedfish/orgmode/config.el  -*- lexical-binding: t; -*-
 
-(after! org
-  ;; make org-ellipsis's face same as current heading,
-  ;; instead of having its own
-  (custom-set-faces!
-   '(org-ellipsis :foreground nil))
+(use-package! org
+  :init
   (setq org-directory (expand-file-name "~/work/org/")
-    org-roam-directory (file-name-as-directory (expand-file-name (concat org-directory "/roam")))
-    org-roam-db-location (expand-file-name "org-roam.db" doom-cache-dir)
     diary-file (expand-file-name (concat org-directory "/diary"))
     ;; all files but later.org should be put in agenda
     org-agenda-files
     (delete (expand-file-name "~/work/org/later.org")
-      (file-expand-wildcards (concat org-directory "*.org")))
+      (file-expand-wildcards (concat org-directory "*.org"))))
+  :config
+  ;; make org-ellipsis's face same as current heading,
+  ;; instead of having its own
+  (custom-set-faces!
+   '(org-ellipsis :foreground nil))
+  (setq
     ;; one archive file instead of many
     org-archive-location
     (concat org-directory "archive.org::* From %s")
@@ -100,11 +101,16 @@
   :config
   (org-alert-enable))
 
-(after! org-roam
+(use-package! org-roam
+  :config
   ;; https://github.com/org-roam/org-roam-server/issues/115#issuecomment-730006834
   (smartparens-global-mode -1)
   (org-roam-server-mode)
-  (smartparens-global-mode +1))
+  (smartparens-global-mode +1)
+  :init
+  (setq
+    org-roam-directory (file-name-as-directory (expand-file-name (concat org-directory "/roam")))
+    org-roam-db-location (expand-file-name "org-roam.db" doom-cache-dir)))
 
 (use-package! org-roam-server
   :after org
