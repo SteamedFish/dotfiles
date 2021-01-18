@@ -48,9 +48,8 @@
   (push "~/.doom.d/snippets" yas-snippet-dirs))
 
 (after! projectile
-  (projectile-add-known-project "~/dotfiles")
-  (projectile-add-known-project "~/.emacs.d")
-  (dolist (dir '("~/work/" "~/dumbo/" "~/Dropbox/" "~/Qsync/Work/" "~/dotfiles/"))
+  (projectile-add-known-project "~/.config/emacs")
+  (dolist (dir '("~/work/" "projects"))
     (when (file-directory-p dir)
       (add-to-list 'projectile-project-search-path dir))))
 
