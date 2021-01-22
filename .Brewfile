@@ -138,12 +138,10 @@ brew "yadm"
 brew "yasm"
 brew "you-get"
 brew "youtube-dl"
-brew "d12frosted/emacs-plus/emacs-plus@28", args: ["with-dbus", "with-xwidgets"], link: false
 brew "parera10/csshx/csshx"
 brew "railwaycat/emacsmacport/emacs-mac", args: ["with-dbus", "with-rsvg"]
-brew "srkomodo/tap/shadowfox-updater"
 brew "twlz0ne/ccls/ccls"
-brew "vitorgalvao/tiny-scripts/cask-repair"
+brew "vmtouch"
 cask "alacritty"
 cask "alfred"
 cask "android-platform-tools"
