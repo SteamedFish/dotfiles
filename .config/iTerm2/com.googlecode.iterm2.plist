@@ -642,24 +642,24 @@
 				<key>Alpha Component</key>
 				<real>0.7057952880859375</real>
 				<key>Blue Component</key>
-				<real>0.29302557764473458</real>
+				<real>0.64554890895224892</real>
 				<key>Color Space</key>
 				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.023500448583945399</real>
+				<real>0.05177257381215445</real>
 				<key>Red Component</key>
-				<real>0.36862742900848389</real>
+				<real>0.812103271484375</real>
 			</dict>
 			<key>Badge Font</key>
 			<string>RecursiveSansCsl-Bold</string>
 			<key>Badge Max Height</key>
-			<real>0.20000000000000001</real>
+			<real>0.40000000000000002</real>
 			<key>Badge Max Width</key>
-			<real>0.65000000000000002</real>
+			<real>0.84999999999999998</real>
 			<key>Badge Right Margin</key>
 			<real>10</real>
 			<key>Badge Text</key>
-			<string>\(session.name)\n\(session.username)@\(session.hostname)</string>
+			<string>\n\(terminalIconName)\n\(autoName)\n\(name)\n\(path)\n\(commandLine)</string>
 			<key>Badge Top Margin</key>
 			<real>10</real>
 			<key>Blink Allowed</key>
