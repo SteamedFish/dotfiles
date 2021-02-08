@@ -104,9 +104,9 @@
 (use-package! org-roam
   :config
   ;; https://github.com/org-roam/org-roam-server/issues/115#issuecomment-730006834
-  (smartparens-global-mode -1)
-  (org-roam-server-mode)
-  (smartparens-global-mode +1)
+  ;;(smartparens-global-mode -1)
+  ;;(org-roam-server-mode)
+  ;;(smartparens-global-mode +1)
   :init
   (setq
     org-roam-directory (file-name-as-directory (expand-file-name (concat org-directory "/roam")))
