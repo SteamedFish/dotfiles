@@ -59,6 +59,8 @@ unset _ext
 if [ -f "$HOME/.zinit/bin/zinit.zsh" ]; then
     # shellcheck source=../.zinit/bin/zinit.zsh
     source "$HOME/.zinit/bin/zinit.zsh"
+    zinit light romkatv/powerlevel10k
+
     zinit ice wait blockf atpull'zinit creinstall -q .'
     zinit light zsh-users/zsh-completions
 
@@ -74,8 +76,6 @@ if [ -f "$HOME/.zinit/bin/zinit.zsh" ]; then
     zinit ice wait"1" lucid
     zinit load psprint/zsh-navigation-tools
 
-    zinit ice wait'!' lucid atload'source ~/.p10k.zsh; _p9k_precmd' nocd
-    zinit light romkatv/powerlevel10k
 
     if [[ "$OSTYPE" == "darwin"* ]]; then
         zinit light iam4x/zsh-iterm-touchbar
