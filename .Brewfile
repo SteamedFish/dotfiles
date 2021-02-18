@@ -25,6 +25,8 @@ brew "aspell"
 brew "dbus", restart_service: true
 brew "bash"
 brew "bash-completion"
+brew "bat"
+brew "bats-core"
 brew "brew-cask-completion"
 brew "clang-format"
 brew "cmake"
