@@ -11,6 +11,6 @@
 /sbin
 /opt/local/bin
 /opt/local/sbin
-/usr/local/lib/ruby/gems/2.6.0/bin
+/usr/local/lib/ruby/gems/3.0.0/bin
 /usr/local/opt/util-linux/bin
 /usr/local/opt/util-linux/sbin
