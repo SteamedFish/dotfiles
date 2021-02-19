@@ -1,10 +1,17 @@
 #!/bin/bash
 
 go_apps=(
-github.com/rogpeppe/godef
+golang.org/x/tools/gopls
 golang.org/x/tools/cmd/guru
 golang.org/x/tools/cmd/gorename
 golang.org/x/tools/cmd/goimports
+golang.org/x/lint/golint
+github.com/nsf/gocode
+github.com/fatih/gomodifytags
+github.com/motemen/gore/cmd/gore
+github.com/go-delve/delve/cmd/dlv
+github.com/ramya-rao-a/go-outline
+github.com/rogpeppe/godef
 github.com/zmb3/gogetdoc
 github.com/cweill/gotests/...
 github.com/haya14busa/gopkgs/cmd/gopkgs
@@ -54,6 +61,7 @@ linux_apps=(
 )
 
 arch_apps=(
+    inetutils
     bind-tools
     youtube-dl
     you-get
@@ -115,7 +123,6 @@ install_goapps() {
     for apps in "${go_apps[@]}"; do
         GOLANG="$HOME/.go" go get -u -v "$apps"
     done
-    curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.27.0
 }
 
 setup_mac_system() {
@@ -123,6 +130,8 @@ setup_mac_system() {
     if ! [ -f "$HOME/.iterm2_shell_integration.zsh" ]; then
         curl -L https://iterm2.com/shell_integration/install_shell_integration_and_utilities.sh | bash
     fi
+
+    sudo /usr/sbin/DevToolsSecurity -enable
 }
 
 install_zplugin() {
