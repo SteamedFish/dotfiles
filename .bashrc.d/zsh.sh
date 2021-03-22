@@ -59,7 +59,10 @@ unset _ext
 if [ -f "$HOME/.zinit/bin/zinit.zsh" ]; then
     # shellcheck source=../.zinit/bin/zinit.zsh
     source "$HOME/.zinit/bin/zinit.zsh"
-    zinit light romkatv/powerlevel10k
+
+    if [ -z "$(command -v starship)" ];then
+        zinit light romkatv/powerlevel10k
+    fi
 
     zinit ice wait blockf atpull'zinit creinstall -q .'
     zinit light zsh-users/zsh-completions
@@ -80,6 +83,7 @@ if [ -f "$HOME/.zinit/bin/zinit.zsh" ]; then
     if [[ "$OSTYPE" == "darwin"* ]]; then
         zinit light iam4x/zsh-iterm-touchbar
     fi
+
     zinit light sobolevn/wakatime-zsh-plugin
 fi
 

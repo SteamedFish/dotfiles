@@ -2,6 +2,10 @@
 
 # bash-powerline
 
+if [ -n "$(command -v starship)" ];then
+    return
+fi
+
 if [ -z "$BASH" ]; then
     return
 fi
