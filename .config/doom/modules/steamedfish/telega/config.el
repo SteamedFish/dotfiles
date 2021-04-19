@@ -30,6 +30,7 @@
         ;;telega-root-fill-column 48
         telega-chat-fill-column 37
         telega-chat-button-width 37
+        telega-symbol-reply "↫"
         telega-chat-show-deleted-messages-for '(all))
 
   ;; copied from https://github.com/sarg/dotfiles/
