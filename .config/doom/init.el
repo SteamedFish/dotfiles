@@ -142,6 +142,7 @@
 
        :lang
        ;;agda              ; types of types of types of types...
+       beancount         ; mind the GAAP
        (cc               ; C/C++/Obj-C madness
         +lsp)
        ;;clojure           ; java with a lisp
@@ -156,6 +157,7 @@
        emacs-lisp        ; drown in parentheses
        ;;erlang            ; an elegant language for a more civilized age
        ;;ess               ; emacs speaks statistics
+       ;;factor
        ;;faust             ; dsp, but you get to keep your soul
        ;;fsharp            ; ML stands for Microsoft's Language
        ;;fstar             ; (dependent) types and (monadic) effects and Z3
@@ -170,9 +172,8 @@
        ;;julia             ; a better, faster MATLAB
        ;;kotlin            ; a better, slicker Java(Script)
        latex             ; writing papers in Emacs has never been so fun
-       ;;lean
-       ;;factor
-       ;;ledger            ; an accounting system in Emacs
+       ;;lean              ; for folks with too much to prove
+       ;;ledger            ; be audit you can be
        ;;lua               ; one-based indices? one-based indices
        (markdown)          ; writing docs for people to ignore
         ;;+grip)
@@ -220,6 +221,7 @@
        ;;terra             ; Earth and Moon in alignment for performance.
        web               ; the tubes
        yaml              ; JSON, but readable
+       ;;zig               ; C, but simpler
 
        :email
        (mu4e +gmail)
@@ -228,6 +230,8 @@
 
        :app
        calendar
+       ;;emms
+       ;;everywhere        ; *leave* Emacs!? You must be joking
        irc               ; how neckbeards socialize
        (rss +org)        ; emacs as an RSS reader
        twitter           ; twitter client https://twitter.com/vnought
@@ -251,5 +255,4 @@
        (:if (not (or IS-WINDOWS IS-ANDROID))
         telega)
        ui
-       tools
-       beancount)
+       tools)
