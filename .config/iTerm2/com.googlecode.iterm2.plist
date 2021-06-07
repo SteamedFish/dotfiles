@@ -1498,13 +1498,6 @@
 	<true/>
 	<key>ToolbeltTools</key>
 	<array>
-		<string>Profiles</string>
-		<string>Captured Output</string>
-		<string>Command History</string>
-		<string>Jobs</string>
-		<string>Notes</string>
-		<string>Actions</string>
-		<string>Paste History</string>
 		<string>Recent Directories</string>
 	</array>
 	<key>URLHandlersByGuid</key>
