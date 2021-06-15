@@ -9,3 +9,5 @@
 (package! ftable
   :recipe (:host github :repo "casouri/ftable"))
 (package! org-alert)
+(package! org-contrib)
+;;(package! org-plus-contrib) ;; already included in doom config
