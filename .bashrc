@@ -44,7 +44,7 @@ if $CLICOLOR; then
     alias grep='grep --color=auto'
     alias egrep='egrep --colour=auto'
     alias fgrep='fgrep --colour=auto'
-    if [[ "$OSTYPE" != "linux-android" ]] && [[ "$OS" != "OSX" ]]; then
+    if [[ "$OSTYPE" != "linux-android" ]] && [[ "$OSTYPE" != "darwin"* ]]; then
         alias ip='ip --color=auto'
         alias diff='diff --color=auto'
     elif [[ "$OSTYPE" == "linux-android" ]]; then
