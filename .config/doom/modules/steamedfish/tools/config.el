@@ -35,7 +35,6 @@
   (setq rfc-mode-directory (concat doom-cache-dir "/rfc")))
 
 (use-package! eaf
-  :when IS-LINUX
   :commands (eaf-open-browser eaf-open eaf-open-browser-with-history
               eaf-open-camera eaf-open-terminal eaf-file-sender-qrcode
               eaf-file-sender-qrcode-in-dired eaf-file-receiver-qrcode

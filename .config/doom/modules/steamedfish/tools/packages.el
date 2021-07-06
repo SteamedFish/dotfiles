@@ -7,6 +7,7 @@
   :recipe (:host github
             :repo "manateelazycat/emacs-application-framework"
             :files ("*")))
+(package! epc) ;; required by eaf
 (package! netease-cloud-music
   :recipe (:host github
             :repo "SpringHan/netease-cloud-music.el"))
