@@ -1401,6 +1401,29 @@
 			<integer>386</integer>
 			<key>Transparency</key>
 			<real>0.26590260152284267</real>
+			<key>Triggers</key>
+			<array>
+				<dict>
+					<key>action</key>
+					<string>MuteCoprocessTrigger</string>
+					<key>parameter</key>
+					<string>/usr/local/bin/iterm2-send-zmodem.sh</string>
+					<key>partial</key>
+					<true/>
+					<key>regex</key>
+					<string>rz waiting to receive.\*\*B0100</string>
+				</dict>
+				<dict>
+					<key>action</key>
+					<string>MuteCoprocessTrigger</string>
+					<key>parameter</key>
+					<string>/usr/local/bin/iterm2-recv-zmodem.sh</string>
+					<key>partial</key>
+					<true/>
+					<key>regex</key>
+					<string>\*\*B00000000000000</string>
+				</dict>
+			</array>
 			<key>Unicode Version</key>
 			<integer>9</integer>
 			<key>Unlimited Scrollback</key>
