@@ -52,13 +52,11 @@ if [ -d "$HOME/emacs-distros/spacemacs" ] && \
     for distro in centaur spacemacs; do
         eval "
         function $distro {
-            ln -s emacs-distros/chemacs/.emacs ~/
             if [[ \"$OSTYPE\" == \"darwin\"* ]]; then
                 /Applications/Emacs.app/Contents/MacOS/Emacs --with-profile=$distro &
             elif [[ \"$OSTYPE\" == \"linux-gnu\" ]]; then
                 /usr/bin/emacs --with-profile=$distro &
             fi
-            sleep 10 && rm -f ~/.emacs &
         }
         "
     done
