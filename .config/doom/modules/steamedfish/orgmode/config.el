@@ -26,6 +26,7 @@
 
   ;; refresh images after C-c C-c
   (add-hook 'org-babel-after-execute-hook 'org-redisplay-inline-images)
+  (add-hook 'org-mode-hook 'org-num-mode)
 
   (when (featurep! :lang plantuml)
     (add-to-list 'org-src-lang-modes
