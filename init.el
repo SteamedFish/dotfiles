@@ -7,11 +7,13 @@
 ;;; Code:
 
 ;; add to load-path
+(push (expand-file-name "lisp-essential" user-emacs-directory) load-path)
 (push (expand-file-name "lisp" user-emacs-directory) load-path)
 
-(require 'init-startup)
-(require 'init-setups)
+
+(require 'init-earlyinit)
 (require 'init-straight)
+(require 'init-setups)
 
 ;; load custom-file
 (when (file-exists-p custom-file)

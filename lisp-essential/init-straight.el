@@ -9,6 +9,10 @@
 (setq straight-recipes-emacsmirror-use-mirror t
       straight-repository-branch "develop")
 
+(setq straight-disable-native-compile
+      (when (fboundp 'native-comp-available-p)
+	(not (native-comp-available-p))))
+
 ;; official bootstrap code
 (defvar bootstrap-version)
 (let ((bootstrap-file
