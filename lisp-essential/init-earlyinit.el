@@ -4,6 +4,11 @@
 
 ;;; Code:
 
+(let ((min-version "27.1"))
+  (when (version< emacs-version min-version)
+    (error (concat "This config requires at least Emacs %s, "
+             "but you are running Emacs %s")
+      min-version emacs-version)))
 
 ;; Disable garbage collection in the startup process
 (setq gc-cons-threshold most-positive-fixnum)
@@ -33,12 +38,6 @@
 (setq inhibit-startup-message t
       inhibit-startup-echo-area-message t
       inhibit-default-init t)
-
-(let ((min-version "27.1"))
-  (when (version< emacs-version min-version)
-    (error (concat "This config requires at least Emacs %s, "
-             "but you are running Emacs %s")
-      min-version emacs-version)))
 
 ;; So we can detect this having been loaded
 (provide 'init-earlyinit)
