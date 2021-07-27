@@ -35,8 +35,10 @@
           (lambda ()
             (setq gc-cons-threshold (* 20 1024 1024))))
 
+;; Don't display useless messages
 (setq inhibit-startup-message t
       inhibit-startup-echo-area-message t
+      inhibit-startup-screen t
       inhibit-default-init t)
 
 ;; So we can detect this having been loaded
