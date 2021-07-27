@@ -28,5 +28,11 @@
       inhibit-startup-echo-area-message t
       inhibit-default-init t)
 
+(let ((min-version "27.1"))
+  (when (version< emacs-version min-version)
+    (error (concat "This config requires at least Emacs %s, "
+             "but you are running Emacs %s")
+      min-version emacs-version)))
+
 ;; So we can detect this having been loaded
 (provide 'init-earlyinit)
