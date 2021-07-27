@@ -13,6 +13,7 @@
 
 (require 'init-earlyinit)
 (require 'init-straight)
+(require 'init-leaf)
 (require 'init-setups)
 
 ;; load custom-file
