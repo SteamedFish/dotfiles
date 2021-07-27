@@ -1,3 +1,9 @@
+;;; init-earlyinit.el --- early init for emacs27+ -*- lexical-binding: t; -*-
+
+;;; Commentary:
+
+;;; Code:
+
 
 ;; Disable garbage collection in the startup process
 (setq gc-cons-threshold most-positive-fixnum)
