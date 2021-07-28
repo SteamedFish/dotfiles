@@ -26,5 +26,11 @@
       (when (and (stringp custom-file) (file-exists-p custom-file))
         (load custom-file)))))
 
+(leaf no-littering
+  :straight t
+  :init
+  (custom-set-variables `(no-littering-etc-directory ,(expand-file-name "etc/" my-data-dir)))
+  (custom-set-variables `(no-littering-var-directory ,(expand-file-name "data/" my-data-dir))))
+
 (provide 'init-setups)
 ;;; init-setups.el ends here
