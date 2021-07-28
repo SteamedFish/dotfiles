@@ -28,9 +28,8 @@
 
 (leaf no-littering
   :straight t
-  :init
-  (custom-set-variables `(no-littering-etc-directory ,(expand-file-name "etc/" my-data-dir)))
-  (custom-set-variables `(no-littering-var-directory ,(expand-file-name "data/" my-data-dir))))
+  :pre-setq `((no-littering-etc-directory . ,(expand-file-name "etc/" my-data-dir))
+              (no-littering-var-directory . ,(expand-file-name "data/" my-data-dir))))
 
 (provide 'init-setups)
 ;;; init-setups.el ends here
