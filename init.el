@@ -20,5 +20,8 @@
 (require 'init-leaf)
 (require 'init-setups)
 
+
+(require 'init-gcmh)
+
 (provide 'init)
 ;;; init.el ends here
