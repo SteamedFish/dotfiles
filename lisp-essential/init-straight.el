@@ -10,19 +10,20 @@
       straight-repository-branch "develop")
 
 (setq straight-disable-native-compile
-      (when (fboundp 'native-comp-available-p)
-	(not (native-comp-available-p))))
+  (when (fboundp 'native-comp-available-p)
+    (not (native-comp-available-p))))
+
 
 ;; official bootstrap code
 (defvar bootstrap-version)
 (let ((bootstrap-file
-       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-      (bootstrap-version 5))
+        (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+       (bootstrap-version 5))
   (unless (file-exists-p bootstrap-file)
     (with-current-buffer
-        (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-         'silent 'inhibit-cookies)
+      (url-retrieve-synchronously
+        "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+        'silent 'inhibit-cookies)
       (goto-char (point-max))
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
