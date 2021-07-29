@@ -11,3 +11,5 @@
 *.~undo-tree
 
 straight
+
+.local
