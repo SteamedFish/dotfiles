@@ -7,7 +7,7 @@
 
 ;;; Code:
 
-(push (expand-file-name "lisp-essential" user-emacs-directory) load-path)
+(push (expand-file-name "lisp-core" user-emacs-directory) load-path)
 (require 'init-earlyinit)
 
 
