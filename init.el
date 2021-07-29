@@ -14,6 +14,7 @@
 (require 'init-straight)
 (require 'init-leaf)
 (require 'init-setups)
+(require 'init-helpers)
 (require 'init-evil)
 
 
