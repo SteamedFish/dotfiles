@@ -32,7 +32,9 @@
 (setq inhibit-startup-message t
       inhibit-startup-echo-area-message t
       inhibit-startup-screen t
-      inhibit-default-init t)
+      inhibit-default-init t
+      inhibit-x-resources t
+      inhibit-splash-screen t)
 
 ;; So we can detect this having been loaded
 (provide 'init-earlyinit)
