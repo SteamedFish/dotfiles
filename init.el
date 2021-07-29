@@ -10,11 +10,6 @@
 (push (expand-file-name "lisp-core" user-emacs-directory) load-path)
 (push (expand-file-name "lisp" user-emacs-directory) load-path)
 
-(defconst my-data-dir (concat user-emacs-directory ".local/")
-  "The root directory where I put data files")
-(unless (file-exists-p my-data-dir)
-  (make-directory my-data-dir))
-
 (require 'init-earlyinit)
 (require 'init-straight)
 (require 'init-leaf)
