@@ -19,6 +19,7 @@
 (require 'init-straight)
 (require 'init-leaf)
 (require 'init-setups)
+(require 'init-evil)
 
 
 (require 'init-gcmh)
