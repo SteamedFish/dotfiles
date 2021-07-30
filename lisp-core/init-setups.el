@@ -6,16 +6,6 @@
 
 ;;; Code:
 
-(defconst my-data-dir (concat user-emacs-directory ".local/")
-  "The root directory where I put data files")
-(unless (file-exists-p my-data-dir)
-  (make-directory my-data-dir))
-
-(defconst IS-MAC     (eq system-type 'darwin))
-(defconst IS-LINUX   (eq system-type 'gnu/linux))
-(defconst IS-WINDOWS (memq system-type '(cygwin windows-nt ms-dos)))
-(defconst IS-BSD     (or IS-MAC (eq system-type 'berkeley-unix)))
-
 (leaf cus-start
   :doc "builtins"
   :tag "builtin" "internal"

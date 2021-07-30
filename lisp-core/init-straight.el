@@ -13,6 +13,10 @@
   (when (fboundp 'native-comp-available-p)
     (not (native-comp-available-p))))
 
+;; This is the best way, but need python3 and watchexec to work
+(setq straight-check-for-modifications
+  (or IS-LINUX IS-MAC))
+
 
 ;; official bootstrap code
 (defvar bootstrap-version)
