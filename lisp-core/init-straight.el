@@ -14,8 +14,8 @@
     (not (native-comp-available-p))))
 
 ;; This is the best way, but need python3 and watchexec to work
-(setq straight-check-for-modifications
-  (or IS-LINUX IS-MAC))
+(when (or IS-LINUX IS-MAC)
+  (setq straight-check-for-modifications '(watch-files)))
 
 
 ;; official bootstrap code
