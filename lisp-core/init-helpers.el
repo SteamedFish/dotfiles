@@ -29,5 +29,9 @@
   :hook (after-init-hook . which-key-mode)
   :blackout t)
 
+(leaf ibuffer
+  :straight nil
+  :bind (([remap list-buffers] . ibuffer)))
+
 (provide 'init-helpers)
 ;;; init-helpers.el ends here
