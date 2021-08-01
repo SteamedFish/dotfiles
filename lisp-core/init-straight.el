@@ -14,8 +14,10 @@
     (not (native-comp-available-p))))
 
 ;; This is the best way, but need python3 and watchexec to work
-(when (or IS-LINUX IS-MAC)
-  (setq straight-check-for-modifications '(watch-files)))
+(if (and (executable-find "python3")
+         (executable-find "watchexec"))
+    (setq straight-check-for-modifications '(watch-files find-when-checking))
+  (setq straight-check-for-modifications '(find-at-startup find-when-checking)))
 
 
 ;; official bootstrap code
