@@ -21,8 +21,7 @@
 (defconst IS-BSD     (or IS-MAC (eq system-type 'berkeley-unix)))
 
 (require 'init-earlyinit)
-(require 'init-straight)
-(require 'init-leaf)
+(require 'init-packages)
 (require 'init-setups)
 (require 'init-helpers)
 (require 'init-evil)

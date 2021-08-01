@@ -1,8 +1,8 @@
-;;; init-straight.el --- setup for straight.el -*- lexical-binding: t; -*-
+;;; init-packages.el --- setup for straight and leaf -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 
-;; setup for straight.el
+;; setup for straight.el and leaf.el
 
 ;;; Code:
 
@@ -34,5 +34,23 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
-(provide 'init-straight)
-;;; init-straight.el ends here
+(unless (fboundp 'leaf)
+  (if (fboundp 'straight-use-package)
+    (progn
+      (straight-use-package 'leaf)
+      (straight-use-package 'leaf-keywords)
+      (straight-use-package 'system-packages))
+    (error "We need straight.el installed on the system")))
+
+(leaf leaf-keywords
+  :ensure nil
+  :config
+  ;; initialize leaf-keywords.el
+  (leaf-keywords-init))
+
+(leaf straight
+  :ensure nil
+  :ensure-system-package watchexec)
+
+(provide 'init-packages)
+;;; init-packages.el ends here
