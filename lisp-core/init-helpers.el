@@ -26,7 +26,8 @@
 
 (leaf which-key
   :straight t
-  :hook (after-init-hook . which-key-mode))
+  :hook (after-init-hook . which-key-mode)
+  :blackout t)
 
 (provide 'init-helpers)
 ;;; init-helpers.el ends here

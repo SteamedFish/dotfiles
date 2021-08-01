@@ -52,7 +52,8 @@
     (progn
       (straight-use-package 'leaf)
       (straight-use-package 'leaf-keywords)
-      (straight-use-package 'system-packages))
+      (straight-use-package 'system-packages)
+      (straight-use-package 'blackout))
     (error "We need straight.el installed on the system")))
 
 (leaf leaf-keywords

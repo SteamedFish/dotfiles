@@ -8,7 +8,8 @@
 
 (leaf gcmh
   :straight t
-  :hook (after-init-hook . gcmh-mode))
+  :hook (after-init-hook . gcmh-mode)
+  :blackout t)
 
 (provide 'init-gcmh)
 ;;; init-gcmh.el ends here
