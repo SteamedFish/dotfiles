@@ -37,7 +37,7 @@
   :config
   (add-hook 'after-init-hook
     (lambda ()
-      (when (and (stringp custom-file) (file-exists-p custom-file))
+      (when (and (bound-and-true-p custom-file) (file-exists-p custom-file))
         (load custom-file)))))
 
 (leaf no-littering
