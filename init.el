@@ -24,6 +24,7 @@
 (require 'init-packages)
 (require 'init-setups)
 (require 'init-helpers)
+(require 'init-keybindings)
 (require 'init-evil)
 
 
