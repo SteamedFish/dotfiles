@@ -6,9 +6,11 @@
 
 ;;; Code:
 
+;;; bootstrap straight.el
+
 ;; straight.el bootstrap
 (setq straight-recipes-emacsmirror-use-mirror t
-      straight-repository-branch "develop")
+  straight-repository-branch "develop")
 
 (setq straight-disable-native-compile
   (when (fboundp 'native-comp-available-p)
@@ -38,6 +40,13 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
+;;; prevent emacs's builtin org from being loaded
+
+(straight-register-package 'org)
+(straight-register-package 'org-contrib)
+
+;;; bootstrap leaf.el
+
 (unless (fboundp 'leaf)
   (if (fboundp 'straight-use-package)
     (progn
@@ -55,6 +64,11 @@
 (leaf straight
   :ensure nil
   :ensure-system-package watchexec)
+
+;; experimental/unstable extension of straight.el
+(leaf straight-x
+  :ensure nil
+  :commands (straight-x-fetch-all))
 
 (provide 'init-packages)
 ;;; init-packages.el ends here
