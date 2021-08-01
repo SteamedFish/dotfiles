@@ -6,6 +6,7 @@
 
 ;;; Code:
 
+;; straight.el bootstrap
 (setq straight-recipes-emacsmirror-use-mirror t
       straight-repository-branch "develop")
 
@@ -13,17 +14,20 @@
   (when (fboundp 'native-comp-available-p)
     (not (native-comp-available-p))))
 
+(setq straight-base-dir my-data-dir)
+
 ;; This is the best way, but need python3 and watchexec to work
 (if (and (executable-find "python3")
          (executable-find "watchexec"))
     (setq straight-check-for-modifications '(watch-files find-when-checking))
   (setq straight-check-for-modifications '(find-at-startup find-when-checking)))
 
-
-;; official bootstrap code
 (defvar bootstrap-version)
 (let ((bootstrap-file
-        (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+        (expand-file-name
+          "straight/repos/straight.el/bootstrap.el"
+          (or (bound-and-true-p straight-base-dir)
+            user-emacs-directory)))
        (bootstrap-version 5))
   (unless (file-exists-p bootstrap-file)
     (with-current-buffer
