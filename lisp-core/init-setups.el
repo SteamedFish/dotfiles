@@ -45,5 +45,10 @@
   :pre-setq `((no-littering-etc-directory . ,(expand-file-name "etc/" my-data-dir))
               (no-littering-var-directory . ,(expand-file-name "data/" my-data-dir))))
 
+;; remember last location
+(leaf saveplace
+  :straight nil
+  :config (save-place-mode +1))
+
 (provide 'init-setups)
 ;;; init-setups.el ends here
