@@ -19,6 +19,9 @@
   :config
   (global-wakatime-mode))
 
+(leaf rfc-mode
+  :straight t
+  :setq `((rfc-mode-directory . ,(concat my-data-dir "data/rfc/"))))
 
 (provide 'init-smalltools)
 ;;; init-smalltools.el ends here
