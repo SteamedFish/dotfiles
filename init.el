@@ -35,6 +35,7 @@
 
 ;; lisp-lang
 (require 'init-generic-x)
+(require 'init-puppet)
 
 
 (provide 'init)
