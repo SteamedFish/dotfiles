@@ -8,6 +8,10 @@
 
 ;;; Code:
 
+(leaf ssh-deploy
+  :straight t
+  :init
+  (push '(ssh-deploy-on-explicit-save . t) safe-local-variable-values))
 
 (leaf wakatime-mode
   :straight t
