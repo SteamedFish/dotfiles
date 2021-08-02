@@ -31,6 +31,7 @@
 
 ;; lisp-tools
 (require 'init-evil)
+(require 'init-calendar)
 (require 'init-smalltools)
 
 ;; lisp-lang
