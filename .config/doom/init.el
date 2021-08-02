@@ -37,6 +37,7 @@
         ;;+prescient
         +icons
         +fuzzy)
+       ;;vertico           ; the search engine of the future
 
        :ui
        deft              ; notational velocity for Emacs
@@ -44,7 +45,6 @@
        doom-dashboard    ; a nifty splash screen for Emacs
        doom-quit         ; DOOM quit-message prompts when you quit Emacs
        ;;(emoji +unicode)  ; 🙂
-       fill-column       ; a `fill-column' indicator
        hl-todo           ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
        hydra
        indent-guides     ; highlighted indent columns
@@ -191,8 +191,8 @@
         +pandoc          ; pandoc integration into org's exporter
         +pomodoro        ; be fruitful with the tomato technique
         +present         ; using Emacs for presentations
-        +pretty          ; pretty unicode symbols
-        +roam)           ; org-roam integration
+        +pretty)          ; pretty unicode symbols
+        ;;+roam)           ; org-roam integration
        ;;php               ; perl's insecure younger brother
        (:if (not IS-ANDROID)
         plantuml)          ; diagrams for confusing people more
@@ -213,7 +213,7 @@
        (rust              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
         +lsp)
        ;;scala             ; java, but good
-       ;;scheme            ; a fully conniving family of lisps
+       ;;(scheme +guile)   ; a fully conniving family of lisps
        sh                ; she sells {ba,z,fi}sh shells on the C xor
        ;;sml
        ;;solidity          ; do you need a blockchain? No.
