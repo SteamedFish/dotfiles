@@ -21,15 +21,20 @@
 (defconst IS-WINDOWS (memq system-type '(cygwin windows-nt ms-dos)))
 (defconst IS-BSD     (or IS-MAC (eq system-type 'berkeley-unix)))
 
+;; lisp-core
 (require 'init-earlyinit)
 (require 'init-packages)
 (require 'init-setups)
 (require 'init-helpers)
 (require 'init-keybindings)
+(require 'init-gcmh)
+
+;; lisp-tools
 (require 'init-evil)
 
+;; lisp-lang
+(require 'init-generic-x)
 
-(require 'init-gcmh)
 
 (provide 'init)
 ;;; init.el ends here
