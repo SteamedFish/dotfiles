@@ -25,5 +25,18 @@
 (leaf all-the-icons
   :straight t)
 
+(leaf netease-cloud-music
+  :require (cl-macs)
+  :straight (netease-cloud-music
+             :host github
+             :repo "SpringHan/netease-cloud-music.el")
+  :ensure-system-package (mpv node)
+  :custom
+  `(netease-cloud-music-cache-directory . ,(concat my-data-dir "data/netease-cloud-music"))
+  :config
+  (unless (file-directory-p (concat netease-cloud-music-cache-directory "/api"))
+    (netease-cloud-music-download-api))
+  :commands (netease-cloud-music eaf-open-netease-cloud-music))
+
 (provide 'init-smalltools)
 ;;; init-smalltools.el ends here
