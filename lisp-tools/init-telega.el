@@ -29,7 +29,7 @@
          ("RET"        . newline)
          ("<s-return>" . telega-chatbuf-input-send))
   :custom
-  `(telega-directory . ,(expand-file-name "~/.config/telega"))
+  `(telega-directory . ,(concat my-data-dir "data/telega"))
   (telega-use-tracking-for . nil)
   (telega-usl-shorten-use-images . t)
   (telega-mnz-use-language-detection . 10)
