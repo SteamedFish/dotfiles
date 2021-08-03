@@ -12,6 +12,7 @@
 (leaf telega
   :straight t
   :commands telega
+  :after all-the-icons
   :hook
   (telega-load-hook . telega-mode-line-mode)
   (telega-load-hook . telega-notifications-mode)
@@ -42,7 +43,18 @@
   (telega-chat-history-limit . 100)
   (telega-sticker-set-download . t)
   (telega-symbol-reply . "↫")
-  (telega-chat-show-deleted-messaes-for . '(all)))
+  (telega-chat-show-deleted-messaes-for . '(all))
+  :config
+  (add-to-list 'all-the-icons-mode-icon-alist
+               '(telega-root-mode all-the-icons-fileicon "telegram"
+                                  :heigt 1.0
+                                  :v-adjust -0.2
+                                  :face all-the-icons-yellow))
+  (add-to-list 'all-the-icons-mode-icon-alist
+               '(telega-chat-mode all-the-icons-fileicon "telegram"
+                                  :heigt 1.0
+                                  :v-adjust -0.2
+                                  :face all-the-icons-blue)))
 
 (leaf telega-url-shorten
   :straight nil
