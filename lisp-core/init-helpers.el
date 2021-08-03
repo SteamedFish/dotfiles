@@ -26,7 +26,7 @@
 
 (leaf which-key
   :straight t
-  :hook (after-init-hook . which-key-mode)
+  :global-minor-mode t
   :blackout t)
 
 (leaf ibuffer

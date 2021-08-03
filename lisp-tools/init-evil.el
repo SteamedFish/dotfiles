@@ -11,7 +11,7 @@
 
 (leaf evil
   :straight t
-  :hook (after-init-hook . evil-mode)
+  :global-minor-mode t
   :pre-setq
   `((evil-want-keybinding . nil)))
 

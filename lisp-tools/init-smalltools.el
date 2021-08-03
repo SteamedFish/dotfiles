@@ -16,8 +16,7 @@
 (leaf wakatime-mode
   :straight t
   :blackout t
-  :config
-  (global-wakatime-mode))
+  :global-minor-mode global-wakatime-mode)
 
 (leaf rfc-mode
   :straight t

@@ -18,8 +18,7 @@
 
 ;; undo/redo stack for windows
 (leaf winner
-  :config
-  (winner-mode +1))
+  :global-minor-mode t)
 
 (provide 'init-keybindings)
 ;;; init-keybindings.el ends here
