@@ -22,5 +22,8 @@
   :straight t
   :setq `((rfc-mode-directory . ,(concat my-data-dir "data/rfc/"))))
 
+(leaf all-the-icons
+  :straight t)
+
 (provide 'init-smalltools)
 ;;; init-smalltools.el ends here
