@@ -33,6 +33,7 @@
 (require 'init-evil)
 (require 'init-calendar)
 (require 'init-smalltools)
+(require 'init-telega)
 
 ;; lisp-lang
 (require 'init-generic-x)
