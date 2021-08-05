@@ -44,6 +44,9 @@
 (leaf indent
   :setq (tab-always-indent . nil))
 
+(leaf files
+  :setq (require-final-newline . t))
+
 (leaf mule-cmds
   :config
   (set-language-environment "UTF-8"))
