@@ -79,11 +79,11 @@
 ;;   ;; :config (nano-dark)
 ;;   :config (load-theme 'nano t))
 
-(leaf nano-modeline
-  :straight (nano-modeline :host github :repo "rougier/nano-modeline")
-  :custom
-  (nano-modeline-position . 'bottom)
-  :require (nano-modeline))
+;; (leaf nano-modeline
+;;   :straight (nano-modeline :host github :repo "rougier/nano-modeline")
+;;   :custom
+;;   (nano-modeline-position . 'bottom)
+;;   :require (nano-modeline))
 
 (leaf nord-theme
   :url "https://github.com/arcticicestudio/nord-emacs"
@@ -94,6 +94,10 @@
   (nord-region-highlight . 'frost)
   (nord-uniform-mode-lines . t)
   :config (load-theme 'nord))
+
+(leaf doom-modeline
+  :straight t
+  :global-minor-mode t)
 
 (provide 'init-theme)
 ;;; init-theme.el ends here
