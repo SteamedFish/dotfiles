@@ -61,10 +61,8 @@
   :init
   (custom-set-variables `(custom-file ,(concat my-data-dir "custom.el")))
   :config
-  (add-hook 'after-init-hook
-    (lambda ()
-      (when (and (bound-and-true-p custom-file) (file-exists-p custom-file))
-        (load custom-file)))))
+  (when (and (bound-and-true-p custom-file) (file-exists-p custom-file))
+    (load custom-file)))
 
 (leaf no-littering
   :straight t
