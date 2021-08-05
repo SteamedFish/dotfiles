@@ -21,19 +21,54 @@
   (nano-font-family-monospaced . "Rec Mono Duotone")
   (nano-font-family-proportional . "Fira Sans")
   :require nano-base-colors
-  :require nano-faces
-  :require nano-theme-dark
-  :require nano-theme
-  :require nano-layout
   :require nano-colors
+  :require nano-faces
+  ;; :require nano-theme-dark
+  ;; :require nano-theme
+  :require nano-layout
+  ;; :require nano-modeline
+  ;; :require nano-colors
   :require nano-minibuffer
   ;; :require nano-counsel
   ;; :require nano-mu4e
   ;; :require nano-agenda
   :config
-  (nano-faces)
-  (nano-theme))
+  ;; (nano-theme)
+  (nano-faces))
 
+;; (leaf nord-theme
+;;   :url "https://github.com/arcticicestudio/nord-emacs"
+;;   :straight t
+;;   :init
+;;   (add-to-list 'custom-safe-themes "e3b2bad7b781a968692759ad12cb6552bc39d7057762eefaf168dbe604ce3a4b")
+;;   :custom
+;;   (nord-region-highlight . 'frost)
+;;   (nord-uniform-mode-lines . t)
+;;   :config (load-theme 'nord))
+
+(leaf bespoke-themes
+  :straight (bespoke-themes :host github :repo "mclear-tools/bespoke-themes")
+  :pre-setq
+  ;; Set header line
+  (bespoke-set-mode-line . nil) ;; not working correctly
+  ;; Set mode line height
+  (bespoke-set-mode-line-size . 3)
+  ;; Show diff lines in modeline
+  (bespoke-set-git-diff-mode-line . t)
+  ;; Set mode-line cleaner
+  (bespoke-set-mode-line-cleaner . t)
+  ;; Set evil cursor colors
+  (bespoke-set-evil-cursors . t)
+  ;; Use mode line visual bell
+  (bespoke-set-visual-bell . t)
+  ;; Set use of italics
+  (bespoke-set-italic-comments . t)
+  (bespoke-set-italic-keywords . t)
+  ;; Set variable pitch
+  (bespoke-set-variable-pitch . t)
+  ;; Set initial theme variant
+  (bespoke-set-theme 'dark)
+  :config (load-theme 'bespoke t))
 
 ;; Vertical window divider
 (leaf frame
