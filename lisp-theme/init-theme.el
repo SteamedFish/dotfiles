@@ -35,6 +35,14 @@
   (nano-theme))
 
 
+;; Vertical window divider
+(leaf frame
+  :custom
+  (window-divider-default-right-width . 12)
+  (window-divider-default-bottom-width . 1)
+  (window-divider-default-places . 'right-only)
+  (window-divider-mode . t)
+  :hook ('before-make-frame-hook . 'window-divider-mode))
 
 (provide 'init-theme)
 ;;; init-theme.el ends here
