@@ -13,6 +13,9 @@
   :custom ((user-full-name . "SteamedFish")
            (user-mail-address . "steamedfish@hotmail.com")
            (frame-title-format . '("%b - " user-full-name "'s Emacs")))
+  :setq-default
+  (bidi-display-reordering . 'left-to-right)
+  (bidi-paragraph-direction . 'left-to-right)
   :init
   (cond
     (IS-MAC
