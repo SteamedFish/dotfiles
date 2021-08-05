@@ -16,6 +16,8 @@
   :setq-default
   (bidi-display-reordering . 'left-to-right)
   (bidi-paragraph-direction . 'left-to-right)
+  :setq
+  `(read-process-output-max . ,(* 1024 1024))
   :init
   (cond
     (IS-MAC
