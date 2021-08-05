@@ -29,6 +29,14 @@
       (setq w32-lwindow-modifier 'super
             w32-rwindow-modifier 'super))))
 
+(leaf mule-cmds
+  :config
+  (set-language-environment "UTF-8"))
+
+(leaf select
+  :unless IS-WINDOWS
+  :setq (selection-coding-system . 'utf-8))
+
 (leaf cus-edit
   :ensure nil
   :tag "builtin" "internal"
