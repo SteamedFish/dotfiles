@@ -39,7 +39,8 @@
                                 "@nasy_nautc_bot"
                                 "@nasy_words_bot"
                                 "@PythaGataBot"
-                                "@DeezerMusicBot"))
+                                "@DeezerMusicBot"
+                                "@shuibiaobot"))
   (telega-chat-history-limit . 100)
   (telega-sticker-set-download . t)
   (telega-symbol-reply . "↫")
