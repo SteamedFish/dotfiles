@@ -6,6 +6,10 @@
 
 ;;; Code:
 
+(leaf startup
+  :setq
+  `(auto-save-list-file-prefix . ,(concat my-data-dir "autosave/")))
+
 (leaf cus-start
   :doc "builtins"
   :tag "builtin" "internal"
