@@ -20,8 +20,11 @@
   :setq-default
   (bidi-display-reordering . 'left-to-right)
   (bidi-paragraph-direction . 'left-to-right)
+  (indent-tabs-mode . nil)
+  (tab-width . 8)
   :setq
   `(read-process-output-max . ,(* 1024 1024))
+  (tabify-regexp . "^\t* [ \t]+")
   :init
   (cond
     (IS-MAC
@@ -37,6 +40,9 @@
     (IS-WINDOWS
       (setq w32-lwindow-modifier 'super
             w32-rwindow-modifier 'super))))
+
+(leaf indent
+  :setq (tab-always-indent . nil))
 
 (leaf mule-cmds
   :config
