@@ -8,6 +8,7 @@
 
 ;; add to load-path
 (push (expand-file-name "lisp-core" user-emacs-directory) load-path)
+(push (expand-file-name "lisp-theme" user-emacs-directory) load-path)
 (push (expand-file-name "lisp-tools" user-emacs-directory) load-path)
 (push (expand-file-name "lisp-lang" user-emacs-directory) load-path)
 
@@ -31,6 +32,9 @@
 (require 'init-helpers)
 (require 'init-keybindings)
 (require 'init-gcmh)
+
+;; lisp-theme
+(require 'init-theme)
 
 ;; lisp-tools
 (require 'init-evil)
