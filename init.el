@@ -46,6 +46,7 @@
 ;; lisp-lang
 (require 'init-generic-x)
 (require 'init-puppet)
+(require 'init-elisp)
 
 
 (provide 'init)
