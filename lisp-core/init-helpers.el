@@ -33,5 +33,16 @@
   :straight nil
   :bind (([remap list-buffers] . ibuffer)))
 
+(leaf ido
+  :unless (or (fboundp 'helm-mode) (fboundp 'ivy-mode) (fboundp 'vertico-mode))
+  :global-minor-mode t
+  :setq (ido-enable-flex-matching . t))
+
+(leaf smex
+  :straight t
+  :unless (or (fboundp 'helm-mode) (fboundp 'ivy-mode) (fboundp 'vertico-mode))
+  :bind ([remap execute-extended-command] . smex)
+  :config (smex-initialize))
+
 (provide 'init-helpers)
 ;;; init-helpers.el ends here
