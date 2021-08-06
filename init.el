@@ -38,6 +38,7 @@
 
 ;; lisp-tools
 (require 'init-evil)
+(require 'init-edittools)
 (require 'init-calendar)
 (require 'init-smalltools)
 (require 'init-eaf)
