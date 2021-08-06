@@ -58,5 +58,16 @@
   :custom `(smex-save-file . ,(concat my-data-dir "data/smex-items"))
   :config (smex-initialize))
 
+(leaf mini-frame
+  :url "https://github.com/muffinmad/emacs-mini-frame"
+  :when window-system
+  :custom
+  '(mini-frame-show-parameters . '((top . 9990)
+                                   (width . 1.0)
+                                   (left . 0.5)
+                                   (leight . 1)))
+  :global-minor-mode t
+  :straight t)
+
 (provide 'init-helpers)
 ;;; init-helpers.el ends here
