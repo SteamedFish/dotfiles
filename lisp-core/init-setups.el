@@ -94,6 +94,10 @@
   (unless backup-directory-alist
     (setq backup-directory-alist `(("." . ,(concat my-data-dir
                                                    "backups"))))))
+(leaf server
+  :unless window-system
+  :config (unless (server-running-p)
+            (server-start)))
 
 (provide 'init-setups)
 ;;; init-setups.el ends here
