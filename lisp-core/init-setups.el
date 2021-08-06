@@ -74,5 +74,10 @@
   :straight nil
   :config (save-place-mode +1))
 
+(leaf ido
+  :unless (or (fboundp 'helm-mode) (fboundp 'ivy-mode) (fboundp 'vertico-mode))
+  :global-minor-mode t
+  :setq (ido-enable-flex-matching . t))
+
 (provide 'init-setups)
 ;;; init-setups.el ends here
