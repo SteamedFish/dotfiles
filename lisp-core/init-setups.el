@@ -25,6 +25,7 @@
   `(read-process-output-max . ,(* 1024 1024))
   (tabify-regexp . "^\t* [ \t]+")
   (visible-bell . t)
+  (fill-column . 80)
   :init
   (cond
     (IS-MAC
