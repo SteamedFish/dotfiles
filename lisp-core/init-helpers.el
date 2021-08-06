@@ -32,6 +32,13 @@
   :global-minor-mode t
   :blackout t)
 
+(leaf which-key-posframe
+  :url "https://github.com/yanghaoxie/which-key-posframe"
+  :when window-system
+  :straight t
+  :setq (which-key-posframe-poshandler . 'posframe-poshandler-frame-bottom-center)
+  :global-minor-mode t)
+
 (leaf ibuffer
   :tag "builtin"
   :straight nil
