@@ -79,5 +79,8 @@
   :global-minor-mode t
   :setq (ido-enable-flex-matching . t))
 
+(leaf uniquify
+  :require t)
+
 (provide 'init-setups)
 ;;; init-setups.el ends here
