@@ -10,6 +10,7 @@
 ;;; Code:
 
 (leaf telega
+  :url https://github.com/zevlg/telega.el
   :straight t
   :commands telega
   :after all-the-icons
@@ -58,12 +59,14 @@
                                   :face all-the-icons-blue)))
 
 (leaf telega-url-shorten
+  :url https://github.com/zevlg/telega.el
   :straight nil
   :after telega
   :global-minor-mode (global-telega-url-shorten-mode))
 
 
 (leaf telega-mnz
+  :url https://github.com/zevlg/telega.el
   :straight nil
   :after telega
   :global-minor-mode global-telega-mnz-mode)

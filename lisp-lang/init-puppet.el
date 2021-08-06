@@ -10,6 +10,7 @@
 ;;; Code:
 
 (leaf puppet-mode
+  :url "https://github.com/voxpupuli/puppet-mode"
   :straight t
   :setq
   '((puppet-fontify-variables-in-comments . t)))

@@ -9,6 +9,7 @@
 ;;; Code:
 
 (leaf parinfer-rust-mode
+  :url "https://github.com/justinbarclay/parinfer-rust-mode"
   :straight t
   :when (fboundp 'module-load)
   :hook emacs-lisp-mode-hook
@@ -28,6 +29,7 @@
                                  (IS-WINDOWS "parinfer-rust-windows.dll")))))
 
 (leaf parinfer
+  :url "https://github.com/DogLooksGood/parinfer-mode"
   :straight t
   :unless (fboundp 'module-load)
   :hook ((emacs-lisp-mode

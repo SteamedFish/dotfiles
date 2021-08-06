@@ -9,6 +9,7 @@
 ;;; Code:
 
 (leaf eldoc
+  :tag "builtin"
   :blackout t)
 
 (provide 'init-elisp)

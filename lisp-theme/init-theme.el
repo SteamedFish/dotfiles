@@ -10,12 +10,17 @@
 ;;; Code:
 
 (leaf svg-tag-mode
+  :url "https://github.com/rougier/svg-tag-mode"
+  :unless window-system
   :straight (svg-tag-mode :host github :repo "rougier/svg-tag-mode"))
 
 (leaf mini-frame
+  :url "https://github.com/muffinmad/emacs-mini-frame"
+  :unless window-system
   :straight t)
 
 ;; (leaf nano
+;;   :url "https://github.com/rougier/nano-emacs"
 ;;   :straight (nano :host github :repo "rougier/nano-emacs")
 ;;   :pre-setq
 ;;   (nano-font-family-monospaced . "Rec Mono Duotone")
@@ -37,6 +42,7 @@
 ;;   (nano-faces))
 
 ;; (leaf bespoke-themes
+;;   :url "https://github.com/mclear-tools/bespoke-themes"
 ;;   :straight (bespoke-themes :host github :repo "mclear-tools/bespoke-themes")
 ;;   :pre-setq
 ;;   ;; Set header line
@@ -62,6 +68,7 @@
 
 ;; Vertical window divider
 (leaf frame
+  :tag "builtin"
   :custom
   (window-divider-default-right-width . 12)
   (window-divider-default-bottom-width . 1)
@@ -70,16 +77,19 @@
   :hook ('before-make-frame-hook . 'window-divider-mode))
 
 (leaf hl-todo
+  :url "https://github.com/tarsius/hl-todo"
   :straight t
   :global-minor-mode global-hl-todo-mode)
 
 ;; (leaf nano-theme
+;;   :url "https://github.com/rougier/nano-theme"
 ;;   :straight (nano-theme :host github :repo "rougier/nano-theme")
 ;;   ;; :require nano-theme
 ;;   ;; :config (nano-dark)
 ;;   :config (load-theme 'nano t))
 
 ;; (leaf nano-modeline
+;;   :url "https://github.com/rougier/nano-modeline"
 ;;   :straight (nano-modeline :host github :repo "rougier/nano-modeline")
 ;;   :custom
 ;;   (nano-modeline-position . 'bottom)
@@ -96,6 +106,7 @@
   :config (load-theme 'nord))
 
 (leaf doom-modeline
+  :url "https://github.com/seagle0128/doom-modeline"
   :straight t
   :custom
   (doom-modeline-minor-modes . t)

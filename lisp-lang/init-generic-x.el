@@ -12,7 +12,7 @@
 ;; before require generic-x we append more modes
 ;; to make emacs support filetypes such as dosini
 (leaf generic-x
-  :straight nil
+  :tag "builtin"
   :pre-setq
   '((generic-extras-enable-list . '(apache-conf-generic-mode
                                     apache-log-generic-mode

@@ -9,7 +9,7 @@
 ;;; Code:
 
 (leaf calendar
-  :straight nil
+  :tag "builtin"
   :setq
   '((calendar-latitude . 23.1247)
     (calendar-longitude . 113.3612)
@@ -18,7 +18,7 @@
     (calendar-mark-diary-entries-flag . t)))
 
 (leaf appt
-  :straight nil
+  :tag "builtin"
   :config (appt-activate)
   :setq '((appt-display-mode-line . t)
           (appt-display-diary . t)))

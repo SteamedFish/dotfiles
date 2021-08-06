@@ -10,7 +10,7 @@
 
 ;; S-left S-right S-up S-down to move windows
 (leaf windmove
-  :straight nil
+  :tag "builtin"
   :config
   (windmove-default-keybindings)
   (windmove-display-default-keybindings)
@@ -18,6 +18,7 @@
 
 ;; undo/redo stack for windows
 (leaf winner
+  :tag "builtin"
   :global-minor-mode t)
 
 (provide 'init-keybindings)

@@ -9,23 +9,28 @@
 ;;; Code:
 
 (leaf ssh-deploy
+  :url "https://github.com/cjohansson/emacs-ssh-deploy"
   :straight t
   :init
   (push '(ssh-deploy-on-explicit-save . t) safe-local-variable-values))
 
 (leaf wakatime-mode
+  :url "https://github.com/wakatime/wakatime-mode"
   :straight t
   :blackout t
   :global-minor-mode global-wakatime-mode)
 
 (leaf rfc-mode
+  :url "https://github.com/galdor/rfc-mode"
   :straight t
   :setq `((rfc-mode-directory . ,(concat my-data-dir "data/rfc/"))))
 
 (leaf all-the-icons
+  :url "https://github.com/domtronn/all-the-icons.el"
   :straight t)
 
 (leaf netease-cloud-music
+  :url "https://github.com/SpringHan/netease-cloud-music.el"
   :require (cl-macs)
   :straight (netease-cloud-music
              :host github

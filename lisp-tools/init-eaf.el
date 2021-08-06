@@ -9,10 +9,12 @@
 ;;; Code:
 
 (leaf epc
+  :url "https://github.com/kiwanami/emacs-epc"
   :doc "required by eaf"
   :straight t)
 
 (leaf eaf
+  :url "https://github.com/manateelazycat/emacs-application-framework"
   :straight (eaf
              :host github
              :repo "manateelazycat/emacs-application-framework"

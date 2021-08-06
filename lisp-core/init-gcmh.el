@@ -7,6 +7,7 @@
 ;;; Code:
 
 (leaf gcmh
+  :url "https://gitlab.com/koral/gcmh"
   :straight t
   :hook (after-init-hook . gcmh-mode)
   :setq

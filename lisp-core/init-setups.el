@@ -7,13 +7,12 @@
 ;;; Code:
 
 (leaf startup
+  :tag "builtin"
   :setq
   `(auto-save-list-file-prefix . ,(concat my-data-dir "autosave/")))
 
 (leaf cus-start
-  :doc "builtins"
-  :tag "builtin" "internal"
-  :ensure nil
+  :tag "builtin"
   :custom ((user-full-name . "SteamedFish")
            (user-mail-address . "steamedfish@hotmail.com")
            (frame-title-format . '("%b - " user-full-name "'s Emacs")))
@@ -43,22 +42,25 @@
             w32-rwindow-modifier 'super))))
 
 (leaf indent
+  :tag "builtin"
   :setq (tab-always-indent . nil))
 
 (leaf files
+  :tag "builtin"
   :setq (require-final-newline . t))
 
 (leaf mule-cmds
+  :tag "builtin"
   :config
   (set-language-environment "UTF-8"))
 
 (leaf select
+  :tag "builtin"
   :unless IS-WINDOWS
   :setq (selection-coding-system . 'utf-8))
 
 (leaf cus-edit
-  :ensure nil
-  :tag "builtin" "internal"
+  :tag "builtin"
   :init
   (custom-set-variables `(custom-file ,(concat my-data-dir "custom.el")))
   :config
@@ -66,35 +68,42 @@
     (load custom-file)))
 
 (leaf no-littering
+  :url "https://github.com/emacscollective/no-littering"
   :straight t
   :pre-setq `((no-littering-etc-directory . ,(expand-file-name "etc/" my-data-dir))
               (no-littering-var-directory . ,(expand-file-name "data/" my-data-dir))))
 
 ;; remember last location
 (leaf saveplace
-  :straight nil
+  :tag "builtin"
   :custom `(save-place-file . ,(concat my-data-dir "data/places"))
   :global-minor-mode save-place-mode)
 
 (leaf uniquify
+  :tag "builtin"
   :require t)
 
 (leaf paren
+  :tag "builtin"
   :global-minor-mode show-paren-mode)
 
 (leaf mouse
+  :tag "builtin"
   :setq
   (mouse-yank-at-point . t))
 
 (leaf ediff-wind
+  :tag "builtin"
   :setq (ediff-choose-window-setup-function . 'ediff-setup-windows-plain))
 
 (leaf files
+  :tag "builtin"
   :config
   (unless backup-directory-alist
     (setq backup-directory-alist `(("." . ,(concat my-data-dir
                                                    "backups"))))))
 (leaf server
+  :tag "builtin"
   :unless window-system
   :config (unless (server-running-p)
             (server-start)))
