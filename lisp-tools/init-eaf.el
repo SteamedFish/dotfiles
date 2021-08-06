@@ -11,10 +11,12 @@
 (leaf epc
   :url "https://github.com/kiwanami/emacs-epc"
   :doc "required by eaf"
-  :straight t)
+  :straight t
+  :when window-system)
 
 (leaf eaf
   :url "https://github.com/manateelazycat/emacs-application-framework"
+  :when window-system
   :straight (eaf
              :host github
              :repo "manateelazycat/emacs-application-framework"
