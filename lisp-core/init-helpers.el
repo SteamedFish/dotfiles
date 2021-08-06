@@ -42,6 +42,7 @@
   :straight t
   :unless (or (fboundp 'helm-mode) (fboundp 'ivy-mode) (fboundp 'vertico-mode))
   :bind ([remap execute-extended-command] . smex)
+  :custom `(smex-save-file . ,(concat my-data-dir "data/smex-items"))
   :config (smex-initialize))
 
 (provide 'init-helpers)
