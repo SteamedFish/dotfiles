@@ -14,17 +14,6 @@
   :when window-system
   :straight (svg-tag-mode :host github :repo "rougier/svg-tag-mode"))
 
-(leaf mini-frame
-  :url "https://github.com/muffinmad/emacs-mini-frame"
-  :when window-system
-  :custom
-  '(mini-frame-show-parameters . '((top . 9990)
-                                   (width . 1.0)
-                                   (left . 0.5)
-                                   (leight . 1)))
-  :global-minor-mode t
-  :straight t)
-
 ;; (leaf nano
 ;;   :url "https://github.com/rougier/nano-emacs"
 ;;   :straight (nano :host github :repo "rougier/nano-emacs")
