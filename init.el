@@ -41,6 +41,7 @@
 (require 'init-edittools)
 (require 'init-calendar)
 (require 'init-smalltools)
+(require 'init-version-control)
 (require 'init-chinese)
 (require 'init-eaf)
 (require 'init-telega)
