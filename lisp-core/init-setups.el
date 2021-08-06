@@ -82,5 +82,8 @@
 (leaf uniquify
   :require t)
 
+(leaf paren
+  :global-minor-mode show-paren-mode)
+
 (provide 'init-setups)
 ;;; init-setups.el ends here
