@@ -113,7 +113,8 @@
 (leaf hl-fill-column
   :url "https://github.com/laishulu/hl-fill-column"
   :straight t
-  :global-minor-mode global-hl-fill-column-mode)
+  :hook (prog-mode-hook . hl-fill-column-mode))
+  ;; :global-minor-mode global-hl-fill-column-mode)
 
 (provide 'init-theme)
 ;;; init-theme.el ends here
