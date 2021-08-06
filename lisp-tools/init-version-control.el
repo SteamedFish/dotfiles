@@ -32,6 +32,16 @@
   :url "https://magit.vc/"
   :straight t)
 
+(leaf transient
+  :url "https://github.com/magit/transient"
+  :straight t
+  :custom
+  (transient-enable-popup-navigation . t)
+  (transient-show-common-commands . nil)
+  (transient-highlight-mismatched-keys . t)
+  `(transient-levels-file . ,(concat my-data-dir "data/transient/levels.el"))
+  `(transient-history-file . ,(concat my-data-dir "data/transient/history.el")))
+
 
 (provide 'init-version-control)
 ;;; init-version-control.el ends here
