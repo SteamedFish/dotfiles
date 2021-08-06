@@ -80,6 +80,12 @@
   :global-minor-mode t
   :setq (ido-enable-flex-matching . t))
 
+(leaf smex
+  :straight t
+  :unless (or (fboundp 'helm-mode) (fboundp 'ivy-mode) (fboundp 'vertico-mode))
+  :bind ([remap execute-extended-command] . smex)
+  :config (smex-initialize))
+
 (leaf uniquify
   :require t)
 
