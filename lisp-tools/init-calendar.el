@@ -17,6 +17,17 @@
     (calendar-mark-holidays-flag . t)
     (calendar-mark-diary-entries-flag . t)))
 
+(leaf cal-china-x
+  :url "https://github.com/xwl/cal-china-x"
+  :straight t
+  :require t
+  :setq
+  (cal-china-x-important-holidays . cal-china-x-chinese-holidays)
+  ;; `(clendar-holidays . ,(append cal-china-x-chinese-holidays
+  ;;                          cal-china-x-general-holidays)))
+  :config
+  (setq calendar-holidays (append cal-china-x-chinese-holidays
+                            cal-china-x-general-holidays)))
 (leaf appt
   :tag "builtin"
   :config (appt-activate)
