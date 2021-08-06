@@ -104,7 +104,8 @@
                                                    "backups"))))))
 (leaf server
   :tag "builtin"
-  :unless window-system
+  :when window-system
+  :require t
   :config (unless (server-running-p)
             (server-start)))
 
