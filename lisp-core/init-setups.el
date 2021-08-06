@@ -74,7 +74,7 @@
 (leaf saveplace
   :straight nil
   :custom `(save-place-file . ,(concat my-data-dir "data/places"))
-  :config (save-place-mode +1))
+  :global-minor-mode save-place-mode)
 
 (leaf uniquify
   :require t)
