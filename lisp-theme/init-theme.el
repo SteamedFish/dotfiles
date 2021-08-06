@@ -11,12 +11,12 @@
 
 (leaf svg-tag-mode
   :url "https://github.com/rougier/svg-tag-mode"
-  :unless window-system
+  :when window-system
   :straight (svg-tag-mode :host github :repo "rougier/svg-tag-mode"))
 
 (leaf mini-frame
   :url "https://github.com/muffinmad/emacs-mini-frame"
-  :unless window-system
+  :when window-system
   :straight t)
 
 ;; (leaf nano
