@@ -25,6 +25,7 @@
   :setq
   `(read-process-output-max . ,(* 1024 1024))
   (tabify-regexp . "^\t* [ \t]+")
+  (visible-bell . t)
   :init
   (cond
     (IS-MAC
@@ -84,6 +85,19 @@
 
 (leaf paren
   :global-minor-mode show-paren-mode)
+
+(leaf mouse
+  :setq
+  (mouse-yank-at-point . t))
+
+(leaf ediff-wind
+  :setq (ediff-choose-window-setup-function . 'ediff-setup-windows-plain))
+
+(leaf files
+  :config
+  (unless backup-directory-alist
+    (setq backup-directory-alist `(("." . ,(concat my-data-dir
+                                                   "backups"))))))
 
 (provide 'init-setups)
 ;;; init-setups.el ends here
