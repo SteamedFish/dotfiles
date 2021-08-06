@@ -18,12 +18,14 @@
 (leaf sis
   :url "https://github.com/laishulu/emacs-smart-input-source"
   :straight t
-  :when (eq window-system 'mac)
   :unless (fboundp 'rime-mode)
   :config
-  (sis-ism-lazyman-config
-    "com.apple.keylayout.US"
-    "im.rime.inputmethod.Squirrel.Rime")
+  (when (eq window-system 'mac)
+    (sis-ism-lazyman-config
+      "com.apple.keylayout.US"
+      "im.rime.inputmethod.Squirrel.Rime"))
+  (when IS-LINUX
+    (sis-ism-lazyman-config "1" "2" 'fcitx))
   :setq
   (sis-inline-tighten-head-rule . 0)
   (sis-inline-tighten-tail-rule . 0)
