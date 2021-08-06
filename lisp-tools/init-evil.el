@@ -14,7 +14,9 @@
   :straight t
   :global-minor-mode t
   :pre-setq
-  `((evil-want-keybinding . nil)))
+  `((evil-want-keybinding . nil))
+  :config
+  (evil-select-search-module 'evil-search-module 'evil-search))
 
 (leaf evil-collection
   :url "https://github.com/emacs-evil/evil-collection"
