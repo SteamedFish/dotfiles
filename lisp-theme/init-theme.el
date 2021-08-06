@@ -97,6 +97,11 @@
 
 (leaf doom-modeline
   :straight t
+  :custom
+  (doom-modeline-minor-modes . t)
+  (doom-modeline-enable-word-count . t)
+  (doom-modeline-mu4e . t)
+  (doom-modeline-irc . t)
   :global-minor-mode t)
 
 (provide 'init-theme)
