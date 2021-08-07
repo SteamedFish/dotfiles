@@ -48,7 +48,11 @@
 
 (leaf files
   :tag "builtin"
-  :setq (require-final-newline . t))
+  :setq (require-final-newline . t)
+  :config
+  (unless backup-directory-alist
+    (setq backup-directory-alist `(("." . ,(concat my-data-dir
+                                                   "backups"))))))
 
 (leaf mule-cmds
   :tag "builtin"
@@ -97,12 +101,6 @@
   :tag "builtin"
   :setq (ediff-choose-window-setup-function . 'ediff-setup-windows-plain))
 
-(leaf files
-  :tag "builtin"
-  :config
-  (unless backup-directory-alist
-    (setq backup-directory-alist `(("." . ,(concat my-data-dir
-                                                   "backups"))))))
 (leaf server
   :tag "builtin"
   :when window-system
