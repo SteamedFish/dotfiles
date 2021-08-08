@@ -11,8 +11,7 @@
 (leaf ssh-deploy
   :url "https://github.com/cjohansson/emacs-ssh-deploy"
   :straight t
-  :init
-  (push '(ssh-deploy-on-explicit-save . t) safe-local-variable-values))
+  :pre-push ((safe-local-variable-values . '(ssh-deploy-on-explicit-save . t))))
 
 (leaf wakatime-mode
   :url "https://github.com/wakatime/wakatime-mode"
