@@ -26,7 +26,8 @@
   :tag "builtin"
   :doc "A lightweight alternative to emerge/ediff"
   :doc "enable the mode, then use C-c ^"
-  :hook find-file-hook)
+  :hook find-file-hook
+  :blackout t)
 
 (leaf magit
   :url "https://magit.vc/"
