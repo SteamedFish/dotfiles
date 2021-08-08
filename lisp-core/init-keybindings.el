@@ -21,5 +21,16 @@
   :tag "builtin"
   :global-minor-mode t)
 
+(leaf simple
+  :tag "builtin"
+  :doc "Mac like keybindings"
+  :bind
+  ("s-a" . mark-whole-buffer)
+  ("s-c" . kill-ring-save)
+  ("s-l" . goto-line)
+  ("s-v" . yank)
+  ("s-z" . undo))
+
+
 (provide 'init-keybindings)
 ;;; init-keybindings.el ends here
