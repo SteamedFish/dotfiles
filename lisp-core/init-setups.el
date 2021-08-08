@@ -28,6 +28,7 @@
   (fill-column . 80)
   (locale-coding-system . 'utf-8)
   :init
+  (fset 'yes-or-no-p 'y-or-n-p)
   (cond
     (IS-MAC
       ;; mac-* variables are used by the special emacs-mac build of Emacs by
