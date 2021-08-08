@@ -12,5 +12,17 @@
   :tag "builtin"
   :blackout t)
 
+(leaf highlight-defined
+  :url "https://github.com/Fanael/highlight-defined"
+  :straight t
+  :hook (emacs-lisp-mode-hook . highlight-defined-mode)
+  :pre-setq (highlight-defined-face-use-itself . t))
+
+(leaf highlight-quoted
+  :url https://github.com/Fanael/highlight-quoted
+  :straight t
+  :hook (emacs-lisp-mode-hook . highlight-quoted-mode))
+  
+
 (provide 'init-elisp)
 ;;; init-elisp.el ends here
