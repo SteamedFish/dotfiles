@@ -41,6 +41,10 @@
   :blackout t
   :setq (parinfer-extensions . '(defaults pretty-parens smart-tab smart-yank evil)))
 
+(leaf autorevert
+  :tag "builtin"
+  :blackout t
+  :global-minor-mode global-auto-revert-mode)
 
 (provide 'init-edittools)
 ;;; init-edittools.el ends here
