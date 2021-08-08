@@ -26,6 +26,7 @@
   (tabify-regexp . "^\t* [ \t]+")
   (visible-bell . t)
   (fill-column . 80)
+  (locale-coding-system . 'utf-8)
   :init
   (cond
     (IS-MAC
@@ -57,7 +58,18 @@
 (leaf mule-cmds
   :tag "builtin"
   :config
-  (set-language-environment "UTF-8"))
+  (set-language-environment 'utf-8) 
+  (set-default-coding-systems 'utf-8))
+
+(leaf mule
+  :tag "builtin"
+  :config
+  (set-buffer-file-coding-system 'utf-8)
+  (set-selection-coding-system 'utf-8)
+  (set-file-name-coding-system 'utf-8)
+  (set-keyboard-coding-system 'utf-8)
+  (set-terminal-coding-system 'utf-8)
+  (modify-coding-system-alist 'process "*" 'utf-8))
 
 (leaf select
   :tag "builtin"
