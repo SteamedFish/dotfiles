@@ -39,9 +39,7 @@
   :custom
   (transient-enable-popup-navigation . t)
   (transient-show-common-commands . nil)
-  (transient-highlight-mismatched-keys . t)
-  `(transient-levels-file . ,(concat my-data-dir "data/transient/levels.el"))
-  `(transient-history-file . ,(concat my-data-dir "data/transient/history.el")))
+  (transient-highlight-mismatched-keys . t))
 
 
 (provide 'init-version-control)

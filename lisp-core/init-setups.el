@@ -59,7 +59,7 @@
 (leaf mule-cmds
   :tag "builtin"
   :config
-  (set-language-environment 'utf-8) 
+  (set-language-environment 'utf-8)
   (set-default-coding-systems 'utf-8))
 
 (leaf mule
@@ -88,13 +88,13 @@
 (leaf no-littering
   :url "https://github.com/emacscollective/no-littering"
   :straight t
+  :require t
   :pre-setq `((no-littering-etc-directory . ,(expand-file-name "etc/" my-data-dir))
               (no-littering-var-directory . ,(expand-file-name "data/" my-data-dir))))
 
 ;; remember last location
 (leaf saveplace
   :tag "builtin"
-  :custom `(save-place-file . ,(concat my-data-dir "data/places"))
   :global-minor-mode save-place-mode)
 
 (leaf uniquify

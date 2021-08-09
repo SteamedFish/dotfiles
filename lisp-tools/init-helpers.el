@@ -67,7 +67,6 @@
               (file-directory-p (straight--build-dir "selectrum")))
   :bind ([remap execute-extended-command] . amx)
   :custom
-  `(amx-save-file . ,(concat my-data-dir "data/amx-items"))
   (amx-history-length . 20))
 
 (leaf maple-minibuffer
