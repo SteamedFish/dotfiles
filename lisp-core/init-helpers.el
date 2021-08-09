@@ -51,14 +51,20 @@
 
 (leaf ido
   :tag "builtin"
-  :unless (or (fboundp 'helm-mode) (fboundp 'ivy-mode) (fboundp 'vertico-mode) (fboundp 'selectrum-mode))
+  :unless (or (straight--installed-p 'helm)
+              (straight--installed-p 'counsel)
+              (straight--installed-p 'vertico)
+              (straight--installed-p 'selectrum))
   :global-minor-mode t
   :setq (ido-enable-flex-matching . t))
 
 (leaf amx
   :url https://github.com/DarwinAwardWinner/amx
   :straight t
-  :unless (or (fboundp 'helm-mode) (fboundp 'ivy-mode) (fboundp 'vertico-mode) (fboundp 'selectrum-mode))
+  :unless (or (straight--installed-p 'helm)
+              (straight--installed-p 'counsel)
+              (straight--installed-p 'vertico)
+              (straight--installed-p 'selectrum))
   :bind ([remap execute-extended-command] . amx)
   :custom
   `(amx-save-file . ,(concat my-data-dir "data/amx-items"))
