@@ -76,7 +76,13 @@
   :when window-system
   :global-minor-mode t
   :custom
-  (maple-minibuffer:position-type . 'window-bottom-left))
+  (maple-minibuffer:position-type . 'frame-bottom-left)
+  (maple-minibuffer:width . 0.7)
+  (maple-minibuffer:action . '(read-from-minibuffer read-string))
+  (maple-minibuffer:ignore-action . '(evil-ex
+                                      eval-expression
+                                      evil-ex-search-forward
+                                      evil-ex-search-backward)))
 
 (provide 'init-helpers)
 ;;; init-helpers.el ends here
