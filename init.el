@@ -35,6 +35,7 @@
 
 ;; lisp-theme
 (require 'init-theme)
+(require 'init-fonts)
 
 ;; lisp-tools
 (require 'init-evil)
