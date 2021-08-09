@@ -67,13 +67,13 @@
 ;;   :config (load-theme 'bespoke t))
 
 ;; Vertical window divider
-(leaf frame
-  :tag "builtin"
-  :global-minor-mode window-divider-mode
-  :custom
-  (window-divider-default-right-width . 12)
-  (window-divider-default-bottom-width . 1)
-  (window-divider-default-places . 'right-only))
+;; (leaf frame
+;;   :tag "builtin"
+;;   :global-minor-mode window-divider-mode
+;;   :custom
+;;   (window-divider-default-right-width . 12)
+;;   (window-divider-default-bottom-width . 1)
+;;   (window-divider-default-places . 'right-only))
 
 (leaf hl-todo
   :url "https://github.com/tarsius/hl-todo"
