@@ -51,20 +51,20 @@
 
 (leaf ido
   :tag "builtin"
-  :unless (or (straight--installed-p 'helm)
-              (straight--installed-p 'counsel)
-              (straight--installed-p 'vertico)
-              (straight--installed-p 'selectrum))
+  :unless (or (file-directory-p (straight--build-dir "swiper"))
+              (file-directory-p (straight--build-dir "helm"))
+              (file-directory-p (straight--build-dir "vertico"))
+              (file-directory-p (straight--build-dir "selectrum")))
   :global-minor-mode t
   :setq (ido-enable-flex-matching . t))
 
 (leaf amx
   :url https://github.com/DarwinAwardWinner/amx
   :straight t
-  :unless (or (straight--installed-p 'helm)
-              (straight--installed-p 'counsel)
-              (straight--installed-p 'vertico)
-              (straight--installed-p 'selectrum))
+  :unless (or (file-directory-p (straight--build-dir "swiper"))
+              (file-directory-p (straight--build-dir "helm"))
+              (file-directory-p (straight--build-dir "vertico"))
+              (file-directory-p (straight--build-dir "selectrum")))
   :bind ([remap execute-extended-command] . amx)
   :custom
   `(amx-save-file . ,(concat my-data-dir "data/amx-items"))
