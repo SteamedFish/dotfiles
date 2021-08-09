@@ -29,7 +29,6 @@
              eaf-open-this-from-dired
              eaf-describe-bindings eaf-open-bookmark eaf-open-external
              eaf-get-path-or-url eaf-toggle-fullscreen eaf-share-path-or-url)
-  :require (eaf-evil eaf-org)
   :custom
   `(eaf-config-location . ,(concat my-data-dir "etc/eaf/"))
   (eaf-find-alternate-file-in-dired . t)
@@ -42,6 +41,16 @@
   (eaf-setq eaf-pdf-dark-mode "true")
   (eaf-setq eaf-mindmap-dark-mode "true")
   (eaf-setq eaf-browse-blank-page-url "https://duckduckgo.com/"))
+
+(leaf eaf-evil
+  :url "https://github.com/manateelazycat/emacs-application-framework"
+  :when window-system
+  :after eaf)
+
+(leaf eaf-org
+  :url "https://github.com/manateelazycat/emacs-application-framework"
+  :when window-system
+  :after eaf)
 
 (provide 'init-eaf)
 ;;; init-eaf.el ends here
