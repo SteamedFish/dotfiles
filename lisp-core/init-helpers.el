@@ -44,6 +44,11 @@
   :straight nil
   :bind (([remap list-buffers] . ibuffer)))
 
+(leaf help
+  :tag "builtin"
+  :straight nil
+  :custom (help-window-select . t))
+
 (leaf ido
   :tag "builtin"
   :unless (or (fboundp 'helm-mode) (fboundp 'ivy-mode) (fboundp 'vertico-mode))
