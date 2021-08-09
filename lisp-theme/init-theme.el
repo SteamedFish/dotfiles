@@ -9,6 +9,11 @@
 
 ;;; Code:
 
+(leaf frame
+  :tag "builtin"
+  :when window-system
+  :hook (window-setup-hook . toggle-frame-maximized))
+
 (leaf svg-tag-mode
   :url "https://github.com/rougier/svg-tag-mode"
   :when window-system
