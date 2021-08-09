@@ -28,14 +28,15 @@
                                                 telega-company-hashtag)
                                               (when (telega-chat-bot-p telega-chatbuf--chat)
                                                 '(telega-company-botcmd))))))
-  :bind (:telega-msg-button-map
+  :bind (:telega-chat-mode-map
          ("RET"        . newline)
-         ("<s-return>" . telega-chatbuf-input-send))
+         ("<s-return>" . telega-chatbuf-newline-or-input-send))
   :custom
   `(telega-directory . ,(expand-file-name (concat my-data-dir "data/telega")))
   (telega-use-tracking-for . nil)
   (telega-usl-shorten-use-images . t)
   (telega-mnz-use-language-detection . 10)
+  (telega-chat-ret-always-sends-message . nil)
   (telega-known-inline-bots . '("@shufmbot"
                                 "@jiebabot"
                                 "@toptoh_bot"
