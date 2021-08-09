@@ -70,16 +70,13 @@
   `(amx-save-file . ,(concat my-data-dir "data/amx-items"))
   (amx-history-length . 20))
 
-(leaf mini-frame
-  :url "https://github.com/muffinmad/emacs-mini-frame"
+(leaf maple-minibuffer
+  :url https://github.com/honmaple/emacs-maple-minibuffer
+  :straight (maple-minibuffer :host github :repo "honmaple/emacs-maple-minibuffer")
   :when window-system
-  :custom
-  '(mini-frame-show-parameters . '((top . 9990)
-                                   (width . 1.0)
-                                   (left . 0.5)
-                                   (leight . 1)))
   :global-minor-mode t
-  :straight t)
+  :custom
+  (maple-minibuffer:position-type . 'window-bottom-left))
 
 (provide 'init-helpers)
 ;;; init-helpers.el ends here
