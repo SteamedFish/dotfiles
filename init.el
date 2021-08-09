@@ -39,6 +39,7 @@
 ;; lisp-tools
 (require 'init-evil)
 (require 'init-edittools)
+(require 'init-company)
 (require 'init-calendar)
 (require 'init-smalltools)
 (require 'init-version-control)
