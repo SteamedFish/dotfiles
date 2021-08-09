@@ -16,7 +16,7 @@
 (leaf ansible
   :url https://github.com/k1LoW/emacs-ansible
   :straight t
-  :blackout ansible-mode
+  :config (blackout 'ansible)
   :init
   (defun my-ansible-enable-maybe ()
     "Return non-nil if `ansible' should be enabled for the current file."
