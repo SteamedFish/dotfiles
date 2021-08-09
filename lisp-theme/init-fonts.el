@@ -43,7 +43,8 @@
   :tag "builtin"
   :when window-system
   :config
-  (set-face-attribute 'default nil :font "Rec Mono Duotone"))
+  (set-face-attribute 'default nil :font "Rec Mono Duotone")
+  (set-fontset-font t nil "Symbola" nil 'append))
 
 (leaf face-remap
   :tag "builtin"
