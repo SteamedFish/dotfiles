@@ -31,7 +31,7 @@
           "straight/repos/straight.el/bootstrap.el"
           (or (bound-and-true-p straight-base-dir)
             user-emacs-directory)))
-       (bootstrap-version 5))
+      (bootstrap-version 5))
   (unless (file-exists-p bootstrap-file)
     (with-current-buffer
       (url-retrieve-synchronously
