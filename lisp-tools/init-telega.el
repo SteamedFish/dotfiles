@@ -69,6 +69,7 @@
   :url https://github.com/zevlg/telega.el
   :straight nil
   :after telega
+  :blackout t
   :global-minor-mode global-telega-mnz-mode)
 
 (provide 'init-telega)
