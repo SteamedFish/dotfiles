@@ -54,9 +54,9 @@
   (set-face-font 'my-align-by-sarasa (font-spec :family "Sarasa Mono SC"))
   (defun my-align-with-sarasa-font ()
     (interactive)
-    (when (member "Sarasa Mono SC" (font-family-list)))
-    (setq buffer-face-mode-face 'my-align-by-sarasa)
-    (buffer-face-mode)))
+    (when (member "Sarasa Mono SC" (font-family-list))
+      (setq buffer-face-mode-face 'my-align-by-sarasa)
+      (buffer-face-mode))))
 
 
 (provide 'init-fonts)
