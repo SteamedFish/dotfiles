@@ -51,14 +51,14 @@
 
 (leaf ido
   :tag "builtin"
-  :unless (or (fboundp 'helm-mode) (fboundp 'ivy-mode) (fboundp 'vertico-mode))
+  :unless (or (fboundp 'helm-mode) (fboundp 'ivy-mode) (fboundp 'vertico-mode) (fboundp 'selectrum-mode))
   :global-minor-mode t
   :setq (ido-enable-flex-matching . t))
 
 (leaf smex
   :url "https://github.com/nonsequitur/smex"
   :straight t
-  :unless (or (fboundp 'helm-mode) (fboundp 'ivy-mode) (fboundp 'vertico-mode))
+  :unless (or (fboundp 'helm-mode) (fboundp 'ivy-mode) (fboundp 'vertico-mode) (fboundp 'selectrum-mode))
   :bind ([remap execute-extended-command] . smex)
   :custom `(smex-save-file . ,(concat my-data-dir "data/smex-items"))
   :config (smex-initialize))
