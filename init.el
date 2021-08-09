@@ -29,7 +29,6 @@
 (require 'init-earlyinit)
 (require 'init-packages)
 (require 'init-setups)
-(require 'init-helpers)
 (require 'init-keybindings)
 (require 'init-gcmh)
 
@@ -38,6 +37,7 @@
 (require 'init-fonts)
 
 ;; lisp-tools
+(require 'init-helpers)
 (require 'init-evil)
 (require 'init-ivy)
 (require 'init-edittools)
