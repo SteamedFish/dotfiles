@@ -55,13 +55,14 @@
   :global-minor-mode t
   :setq (ido-enable-flex-matching . t))
 
-(leaf smex
-  :url "https://github.com/nonsequitur/smex"
+(leaf amx
+  :url https://github.com/DarwinAwardWinner/amx
   :straight t
   :unless (or (fboundp 'helm-mode) (fboundp 'ivy-mode) (fboundp 'vertico-mode) (fboundp 'selectrum-mode))
-  :bind ([remap execute-extended-command] . smex)
-  :custom `(smex-save-file . ,(concat my-data-dir "data/smex-items"))
-  :config (smex-initialize))
+  :bind ([remap execute-extended-command] . amx)
+  :custom
+  `(amx-save-file . ,(concat my-data-dir "data/amx-items"))
+  (amx-history-length . 20))
 
 (leaf mini-frame
   :url "https://github.com/muffinmad/emacs-mini-frame"
