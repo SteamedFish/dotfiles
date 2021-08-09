@@ -39,6 +39,7 @@
 
 ;; lisp-tools
 (require 'init-evil)
+(require 'init-ivy)
 (require 'init-edittools)
 (require 'init-company)
 (require 'init-lsp)
