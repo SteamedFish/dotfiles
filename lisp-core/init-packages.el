@@ -17,6 +17,7 @@
     (not (native-comp-available-p))))
 
 (setq straight-base-dir my-data-dir)
+(setq straight-build-dir (format "build-%s" emacs-version))
 
 ;; This is the best way, but need python3 and watchexec to work
 (if (and (executable-find "python3")
