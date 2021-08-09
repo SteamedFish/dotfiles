@@ -44,5 +44,19 @@
   :when window-system
   :config
   (set-face-attribute 'default nil :font "Rec Mono Duotone"))
+
+(leaf face-remap
+  :tag "builtin"
+  :blackout buffer-face-mode
+  :config
+  (make-face 'my-align-by-sarasa)
+  (set-face-font 'my-align-by-sarasa (font-spec :family "Sarasa Mono SC"))
+  (defun my-align-with-sarasa-font ()
+    (interactive)
+    (when (member "Sarasa Mono SC" (font-family-list)))
+    (setq buffer-face-mode-face 'my-align-by-sarasa)
+    (buffer-face-mode)))
+
+
 (provide 'init-fonts)
 ;;; init-fonts.el ends here

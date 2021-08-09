@@ -17,6 +17,8 @@
   :hook
   (telega-load-hook . telega-mode-line-mode)
   (telega-load-hook . telega-notifications-mode)
+  (telega-chat-mode-hook . my-align-with-sarasa-font)
+  (telega-root-mode-hook . my-align-with-sarasa-font)
   `(telega-chat-mode-hook . ,(visual-line-mode t))
   (telega-chat-mode-hook . (lambda ()
                                  (set (make-local-variable 'company-backends)
