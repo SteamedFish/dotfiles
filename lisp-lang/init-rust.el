@@ -11,6 +11,7 @@
 
 (leaf rustic
   :url https://github.com/brotzeit/rustic
+  :ensure-system-package rust-analyzer
   :straight t)
 
 (leaf rust-playground
