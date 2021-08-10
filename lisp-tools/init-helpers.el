@@ -11,13 +11,22 @@
 
 (leaf helpful
   :url "https://github.com/Wilfred/helpful"
+  :doc "helpful-callable
+        helpful-function
+        helpful-macro
+        helpful-command
+        helpful-key
+        helpful-variable
+        helpful-at-point"
   :straight t
   :bind
-  (([remap describe-function] . helpful-callable)
-   ([remap describe-command]  . helpful-command)
-   ([remap describe-variable] . helpful-variable)
-   ([remap describe-key]      . helpful-key)
-   ([remap describe-symbol]   . helpful-symbol)))
+  (([remap describe-function]             . helpful-callable)
+   ([remap describe-command]              . helpful-command)
+   ([remap describe-variable]             . helpful-variable)
+   ([remap describe-key]                  . helpful-key)
+   ([remap describe-symbol]               . helpful-symbol)
+   ([remap Info-goto-emacs-command-node]  . helpful-function)))
+   
 
 (leaf elisp-demos
   :url "https://github.com/xuchunyang/elisp-demos"
@@ -74,9 +83,10 @@
   :url https://github.com/honmaple/emacs-maple-minibuffer
   :straight (maple-minibuffer :host github :repo "honmaple/emacs-maple-minibuffer")
   :when window-system
+  ;; :unless (file-directory-p (straight--build-dir "ivy-posframe"))
   :global-minor-mode t
   :custom
-  (maple-minibuffer:position-type . 'frame-bottom-left)
+  (maple-minibuffer:position-type . 'frame-center)
   (maple-minibuffer:width . 0.7)
   (maple-minibuffer:action . '(read-from-minibuffer read-string))
   (maple-minibuffer:ignore-action . '(evil-ex

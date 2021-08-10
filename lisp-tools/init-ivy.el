@@ -21,7 +21,9 @@
   :custom
   (ivy-use-selectable-prompt . t)
   (ivy-use-virtual-buffers . t)
-  (ivy-fixed-height-minibuffer . t))
+  (ivy-fixed-height-minibuffer . t)
+  (counsel-describe-function-function . #'helpful-callable)
+  (counsel-describe-variable-function . #'helpful-variable))
 
 (leaf prescient
   :url https://github.com/raxod502/prescient.el
@@ -47,6 +49,7 @@
 (leaf ivy-posframe
   :url https://github.com/tumashu/ivy-posframe
   :straight t
+  :unless (file-directory-p (straight--build-dir "maple-minibuffer"))
   :when window-system
   :blackout t
   :global-minor-mode t)
