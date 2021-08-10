@@ -303,7 +303,7 @@ update_gem() {
 
 update_go() {
     echo "Updating go packages"
-    run go get -u all
+    GO111MODULE=off run go get -u all
 }
 
 update_rust() {
