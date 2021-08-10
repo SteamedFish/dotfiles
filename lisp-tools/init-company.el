@@ -16,7 +16,7 @@
   :pre-setq
   (company-idle-delay . 0.1)
   (company-minimum-prefix-length . 1)
-  (company-auto-commit . t)
+  (company-auto-commit . nil)
   (company-show-quick-access . t)
   (company-global-modes . '(not erc-mode message-mode help-mode gud-mode eshell-mode shell-mode)))
 
