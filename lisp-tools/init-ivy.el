@@ -22,12 +22,12 @@
   (ivy-use-selectable-prompt . t)
   (ivy-use-virtual-buffers . t)
   (ivy-fixed-height-minibuffer . t))
-  
+
 (leaf prescient
   :url https://github.com/raxod502/prescient.el
   :straight t
   :global-minor-mode prescient-persist-mode)
-  
+
 (leaf ivy-prescient
   :url https://github.com/raxod502/prescient.el
   :after counsel
@@ -35,21 +35,21 @@
   :global-minor-mode ivy-prescient-mode)
 
 (leaf all-the-icons-ivy-rich
-  :url TODO
+  :url https://github.com/seagle0128/all-the-icons-ivy-rich
   :straight t
-  :hook (ivy-mode . all-the-icons-ivy-rich-mode))
+  :global-minor-mode t)
 
 (leaf ivy-rich
-  :url TODO
+  :url https://github.com/Yevgnen/ivy-rich
   :straight t
-  :hook ((counsel-projectile-mode . ivy-rich-mode)
-         (ivy-rich-mode . ivy-rich-project-root-cache-mode)))
- 
+  :global-minor-mode (ivy-rich-mode ivy-rich-project-root-cache-mode))
+
 (leaf ivy-posframe
-  :url TODO
+  :url https://github.com/tumashu/ivy-posframe
   :straight t
   :when window-system
-  :hook (ivy-mode . ivy-posframe-mode))
+  :blackout t
+  :global-minor-mode t)
 
 
 (provide 'init-ivy)
