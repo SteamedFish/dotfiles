@@ -27,22 +27,22 @@
   :url https://github.com/sebastiencs/company-box
   :straight t
   :when window-system
-  :hook (company-mode . company-box-mode))
+  :blackout t
+  :global-minor-mode t)
 
 (leaf company-quickhelp
   :url https://github.com/company-mode/company-quickhelp
   :straight t
-  :hook (global-company-mode . company-quickhelp-mode)
+  :global-minor-mode t
   :pre-setq (company-quickhelp-delay . 0.3))
 
 (leaf company-quickhelp-terminal
   :url https://github.com/jcs-elpa/company-quickhelp-terminal
   :straight t
   :unless window-system
+  :global-minor-mode t
   :bind (:company-active-map
-         ([remap company-show-doc-buffer] . company-quickhelp-manual-begin))
-  :hook ((global-company-mode . company-quickhelp-mode)
-         (company-quickhelp-mode  . company-quickhelp-terminal-mode)))
+         ([remap company-show-doc-buffer] . company-quickhelp-manual-begin)))
 
 (provide 'init-company)
 ;;; init-company.el ends here
