@@ -50,7 +50,7 @@
                                 "@shuibiaobot"))
   (telega-chat-history-limit . 100)
   (telega-sticker-set-download . t)
-  (telega-symbol-reply . "↫")
+  (telega-symbol-reply . "⮐")
   (telega-chat-show-deleted-messaes-for . '(all))
   :config
   ;; (evil-set-initial-state 'telega-chat-mode 'insert)
