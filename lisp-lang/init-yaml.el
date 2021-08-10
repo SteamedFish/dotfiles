@@ -30,5 +30,13 @@
       (add-to-list 'company-backends 'company-ansible)))
  :hook (yaml-mode-hook . my-ansible-enable-maybe))
 
+(leaf ansible-doc
+  :url https://github.com/emacsorphanage/ansible-doc
+  :straight t)
+
+(leaf company-ansible
+  :url https://github.com/krzysztof-magosa/company-ansible
+  :straight t)
+
 (provide 'init-yaml)
 ;;; init-yaml.el ends here
