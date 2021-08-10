@@ -55,6 +55,7 @@
 (require 'init-puppet)
 (require 'init-elisp)
 (require 'init-rust)
+(require 'init-golang)
 (require 'init-yaml)
 
 
