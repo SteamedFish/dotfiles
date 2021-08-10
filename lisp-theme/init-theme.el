@@ -21,6 +21,10 @@
   (conf-mode-hook . display-line-numbers-mode)
   (text-mode-hook . display-line-numbers-mode))
 
+(leaf hl-line
+  :tag "builtin"
+  :global-minor-mode global-hl-line-mode)
+
 (leaf svg-tag-mode
   :url "https://github.com/rougier/svg-tag-mode"
   :when window-system
