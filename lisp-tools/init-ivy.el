@@ -12,8 +12,7 @@
   :url https://oremacs.com/swiper/
   :straight t
   :blackout (ivy-mode counsel-mode)
-  :global-minor-mode (ivy-mode)
-  :hook (ivy-mode . counsel-mode)
+  :global-minor-mode (ivy-mode counsel-mode)
   :pre-setq
   (enable-recursive-minibuffers . t)
   :bind
