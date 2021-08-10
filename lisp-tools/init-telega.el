@@ -29,7 +29,10 @@
                                             '(telega-company-botcmd))))))
   :bind (:telega-chat-mode-map
          ("RET"        . newline)
-         ("<s-return>" . telega-chatbuf-input-send))
+         ("<s-return>" . telega-chatbuf-input-send)
+         ("C-c c"        . telega-chat-with))
+        (:telega-root-mode-map
+         ("C-c c"        . telega-chat-with))
   :custom
   `(telega-directory . ,(expand-file-name (concat my-data-dir "data/telega")))
   (telega-completing-read-function . 'ivy-completing-read)
