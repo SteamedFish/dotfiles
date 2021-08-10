@@ -13,21 +13,20 @@
   :url https://github.com/zevlg/telega.el
   :straight t
   :commands telega
-  :after all-the-icons
   :hook
   (telega-load-hook . telega-mode-line-mode)
   (telega-load-hook . telega-notifications-mode)
   (telega-chat-mode-hook . my-align-with-sarasa-font)
   (telega-root-mode-hook . my-align-with-sarasa-font)
-  `(telega-chat-mode-hook . ,(visual-line-mode t))
+  (telega-chat-mode-hook . (lambda () (visual-line-mode t)))
   (telega-chat-mode-hook . (lambda ()
-                                 (set (make-local-variable 'company-backends)
-                                      (append '(telega-company-telegram-emoji
-                                                telega-company-username
-                                                telega-company-botcmd
-                                                telega-company-hashtag)
-                                              (when (telega-chat-bot-p telega-chatbuf--chat)
-                                                '(telega-company-botcmd))))))
+                             (set (make-local-variable 'company-backends)
+                                  (append '(telega-company-telegram-emoji
+                                            telega-company-username
+                                            telega-company-botcmd
+                                            telega-company-hashtag)
+                                          (when (telega-chat-bot-p telega-chatbuf--chat)
+                                            '(telega-company-botcmd))))))
   :bind (:telega-chat-mode-map
          ("RET"        . newline)
          ("<s-return>" . telega-chatbuf-newline-or-input-send))
