@@ -1,15 +1,2 @@
-# Compiled
 *.elc
-
-# Packaging
-.cask
-
-# Backup files
-*~
-
-# Undo-tree save-files
-*.~undo-tree
-
-straight
-
 .local
