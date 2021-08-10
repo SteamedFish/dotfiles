@@ -32,12 +32,13 @@
   :url "https://github.com/DogLooksGood/parinfer-mode"
   :straight t
   :unless (fboundp 'module-load)
-  :hook ((emacs-lisp-mode
-          clojure-mode
-          scheme-mode
-          lisp-mode
-          racket-mode
-          hy-mode) . parinfer-mode)
+  :hook ((emacs-lisp-mode-hook
+          lisp-interaction-mode-hook
+          clojure-mode-hook
+          scheme-mode-hook
+          lisp-mode-hook
+          racket-mode-hook
+          hy-mode-hook) . parinfer-mode)
   :blackout t
   :setq (parinfer-extensions . '(defaults pretty-parens smart-tab smart-yank evil)))
 
