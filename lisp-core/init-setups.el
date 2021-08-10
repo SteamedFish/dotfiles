@@ -29,6 +29,10 @@
   (locale-coding-system . 'utf-8)
   :init
   (fset 'yes-or-no-p 'y-or-n-p)
+  :hook
+  (prog-mode-hook . (lambda () (setq show-trailing-whitespace t)))
+  (text-mode-hook . (lambda () (setq show-trailing-whitespace t)))
+  (conf-mode-hook . (lambda () (setq show-trailing-whitespace t)))
   (cond
     (IS-MAC
       ;; mac-* variables are used by the special emacs-mac build of Emacs by
