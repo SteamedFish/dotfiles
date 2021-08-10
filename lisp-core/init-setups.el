@@ -92,6 +92,12 @@
   :pre-setq `((no-littering-etc-directory . ,(expand-file-name "etc/" my-data-dir))
               (no-littering-var-directory . ,(expand-file-name "data/" my-data-dir))))
 
+(leaf exec-path-from-shell
+  :url https://github.com/purcell/exec-path-from-shell
+  :straight t
+  :when (memq window-system '(mac ns x))
+  :config (exec-path-from-shell-initialize))
+
 ;; remember last location
 (leaf saveplace
   :tag "builtin"
