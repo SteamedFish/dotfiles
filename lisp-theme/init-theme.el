@@ -14,6 +14,13 @@
   :when window-system
   :hook (window-setup-hook . toggle-frame-maximized))
 
+(leaf display-line-numbers
+  :tag "builtin"
+  :hook
+  (prog-mode-hook . display-line-numbers-mode)
+  (conf-mode-hook . display-line-numbers-mode)
+  (text-mode-hook . display-line-numbers-mode))
+
 (leaf svg-tag-mode
   :url "https://github.com/rougier/svg-tag-mode"
   :when window-system
