@@ -53,7 +53,7 @@
   (telega-symbol-reply . "↫")
   (telega-chat-show-deleted-messaes-for . '(all))
   :config
-  (evil-set-initial-state 'telega-chat-mode 'insert)
+  ;; (evil-set-initial-state 'telega-chat-mode 'insert)
   (add-to-list 'all-the-icons-mode-icon-alist
                '(telega-root-mode all-the-icons-fileicon "telegram"
                                   :heigt 1.0
