@@ -36,5 +36,12 @@
    sis-global-context-mode
    sis-global-inline-mode))
 
+(leaf ace-pinyin
+  :url https://github.com/cute-jumper/ace-pinyin
+  :straight t
+  :pre-setq (ace-pinyin-use-avy . t)
+  :blackout ace-pinyin-global-mode
+  :global-minor-mode ace-pinyin-global-mode)
+
 (provide 'init-chinese)
 ;;; init-chinese.el ends here
