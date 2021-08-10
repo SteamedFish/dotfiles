@@ -61,6 +61,7 @@
 (leaf amx
   :url https://github.com/DarwinAwardWinner/amx
   :straight t
+  :after ido
   :unless (or (file-directory-p (straight--build-dir "swiper"))
               (file-directory-p (straight--build-dir "helm"))
               (file-directory-p (straight--build-dir "vertico"))
