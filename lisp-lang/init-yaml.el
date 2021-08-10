@@ -32,7 +32,8 @@
 
 (leaf ansible-doc
   :url https://github.com/emacsorphanage/ansible-doc
-  :straight t)
+  :straight t
+  :blackout t)
 
 (leaf company-ansible
   :url https://github.com/krzysztof-magosa/company-ansible
