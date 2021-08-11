@@ -2,7 +2,12 @@
 
 ;;; Commentary:
 
-;; This file bootstraps the configuration
+;; run this file in terminal:
+;; emacs \
+;;    --batch \
+;;    --debug-init \
+;;    --load ~/.config/emacs/init.el \
+;;    --eval ~/.config/emacs/extra/update-emacs.el
 
 ;;; Code:
 
