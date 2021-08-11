@@ -17,6 +17,10 @@
   :url "https://github.com/wakatime/wakatime-mode"
   :straight t
   :blackout t
+  :config
+  (cond
+   (IS-LINUX (system-packages "wakatime"))
+   (IS-MAC (system-packages "wakatime-cli")))
   :global-minor-mode global-wakatime-mode)
 
 (leaf rfc-mode
