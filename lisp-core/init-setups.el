@@ -108,6 +108,7 @@
   (exec-path-from-shell-copy-envs '("GOPATH"
                                     "GO111MODULE"
                                     "GOPROXY"
+                                    "PYTHONPATH"
                                     "SHELL"
                                     "SSH_AUTH_SOCK")))
 
