@@ -7,7 +7,7 @@
 ;;    --batch \
 ;;    --debug-init \
 ;;    --load ~/.config/emacs/init.el \
-;;    --eval ~/.config/emacs/extra/update-emacs.el
+;;    --load ~/.config/emacs/extra/update-emacs.el
 
 ;;; Code:
 
@@ -28,6 +28,6 @@
     (condition-case nil
         (package-menu-execute 'noquery)
       (user-error nil)))))
- 
+
 (provide 'update-emacs)
 ;;; update-emacs.el ends here
