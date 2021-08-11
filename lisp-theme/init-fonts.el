@@ -32,6 +32,7 @@
   :tag "builtin"
   :when IS-LINUX
   :when window-system
+  ;; TOSO: fixit
   :ensure-system-package (ttf-recursive
                           ttf-sarasa-gothic
                           noto-fonts
