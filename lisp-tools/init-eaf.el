@@ -30,17 +30,30 @@
              eaf-describe-bindings eaf-open-bookmark eaf-open-external
              eaf-get-path-or-url eaf-toggle-fullscreen eaf-share-path-or-url)
   :custom
-  `(eaf-config-location . ,(concat my-data-dir "etc/eaf/"))
+  `(eaf-config-location . ,(concat my-data-dir "data/eaf/"))
   (eaf-find-alternate-file-in-dired . t)
-  (browse-url-browser-function . #'eaf-open-browser)
+  ;; (browse-url-browser-function . #'eaf-open-browser)
   (eaf-browser-continue-where-left-off . t)
-  (eaf-browser-default-search-engine . 'duckduckgo)
-  :config
-  (eaf-setq eaf-browser-dark-mode "true")
-  (eaf-setq eaf-terminal-dark-mode "true")
-  (eaf-setq eaf-pdf-dark-mode "true")
-  (eaf-setq eaf-mindmap-dark-mode "true")
-  (eaf-setq eaf-browse-blank-page-url "https://duckduckgo.com/"))
+  (eaf-browser-default-search-engine . "duckduckgo")
+  (eaf-browser-dark-mode . t)
+  (eaf-terminal-dark-mode . t)
+  (eaf-pdf-dark-mode . "follow")
+  (eaf-mindmap-dark-mode . "follow")
+  (eaf-browse-blank-page-url . "https://duckduckgo.com/")
+  (eaf-browser-enable-adblocker . t)
+  (eaf-browser-remember-history . t))
+  ;; install dependencies will cause eaf's repo modified,
+  ;; which will trigger a rebuild, which cleans up installed dependencies
+  ;; :config
+  ;; (let* ((leaf-dir (file-name-directory (locate-library "eaf")))
+  ;;        (default-directory eaf-dir))
+  ;;   (unless (file-exists-p
+  ;;            (expand-file-name
+  ;;             (concat eaf-dir "app/terminal/node_modules")))
+  ;;     (if (executable-find "yay")
+  ;;         (async-shell-command "./install-eaf.sh --ignore-py-deps")
+  ;;       (eaf-install-dependencies)))))
+
 
 (leaf eaf-evil
   :url "https://github.com/manateelazycat/emacs-application-framework"
