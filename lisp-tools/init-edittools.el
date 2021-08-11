@@ -8,6 +8,32 @@
 
 ;;; Code:
 
+(leaf indent
+  :tag "builtin"
+  :setq (tab-always-indent . nil))
+
+(leaf files
+  :tag "builtin"
+  :setq (require-final-newline . t)
+  :hook (before-save-hook . (lambda () delete-trailing-whitespace nil t))
+  :config
+  (unless backup-directory-alist
+    (setq backup-directory-alist `(("." . ,(concat my-data-dir
+                                                   "backups"))))))
+
+(leaf paren
+  :tag "builtin"
+  :global-minor-mode show-paren-mode)
+
+(leaf mouse
+  :tag "builtin"
+  :setq
+  (mouse-yank-at-point . t))
+
+(leaf ediff-wind
+  :tag "builtin"
+  :setq (ediff-choose-window-setup-function . 'ediff-setup-windows-plain))
+
 (leaf parinfer-rust-mode
   :url "https://github.com/justinbarclay/parinfer-rust-mode"
   :straight t
