@@ -58,6 +58,7 @@
 (leaf files
   :tag "builtin"
   :setq (require-final-newline . t)
+  :hook (before-save-hook . (lambda () delete-trailing-whitespace nil t))
   :config
   (unless backup-directory-alist
     (setq backup-directory-alist `(("." . ,(concat my-data-dir
