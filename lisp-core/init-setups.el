@@ -59,6 +59,10 @@
   (unless backup-directory-alist
     (setq backup-directory-alist `(("." . ,(concat my-data-dir
                                                    "backups"))))))
+(leaf ffap
+  :tag "builtin"
+  :custom
+  (ffap-machine-p-known . 'reject))
 
 (leaf mule-cmds
   :tag "builtin"
