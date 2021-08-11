@@ -53,6 +53,7 @@
   (make-face 'my-align-by-sarasa)
   (set-face-font 'my-align-by-sarasa (font-spec :family "Sarasa Mono SC"))
   (defun my-align-with-sarasa-font ()
+    "aligh chinese and engligh by setting font to Sarasa"
     (interactive)
     (when (member "Sarasa Mono SC" (font-family-list))
       (setq buffer-face-mode-face 'my-align-by-sarasa)

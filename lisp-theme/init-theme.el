@@ -16,6 +16,7 @@
   :hook (window-setup-hook . (lambda () (modify-frame-parameters nil (list (cons 'alpha 80)))))
   :init
   (defun my-toggle-transparency ()
+    "toggle frame transparency between 80 and 100"
     (interactive)
     (let* ((oldalpha (frame-parameter nil 'alpha))
            ;; oldalpha may be nil
