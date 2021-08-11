@@ -41,18 +41,31 @@
   (eaf-mindmap-dark-mode . "follow")
   (eaf-browse-blank-page-url . "https://duckduckgo.com/")
   (eaf-browser-enable-adblocker . t)
-  (eaf-browser-remember-history . t))
+  (eaf-browser-remember-history . t)
+  :config
   ;; install dependencies will cause eaf's repo modified,
   ;; which will trigger a rebuild, which cleans up installed dependencies
-  ;; :config
-  ;; (let* ((leaf-dir (file-name-directory (locate-library "eaf")))
-  ;;        (default-directory eaf-dir))
-  ;;   (unless (file-exists-p
-  ;;            (expand-file-name
-  ;;             (concat eaf-dir "app/terminal/node_modules")))
-  ;;     (if (executable-find "yay")
-  ;;         (async-shell-command "./install-eaf.sh --ignore-py-deps")
-  ;;       (eaf-install-dependencies)))))
+  (unless (file-exists-p (concat (file-name-directory (locate-library "eaf")) "node_modules"))
+    (let* ((eaf-dir (file-name-directory (locate-library "eaf")))
+           (repo-dir (concat straight-base-dir "straight/repos/emacs-application-framework/"))
+           (default-directory eaf-dir))
+      (cond ((eq system-type 'gnu/linux)
+             (async-shell-command
+              (concat "cd " eaf-dir "&&"
+                      "./install-eaf.sh --ignore-py-deps" "&&"
+                      "cd " repo-dir "&&"
+                      "git reset --hard HEAD")))
+            ((memq system-type '(cygwin windows-nt ms-dos))
+             (async-shell-command (format "node %s" (concat "install-eaf-win32.js" "&"))))
+            ((eq system-type 'darwin)
+             (async-shell-command
+              (concat "cd " eaf-dir "&&"
+                      "./install-eaf-mac.sh" "&&"
+                      "cd " repo-dir "&&"
+                      "git reset --hard HEAD")))))
+    (let* ((modified-file (concat straight-base-dir "straight/modified/emacs-application-framework")))
+      (when (file-exists-p modified-file)
+        (delete-file modified-file)))))
 
 
 (leaf eaf-evil
