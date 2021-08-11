@@ -65,7 +65,7 @@
 
 (leaf straight
   :ensure nil
-  :ensure-system-package watchexec)
+  :ensure-system-package (watchexec python))
 
 ;; experimental/unstable extension of straight.el
 (leaf straight-x
