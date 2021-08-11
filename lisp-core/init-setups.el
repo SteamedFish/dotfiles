@@ -33,6 +33,7 @@
   (conf-mode-hook . (lambda () (setq show-trailing-whitespace t)))
   :init
   (fset 'yes-or-no-p 'y-or-n-p)
+  (set-charset-priority 'unicode)
   (cond
     (IS-MAC
       ;; mac-* variables are used by the special emacs-mac build of Emacs by
