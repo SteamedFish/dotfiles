@@ -18,7 +18,13 @@
   (company-minimum-prefix-length . 1)
   (company-auto-commit . nil)
   (company-show-quick-access . t)
-  (company-global-modes . '(not erc-mode message-mode help-mode gud-mode eshell-mode shell-mode)))
+  (company-global-modes . '(not
+                            message-mode
+                            help-mode
+                            gud-mode
+                            eshell-mode
+                            shell-mode
+                            vterm-mode)))
 
 (leaf company-prescient
   :url https://github.com/raxod502/prescient.el
