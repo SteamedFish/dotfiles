@@ -14,7 +14,7 @@
   :custom
   (diff-hl-side . 'right)
   :config
-  (when window-system
+  (when IS-GUI
     (setq diff-hl-show-hunk-function 'diff-hl-show-hunk-posframe))
   :global-minor-mode global-diff-hl-mode
   :global-minor-mode global-diff-hl-show-hunk-mouse-mode

@@ -11,7 +11,7 @@
 
 (leaf startup
   :tag "builtin"
-  :when window-system
+  :when IS-GUI
   :hook (window-setup-hook . toggle-frame-maximized)
   :hook (window-setup-hook . (lambda () (modify-frame-parameters nil (list (cons 'alpha 80)))))
   :init
@@ -25,7 +25,7 @@
           (modify-frame-parameters nil (list (cons 'alpha 80)))
         (modify-frame-parameters nil (list (cons 'alpha 100))))))
   :bind ("s-u" . my-toggle-transparency))
-                    
+
 
 (leaf display-line-numbers
   :tag "builtin"
@@ -40,7 +40,7 @@
 
 (leaf svg-tag-mode
   :url "https://github.com/rougier/svg-tag-mode"
-  :when window-system
+  :when IS-GUI
   :straight (svg-tag-mode :host github :repo "rougier/svg-tag-mode"))
 
 ;; (leaf nano

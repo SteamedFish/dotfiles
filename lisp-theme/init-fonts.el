@@ -18,7 +18,6 @@
 ;; (leaf cus-start
 ;;   :tag "builtin"
 ;;   :when IS-MAC
-;;   :when window-system
 ;;   :ensure-system-package (font-recursive
 ;;                           font-recursive-code
 ;;                           font-sarasa-gothic
@@ -31,7 +30,7 @@
 (leaf cus-start
   :tag "builtin"
   :when IS-LINUX
-  :when window-system
+  :when IS-GUI
   ;; TOSO: fixit
   :ensure-system-package (ttf-recursive
                           ttf-sarasa-gothic
@@ -42,7 +41,7 @@
 
 (leaf cus-start
   :tag "builtin"
-  :when window-system
+  :when IS-GUI
   :config
   (set-face-attribute 'default nil :font "Rec Mono Duotone")
   (set-fontset-font t nil "Symbola" nil 'append))

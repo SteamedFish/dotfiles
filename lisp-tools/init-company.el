@@ -34,7 +34,7 @@
 (leaf company-box
   :url https://github.com/sebastiencs/company-box
   :straight t
-  :when window-system
+  :when IS-GUI
   :blackout t
   :global-minor-mode t)
 
@@ -47,7 +47,7 @@
 (leaf company-quickhelp-terminal
   :url https://github.com/jcs-elpa/company-quickhelp-terminal
   :straight t
-  :unless window-system
+  :unless IS-GUI
   :global-minor-mode t
   :bind (:company-active-map
          ([remap company-show-doc-buffer] . company-quickhelp-manual-begin)))

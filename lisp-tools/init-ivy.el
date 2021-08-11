@@ -49,7 +49,7 @@
   :url https://github.com/tumashu/ivy-posframe
   :straight t
   :unless (file-directory-p (straight--build-dir "maple-minibuffer"))
-  :when window-system
+  :when IS-GUI
   :blackout t
   :global-minor-mode t)
 

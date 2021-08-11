@@ -25,6 +25,15 @@
   ;; If running inside Android Termux
   (string-match-p "-linux-android$" system-configuration))
 
+;; detect if we can run gui
+(defconst IS-GUI
+  (cond
+   ((display-graphic-p) t)
+   ((when window-system) t)
+   ((string-match "--without-x" system-configuration-options) nil)
+   ;; set to t if running in noninteractive mode; otherwise nil
+   (t noninteractive)))
+
 ;; lisp-core
 (require 'init-earlyinit)
 (require 'init-packages)

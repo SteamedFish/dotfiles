@@ -102,7 +102,7 @@
 (leaf exec-path-from-shell
   :url https://github.com/purcell/exec-path-from-shell
   :straight t
-  :when (memq window-system '(mac ns x))
+  :when IS-GUI
   :config
   (exec-path-from-shell-initialize)
   (exec-path-from-shell-copy-envs '("GOPATH"
@@ -139,7 +139,7 @@
 
 (leaf server
   :tag "builtin"
-  :when window-system
+  :when IS-GUI
   :require t
   :config (unless (server-running-p)
             (server-start)))

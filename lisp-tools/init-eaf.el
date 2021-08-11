@@ -12,11 +12,11 @@
   :url "https://github.com/kiwanami/emacs-epc"
   :doc "required by eaf"
   :straight t
-  :when window-system)
+  :when IS-GUI)
 
 (leaf eaf
   :url "https://github.com/manateelazycat/emacs-application-framework"
-  :when window-system
+  :when IS-GUI
   :straight (eaf
              :host github
              :repo "manateelazycat/emacs-application-framework"
@@ -70,12 +70,12 @@
 
 (leaf eaf-evil
   :url "https://github.com/manateelazycat/emacs-application-framework"
-  :when window-system
+  :when IS-GUI
   :after eaf)
 
 (leaf eaf-org
   :url "https://github.com/manateelazycat/emacs-application-framework"
-  :when window-system
+  :when IS-GUI
   :after eaf)
 
 (provide 'init-eaf)

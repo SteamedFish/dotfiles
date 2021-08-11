@@ -26,7 +26,7 @@
    ([remap describe-key]                  . helpful-key)
    ([remap describe-symbol]               . helpful-symbol)
    ([remap Info-goto-emacs-command-node]  . helpful-function)))
-   
+
 
 (leaf elisp-demos
   :url "https://github.com/xuchunyang/elisp-demos"
@@ -43,7 +43,7 @@
 
 (leaf which-key-posframe
   :url "https://github.com/yanghaoxie/which-key-posframe"
-  :when window-system
+  :when IS-GUI
   :straight t
   :setq (which-key-posframe-poshandler . 'posframe-poshandler-frame-bottom-center)
   :global-minor-mode t)
@@ -82,7 +82,7 @@
 (leaf maple-minibuffer
   :url https://github.com/honmaple/emacs-maple-minibuffer
   :straight (maple-minibuffer :host github :repo "honmaple/emacs-maple-minibuffer")
-  :when window-system
+  :when IS-GUI
   ;; :unless (file-directory-p (straight--build-dir "ivy-posframe"))
   :global-minor-mode t
   :custom
