@@ -9,10 +9,11 @@
 
 ;;; Code:
 
-(leaf frame
+(leaf startup
   :tag "builtin"
   :when window-system
-  :hook (window-setup-hook . toggle-frame-maximized))
+  :hook (window-setup-hook . toggle-frame-maximized)
+  :hook (window-setup-hook . (lambda () (modify-frame-parameters nil (list (cons 'alpha 80))))))
 
 (leaf display-line-numbers
   :tag "builtin"
