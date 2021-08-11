@@ -110,7 +110,9 @@
   :url https://github.com/purcell/exec-path-from-shell
   :straight t
   :when (memq window-system '(mac ns x))
-  :config (exec-path-from-shell-initialize))
+  :config
+  (exec-path-from-shell-initialize)
+  (exec-path-from-shell-copy-envs '("GOPATH" "GO111MODULE" "GOPROXY")))
 
 ;; remember last location
 (leaf saveplace

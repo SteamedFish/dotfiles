@@ -9,10 +9,6 @@
 
 ;;; Code:
 
-(leaf exec-path-from-shell
-  :config
-  (exec-path-from-shell-copy-envs '("GOPATH" "GO111MODULE" "GOPROXY")))
-
 (leaf go-mode
   :url https://github.com/dominikh/go-mode.el
   :straight t
