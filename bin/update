@@ -345,7 +345,7 @@ update_vim() {
 
 update_emacs() {
     if [ -f "$HOME/.config/emacs/init.el" ]; then
-        emacs --batch --debug-init --load ~/.config/emacs/init.el  --eval ~/.config/emacs/extra/update-emacs.el
+        emacs --batch --debug-init --load ~/.config/emacs/init.el  --load ~/.config/emacs/extra/update-emacs.el
     else
         update_doom
     fi
