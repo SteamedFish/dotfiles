@@ -57,19 +57,28 @@
       (straight-use-package 'blackout))
     (error "We need straight.el installed on the system")))
 
+(leaf leaf
+  :url https://github.com/conao3/leaf.el)
+
+(leaf system-packages
+  :url https://gitlab.com/jabranham/system-packages)
+
+(leaf blackout
+  :url https://github.com/raxod502/blackout)
+
 (leaf leaf-keywords
-  :ensure nil
+  :url https://github.com/conao3/leaf-keywords.el
   :config
   ;; initialize leaf-keywords.el
   (leaf-keywords-init))
 
 (leaf straight
-  :ensure nil
+  :url https://github.com/raxod502/straight.el
   :ensure-system-package (watchexec python))
 
 ;; experimental/unstable extension of straight.el
 (leaf straight-x
-  :ensure nil
+  :url https://github.com/raxod502/straight.el
   :commands (straight-x-fetch-all straight-x-pull-all))
 
 (provide 'init-packages)
