@@ -13,7 +13,18 @@
   :tag "builtin"
   :when window-system
   :hook (window-setup-hook . toggle-frame-maximized)
-  :hook (window-setup-hook . (lambda () (modify-frame-parameters nil (list (cons 'alpha 80))))))
+  :hook (window-setup-hook . (lambda () (modify-frame-parameters nil (list (cons 'alpha 80)))))
+  :init
+  (defun my-toggle-transparency ()
+    (interactive)
+    (let* ((oldalpha (frame-parameter nil 'alpha))
+           ;; oldalpha may be nil
+           (oldalpha (if oldalpha oldalpha 100)))
+      (if (eq oldalpha 100)
+          (modify-frame-parameters nil (list (cons 'alpha 80)))
+        (modify-frame-parameters nil (list (cons 'alpha 100))))))
+  :bind ("s-u" . my-toggle-transparency))
+                    
 
 (leaf display-line-numbers
   :tag "builtin"
