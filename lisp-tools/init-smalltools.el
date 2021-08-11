@@ -45,6 +45,7 @@
   `(netease-cloud-music-cache-directory . ,(concat my-data-dir "data/netease-cloud-music"))
   :config
   (unless (file-directory-p (concat netease-cloud-music-cache-directory "/api"))
+    (require 'netease-cloud-music)
     (netease-cloud-music-download-api))
   :commands (netease-cloud-music eaf-open-netease-cloud-music))
 
