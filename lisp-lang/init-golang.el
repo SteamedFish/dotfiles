@@ -35,7 +35,7 @@
     (system-packages "delve"))
    (IS-MAC
     (unless (executable-find "dlv")
-      (async-shell-command "GO111MODULE=on go install github.com/go-delve/delve/cmd/dlv")))))
+      (async-shell-command "GO111MODULE=on go get -u github.com/go-delve/delve/cmd/dlv")))))
 
 (leaf go-fill-struct
   :url https://github.com/s-kostyaev/go-fill-struct
@@ -53,9 +53,9 @@
     (system-packages "go-impl"))
    (IS-MAC
     (unless (executable-find "impl")
-      (async-shell-command "GO111MODULE=on go install github.com/josharian/impl"))
+      (async-shell-command "GO111MODULE=on go get -u github.com/josharian/impl@latest"))
     (unless (executable-find "godoc")
-      (async-shell-command "GO111MODULE=on go install golang.org/x/tools/cmd/godoc")))))
+      (async-shell-command "GO111MODULE=on go get -u golang.org/x/tools/cmd/godoc")))))
 
 (leaf flycheck-golangci-lint
   :url https://github.com/weijiangan/flycheck-golangci-lint
@@ -73,7 +73,7 @@
     (system-packages "gocode-daemon"))
    (IS-MAC
     (unless (executable-find "gocode")
-      (async-shell-command "GO111MODULE=on go install github.com/nsf/gocode")))))
+      (async-shell-command "GO111MODULE=on go get -u github.com/nsf/gocode")))))
 
 (leaf go-tag
   :url https://github.com/brantou/emacs-go-tag
@@ -83,15 +83,15 @@
    (IS-LINUX
     (system-packages "gomodifytags"))
    (IS-MAC
-    (unless (executable-find "gocode")
-      (async-shell-command "GO111MODULE=on go install github.com/fatih/gomodifytags")))))
+    (unless (executable-find "gomodifytags")
+      (async-shell-command "GO111MODULE=on go get -u github.com/fatih/gomodifytags@latest")))))
 
 (leaf go-gen-test
   :url https://github.com/s-kostyaev/go-gen-test
   :straight t
   :config
   (unless (executable-find "gotests")
-    (async-shell-command "GO111MODULE=on go install github.com/cweill/gotests/...")))
+    (async-shell-command "GO111MODULE=on go get -u github.com/cweill/gotests/...")))
 
 (leaf gotest
   :url https://github.com/nlamirault/gotest.el
