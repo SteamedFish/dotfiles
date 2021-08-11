@@ -344,6 +344,14 @@ update_vim() {
 
 
 update_emacs() {
+    if [ -f "$HOME/.config/emacs/init.el" ]; then
+        emacs --batch --debug-init --load ~/.config/emacs/init.el  --eval ~/.config/emacs/extra/update-emacs.el
+    else
+        update_doom
+    fi
+}
+
+update_doom() {
     local DOOMDIR
     if [ -f "$HOME/.config/emacs/bin/doom" ]; then
         DOOMDIR="$HOME/.config/emacs/"
