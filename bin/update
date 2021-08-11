@@ -344,8 +344,11 @@ update_vim() {
 
 
 update_emacs() {
+    if [ -d "$HOME/.config/emacs/.git" ]; then
+        cd "$HOME/.config/emacs" && run -r 5 git pull
+    fi
     if [ -f "$HOME/.config/emacs/init.el" ]; then
-        emacs --batch --debug-init --load ~/.config/emacs/init.el  --load ~/.config/emacs/extra/update-emacs.el
+        run -r 5 emacs --batch --debug-init --load ~/.config/emacs/init.el  --load ~/.config/emacs/extra/update-emacs.el
     else
         update_doom
     fi
