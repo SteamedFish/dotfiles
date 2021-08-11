@@ -49,28 +49,31 @@
 ;;; bootstrap leaf.el
 
 (unless (fboundp 'leaf)
-  (if (fboundp 'straight-use-package)
-    (progn
-      (straight-use-package 'leaf)
-      (straight-use-package 'leaf-keywords)
-      (straight-use-package 'system-packages)
-      (straight-use-package 'blackout))
-    (error "We need straight.el installed on the system")))
+  (when (fboundp 'straight-use-package)
+    (straight-use-package 'leaf)))
 
 (leaf leaf
-  :url https://github.com/conao3/leaf.el)
-
-(leaf system-packages
-  :url https://gitlab.com/jabranham/system-packages)
-
-(leaf blackout
-  :url https://github.com/raxod502/blackout)
+  :url https://github.com/conao3/leaf.el
+  :custom
+  ;; don't lazy-load any packages
+  (leaf-defer-keywords . '()))
 
 (leaf leaf-keywords
   :url https://github.com/conao3/leaf-keywords.el
+  :init
+  (straight-use-package 'leaf-keywords)
+  (straight-use-package 'system-packages)
+  (straight-use-package 'blackout)
   :config
   ;; initialize leaf-keywords.el
   (leaf-keywords-init))
+
+(leaf system-packages
+  :url https://gitlab.com/jabranham/system-packages
+  :custom (system-packages-noconfirm . t))
+
+(leaf blackout
+  :url https://github.com/raxod502/blackout)
 
 (leaf straight
   :url https://github.com/raxod502/straight.el
