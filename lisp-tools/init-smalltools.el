@@ -30,6 +30,7 @@
 
 (leaf all-the-icons
   :url "https://github.com/domtronn/all-the-icons.el"
+  ;; TODO: automatically download fonts if not exist
   :straight t)
 
 (leaf netease-cloud-music
