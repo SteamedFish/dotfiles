@@ -112,7 +112,11 @@
   :when (memq window-system '(mac ns x))
   :config
   (exec-path-from-shell-initialize)
-  (exec-path-from-shell-copy-envs '("GOPATH" "GO111MODULE" "GOPROXY")))
+  (exec-path-from-shell-copy-envs '("GOPATH"
+                                    "GO111MODULE"
+                                    "GOPROXY"
+                                    "SHELL"
+                                    "SSH_AUTH_SOCK")))
 
 ;; remember last location
 (leaf saveplace
