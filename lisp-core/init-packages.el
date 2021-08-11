@@ -70,7 +70,7 @@
 ;; experimental/unstable extension of straight.el
 (leaf straight-x
   :ensure nil
-  :commands (straight-x-fetch-all))
+  :commands (straight-x-fetch-all straight-x-pull-all))
 
 (provide 'init-packages)
 ;;; init-packages.el ends here
