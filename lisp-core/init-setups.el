@@ -114,6 +114,12 @@
   :tag "builtin"
   :global-minor-mode save-place-mode)
 
+(leaf recentf
+  :tag "builtin"
+  :global-minor-mode t
+  :config
+  (add-to-list 'recentf-filename-handlers #'abbreviate-file-name))
+
 (leaf uniquify
   :tag "builtin"
   :require t)
