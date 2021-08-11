@@ -27,6 +27,8 @@
   (visible-bell . t)
   (fill-column . 80)
   (locale-coding-system . 'utf-8)
+  (enable-recursive-minibuffers . t)
+  (history-length 1000)
   :hook
   (prog-mode-hook . (lambda () (setq show-trailing-whitespace t)))
   (text-mode-hook . (lambda () (setq show-trailing-whitespace t)))
@@ -119,6 +121,16 @@
   :global-minor-mode t
   :config
   (add-to-list 'recentf-filename-handlers #'abbreviate-file-name))
+
+(leaf savehist
+  :tag "builtin"
+  :global-minor-mode t
+  :pre-setq
+  (savehist-addtional-variables . '(mark-ring
+                                    global-mark-ring
+                                    search-ring
+                                    regexp-search-ring
+                                    extended-command-history)))
 
 (leaf uniquify
   :tag "builtin"

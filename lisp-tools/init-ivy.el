@@ -13,8 +13,6 @@
   :straight t
   :blackout (ivy-mode counsel-mode)
   :global-minor-mode (ivy-mode counsel-mode)
-  :pre-setq
-  (enable-recursive-minibuffers . t)
   :bind
   ([remap isearch-forward] . swiper-isearch)
   ([remap isearch-backward] . swiper-isearch-backward)
