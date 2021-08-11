@@ -19,8 +19,8 @@
   :blackout t
   :config
   (cond
-   (IS-LINUX (system-packages "wakatime"))
-   (IS-MAC (system-packages "wakatime-cli")))
+   (IS-LINUX (system-packages-ensure "wakatime"))
+   (IS-MAC (system-packages-ensure "wakatime-cli")))
   :global-minor-mode global-wakatime-mode)
 
 (leaf rfc-mode

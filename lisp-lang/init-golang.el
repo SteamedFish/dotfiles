@@ -20,7 +20,7 @@
   :config
   (cond
    (IS-LINUX
-    (system-packages "go-tools"))
+    (system-packages-ensure "go-tools"))
    (IS-MAC
     (unless (executable-find "guru")
       (async-shell-command "GO111MODULE=on go get -u golang.org/x/tools/cmd/guru")))))
@@ -32,7 +32,7 @@
   :config
   (cond
    (IS-LINUX
-    (system-packages "delve"))
+    (system-packages-ensure "delve"))
    (IS-MAC
     (unless (executable-find "dlv")
       (async-shell-command "GO111MODULE=on go get -u github.com/go-delve/delve/cmd/dlv")))))
@@ -43,14 +43,14 @@
   :config
   (unless (executable-find "fillstruct")
     (async-shell-command "GO111MODULE=on go get -u github.com/davidrjenni/reftools/cmd/fillstruct")))
-    
+
 (leaf go-impl
   :url https://github.com/emacsorphanage/go-impl
   :straight t
   :config
   (cond
    (IS-LINUX
-    (system-packages "go-impl"))
+    (system-packages-ensure "go-impl"))
    (IS-MAC
     (unless (executable-find "impl")
       (async-shell-command "GO111MODULE=on go get -u github.com/josharian/impl@latest"))
@@ -70,7 +70,7 @@
   :config
   (cond
    (IS-LINUX
-    (system-packages "gocode-daemon"))
+    (system-packages-ensure "gocode-daemon"))
    (IS-MAC
     (unless (executable-find "gocode")
       (async-shell-command "GO111MODULE=on go get -u github.com/nsf/gocode")))))
@@ -81,7 +81,7 @@
   :config
   (cond
    (IS-LINUX
-    (system-packages "gomodifytags"))
+    (system-packages-ensure "gomodifytags"))
    (IS-MAC
     (unless (executable-find "gomodifytags")
       (async-shell-command "GO111MODULE=on go get -u github.com/fatih/gomodifytags@latest")))))
