@@ -68,6 +68,11 @@
   :custom
   (ffap-machine-p-known . 'reject))
 
+(leaf simple
+  :tag "builtin"
+  :custom
+  (async-shell-command-buffer . 'new-buffer))
+
 (leaf mule-cmds
   :tag "builtin"
   :config
