@@ -63,6 +63,7 @@
                       "./install-eaf-mac.sh" "&&"
                       "cd " repo-dir "&&"
                       "git reset --hard HEAD")))))
+    ;; FIXME: when this executes; the async-shell-command may not finish yet
     (let* ((modified-file (concat straight-base-dir "straight/modified/emacs-application-framework")))
       (when (file-exists-p modified-file)
         (delete-file modified-file)))))
