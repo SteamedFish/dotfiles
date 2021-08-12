@@ -34,6 +34,10 @@
   :tag "builtin"
   :setq (ediff-choose-window-setup-function . 'ediff-setup-windows-plain))
 
+(leaf undo-fu
+  :url https://gitlab.com/ideasman42/emacs-undo-fu
+  :straight t)
+
 (leaf parinfer-rust-mode
   :url "https://github.com/justinbarclay/parinfer-rust-mode"
   :straight t
