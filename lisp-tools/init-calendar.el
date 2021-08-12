@@ -30,6 +30,7 @@
                             cal-china-x-general-holidays)))
 (leaf appt
   :tag "builtin"
+  :unless noninteractive
   :config (appt-activate)
   :setq '((appt-display-mode-line . t)
           (appt-display-diary . t)))

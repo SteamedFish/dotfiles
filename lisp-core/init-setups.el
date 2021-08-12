@@ -115,16 +115,19 @@
 ;; remember last location
 (leaf saveplace
   :tag "builtin"
+  :unless noninteractive
   :global-minor-mode save-place-mode)
 
 (leaf recentf
   :tag "builtin"
+  :unless noninteractive
   :global-minor-mode t
   :config
   (add-to-list 'recentf-filename-handlers #'abbreviate-file-name))
 
 (leaf savehist
   :tag "builtin"
+  :unless noninteractive
   :global-minor-mode t
   :pre-setq
   (savehist-addtional-variables . '(mark-ring
