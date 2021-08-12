@@ -104,8 +104,9 @@
   :straight t
   :when IS-GUI
   :config
-  (exec-path-from-shell-initialize)
-  (exec-path-from-shell-copy-envs '("GOPATH"
+  (exec-path-from-shell-copy-envs '("PATH"
+                                    "MANPATH"
+                                    "GOPATH"
                                     "GO111MODULE"
                                     "GOPROXY"
                                     "PYTHONPATH"
