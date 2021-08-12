@@ -34,6 +34,10 @@
   (conf-mode-hook . display-line-numbers-mode)
   (text-mode-hook . display-line-numbers-mode))
 
+(leaf simple
+  :tag "builtin"
+  :global-minor-mode column-number-mode)
+
 (leaf hl-line
   :tag "builtin"
   :global-minor-mode global-hl-line-mode)
