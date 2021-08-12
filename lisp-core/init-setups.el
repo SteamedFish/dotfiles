@@ -103,6 +103,10 @@
   :url https://github.com/purcell/exec-path-from-shell
   :straight t
   :when IS-GUI
+  :setq
+  ;; speed up shell startup
+  (exec-path-from-shell-shell-name . "/bin/bash")
+  (exec-path-from-shell-arguments . '("-l"))
   :config
   (exec-path-from-shell-copy-envs '("PATH"
                                     "MANPATH"
