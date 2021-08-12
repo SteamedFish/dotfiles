@@ -45,6 +45,10 @@
   (transient-show-common-commands . nil)
   (transient-highlight-mismatched-keys . t))
 
+(leaf git-modes
+  :url https://github.com/magit/git-modes
+  :straight t)
+
 
 (provide 'init-version-control)
 ;;; init-version-control.el ends here
