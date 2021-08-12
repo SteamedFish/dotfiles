@@ -42,6 +42,11 @@
   :config
   (osx-trash-setup))
 
+(leaf keycast
+  :url https://github.com/tarsius/keycast
+  :doc "enable by keycast-mode or keycast-log-mode, keycast-mode is not working right now"
+  :straight (keycast :host github :repo "tarsius/keycast"))
+
 (leaf netease-cloud-music
   :url "https://github.com/SpringHan/netease-cloud-music.el"
   :require (cl-macs)
