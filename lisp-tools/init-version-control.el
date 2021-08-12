@@ -33,6 +33,10 @@
   :url "https://magit.vc/"
   :straight t)
 
+(leaf forge
+  :url https://github.com/magit/forge
+  :straight t)
+
 (leaf transient
   :url "https://github.com/magit/transient"
   :straight t
