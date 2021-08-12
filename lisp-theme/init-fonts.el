@@ -14,30 +14,30 @@
   :when (eq window-system 'mac)
   :global-minor-mode mac-auto-operator-composition-mode)
 
-;; ensure-system-package don't support brew casks very well
-;; (leaf cus-start
-;;   :tag "builtin"
-;;   :when IS-MAC
-;;   :ensure-system-package (font-recursive
-;;                           font-recursive-code
-;;                           font-sarasa-gothic
-;;                           font-noto-color-emoji
-;;                           font-noto-emoji
-;;                           font-noto-sans-cjk-sc
-;;                           font-noto-sans-symbols
-;;                           font-noto-sans-symbols-2))
-
 (leaf cus-start
   :tag "builtin"
-  :when IS-LINUX
+  :doc "install required fonts"
   :when IS-GUI
-  ;; TOSO: fixit
-  :ensure-system-package (ttf-recursive
-                          ttf-sarasa-gothic
-                          noto-fonts
-                          noto-fonts-cjk
-                          noto-fonts-emoji
-                          noto-fonts-extra))
+  :config
+  (let* ((fonts-alist))
+    (cond
+     (IS-LINUX '(("Rec Mono Duotone" . "ttf-recursive")
+                 ("Sarasa Mono SC" . "ttf-sarasa-gothic")
+                 ("Noto Sans Symbols" . "noto-fonts")
+                 ("Noto Color Emoji" . "noto-fonts-emoji")))
+     (IS-MAC '(("Rec Mono Duotone" . "font-recursive-code")
+               ("Recursive" . "font-recursive")
+               ("Sarasa Mono SC" . "font-sarasa-gothic")
+               ("Noto Color Emoji" . "font-noto-color-emoji")
+               ("Noto Sans CJK SC" . "font-noto-sans-cjk-sc")
+               ("Noto Sans Symbols" . "font-noto-sans-symbols")
+               ("Noto Sans Symbols2" . "font-noto-sans-symbols-2")))
+     (t '(())))
+    (cl-loop for (key . value) in fonts-alist
+             collect (cons key . value)
+             unless (member key (font-family-list))
+             do (system-packages-ensure value))))
+
 
 (leaf cus-start
   :tag "builtin"
