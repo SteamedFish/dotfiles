@@ -28,6 +28,7 @@
   (fill-column . 80)
   (locale-coding-system . 'utf-8)
   (enable-recursive-minibuffers . t)
+  (delete-by-movding-to-trash . t)
   (history-length . 1000)
   :hook
   (prog-mode-hook . (lambda () (setq show-trailing-whitespace t)))

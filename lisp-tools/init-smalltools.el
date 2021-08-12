@@ -34,6 +34,14 @@
   ;; TODO: automatically download fonts if not exist
   :straight t)
 
+(leaf osx-trash
+  :url https://github.com/emacsorphanage/osx-trash
+  :straight t
+  :when IS-MAC
+  :ensure-system-package trash
+  :config
+  (osx-trash-setup))
+
 (leaf netease-cloud-music
   :url "https://github.com/SpringHan/netease-cloud-music.el"
   :require (cl-macs)
