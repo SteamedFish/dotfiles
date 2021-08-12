@@ -44,6 +44,7 @@
 ;; lisp-theme
 (require 'init-theme)
 (require 'init-fonts)
+(require 'init-treemacs)
 
 ;; lisp-tools
 (require 'init-helpers)
