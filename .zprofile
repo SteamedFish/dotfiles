@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# do nothing if not running interactively
+case $- in
+    *i*) ;;
+    *) return;;
+esac
+
 # if [ -n "$(command -v toilet)" ]; then
 #     if [[ "$OSTYPE" == "darwin"* ]] || [[ "$OSTYPE" == "linux-android" ]]; then
 #         toilet -F gay -w 300 -f ascii9 SteamedFish

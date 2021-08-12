@@ -1,12 +1,5 @@
 #!/bin/bash
 
-# do nothing if not running interactively
-
-case $- in
-    *i*) ;;
-    *) return;;
-esac
-
 # exports
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
@@ -17,6 +10,11 @@ export MYSQL_PS1="(\u@\h) [\d]> "
 export PATH=$PATH:$HOME/.go/bin:$HOME/.cargo/bin:$HOME/.local/bin:~/bin
 export GOPATH=$HOME/.go
 
+# do nothing if not running interactively
+case $- in
+    *i*) ;;
+    *) return;;
+esac
 
 # enable color support
 if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
