@@ -59,6 +59,9 @@
       (setq buffer-face-mode-face 'my-align-by-sarasa)
       (buffer-face-mode))))
 
+(leaf prog-mode
+  :tag "builtin"
+  :global-minor-mode global-prettify-symbols-mode)
 
 (provide 'init-fonts)
 ;;; init-fonts.el ends here
