@@ -58,6 +58,19 @@
   :straight nil
   :custom (help-window-select . t))
 
+(leaf popper
+  :url https://github.com/karthink/popper
+  :straight t
+  :setq
+  (popper-reference-buffers . '(("\\*Messages\\*$"
+                                 helpful-mode
+                                 help-mode)))
+  ;; (popper-group-function . #'popper-group-by-projectile)
+  :global-minor-mode t
+  :config
+  (when (display-graphic-p)
+    (setq popper-display-function #'display-buffer-in-child-frame)))
+
 (leaf ido
   :tag "builtin"
   :unless (or (file-directory-p (straight--build-dir "swiper"))
