@@ -13,13 +13,20 @@
 
 (cond
  ((fboundp 'straight-x-pull-all)
-  (straight-x-pull-all))
+  (straight-x-pull-all)
+  (straight-check-all))
  ((fboundp 'straight-pull-all)
-  (straight-pull-all))
+  (straight-pull-all)
+  (straight-check-all))
  ((fboundp 'paradox-upgrade-packages)
-  (paradox-upgrade-packages))
- ((fboundp 'paradox-upgrade-packages)
-  (paradox-upgrade-packages))
+  (progn
+    (unless (boundp 'paradox-github-token)
+      (setq paradox-github-token t))
+    (paradox-upgrade-packages)
+    (princ
+     (if (get-buffer "*Paradox Report*")
+         (with-current-buffer "*Paradox Report*" (buffer-string))
+       "\nNothing to upgrade\n"))))
  (t
   (progn
     (let ((package-menu-async nil))
