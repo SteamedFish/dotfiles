@@ -49,7 +49,17 @@
   :config
   (unless (executable-find "impl")
     (cond
-     (IS-LINUX (system-packages-ensure "go-impl"))
+     (IS-LINUX (when (executable-find "yay")
+                 (async-shell-command
+                  (concat "yay "
+                          "--nocleanmenu "
+                          "--nodiffmenu "
+                          "--noeditmenu "
+                          "--noupgrademenu "
+                          "--removemake "
+                          "--cleanafter "
+                          "--redownloadall "
+                          "-S go-impl"))))
      (IS-MAC (async-shell-command
               "GO111MODULE=on go get -u github.com/josharian/impl@latest"))))
   (unless (executable-find "godoc")
@@ -61,7 +71,21 @@
 (leaf flycheck-golangci-lint
   :url https://github.com/weijiangan/flycheck-golangci-lint
   :straight t
-  :ensure-system-package golangci-lint
+  :config
+  (unless (executable-find "golangci-lint")
+    (cond
+     (IS-LINUX (when (executable-find "yay"))
+        (async-shell-command
+         (concat "yay "
+                 "--nocleanmenu "
+                 "--nodiffmenu "
+                 "--noeditmenu "
+                 "--noupgrademenu "
+                 "--removemake "
+                 "--cleanafter "
+                 "--redownloadall "
+                 "-S golangci-lint")))
+     (IS-MAC (system-packages-ensure "golangci-lint"))))
   :hook (go-mode-hook . flycheck-golangci-lint-setup))
 
 (leaf go-eldoc
@@ -69,13 +93,9 @@
   :straight t
   :hook (go-mode-hook . go-eldoc-setup)
   :config
-  (cond
-   (IS-LINUX
-    (system-packages-ensure "gocode-daemon"))
-   (IS-MAC
-    (unless (executable-find "gocode")
-      (async-shell-command
-       "GO111MODULE=on go get -u github.com/nsf/gocode")))))
+  (unless (executable-find "gocode")
+    (async-shell-command
+     "GO111MODULE=on go get -u github.com/nsf/gocode")))
 
 (leaf go-tag
   :url https://github.com/brantou/emacs-go-tag
@@ -83,8 +103,17 @@
   :config
   (unless (executable-find "gomodifytags")
     (cond
-     (IS-LINUX
-      (system-packages-ensure "gomodifytags"))
+     (IS-LINUX (when (executable-find "yay"))
+        (async-shell-command
+         (concat "yay "
+                 "--nocleanmenu "
+                 "--nodiffmenu "
+                 "--noeditmenu "
+                 "--noupgrademenu "
+                 "--removemake "
+                 "--cleanafter "
+                 "--redownloadall "
+                 "-S gomodifytags")))
      (IS-MAC
       (async-shell-command
        "GO111MODULE=on go get -u github.com/fatih/gomodifytags@latest")))))
