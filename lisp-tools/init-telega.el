@@ -13,6 +13,7 @@
   :url https://github.com/zevlg/telega.el
   :straight t
   :commands telega
+  :ensure-system-package (cmake make gperf)
   :hook
   (telega-load-hook . telega-mode-line-mode)
   (telega-load-hook . telega-notifications-mode)
