@@ -16,6 +16,9 @@
   :bind
   ([remap isearch-forward] . swiper-isearch)
   ([remap isearch-backward] . swiper-isearch-backward)
+  ;; the default keybinding of C-x C-r was #'find-file-read-only
+  ;; which is not very useful
+  ("C-x C-r" . counsel-recentf)
   :custom
   (ivy-use-selectable-prompt . t)
   (ivy-use-virtual-buffers . t)
