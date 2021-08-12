@@ -58,6 +58,7 @@
                           "--noupgrademenu "
                           "--removemake "
                           "--cleanafter "
+                          "--noprovides "
                           "--redownloadall "
                           "-S go-impl"))))
      (IS-MAC (async-shell-command
@@ -74,17 +75,18 @@
   :config
   (unless (executable-find "golangci-lint")
     (cond
-     (IS-LINUX (when (executable-find "yay"))
-        (async-shell-command
-         (concat "yay "
-                 "--nocleanmenu "
-                 "--nodiffmenu "
-                 "--noeditmenu "
-                 "--noupgrademenu "
-                 "--removemake "
-                 "--cleanafter "
-                 "--redownloadall "
-                 "-S golangci-lint")))
+     (IS-LINUX (when (executable-find "yay")
+                 (async-shell-command
+                  (concat "yay "
+                          "--nocleanmenu "
+                          "--nodiffmenu "
+                          "--noeditmenu "
+                          "--noupgrademenu "
+                          "--removemake "
+                          "--cleanafter "
+                          "--noprovides "
+                          "--redownloadall "
+                          "-S golangci-lint"))))
      (IS-MAC (system-packages-ensure "golangci-lint"))))
   :hook (go-mode-hook . flycheck-golangci-lint-setup))
 
@@ -103,17 +105,18 @@
   :config
   (unless (executable-find "gomodifytags")
     (cond
-     (IS-LINUX (when (executable-find "yay"))
-        (async-shell-command
-         (concat "yay "
-                 "--nocleanmenu "
-                 "--nodiffmenu "
-                 "--noeditmenu "
-                 "--noupgrademenu "
-                 "--removemake "
-                 "--cleanafter "
-                 "--redownloadall "
-                 "-S gomodifytags")))
+     (IS-LINUX (when (executable-find "yay")
+                 (async-shell-command
+                  (concat "yay "
+                          "--nocleanmenu "
+                          "--nodiffmenu "
+                          "--noeditmenu "
+                          "--noupgrademenu "
+                          "--removemake "
+                          "--cleanafter "
+                          "--noprovides "
+                          "--redownloadall "
+                          "-S gomodifytags"))))
      (IS-MAC
       (async-shell-command
        "GO111MODULE=on go get -u github.com/fatih/gomodifytags@latest")))))
