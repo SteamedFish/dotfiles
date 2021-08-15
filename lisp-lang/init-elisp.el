@@ -22,7 +22,13 @@
   :url https://github.com/Fanael/highlight-quoted
   :straight t
   :hook (emacs-lisp-mode-hook . highlight-quoted-mode))
-  
+
+(leaf macrostep
+  :url https://github.com/joddie/macrostep
+  :doc "interactive macro-expander"
+  :straight t
+  :hook (emacs-lisp-mode-hook . macrostep-mode))
+
 
 (provide 'init-elisp)
 ;;; init-elisp.el ends here
