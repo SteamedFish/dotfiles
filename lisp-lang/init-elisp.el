@@ -27,8 +27,7 @@
   :url https://github.com/joddie/macrostep
   :doc "interactive macro-expander"
   :straight t
-  :bind ("C-c e" . macrostep-expand)
-  :hook (emacs-lisp-mode-hook . macrostep-mode))
+  :bind ("C-c e" . macrostep-expand))
 
 
 (provide 'init-elisp)
