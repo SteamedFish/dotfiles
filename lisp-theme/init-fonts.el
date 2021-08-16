@@ -24,11 +24,11 @@
            (IS-LINUX '(("Rec Mono Duotone" . "ttf-recursive")
                        ("Sarasa Mono SC" . "ttf-sarasa-gothic")
                        ("Noto Sans Symbols" . "noto-fonts")
-                       ("Noto Color Emoji" . "noto-fonts-emoji")))
+                       ("Noto Color Emoji" . "noto-fonts-emoji")
+                       ("Symbola" . "ttf-symbola")))
            (IS-MAC '(("Rec Mono Duotone" . "font-recursive-code")
                      ("Recursive" . "font-recursive")
                      ("Sarasa Mono SC" . "font-sarasa-gothic")
-                     ("Noto Color Emoji" . "font-noto-color-emoji")
                      ("Noto Sans CJK SC" . "font-noto-sans-cjk-sc")
                      ("Noto Sans Symbols" . "font-noto-sans-symbols")
                      ("Noto Sans Symbols2" . "font-noto-sans-symbols-2")))
@@ -44,6 +44,10 @@
   :when IS-GUI
   :config
   (set-face-attribute 'default nil :font "Rec Mono Duotone")
+  (set-fontset-font t nil "Noto Color Emoji" nil 'append)
+  (set-fontset-font t nil "Apple Color Emoji" nil 'append)
+  (set-fontset-font t nil "Noto Sans Symbols" nil 'append)
+  (set-fontset-font t nil "Noto Sans Symbols2" nil 'append)
   (set-fontset-font t nil "Symbola" nil 'append))
 
 (leaf face-remap
