@@ -27,6 +27,18 @@
   :blackout t
   :global-minor-mode global-whitespace-cleanup-mode)
 
+(leaf yasnippet
+  :url http://joaotavora.github.io/yasnippet/
+  :straight t
+  :require t
+  :global-minor-mode yas-global-mode)
+
+(leaf yasnippet-snippets
+  :url https://github.com/AndreaCrotti/yasnippet-snippets
+  :straight t
+  :config
+  (yas-reload-all))
+
 (leaf paren
   :tag "builtin"
   :global-minor-mode show-paren-mode)
