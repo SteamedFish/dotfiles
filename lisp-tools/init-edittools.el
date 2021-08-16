@@ -15,11 +15,17 @@
 (leaf files
   :tag "builtin"
   :setq (require-final-newline . t)
-  :hook (before-save-hook . delete-trailing-whitespace)
+  ;; :hook (before-save-hook . delete-trailing-whitespace)
   :config
   (unless backup-directory-alist
     (setq backup-directory-alist `(("." . ,(concat my-data-dir
                                                    "backups"))))))
+
+(leaf whitespace-cleanup-mode
+  :url https://github.com/purcell/whitespace-cleanup-mode
+  :straight t
+  :blackout t
+  :global-minor-mode global-whitespace-cleanup-mode)
 
 (leaf paren
   :tag "builtin"
