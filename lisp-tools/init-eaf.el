@@ -45,14 +45,14 @@
   :config
   ;; install dependencies will cause eaf's repo modified,
   ;; which will trigger a rebuild, which cleans up installed dependencies
-  (unless (file-exists-p (concat (file-name-directory (locate-library "eaf")) "node_modules"))
+  (unless (file-exists-p (concat straight-base-dir "straight/repos/emacs-application-framework/app"))
     (let* ((eaf-dir (file-name-directory (locate-library "eaf")))
            (repo-dir (concat straight-base-dir "straight/repos/emacs-application-framework/"))
            (default-directory eaf-dir))
       (cond ((eq system-type 'gnu/linux)
              (async-shell-command
               (concat "cd " eaf-dir "&&"
-                      "./install-eaf.sh --ignore-py-deps" "&&"
+                      "./install-eaf.py --ignore-py-deps" "&&"
                       "cd " repo-dir "&&"
                       "git reset --hard HEAD")))
             ((memq system-type '(cygwin windows-nt ms-dos))
@@ -60,7 +60,7 @@
             ((eq system-type 'darwin)
              (async-shell-command
               (concat "cd " eaf-dir "&&"
-                      "./install-eaf-mac.sh" "&&"
+                      "./install-eaf.py" "&&"
                       "cd " repo-dir "&&"
                       "git reset --hard HEAD")))))
     ;; FIXME: when this executes; the async-shell-command may not finish yet
