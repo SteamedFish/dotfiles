@@ -24,5 +24,13 @@
   :url https://emacs-lsp.github.io/lsp-ui/
   :straight t)
 
+(leaf company-lsp
+  :url https://github.com/tigersoldier/company-lsp
+  :straight t
+  :after company
+  :require t
+  :config
+  (push 'company-lsp company-backends))
+
 (provide 'init-lsp)
 ;;; init-lsp.el ends here
