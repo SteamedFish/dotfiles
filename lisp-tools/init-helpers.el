@@ -56,7 +56,7 @@
 (leaf help
   :tag "builtin"
   :straight nil
-  :custom (help-window-select . t))
+  :setq (help-window-select . t))
 
 (leaf popper
   :url https://github.com/karthink/popper
@@ -89,7 +89,7 @@
               (file-directory-p (straight--build-dir "vertico"))
               (file-directory-p (straight--build-dir "selectrum")))
   :bind ([remap execute-extended-command] . amx)
-  :custom
+  :setq
   (amx-history-length . 20))
 
 (leaf maple-minibuffer
@@ -98,7 +98,7 @@
   :when IS-GUI
   ;; :unless (file-directory-p (straight--build-dir "ivy-posframe"))
   :global-minor-mode t
-  :custom
+  :setq
   (maple-minibuffer:position-type . 'frame-center)
   (maple-minibuffer:width . 0.7)
   (maple-minibuffer:action . '(read-from-minibuffer read-string))

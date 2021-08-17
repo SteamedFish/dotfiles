@@ -76,7 +76,7 @@
   :url https://github.com/minad/corfu
   :straight t
   :disabled t
-  :custom
+  :setq
   (corfu-auto . t)
   (corfu-echo-documentation . nil)
   :global-minor-mode corfu-global-mode)

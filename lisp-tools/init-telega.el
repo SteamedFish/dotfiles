@@ -34,7 +34,7 @@
          ("C-c c"        . telega-chat-with))
         (:telega-root-mode-map
          ("C-c c"        . telega-chat-with))
-  :custom
+  :setq
   `(telega-directory . ,(expand-file-name (concat my-data-dir "data/telega")))
   (telega-completing-read-function . 'ivy-completing-read)
   (telega-use-tracking-for . nil)

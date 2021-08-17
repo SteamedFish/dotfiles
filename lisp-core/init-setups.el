@@ -13,15 +13,15 @@
 
 (leaf cus-start
   :tag "builtin"
-  :custom ((user-full-name . "SteamedFish")
-           (user-mail-address . "steamedfish@hotmail.com")
-           (frame-title-format . '("%b - " user-full-name "'s Emacs")))
   :setq-default
   (bidi-display-reordering . 'left-to-right)
   (bidi-paragraph-direction . 'left-to-right)
   (indent-tabs-mode . nil)
   (tab-width . 8)
   :setq
+  (user-full-name . "SteamedFish")
+  (user-mail-address . "steamedfish@hotmail.com")
+  (frame-title-format . '("%b - " user-full-name "'s Emacs"))
   `(read-process-output-max . ,(* 1024 1024))
   (tabify-regexp . "^\t* [ \t]+")
   (visible-bell . t)
@@ -54,12 +54,12 @@
 
 (leaf ffap
   :tag "builtin"
-  :custom
+  :setq
   (ffap-machine-p-known . 'reject))
 
 (leaf simple
   :tag "builtin"
-  :custom
+  :setq
   (async-shell-command-buffer . 'new-buffer))
 
 (leaf mule-cmds

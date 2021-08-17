@@ -70,7 +70,7 @@
              :host github
              :repo "SpringHan/netease-cloud-music.el")
   :ensure-system-package (mpv node)
-  :custom
+  :setq
   `(netease-cloud-music-cache-directory . ,(concat my-data-dir "data/netease-cloud-music"))
   :config
   (unless (file-directory-p (concat netease-cloud-music-cache-directory "/api"))

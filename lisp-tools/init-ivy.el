@@ -19,7 +19,7 @@
   ;; the default keybinding of C-x C-r was #'find-file-read-only
   ;; which is not very useful
   ("C-x C-r" . counsel-recentf)
-  :custom
+  :setq
   (ivy-use-selectable-prompt . t)
   (ivy-use-virtual-buffers . t)
   (ivy-fixed-height-minibuffer . t)

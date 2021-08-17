@@ -18,6 +18,7 @@
   :custom
   (evil-search-module . 'evil-search)
   (evil-undo-system . 'undo-fu)
+  :setq
   (evil-split-window-below . t)
   (evil-vsplit-window-right . t))
 

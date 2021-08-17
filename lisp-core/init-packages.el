@@ -54,7 +54,7 @@
 
 (leaf leaf
   :url https://github.com/conao3/leaf.el
-  :custom
+  :setq
   ;; don't lazy-load any packages
   (leaf-defer-keywords . nil)
   (leaf-expand-leaf-defer . nil))
@@ -71,7 +71,7 @@
 
 (leaf system-packages
   :url https://gitlab.com/jabranham/system-packages
-  :custom (system-packages-noconfirm . t))
+  :setq (system-packages-noconfirm . t))
 
 (leaf blackout
   :url https://github.com/raxod502/blackout)

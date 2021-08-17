@@ -29,7 +29,7 @@
              eaf-open-this-from-dired
              eaf-describe-bindings eaf-open-bookmark eaf-open-external
              eaf-get-path-or-url eaf-toggle-fullscreen eaf-share-path-or-url)
-  :custom
+  :setq
   `(eaf-config-location . ,(concat my-data-dir "data/eaf/"))
   (eaf-find-alternate-file-in-dired . t)
   ;; (browse-url-browser-function . #'eaf-open-browser)

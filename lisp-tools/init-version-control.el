@@ -40,7 +40,7 @@
 (leaf transient
   :url "https://github.com/magit/transient"
   :straight t
-  :custom
+  :setq
   (transient-enable-popup-navigation . t)
   (transient-show-common-commands . nil)
   (transient-highlight-mismatched-keys . t))

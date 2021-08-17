@@ -101,7 +101,7 @@
   :tag "builtin"
   :disabled t
   :global-minor-mode window-divider-mode
-  :custom
+  :setq
   (window-divider-default-right-width . 12)
   (window-divider-default-bottom-width . 1)
   (window-divider-default-places . 'right-only))
@@ -123,7 +123,7 @@
   :url "https://github.com/rougier/nano-modeline"
   :straight (nano-modeline :host github :repo "rougier/nano-modeline")
   :disabled t
-  :custom
+  :setq
   (nano-modeline-position . 'bottom)
   :require (nano-modeline))
 
@@ -132,7 +132,7 @@
   :straight t
   :init
   (add-to-list 'custom-safe-themes "e3b2bad7b781a968692759ad12cb6552bc39d7057762eefaf168dbe604ce3a4b")
-  :custom
+  :setq
   (nord-region-highlight . 'frost)
   (nord-uniform-mode-lines . t)
   :config (load-theme 'nord))
@@ -140,7 +140,7 @@
 (leaf doom-modeline
   :url "https://github.com/seagle0128/doom-modeline"
   :straight t
-  :custom
+  :setq
   (doom-modeline-minor-modes . t)
   (doom-modeline-enable-word-count . t)
   (doom-modeline-mu4e . t)
