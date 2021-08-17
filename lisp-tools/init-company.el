@@ -72,5 +72,14 @@
   :config
   (add-to-list 'company-backends 'company-dict))
 
+(leaf corfu
+  :url https://github.com/minad/corfu
+  :straight t
+  :disabled t
+  :custom
+  (corfu-auto . t)
+  (corfu-echo-documentation . nil)
+  :global-minor-mode corfu-global-mode)
+
 (provide 'init-company)
 ;;; init-company.el ends here

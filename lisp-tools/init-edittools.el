@@ -10,7 +10,7 @@
 
 (leaf indent
   :tag "builtin"
-  :setq (tab-always-indent . nil))
+  :setq (tab-always-indent . 'complete))
 
 (leaf files
   :tag "builtin"
