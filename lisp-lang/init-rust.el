@@ -12,7 +12,8 @@
 (leaf rustic
   :url https://github.com/brotzeit/rustic
   :ensure-system-package rust-analyzer
-  :straight t)
+  :straight t
+  :hook (rustic-mode-hook . lsp-deferred))
 
 (leaf rust-playground
   :url https://github.com/grafov/rust-playground

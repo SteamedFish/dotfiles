@@ -17,14 +17,10 @@
   (lsp-eldoc-render-all . t)
   (lsp-enable-semantic-highlighting . t)
   :hook
-  ;; TODO: only enable lsp-mode when lsp-mode is actually avaliable
-  ((prog-mode . (lambda ()
-                  (unless (derived-mode-p 'emacs-lisp-mode 'lisp-mode)
-                    (lsp-deferred))))
-   (lsp-mode . (lambda ()
-                 (lsp-enable-which-key-integration)
-                 (add-hook 'before-save-hook #'lsp-format-buffer t t)
-                 (add-hook 'before-save-hook #'lsp-organize-imports t t)))))
+  (lsp-mode-hook . (lambda ()
+                     (lsp-enable-which-key-integration)
+                     (add-hook 'before-save-hook #'lsp-format-buffer t t)
+                     (add-hook 'before-save-hook #'lsp-organize-imports t t))))
 
 (leaf lsp-ui
   :url https://emacs-lsp.github.io/lsp-ui/

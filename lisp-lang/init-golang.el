@@ -12,7 +12,9 @@
 (leaf go-mode
   :url https://github.com/dominikh/go-mode.el
   :straight t
-  :ensure-system-package gopls)
+  :ensure-system-package gopls
+  :hook
+  (go-mode-hook . lsp-deferred))
 
 (leaf go-guru
   :url https://github.com/dominikh/go-mode.el
