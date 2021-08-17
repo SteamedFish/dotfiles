@@ -17,7 +17,9 @@
   (evil-want-keybinding . nil)
   :custom
   (evil-search-module . 'evil-search)
-  (evil-undo-system . 'undo-fu))
+  (evil-undo-system . 'undo-fu)
+  (evil-split-window-below . t)
+  (evil-vsplit-window-right . t))
 
 (leaf evil-collection
   :url "https://github.com/emacs-evil/evil-collection"
