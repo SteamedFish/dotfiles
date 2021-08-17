@@ -151,6 +151,7 @@
 (leaf mode-icons
   :url https://github.com/ryuslash/mode-icons
   :straight t
+  :when IS-GUI
   :global-minor-mode mode-icons-mode)
 
 (provide 'init-theme)
