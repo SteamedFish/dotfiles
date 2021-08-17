@@ -98,7 +98,7 @@
 (leaf aggressive-indent
   :url https://github.com/Malabarba/aggressive-indent-mode
   :straight t
-  :blackout global-aggressive-indent-mode
+  :blackout (global-aggressive-indent-mode aggressive-indent-mode)
   :global-minor-mode global-aggressive-indent-mode)
 
 (provide 'init-edittools)

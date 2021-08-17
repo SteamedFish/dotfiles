@@ -51,6 +51,7 @@
   :url https://github.com/lastquestion/explain-pause-mode
   :doc "use M-x explain-pause-top to find what makes emacs slow"
   :straight t
+  :blackout t
   :global-minor-mode t)
 
 (leaf esup
