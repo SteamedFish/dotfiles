@@ -18,6 +18,11 @@
   (company-minimum-prefix-length . 1)
   (company-auto-commit . nil)
   (company-show-quick-access . t)
+  (company-backends . '((company-capf :with company-yasnippet)
+                        (company-dabbrev-code
+                         company-keywords
+                         company-files)
+                        company-dabbrev))
   (company-global-modes . '(not
                             message-mode
                             help-mode
@@ -36,7 +41,9 @@
   :straight t
   :when IS-GUI
   :blackout t
-  :global-minor-mode t)
+  :hook (company-mode-hook . company-box-mode)
+  :setq
+  (company-box-icons-alist . 'company-box-icons-all-the-icons))
 
 (leaf company-quickhelp
   :url https://github.com/company-mode/company-quickhelp
@@ -51,6 +58,19 @@
   :global-minor-mode t
   :bind (:company-active-map
          ([remap company-show-doc-buffer] . company-quickhelp-manual-begin)))
+
+(leaf company-math
+  :url https://github.com/vspinu/company-math
+  :straight t
+  :config
+  (add-to-list 'company-backends 'company-math-symbols-unicode))
+
+(leaf company-dict
+  :url https://github.com/hlissner/emacs-company-dict
+  :straight t
+  :setq `(company-dict-dir . ,(concat my-data-dir "/data/company-dict/"))
+  :config
+  (add-to-list 'company-backends 'company-dict))
 
 (provide 'init-company)
 ;;; init-company.el ends here
