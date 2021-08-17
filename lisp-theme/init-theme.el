@@ -148,5 +148,10 @@
   :hook (prog-mode-hook . hl-fill-column-mode))
   ;; :global-minor-mode global-hl-fill-column-mode)
 
+(leaf mode-icons
+  :url https://github.com/ryuslash/mode-icons
+  :straight t
+  :global-minor-mode mode-icons-mode)
+
 (provide 'init-theme)
 ;;; init-theme.el ends here
