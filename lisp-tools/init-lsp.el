@@ -17,6 +17,7 @@
   (lsp-eldoc-render-all . t)
   (lsp-enable-semantic-highlighting . t)
   :hook
+  ;; TODO: only enable lsp-mode when lsp-mode is actually avaliable
   ((prog-mode . (lambda ()
                   (unless (derived-mode-p 'emacs-lisp-mode 'lisp-mode)
                     (lsp-deferred))))
