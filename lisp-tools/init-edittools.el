@@ -101,5 +101,22 @@
   :blackout (global-aggressive-indent-mode aggressive-indent-mode)
   :global-minor-mode global-aggressive-indent-mode)
 
+(leaf tree-sitter
+  :url https://emacs-tree-sitter.github.io/
+  :straight t
+  :require t
+  :blackout t
+  :when (functionp 'module-load)
+  :ensure-system-package tree-sitter
+  :global-minor-mode global-tree-sitter-mode
+  :hook
+  (tree-sitter-after-on-hook . tree-sitter-hl-mode))
+
+(leaf tree-sitter-langs
+  :url https://github.com/emacs-tree-sitter/tree-sitter-langs
+  :straight t
+  :require t
+  :when (functionp 'module-load))
+
 (provide 'init-edittools)
 ;;; init-edittools.el ends here
