@@ -43,5 +43,10 @@
   :blackout (ace-pinyin-global-mode ace-pinyin-mode)
   :global-minor-mode ace-pinyin-global-mode)
 
+(leaf fanyi
+  :url https://github.com/condy0919/fanyi.el
+  :doc "use M-x fanyi-dwim to translate"
+  :straight t)
+
 (provide 'init-chinese)
 ;;; init-chinese.el ends here
