@@ -30,7 +30,7 @@
   :url https://emacs-lsp.github.io/lsp-ui/
   :straight t
   :setq
-  (lsp-ui-doc-position . 'at-point)
+  (lsp-ui-doc-position . 'bottom)
   (lsp-ui-flycheck-enable . t)
   (lsp-ui-sideline-ignore-duplicate . t)
   (lsp-ui-sideline-update-mode . 'point)
