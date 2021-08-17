@@ -39,11 +39,12 @@
              do (system-packages-ensure value))))
 
 
-(leaf cus-start
+(leaf faces
   :tag "builtin"
   :when IS-GUI
   :config
-  (set-face-attribute 'default nil :font "Rec Mono Duotone")
+  (set-face-attribute 'default nil :font (font-spec :family "Rec Mono Duotone" :size 14))
+  ;; add some symbol fonts for font failback
   (set-fontset-font t nil "Noto Color Emoji" nil 'append)
   (set-fontset-font t nil "Apple Color Emoji" nil 'append)
   (set-fontset-font t nil "Noto Sans Symbols" nil 'append)
