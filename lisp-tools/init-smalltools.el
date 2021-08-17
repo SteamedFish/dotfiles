@@ -47,6 +47,17 @@
   :doc "enable by keycast-mode or keycast-log-mode, keycast-mode is not working right now"
   :straight (keycast :host github :repo "tarsius/keycast"))
 
+(leaf explain-pause-mode
+  :url https://github.com/lastquestion/explain-pause-mode
+  :doc "use M-x explain-pause-top to find what makes emacs slow"
+  :straight t
+  :global-minor-mode t)
+
+(leaf esup
+  :url https://github.com/jschaf/esup
+  :doc "use M-x esup to benchmark emacs startup time"
+  :straight t)
+
 (leaf youtube-dl
   :url https://github.com/skeeto/youtube-dl-emacs
   :straight t)
