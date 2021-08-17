@@ -95,5 +95,11 @@
   :blackout t
   :global-minor-mode global-auto-revert-mode)
 
+(leaf aggressive-indent
+  :url https://github.com/Malabarba/aggressive-indent-mode
+  :straight t
+  :blackout global-aggressive-indent-mode
+  :global-minor-mode global-aggressive-indent-mode)
+
 (provide 'init-edittools)
 ;;; init-edittools.el ends here
