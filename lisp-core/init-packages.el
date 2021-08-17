@@ -56,7 +56,8 @@
   :url https://github.com/conao3/leaf.el
   :custom
   ;; don't lazy-load any packages
-  (leaf-defer-keywords . '()))
+  (leaf-defer-keywords . nil)
+  (leaf-expand-leaf-defer . nil))
 
 (leaf leaf-keywords
   :url https://github.com/conao3/leaf-keywords.el
