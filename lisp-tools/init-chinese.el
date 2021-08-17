@@ -43,6 +43,13 @@
   :blackout (ace-pinyin-global-mode ace-pinyin-mode)
   :global-minor-mode ace-pinyin-global-mode)
 
+(leaf pinyin-search
+  :url https://github.com/xuchunyang/pinyin-search.el
+  :doc "usr M-x pinyin-search to search"
+  :doc "FIXME: work with swipper"
+  :straight t
+  :setq (pinyin-search-activated . t))
+
 (leaf fanyi
   :url https://github.com/condy0919/fanyi.el
   :doc "use M-x fanyi-dwim to translate"
