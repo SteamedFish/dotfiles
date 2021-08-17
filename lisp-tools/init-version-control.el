@@ -27,6 +27,7 @@
   :doc "A lightweight alternative to emerge/ediff"
   :doc "enable the mode, then use C-c ^"
   :hook find-file-hook
+  :disabled t
   :blackout t)
 
 (leaf magit
