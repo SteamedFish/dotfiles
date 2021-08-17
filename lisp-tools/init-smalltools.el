@@ -47,6 +47,10 @@
   :doc "enable by keycast-mode or keycast-log-mode, keycast-mode is not working right now"
   :straight (keycast :host github :repo "tarsius/keycast"))
 
+(leaf youtube-dl
+  :url https://github.com/skeeto/youtube-dl-emacs
+  :straight t)
+
 (leaf netease-cloud-music
   :url "https://github.com/SpringHan/netease-cloud-music.el"
   :require (cl-macs)
