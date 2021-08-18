@@ -130,6 +130,8 @@
   :tag "builtin"
   :unless noninteractive
   :global-minor-mode t
+  :pre-setq
+  (recentf-max-saved-items . 300)
   :config
   (add-to-list 'recentf-filename-handlers #'abbreviate-file-name))
 
