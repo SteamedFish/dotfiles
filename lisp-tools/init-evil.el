@@ -25,9 +25,8 @@
 (leaf evil-collection
   :url "https://github.com/emacs-evil/evil-collection"
   :straight t
-  :hook (evil-mode-hook . evil-collection-init)
-  :hook (magit-mode-hook . evil-collection-magit-setup)
-  :hook (telega-load-hook . evil-collection-telega-setup))
+  :config
+  (evil-collection-init))
 
 (provide 'init-evil)
 ;;; init-evil.el ends here
