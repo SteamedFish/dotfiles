@@ -47,6 +47,7 @@
 (require 'init-treemacs)
 
 ;; lisp-tools
+(require 'init-dired)
 (require 'init-helpers)
 (require 'init-evil)
 (require 'init-ivy)
