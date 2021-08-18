@@ -150,6 +150,11 @@
   :tag "builtin"
   :require t)
 
+(leaf so-long
+  :tag "builtin"
+  :global-minor-mode global-so-long-mode
+  :setq (so-long-threshold . 400))
+
 (leaf server
   :tag "builtin"
   :when IS-GUI
