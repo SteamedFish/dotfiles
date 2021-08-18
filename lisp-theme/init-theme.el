@@ -36,6 +36,9 @@
 
 (leaf simple
   :tag "builtin"
+  :hook
+  (text-mode-hook . visual-line-mode)
+  :global-minor-mode size-indication-mode
   :global-minor-mode column-number-mode)
 
 (leaf hl-line
