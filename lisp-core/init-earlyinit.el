@@ -25,6 +25,8 @@
 ;; Don't resize the frame when font size changes
 (setq frame-inhibit-implied-resize t)
 
+(setq load-prefer-newer t)
+
 ;; Ignore X resources
 (advice-add #'x-apply-session-resources :override #'ignore)
 
