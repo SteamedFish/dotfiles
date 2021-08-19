@@ -25,10 +25,9 @@
 (leaf evil-collection
   :url "https://github.com/emacs-evil/evil-collection"
   :straight t
-  :require t
-  :blackout evil-collection-unimpaired-mode
   :config
-  (evil-collection-init))
+  (evil-collection-init)
+  (blackout 'evil-collection-unimpaired-mode))
 
 (provide 'init-evil)
 ;;; init-evil.el ends here
