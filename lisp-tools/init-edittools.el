@@ -120,5 +120,14 @@
   :require t
   :when (functionp 'module-load))
 
+(leaf format-all-the-code
+  :url https://github.com/lassik/emacs-format-all-the-code
+  :straight format-all
+  :setq
+  (format-all-show-errors . 'warnings)
+  :hook
+  (prog-mode-hook . format-all-mode)
+  (format-all-mode-hook . format-all-ensure-formatter))
+
 (provide 'init-edittools)
 ;;; init-edittools.el ends here
