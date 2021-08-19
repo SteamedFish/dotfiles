@@ -38,6 +38,7 @@
   :tag "builtin"
   :hook
   (text-mode-hook . visual-line-mode)
+  :blackout visual-line-mode
   :global-minor-mode size-indication-mode
   :global-minor-mode column-number-mode)
 
