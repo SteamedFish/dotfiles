@@ -59,6 +59,7 @@
 
 (leaf simple
   :tag "builtin"
+  :blackout auto-fill-mode
   :setq
   (async-shell-command-buffer . 'new-buffer))
 

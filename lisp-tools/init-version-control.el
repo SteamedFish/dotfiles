@@ -50,6 +50,10 @@
   :url https://github.com/magit/git-modes
   :straight t)
 
+(leaf with-editor
+  :url https://github.com/magit/with-editor
+  :straight t
+  :blackout with-editor-mode)
 
 (provide 'init-version-control)
 ;;; init-version-control.el ends here
