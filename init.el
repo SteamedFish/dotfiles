@@ -63,6 +63,7 @@
 
 ;; lisp-lang
 (require 'init-generic-x)
+(require 'init-orgmode)
 (require 'init-puppet)
 (require 'init-elisp)
 (require 'init-rust)
