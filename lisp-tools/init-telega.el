@@ -12,6 +12,7 @@
 (leaf telega
   :url https://github.com/zevlg/telega.el
   :straight t
+  :doc "use s for filter"
   :commands telega
   :ensure-system-package (cmake make gperf)
   :hook
