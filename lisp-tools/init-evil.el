@@ -25,6 +25,7 @@
 (leaf evil-collection
   :url "https://github.com/emacs-evil/evil-collection"
   :straight t
+  :blackout evil-collection-unimpaired-mode
   :config
   (evil-collection-init))
 
