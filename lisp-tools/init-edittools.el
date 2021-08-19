@@ -31,7 +31,9 @@
   :url http://joaotavora.github.io/yasnippet/
   :straight t
   :require t
-  :global-minor-mode yas-global-mode)
+  :global-minor-mode yas-global-mode
+  :config
+  (when IS-MAC (blackout 'yas-minor-mode)))
 
 (leaf yasnippet-snippets
   :url https://github.com/AndreaCrotti/yasnippet-snippets
