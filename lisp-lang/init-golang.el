@@ -16,6 +16,12 @@
   :hook
   (go-mode-hook . lsp-deferred))
 
+(leaf ob-go
+  :url https://github.com/pope/ob-go
+  :straight t
+  :config
+  (add-to-list 'org-src-lang-modes '("go" . go)))
+
 (leaf go-guru
   :url https://github.com/dominikh/go-mode.el
   :straight t
