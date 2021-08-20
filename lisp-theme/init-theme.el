@@ -49,6 +49,7 @@
 (leaf svg-tag-mode
   :url "https://github.com/rougier/svg-tag-mode"
   :when IS-GUI
+  ;; :global-minor-mode global-svg-tag-mode
   :straight (svg-tag-mode :host github :repo "rougier/svg-tag-mode"))
 
 (leaf nano
@@ -154,8 +155,8 @@
 (leaf hl-fill-column
   :url "https://github.com/laishulu/hl-fill-column"
   :straight t
-  :hook (prog-mode-hook . hl-fill-column-mode))
   ;; :global-minor-mode global-hl-fill-column-mode)
+  :hook (prog-mode-hook . hl-fill-column-mode))
 
 (leaf mode-icons
   :url https://github.com/ryuslash/mode-icons
