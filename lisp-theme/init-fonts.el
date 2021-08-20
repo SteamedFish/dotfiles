@@ -54,6 +54,7 @@
 (leaf face-remap
   :tag "builtin"
   :blackout buffer-face-mode
+  :when IS-GUI
   :config
   (make-face 'my-align-by-sarasa)
   (set-face-font 'my-align-by-sarasa (font-spec :family "Sarasa Mono SC"))
@@ -73,6 +74,7 @@
 
 (leaf prog-mode
   :tag "builtin"
+  :when IS-GUI
   :global-minor-mode global-prettify-symbols-mode)
 
 (provide 'init-fonts)
