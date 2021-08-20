@@ -53,7 +53,9 @@
 (leaf with-editor
   :url https://github.com/magit/with-editor
   :straight t
-  :blackout with-editor-mode)
+  :blackout with-editor-mode
+  :hook
+  (with-editor-mode-hook . evil-insert-state))
 
 (provide 'init-version-control)
 ;;; init-version-control.el ends here
