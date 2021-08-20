@@ -48,6 +48,7 @@
 
 (leaf svg-tag-mode
   :url "https://github.com/rougier/svg-tag-mode"
+  :tag "TODO"
   :when IS-GUI
   ;; :global-minor-mode global-svg-tag-mode
   :straight (svg-tag-mode :host github :repo "rougier/svg-tag-mode"))

@@ -41,7 +41,7 @@
 (leaf org-contrib
   :url https://orgmode.org/worg/org-contrib/
   :straight t
-  :tag "todo" ;; need to require each contrib file
+  :tag "TODO" ;; need to require each contrib file
   :require ox-confluence)
 
 (leaf evil-org
@@ -102,7 +102,7 @@
   :url https://github.com/org-mime/org-mime
   :doc "sends HTML email with orgmode"
   :straight t
-  :tag "todo" "need keybinding")
+  :tag "TODO" "need keybinding")
 
 (leaf org-timeline
   :url https://github.com/Fuco1/org-timeline
