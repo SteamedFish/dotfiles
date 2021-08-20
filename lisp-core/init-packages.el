@@ -42,7 +42,6 @@
   (load bootstrap-file nil 'nomessage))
 
 ;;; prevent emacs's builtin org from being loaded
-
 (straight-register-package 'org)
 (straight-register-package 'org-contrib)
 
