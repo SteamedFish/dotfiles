@@ -23,6 +23,7 @@
   (ivy-use-selectable-prompt . t)
   (ivy-use-virtual-buffers . t)
   (ivy-fixed-height-minibuffer . t)
+  (ivy-re-builders-alist . '((t . ivy--regex-fuzzy)))
   (counsel-describe-function-function . #'helpful-callable)
   (counsel-describe-variable-function . #'helpful-variable)
   (counsel-describe-symbol-function   . #'helpful-symbol))
@@ -30,6 +31,7 @@
 (leaf prescient
   :url https://github.com/raxod502/prescient.el
   :straight t
+  :disabled t
   :global-minor-mode prescient-persist-mode)
 
 (leaf ivy-prescient
