@@ -9,6 +9,10 @@
 
 ;;; Code:
 
+
+;; Thie setq must set outside leaf block
+(setq org-directory (expand-file-name "~/work/org/"))
+
 (leaf org
   :url https://orgmode.org/
   :straight t
@@ -18,44 +22,32 @@
   (org-startup-indented . t)
   (org-startup-numerated . t)
   (org-startup-folded . nil)
-  `(org-directory . ,(expand-file-name "~/work/org/"))
-  (org-agenda-files . org-directory)
+  `(org-agenda-files . ,org-directory)
   (org-log-done . 'time)
   (org-cache-invisible-edits . 'smart)
-  :config
-  (setq org-babel-do-load-languages '((emacs-lisp . t)
-                                      (awk . t)
-                                      (C . t)
-                                      (calc . t)
-                                      (css . t)
-                                      (ditaa . t)
-                                      (dot . t)
-                                      (gnuplot . t)
-                                      (latex . t)
-                                      (ledger . t)
-                                      (makefile . t)
-                                      (maxima . t)
-                                      (org . t)
-                                      (perl . t)
-                                      (plantuml . t)
-                                      (python . t)
-                                      (ruby . t)
-                                      (screen . t)
-                                      (shell . t)
-                                      (sql . t)
-                                      (sqlite . t)))
-  (org-babel-do-load-languages 'org-babel-do-load-languages 'org-babel-do-load-languages)
+  `(org-archive-location . ,(concat org-directory "archive.org::* From %s"))
+  (org-log-done . 'time)
+  (org-log-done-with-time . t)
+  `(org-ellipsis . ,(if (char-displayable-p ?⬎) "  ⬎" nil))
+  (org-startup-with-inline-images . t)
+  (org-html-validation-link . nil)
+  (org-agenda-include-diary . t)
+  :hook
+  (org-babel-after-execute-hook . org-redisplay-inline-images)
   :bind
   (:org-mode-map
    ([remap org-set-tags-command] . counsel-org-tag)))
 
 (leaf org-contrib
   :url https://orgmode.org/worg/org-contrib/
-  :straight t)
+  :straight t
+  :tag "todo" ;; need to require each contrib file
+  :require ox-confluence)
 
 (leaf evil-org
   :url https://github.com/Somelauw/evil-org-mode
   :straight t
+  :blackout evil-org-mode
   :require (evil-org evil-org-agenda)
   :hook (org-mode-hook . evil-org-mode)
   :pre-setq
@@ -72,13 +64,6 @@
   (evil-org-set-key-theme)
   (evil-org-agenda-set-keys))
 
-
-(leaf ob-go
-  :url https://github.com/pope/ob-go
-  :straight t
-  :config
-  (add-to-list 'org-babel-do-load-languages '(go . t))
-  (org-babel-do-load-languages 'org-babel-do-load-languages 'org-babel-do-load-languages))
 
 (leaf ox-gfm
   :url https://github.com/larstvei/ox-gfm
@@ -164,9 +149,9 @@
 (leaf org-roam
   :url https://www.orgroam.com
   :straight t
-  :config (org-roam-setup)
-  :pre-setq
-  `(org-roam-directory . (concat org-directory "roam/"))
+  :after org
+  :setq
+  `(org-roam-directory . ,(concat org-directory "roam/"))
   (org-roam-v2-ack . t)
   :config
   (unless (file-exists-p org-roam-directory)
@@ -181,7 +166,7 @@
   :url https://github.com/legalnonsense/elgantt
   :doc "A Gantt chart/calendar for Orgmode"
   :doc "M-x elgantt-open"
-  :straight t
+  :straight (elgantt :host github :repo "legalnonsense/elgantt")
   :setq
   (elgantt-header-type . 'outline)
   (elgantt-insert-blank-line-between-top-level-header . t)
@@ -192,6 +177,18 @@
 (leaf literate-calc-mode
   :url https://github.com/sulami/literate-calc-mode.el
   :straight t)
+
+(leaf valign
+  :url https://github.com/casouri/valign
+  :blackout t
+  :straight t
+  :hook (org-mode-hook . valign-mode))
+
+(leaf org-alert
+  :url https://github.com/spegoraro/org-alert
+  :straight t
+  :require t
+  :config (org-alert-enable))
 
 (provide 'init-orgmode)
 ;;; init-orgmode.el ends here
