@@ -17,6 +17,7 @@
 (leaf eaf
   :url "https://github.com/manateelazycat/emacs-application-framework"
   :when IS-GUI
+  :when IS-LINUX
   :straight (eaf
              :host github
              :repo "manateelazycat/emacs-application-framework"
