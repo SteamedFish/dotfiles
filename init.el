@@ -69,7 +69,7 @@
 (require 'init-rust)
 (require 'init-golang)
 (require 'init-yaml)
-
+(require 'init-plantuml)
 
 (provide 'init)
 ;;; init.el ends here
