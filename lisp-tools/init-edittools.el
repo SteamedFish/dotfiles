@@ -73,10 +73,10 @@
   :pre-setq
   (parinfer-rust-auto-download . t)
   `(parinfer-rust-library . ,(concat my-data-dir "data/parinfer-rust/"
-                               (cond
-                                 (IS-MAC "parinfer-rust-darwin.so")
-                                 (IS-LINUX "parinfer-rust-linux.so")
-                                 (IS-WINDOWS "parinfer-rust-windows.dll")))))
+                                     (cond
+                                      (IS-MAC "parinfer-rust-darwin.so")
+                                      (IS-LINUX "parinfer-rust-linux.so")
+                                      (IS-WINDOWS "parinfer-rust-windows.dll")))))
 
 (leaf parinfer
   :url "https://github.com/DogLooksGood/parinfer-mode"
