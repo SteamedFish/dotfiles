@@ -32,6 +32,8 @@
   :doc "similar to whitespace-cleanup-mode"
   :straight t
   :disabled t
+  :setq
+  (ws-butler-keep-whitespace-before-point . nil)
   :global-minor-mode ws-butler-global-mode)
 
 (leaf yasnippet
