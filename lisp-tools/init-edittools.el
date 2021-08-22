@@ -132,5 +132,24 @@
   (prog-mode-hook . format-all-mode)
   (format-all-mode-hook . format-all-ensure-formatter))
 
+(leaf better-jumper
+  :url https://github.com/gilbertw1/better-jumper
+  :straight t
+  :blackout (better-jumper-mode better-jumper-local-mode)
+  :global-minor-mode t
+  :bind
+  ([remap evil-jump-forward] . better-jumper-jump-forward)
+  ([remap evil-jump-backward] . better-jumper-jump-backward)
+  ([remap xref-pop-marker-stack] . better-jumper-jump-backward))
+
+(leaf dtrt-indent
+  :url https://github.com/jscheid/dtrt-indent/
+  :doc "guess file indent settings"
+  :blackout t
+  :straight t
+  :setq
+  (dtrt-indent-run-after-smie . t)
+  :global-minor-mode dtrt-indent-global-mode)
+
 (provide 'init-edittools)
 ;;; init-edittools.el ends here
