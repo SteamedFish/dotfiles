@@ -33,7 +33,7 @@
 (leaf magit
   :url "https://magit.vc/"
   :straight t
-  :config
+  :init
   ;;HACK: magit requires projecct-swith-commands, which only avaliable after Emacs 28.1
   (when (version< emacs-version "28.1")
     (setq project-switch-commands  '((project-find-file "Find file")
