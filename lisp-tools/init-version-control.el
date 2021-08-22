@@ -46,6 +46,11 @@
   (transient-show-common-commands . nil)
   (transient-highlight-mismatched-keys . t))
 
+(leaf transient-posframe
+  :url https://github.com/yanghaoxie/transient-posframe
+  :straight t
+  :global-minor-mode t)
+
 (leaf git-modes
   :url https://github.com/magit/git-modes
   :straight t)
