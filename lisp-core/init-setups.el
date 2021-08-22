@@ -62,6 +62,7 @@
   :tag "builtin"
   :blackout auto-fill-mode
   :setq
+  (kill-do-not-save-duplicates . t)
   (async-shell-command-buffer . 'new-buffer))
 
 (leaf mule-cmds
@@ -142,7 +143,9 @@
   :unless noninteractive
   :global-minor-mode t
   :pre-setq
-  (savehist-addtional-variables . '(mark-ring
+  (savehist-addtional-variables . '(kill-ring
+                                    register-alist
+                                    mark-ring
                                     global-mark-ring
                                     search-ring
                                     regexp-search-ring
