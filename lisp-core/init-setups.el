@@ -18,6 +18,7 @@
   (bidi-paragraph-direction . 'left-to-right)
   (indent-tabs-mode . nil)
   (tab-width . 8)
+  (fill-column . 80)
   :setq
   (user-full-name . "SteamedFish")
   (user-mail-address . "steamedfish@hotmail.com")
@@ -26,7 +27,6 @@
   (create-lock-files . nil)
   (tabify-regexp . "^\t* [ \t]+")
   (visible-bell . t)
-  (fill-column . 80)
   (locale-coding-system . 'utf-8)
   (enable-recursive-minibuffers . t)
   (delete-by-movding-to-trash . t)
