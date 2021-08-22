@@ -23,6 +23,7 @@
   (user-mail-address . "steamedfish@hotmail.com")
   (frame-title-format . '("%b - " user-full-name "'s Emacs"))
   `(read-process-output-max . ,(* 1024 1024))
+  (create-lock-files . nil)
   (tabify-regexp . "^\t* [ \t]+")
   (visible-bell . t)
   (fill-column . 80)
