@@ -27,6 +27,13 @@
   :blackout t
   :global-minor-mode global-whitespace-cleanup-mode)
 
+(leaf ws-butler
+  :url https://github.com/lewang/ws-butler
+  :doc "similar to whitespace-cleanup-mode"
+  :straight t
+  :disabled t
+  :global-minor-mode ws-butler-global-mode)
+
 (leaf yasnippet
   :url http://joaotavora.github.io/yasnippet/
   :straight t
