@@ -95,6 +95,8 @@
 (leaf autorevert
   :tag "builtin"
   :blackout t
+  :custom
+  (auto-revert-use-notify . nil)
   :global-minor-mode global-auto-revert-mode)
 
 (leaf aggressive-indent
