@@ -19,6 +19,7 @@
   (indent-tabs-mode . nil)
   (tab-width . 8)
   (fill-column . 80)
+  (display-line-numbers-widen . t)
   :setq
   (user-full-name . "SteamedFish")
   (user-mail-address . "steamedfish@hotmail.com")
