@@ -29,11 +29,6 @@
   :straight t
   :setq `((rfc-mode-directory . ,(concat my-data-dir "data/rfc/"))))
 
-(leaf all-the-icons
-  :url "https://github.com/domtronn/all-the-icons.el"
-  ;; TODO: automatically download fonts if not exist
-  :straight t)
-
 (leaf osx-trash
   :url https://github.com/emacsorphanage/osx-trash
   :straight t

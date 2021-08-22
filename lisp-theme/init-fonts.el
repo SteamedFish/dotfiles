@@ -77,5 +77,12 @@
   :when IS-GUI
   :global-minor-mode global-prettify-symbols-mode)
 
+(leaf all-the-icons
+  :url "https://github.com/domtronn/all-the-icons.el"
+  :straight t
+  :config
+  (unless (member "all-the-icons" (font-family-list))
+    (all-the-icons-install-fonts)))
+
 (provide 'init-fonts)
 ;;; init-fonts.el ends here
