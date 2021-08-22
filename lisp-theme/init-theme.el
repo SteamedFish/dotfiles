@@ -34,6 +34,13 @@
   (conf-mode-hook . display-line-numbers-mode)
   (text-mode-hook . display-line-numbers-mode))
 
+(leaf highlight-numbers
+  :url https://github.com/Fanael/highlight-numbers
+  :straight t
+  :hook
+  (prog-mode-hook . highlight-numbers-mode)
+  (conf-mode-hook . highlight-numbers-mode))
+
 (leaf simple
   :tag "builtin"
   :hook
