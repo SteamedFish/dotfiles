@@ -151,5 +151,17 @@
   (dtrt-indent-run-after-smie . t)
   :global-minor-mode dtrt-indent-global-mode)
 
+(leaf smartparens
+  :url https://github.com/Fuco1/smartparens
+  :doc "use M-x sp-cheat-sheet for help"
+  :straight t
+  :hook (prog-mode-hook . smartparens-mode)
+  :blackout t
+  :setq
+  (sp-highlight-pair-overlay . nil)
+  (sp-highlight-wrap-overlay . nil)
+  (sp-highlight-wrap-tag-overlay . nil)
+  :require smartparens-config)
+
 (provide 'init-edittools)
 ;;; init-edittools.el ends here
