@@ -39,19 +39,19 @@
   (fset 'yes-or-no-p 'y-or-n-p)
   (set-charset-priority 'unicode)
   (cond
-    (IS-MAC
-      ;; mac-* variables are used by the special emacs-mac build of Emacs by
-      ;; Yamamoto Mitsuharu, while other builds use ns-*.
-      (setq mac-command-modifier      'super
-            ns-command-modifier       'super
-            mac-option-modifier       'meta
-            ns-option-modifier        'meta
-            ;; Free up the right option for character composition
-            mac-right-option-modifier 'none
-            ns-right-option-modifier  'none))
-    (IS-WINDOWS
-      (setq w32-lwindow-modifier 'super
-            w32-rwindow-modifier 'super))))
+   (IS-MAC
+    ;; mac-* variables are used by the special emacs-mac build of Emacs by
+    ;; Yamamoto Mitsuharu, while other builds use ns-*.
+    (setq mac-command-modifier      'super
+          ns-command-modifier       'super
+          mac-option-modifier       'meta
+          ns-option-modifier        'meta
+          ;; Free up the right option for character composition
+          mac-right-option-modifier 'none
+          ns-right-option-modifier  'none))
+   (IS-WINDOWS
+    (setq w32-lwindow-modifier 'super
+          w32-rwindow-modifier 'super))))
 
 (leaf ffap
   :tag "builtin"
