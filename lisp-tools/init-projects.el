@@ -20,8 +20,11 @@
   (projectile-globally-ignored-file-suffixes . '(".elc" ".pyc" ".o"))
   (projectile-ignored-projects '("~"))
   :config
-  (when IS-MAC (blackout 'projectile-mode)))
-
+  (when IS-MAC (blackout 'projectile-mode))
+  (projectile-add-known-project (expand-file-name "~/.config/emacs"))
+  (dolist (dir '("~/work/" "~/projects"))
+    (when (file-directory-p dir)
+      (add-to-list 'projectile-project-search-path (expand-file-name dir)))))
 
 (provide 'init-projects)
 ;;; init-projects.el ends here
