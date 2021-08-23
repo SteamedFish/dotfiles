@@ -145,7 +145,9 @@
   (org-tree-slide-modeline-display . 'outside)
   (org-tree-slide-skip-done . nil)
   (org-tree-slide-skip-comments . t)
-  (org-tree-slide-skip-outline-level . 3))
+  (org-tree-slide-skip-outline-level . 0)
+  :config
+  (org-tree-slide-presentation-profile))
 
 (leaf org-roam
   :url https://www.orgroam.com
