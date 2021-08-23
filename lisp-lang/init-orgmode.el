@@ -193,5 +193,24 @@
   :require t
   :config (org-alert-enable))
 
+(leaf revealjs
+  :url https://revealjs.com/
+  :doc "This is not an Emacs package, we just need its source files"
+  :straight (revealjs :host github :repo "hakimel/reveal.js" :files ("*")))
+
+(leaf org-re-reveal
+  :url https://gitlab.com/oer/org-re-reveal
+  :straight t
+  :require t
+  :setq
+  (org-re-reveal-revealjs-version . "4")
+  `(org-re-reveal-root . ,(expand-file-name "../../" (locate-library "dist/reveal.js" t))))
+
+(leaf org-re-reveal-ref
+  :url https://gitlab.com/oer/org-re-reveal-ref
+  :straight t
+  ;; This packages pulls to many dependencies
+  :disabled t)
+
 (provide 'init-orgmode)
 ;;; init-orgmode.el ends here
