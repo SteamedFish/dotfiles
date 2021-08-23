@@ -97,7 +97,7 @@
   :url https://github.com/snosov1/toc-org
   :doc "Table of Contensts"
   :straight t
-  :hook (org-mode . toc-org-mode))
+  :hook (org-mode-hook . toc-org-mode))
 
 (leaf org-mime
   :url https://github.com/org-mime/org-mime
