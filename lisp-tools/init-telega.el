@@ -53,7 +53,7 @@
                                 "@shuibiaobot"))
   (telega-chat-history-limit . 100)
   (telega-sticker-set-download . t)
-  (telega-chat-show-deleted-messaes-for . '(all))
+  (telega-chat-show-deleted-messages-for . '(all))
   :config
   ;; (evil-set-initial-state 'telega-chat-mode 'insert)
   (add-to-list 'all-the-icons-mode-icon-alist
