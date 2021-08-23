@@ -21,6 +21,7 @@
   :setq
   (org-startup-indented . t)
   (org-startup-numerated . t)
+  (org-num-skip-tags . '("TOC"))
   (org-startup-folded . nil)
   `(org-agenda-files . ,org-directory)
   (org-log-done . 'time)
