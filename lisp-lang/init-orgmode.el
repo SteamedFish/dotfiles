@@ -207,6 +207,7 @@
 (leaf emacs-reveal
   :url https://gitlab.com/oer/emacs-reveal
   :doc https://gitlab.com/oer/emacs-reveal-howto
+  :dog "BUG: must disable hl-todo and tree-sitter otherwise export will fail"
   :straight (emacs-reveal :host gitlab :repo "oer/emacs-reveal" :files ("*" ".*"))
   :pre-setq
   `(oer-reveal-org-includes-dir . ,(concat my-data-dir "etc/oer-reveal-org-include-dir"))
