@@ -189,6 +189,8 @@
 (leaf writeroom-mode
   :url https://github.com/joostkremers/writeroom-mode
   :straight t
+  :hook
+  (write-room-mode-hook . mixed-pitch-mode)
   :setq
   (writeroom-restore-window-config . t))
 
