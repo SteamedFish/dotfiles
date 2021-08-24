@@ -82,6 +82,8 @@
   :url https://github.com/integral-dw/org-superstar-mode
   :straight t
   :when IS-GUI
+  :setq
+  (org-superstar-special-todo-items . t)
   :hook (org-mode-hook . org-superstar-mode))
 
 (leaf org-fancy-priorities
