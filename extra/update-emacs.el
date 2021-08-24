@@ -14,10 +14,12 @@
 (cond
  ((fboundp 'straight-x-pull-all)
   (straight-x-pull-all)
-  (straight-check-all))
+  (straight-check-all)
+  (straight-remove-unused-repos))
  ((fboundp 'straight-pull-all)
   (straight-pull-all)
-  (straight-check-all))
+  (straight-check-all)
+  (straight-remove-unused-repos))
  ((fboundp 'paradox-upgrade-packages)
   (progn
     (unless (boundp 'paradox-github-token)
