@@ -99,6 +99,17 @@
   :straight t
   :hook (org-mode-hook . toc-org-mode))
 
+(leaf ox-pandoc
+  :url https://github.com/kawabata/ox-pandoc
+  :straight t
+  :ensure-system-package pandoc
+  :setq
+  (org-pandoc-options . '((standalone . t)))
+  (org-pandoc-options-for-beamer-pdf . '((pdf-engine . "xelatex")))
+  (org-pandoc-options-for-latex-pdf . '((pdf-engine . "xelatex")))
+  ;; special extensions for markdown_github output
+  (org-pandoc-format-extensions . '(markdown_github+pipe_tables+raw_html)))
+
 (leaf org-mime
   :url https://github.com/org-mime/org-mime
   :doc "sends HTML email with orgmode"
