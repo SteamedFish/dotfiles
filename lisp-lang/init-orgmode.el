@@ -103,6 +103,7 @@
   :url https://github.com/kawabata/ox-pandoc
   :straight t
   :ensure-system-package pandoc
+  :require t
   :setq
   (org-pandoc-options . '((standalone . t)))
   (org-pandoc-options-for-beamer-pdf . '((pdf-engine . "xelatex")))
