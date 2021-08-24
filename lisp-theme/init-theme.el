@@ -192,5 +192,10 @@
   :setq
   (writeroom-restore-window-config . t))
 
+(leaf solaire-mode
+  :url https://github.com/hlissner/emacs-solaire-mode
+  :straight t
+  :global-minor-mode solaire-global-mode)
+
 (provide 'init-theme)
 ;;; init-theme.el ends here
