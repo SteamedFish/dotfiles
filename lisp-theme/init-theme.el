@@ -186,5 +186,11 @@
   :when IS-GUI
   :global-minor-mode mode-icons-mode)
 
+(leaf writeroom-mode
+  :url https://github.com/joostkremers/writeroom-mode
+  :straight t
+  :setq
+  (writeroom-restore-window-config . t))
+
 (provide 'init-theme)
 ;;; init-theme.el ends here
