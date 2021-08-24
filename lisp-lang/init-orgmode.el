@@ -22,7 +22,10 @@
   (org-startup-indented . t)
   (org-startup-numerated . t)
   (org-num-skip-tags . '("TOC"))
+  (org-hide-emphasis-markers . t)
+  (org-pretty-entities . t)
   (org-startup-folded . nil)
+  (org-link-descriptive . t)
   `(org-agenda-files . ,org-directory)
   (org-log-done . 'time)
   (org-cache-invisible-edits . 'smart)
@@ -133,6 +136,18 @@
   :url https://github.com/lujun9972/org-preview-html
   :doc "M-x org-preview-html-mode"
   :straight t)
+
+(leaf org-appear
+  :url https://github.com/awth13/org-appear
+  :doc "automatically show emphasis markers"
+  :straight t
+  :setq
+  (org-appear-autolinks . t)
+  (org-appear-autosubmarkers . t)
+  (org-appear-autoemphasis . t)
+  (org-appear-autoentities . t)
+  (org-appear-autokeywords . t)
+  :hook (org-mode-hook . org-appear-mode))
 
 (leaf org-tree-slide
   :url https://github.com/takaxp/org-tree-slide
