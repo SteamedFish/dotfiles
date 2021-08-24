@@ -232,10 +232,24 @@
 (leaf emacs-reveal
   :url https://gitlab.com/oer/emacs-reveal
   :doc https://gitlab.com/oer/emacs-reveal-howto
-  :dog "BUG: must disable hl-todo and tree-sitter otherwise export will fail"
+  :doc "BUG: must disable hl-todo and tree-sitter otherwise export will fail"
   :straight (emacs-reveal :host gitlab :repo "oer/emacs-reveal" :files ("*" ".*"))
+  :disabled t
   :pre-setq
   `(oer-reveal-org-includes-dir . ,(concat my-data-dir "etc/oer-reveal-org-include-dir"))
+  :setq
+  (emacs-reveal-managed-install-p . t)
+  (org-re-reveal-theme . "moon")
+  (org-re-reveal-embed-local-resources . nil)
+  (org-re-reveal-progress . t)
+  (org-re-reveal-single-file . nil)
+  (org-re-reveal-slide-number . t)
+  (org-re-reveal-export-notes-to-pdf . t)
+  :config
+  (oer-reveal-setup-submodules t)
+  (oer-reveal-generate-include-files t)
+  (oer-reveal-publish-setq-defaults)
+  ;; (setq org-re-reveal-root (concat (file-name-directory (locate-library "emacs-reveal")) "emacs-reveal-submodules/reveal.js"))
   :require t)
 
 (provide 'init-orgmode)
