@@ -199,6 +199,7 @@
 
 (leaf org-re-reveal
   :url https://gitlab.com/oer/org-re-reveal
+  :doc https://gitlab.com/oer/emacs-reveal-howto
   :straight t
   :require t
   :setq
