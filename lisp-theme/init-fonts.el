@@ -44,6 +44,7 @@
   :when IS-GUI
   :config
   (set-face-attribute 'default nil :font (font-spec :family "Rec Mono Duotone" :size 14))
+  (set-face-font 'variable-pitch "Recursive")
   ;; add some symbol fonts for font failback
   (set-fontset-font t nil "Noto Color Emoji" nil 'append)
   (set-fontset-font t nil "Apple Color Emoji" nil 'append)
@@ -84,6 +85,13 @@
   :config
   (unless (or (member "all-the-icons" (font-family-list)) IS-GUI)
     (all-the-icons-install-fonts)))
+
+(leaf mixed-pitch
+  :url https://gitlab.com/jabranham/mixed-pitch
+  :straight t
+  :blackout t
+  :hook
+  (text-mode-hook . mixed-pitch-mode))
 
 (provide 'init-fonts)
 ;;; init-fonts.el ends here
