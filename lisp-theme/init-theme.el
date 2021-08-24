@@ -143,12 +143,26 @@
 (leaf nord-theme
   :url "https://github.com/arcticicestudio/nord-emacs"
   :straight t
+  :disabled t
   :init
   (add-to-list 'custom-safe-themes "e3b2bad7b781a968692759ad12cb6552bc39d7057762eefaf168dbe604ce3a4b")
   :setq
   (nord-region-highlight . 'frost)
   (nord-uniform-mode-lines . t)
   :config (load-theme 'nord))
+
+(leaf doom-themes
+  :url https://github.com/hlissner/emacs-doom-themes
+  :straight t
+  :pre-setq
+  (doom-themes-enable-bold . t)
+  (doom-themes-enable-italic . t)
+  (doom-themes-treemacs-theme . "doom-colors")
+  :config
+  (load-theme 'doom-nord t)
+  (doom-themes-visual-bell-config)
+  (doom-themes-treemacs-config)
+  (doom-themes-org-config))
 
 (leaf doom-modeline
   :url "https://github.com/seagle0128/doom-modeline"
