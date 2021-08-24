@@ -81,7 +81,7 @@
   :url "https://github.com/domtronn/all-the-icons.el"
   :straight t
   :config
-  (unless (member "all-the-icons" (font-family-list))
+  (unless (or (member "all-the-icons" (font-family-list)) IS-GUI)
     (all-the-icons-install-fonts)))
 
 (provide 'init-fonts)
