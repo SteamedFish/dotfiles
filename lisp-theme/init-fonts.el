@@ -46,6 +46,11 @@
   (set-face-attribute 'default nil :font (font-spec :family "Rec Mono Duotone" :size 14))
   (set-face-font 'variable-pitch "Recursive")
   (set-face-font 'fixed-pitch "Rec Mono Duotone")
+  (let ((chinese-font (cond
+                       (IS-MAC "Hiragino Sans GB")
+                       (t "Noto Sans CJK SC"))))
+    (dolist (charset '(han cjk-misc bopomofo))
+      (set-fontset-font nil charset chinese-font nil 'prepend)))
   ;; add some symbol fonts for font failback
   (set-fontset-font t nil "Noto Color Emoji" nil 'append)
   (set-fontset-font t nil "Apple Color Emoji" nil 'append)
