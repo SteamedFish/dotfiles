@@ -10,6 +10,7 @@
 
 (leaf projectile
   :url https://projectile.mx
+  :doc "C-x p"
   :straight t
   :global-minor-mode t
   :bind
