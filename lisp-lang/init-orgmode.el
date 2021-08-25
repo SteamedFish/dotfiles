@@ -229,6 +229,12 @@
   :require t
   :config (org-alert-enable))
 
+(leaf org-pretty-tags
+  :url https://gitlab.com/marcowahl/org-pretty-tags
+  :straight t
+  :blackout org-pretty-tags-mode
+  :global-minor-mode org-pretty-tags-global-mode)
+
 (leaf emacs-reveal
   :url https://gitlab.com/oer/emacs-reveal
   :doc https://gitlab.com/oer/emacs-reveal-howto
