@@ -241,6 +241,13 @@
   :blackout org-pretty-tags-mode
   :global-minor-mode org-pretty-tags-global-mode)
 
+(leaf org-menu
+  :url https://github.com/sheijk/org-menu
+  :straight (org-menu :host github :repo "sheijk/org-menu")
+  :doc  "M-x org-menu"
+  ;; currently not working
+  :tag "TODO")
+
 (leaf emacs-reveal
   :url https://gitlab.com/oer/emacs-reveal
   :doc https://gitlab.com/oer/emacs-reveal-howto
