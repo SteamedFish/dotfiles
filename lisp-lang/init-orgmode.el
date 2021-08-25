@@ -39,6 +39,12 @@
   (org-fontify-whole-heading-line . t)
   (org-fontify-done-headline . t)
   (org-fontify-quote-and-verse-blocks . t)
+  :config
+  (custom-theme-set-faces 'user
+                          '(org-level-1 ((t (:height 1.75 :inherit outline-1))))
+                          '(org-level-2 ((t (:height 1.5 :inherit outline-2))))
+                          '(org-level-3 ((t (:height 1.25 :inherit outline-3))))
+                          '(org-level-4 ((t (:height 1.1 :inherit outline-4)))))
   :hook
   (org-babel-after-execute-hook . org-redisplay-inline-images)
   :bind
