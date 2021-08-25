@@ -8,6 +8,15 @@
 
 ;;; Code:
 
+(leaf rg
+  :url https://github.com/dajva/rg.el
+  :doc "C-c s to search"
+  :straight t
+  :ensure-system-package (rg . ripgrep)
+  :config
+  ;; (rg-enable-menu)
+  (rg-enable-default-bindings))
+
 (leaf ssh-deploy
   :url "https://github.com/cjohansson/emacs-ssh-deploy"
   :straight t
