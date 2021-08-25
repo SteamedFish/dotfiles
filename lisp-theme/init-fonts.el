@@ -78,6 +78,8 @@
 (leaf prog-mode
   :tag "builtin"
   :when IS-GUI
+  :setq
+  (prettify-symbols-unprettify-at-point . 'right-edge)
   :global-minor-mode global-prettify-symbols-mode)
 
 (leaf all-the-icons
