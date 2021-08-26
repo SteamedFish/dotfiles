@@ -1,0 +1,7 @@
+* My Emacs configuration
+
+
++ unfinished
++ currently almost zero keybinding setup
++ will install packages to system automatically, which may not be what you want, so use it with causion
++ still a lot of work to be done
