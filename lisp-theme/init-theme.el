@@ -156,6 +156,8 @@
   (doom-themes-enable-bold . t)
   (doom-themes-enable-italic . t)
   (doom-themes-treemacs-theme . "doom-colors")
+  :setq
+  (doom-nord-brighter-comments . t)
   :config
   (load-theme 'doom-nord t)
   (doom-themes-visual-bell-config)
