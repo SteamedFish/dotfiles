@@ -39,8 +39,6 @@
   `(telega-directory . ,(expand-file-name (concat my-data-dir "data/telega")))
   (telega-completing-read-function . 'ivy-completing-read)
   (telega-use-tracking-for . nil)
-  (telega-usl-shorten-use-images . t)
-  (telega-mnz-use-language-detection . 10)
   (telega-chat-ret-always-sends-message . nil)
   (telega-known-inline-bots . '("@shufmbot"
                                 "@jiebabot"
@@ -71,6 +69,8 @@
   :url https://github.com/zevlg/telega.el
   :straight nil
   :after telega
+  :setq
+  (telega-url-shorten-use-images . t)
   :global-minor-mode (global-telega-url-shorten-mode))
 
 
@@ -79,6 +79,8 @@
   :straight nil
   :after telega
   :blackout t
+  :setq
+  (telega-mnz-use-language-detection . 10)
   :global-minor-mode global-telega-mnz-mode)
 
 (leaf telega-alert
@@ -93,6 +95,7 @@
   :url https://github.com/zevlg/telega.el
   :straight nil
   :after telega
+  :config
   (add-hook 'telega-load-hook #'telega-transient-mode))
 
 (provide 'init-telega)
