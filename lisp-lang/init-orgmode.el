@@ -209,6 +209,10 @@
   :straight t
   :global-minor-mode org-super-agenda-mode)
 
+(leaf org-ql
+  :url https://github.com/alphapapa/org-ql
+  :straight t)
+
 (leaf elgantt
   :url https://github.com/legalnonsense/elgantt
   :doc "A Gantt chart/calendar for Orgmode"
