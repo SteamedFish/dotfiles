@@ -172,5 +172,12 @@
   (sp-highlight-wrap-tag-overlay . nil)
   :require smartparens-config)
 
+(leaf tramp
+  :tag "builtin"
+  :setq
+  (tramp-default-method . "ssh")
+  (tramp-completion-reread-directory-timeout . 60)
+  (tramp-verbose . 1))
+
 (provide 'init-edittools)
 ;;; init-edittools.el ends here
