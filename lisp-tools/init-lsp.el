@@ -27,7 +27,6 @@
   :straight t
   :setq
   (lsp-ui-doc-position . 'bottom)
-  (lsp-ui-flycheck-enable . t)
   (lsp-ui-sideline-ignore-duplicate . t)
   (lsp-ui-sideline-update-mode . 'point)
   (lsp-ui-doc-enable . t))
