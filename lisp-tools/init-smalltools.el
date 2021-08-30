@@ -66,6 +66,12 @@
   :url https://github.com/skeeto/youtube-dl-emacs
   :straight t)
 
+(leaf pcre2el
+  :url https://github.com/joddie/pcre2el
+  :doc "C-c /"
+  :straight t
+  :global-minor-mode rxt-global-mode)
+
 (leaf netease-cloud-music
   :url "https://github.com/SpringHan/netease-cloud-music.el"
   :require (cl-macs)
