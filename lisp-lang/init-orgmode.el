@@ -26,6 +26,8 @@
   (org-pretty-entities . t)
   (org-startup-folded . nil)
   (org-link-descriptive . t)
+  ;; TODO: this will cause error:
+  ;; Error running timer ‘org-alert-check’: (error "‘org-agenda-files’ cannot be a single directory")
   `(org-agenda-files . ,org-directory)
   (org-log-done . 'time)
   (org-cache-invisible-edits . 'smart)
