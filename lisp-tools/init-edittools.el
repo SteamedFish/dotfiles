@@ -177,7 +177,7 @@
   :setq
   (tramp-default-method . "ssh")
   (tramp-completion-reread-directory-timeout . 60)
-  (tramp-verbose . 1))
+  (tramp-verbose . 2))
 
 (provide 'init-edittools)
 ;;; init-edittools.el ends here
