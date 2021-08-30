@@ -16,6 +16,7 @@
   (lsp-enable-file-watchers . nil)
   (lsp-eldoc-render-all . t)
   (lsp-enable-semantic-highlighting . t)
+  (lsp-completion-provider . :none)
   :hook
   (lsp-mode-hook . (lambda ()
                      (lsp-enable-which-key-integration)
