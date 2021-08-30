@@ -99,7 +99,8 @@
   :straight t
   :blackout t
   :hook
-  (text-mode-hook . mixed-pitch-mode))
+  (text-mode-hook . mixed-pitch-mode)
+  (helpful-mode-hook . mixed-pitch-mode))
 
 (provide 'init-fonts)
 ;;; init-fonts.el ends here
