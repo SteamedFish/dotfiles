@@ -30,7 +30,7 @@
   ;; Error running timer ‘org-alert-check’: (error "‘org-agenda-files’ cannot be a single directory")
   `(org-agenda-files . ,org-directory)
   (org-log-done . 'time)
-  (org-cache-invisible-edits . 'smart)
+  (org-catch-invisible-edits . 'smart)
   `(org-archive-location . ,(concat org-directory "archive.org::* From %s"))
   (org-log-done . 'time)
   (org-log-done-with-time . t)

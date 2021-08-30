@@ -25,12 +25,12 @@
   (user-mail-address . "steamedfish@hotmail.com")
   (frame-title-format . '("%b - " user-full-name "'s Emacs"))
   `(read-process-output-max . ,(* 1024 1024))
-  (create-lock-files . nil)
+  (create-lockfiles . nil)
   (tabify-regexp . "^\t* [ \t]+")
   (visible-bell . t)
   (locale-coding-system . 'utf-8)
   (enable-recursive-minibuffers . t)
-  (delete-by-movding-to-trash . t)
+  (delete-by-moving-to-trash . t)
   (history-length . 1000)
   :hook
   (prog-mode-hook . (lambda () (setq show-trailing-whitespace t)))
@@ -144,13 +144,13 @@
   :unless noninteractive
   :global-minor-mode t
   :pre-setq
-  (savehist-addtional-variables . '(kill-ring
-                                    register-alist
-                                    mark-ring
-                                    global-mark-ring
-                                    search-ring
-                                    regexp-search-ring
-                                    extended-command-history)))
+  (savehist-additional-variables . '(kill-ring
+                                     register-alist
+                                     mark-ring
+                                     global-mark-ring
+                                     search-ring
+                                     regexp-search-ring
+                                     extended-command-history)))
 
 (leaf uniquify
   :tag "builtin"
