@@ -36,6 +36,7 @@
 (leaf rfc-mode
   :url "https://github.com/galdor/rfc-mode"
   :straight t
+  :hook (rfc-mode-hook . mixed-pitch-mode)
   :setq `((rfc-mode-directory . ,(concat my-data-dir "data/rfc/"))))
 
 (leaf osx-trash
