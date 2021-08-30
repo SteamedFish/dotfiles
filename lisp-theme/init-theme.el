@@ -158,8 +158,9 @@
   (doom-themes-treemacs-theme . "doom-colors")
   :setq
   (doom-nord-brighter-comments . t)
+  (doom-one-brighter-comments . t)
   :config
-  (load-theme 'doom-nord t)
+  (load-theme 'doom-one t)
   (doom-themes-visual-bell-config)
   (doom-themes-treemacs-config)
   (doom-themes-org-config))
