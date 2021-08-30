@@ -16,7 +16,11 @@
   :url "https://github.com/Fanael/highlight-defined"
   :straight t
   :hook (emacs-lisp-mode-hook . highlight-defined-mode)
-  :pre-setq (highlight-defined-face-use-itself . t))
+  :pre-setq (highlight-defined-face-use-itself . t)
+  :config
+  (custom-theme-set-faces 'user
+                          '(highlight-defined-function-name-face ((t (:slant italic :inherit font-lock-function-name-face))))
+                          '(highlight-defined-variable-name-face ((t (:slant italic :inherit font-lock-variable-name-face))))))
 
 (leaf highlight-quoted
   :url https://github.com/Fanael/highlight-quoted
