@@ -16,8 +16,7 @@
   :commands telega
   :ensure-system-package (cmake make gperf)
   :hook
-  (telega-load-hook . telega-mode-line-mode)
-  (telega-load-hook . telega-notifications-mode)
+  (telega-open-file-hook . telega-edit-file-mode)
   (telega-chat-mode-hook . my-align-with-sarasa-font)
   (telega-root-mode-hook . my-align-with-sarasa-font)
   (telega-chat-mode-hook . (lambda () (visual-line-mode t)))
@@ -55,6 +54,7 @@
   (telega-sticker-set-download . t)
   (telega-chat-show-deleted-messages-for . '(all))
   :config
+  (add-hook 'telega-load-hook #'telega-mode-line-mode)
   ;; (evil-set-initial-state 'telega-chat-mode 'insert)
   (add-to-list 'all-the-icons-mode-icon-alist
                '(telega-root-mode all-the-icons-fileicon "telegram"
@@ -80,6 +80,20 @@
   :after telega
   :blackout t
   :global-minor-mode global-telega-mnz-mode)
+
+(leaf telega-alert
+  :url https://github.com/zevlg/telega.el
+  :straight nil
+  :after telega
+  (if IS-MAC
+      (add-hook 'telega-load-hook #'telega-alert-mode)
+    (add-hook 'telega-load-hook #'telega-notifications-mode)))
+
+(leaf telega-transient
+  :url https://github.com/zevlg/telega.el
+  :straight nil
+  :after telega
+  (add-hook 'telega-load-hook #'telega-transient-mode))
 
 (provide 'init-telega)
 ;;; init-telega.el ends here
