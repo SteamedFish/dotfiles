@@ -18,6 +18,9 @@
   :straight t
   :blackout org-indent-mode
   :blackout org-num-mode
+  :init
+  (setq org-agenda-files (delete (expand-file-name "~/work/org/later.org")
+                                 (file-expand-wildcards (concat org-directory "*.org"))))
   :setq
   (org-startup-indented . t)
   (org-startup-numerated . t)
@@ -26,9 +29,6 @@
   (org-pretty-entities . t)
   (org-startup-folded . nil)
   (org-link-descriptive . t)
-  ;; TODO: this will cause error:
-  ;; Error running timer ‘org-alert-check’: (error "‘org-agenda-files’ cannot be a single directory")
-  `(org-agenda-files . ,org-directory)
   (org-log-done . 'time)
   (org-catch-invisible-edits . 'smart)
   `(org-archive-location . ,(concat org-directory "archive.org::* From %s"))
