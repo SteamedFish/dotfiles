@@ -18,6 +18,8 @@
   :tag "builtin"
   :doc "install required fonts"
   :when IS-GUI
+  :setq-default (line-spacing . 0)
+  :hook (text-mode-hook . (lambda () (setq-local line-spacing 1)))
   :config
   (let* ((fonts-alist
           (cond
