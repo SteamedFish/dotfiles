@@ -19,7 +19,7 @@
   :blackout org-indent-mode
   :blackout org-num-mode
   :init
-  (setq org-agenda-files (delete (expand-file-name "~/work/org/later.org")
+  (setq org-agenda-files (delete (expand-file-name "~/work/org/archive.org")
                                  (file-expand-wildcards (concat org-directory "*.org"))))
   :setq
   (org-startup-indented . t)
