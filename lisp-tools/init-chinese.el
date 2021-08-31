@@ -15,15 +15,68 @@
   (evil-pinyin-with-search-rule . 'always)
   :global-minor-mode global-evil-pinyin-mode)
 
+(leaf rime
+  :url https://github.com/DogLooksGood/emacs-rime
+  :straight t
+  :when (or IS-MAC IS-LINUX)
+  :when (fboundp 'module-load)
+  :when IS-GUI
+  :bind
+  ("C-SPC" . toggle-input-method)
+  (:rime-active-mode-map
+   ("M-j" . rime-inline-ascii))
+  (:rime-mode-map
+   ("M-j" . rime-force-enable))
+  :pre-setq
+  (default-input-method . "rime")
+  `(rime-user-data-dir . ,(concat user-emacs-directory "etc/rime/"))
+  :setq
+  (rime-show-candidate . 'posframe)
+  (rime-inline-ascii-trigger . 'shift-l)
+  :init
+  ;; TODO: when using emacs-mac, make sure system IME is always disabled
+  (when IS-LINUX
+    (unless (executable-find "rime_patch")
+      (system-packages-ensure "librime")))
+  (when IS-MAC
+    (system-packages-ensure "unzip")
+    (setq rime-librime-root (concat my-data-dir "data/librime/dist"))
+    (unless (file-exists-p (concat my-data-dir "data/librime/"))
+      (make-directory (concat my-data-dir "data/librime")))
+    (unless (file-exists-p (concat my-data-dir "data/librime/dist/bin/rime_patch"))
+      (require 'url)
+      (url-copy-file
+       "https://github.com/rime/librime/releases/download/1.7.3/rime-1.7.3-osx.zip"
+       (concat my-data-dir "data/librime/rime-1.7.3-osx.zip")
+       t)
+      (async-shell-command (concat "cd " my-data-dir "data/librime"
+                                   "&& unzip rime-1.7.3-osx.zip"))))
+  :hook
+  (after-change-major-mode-hook . (lambda () (activate-input-method default-input-method)))
+  :setq-default
+  ;; TODO: set this based on different modes
+  (rime-disable-predicates . '(rime-predicate-prog-in-code-p
+                               rime-predicate-evil-mode-p
+                               rime-predicate-ace-window-p
+                               rime-predicate-hydra-p
+                               rime-predicate-org-in-src-block-p
+                               (lambda () (minibufferp))
+                               rime-predicate-org-latex-mode-p
+                               (lambda () (button-at (point)))
+                               rime-predicate-current-uppercase-letter-p
+                               rime-predicate-tex-math-or-command-p)))
+
+
 (leaf sis
   :url "https://github.com/laishulu/emacs-smart-input-source"
   :straight t
   :unless (fboundp 'rime-mode)
+  :disabled t
   :config
   (when (eq window-system 'mac)
     (sis-ism-lazyman-config
-      "com.apple.keylayout.US"
-      "im.rime.inputmethod.Squirrel.Rime"))
+     "com.apple.keylayout.US"
+     "im.rime.inputmethod.Squirrel.Rime"))
   (when IS-LINUX
     (sis-ism-lazyman-config "1" "2" 'fcitx))
   :setq
