@@ -26,6 +26,10 @@
         (modify-frame-parameters nil (list (cons 'alpha 100))))))
   :bind ("s-u" . my-toggle-transparency))
 
+(leaf fringe
+  :tag "builtin"
+  :config
+  (fringe-mode '(8 . 8)))
 
 (leaf display-line-numbers
   :tag "builtin"
