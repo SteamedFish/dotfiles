@@ -26,6 +26,7 @@
   (org-startup-numerated . t)
   (org-num-skip-tags . '("TOC"))
   (org-num-skip-footnotes . t)
+  (org-num-max-level . 2)
   (org-hide-emphasis-markers . t)
   (org-pretty-entities . t)
   (org-startup-folded . nil)
