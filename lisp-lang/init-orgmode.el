@@ -79,6 +79,12 @@
   (evil-org-set-key-theme)
   (evil-org-agenda-set-keys))
 
+(leaf org-outer-indent
+  :url https://github.com/rougier/org-outer-indent
+  :straight (org-outer-indent :host github :repo "rougier/org-outer-indent")
+  ;; we made org headlines larger, which breaks org-outer-indent-mode
+  :disabled t
+  :hook (org-mode-hook . org-outer-indent-mode))
 
 (leaf ox-gfm
   :url https://github.com/larstvei/ox-gfm
