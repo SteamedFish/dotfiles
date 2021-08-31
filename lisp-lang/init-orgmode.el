@@ -25,6 +25,7 @@
   (org-startup-indented . t)
   (org-startup-numerated . t)
   (org-num-skip-tags . '("TOC"))
+  (org-num-skip-footnotes . t)
   (org-hide-emphasis-markers . t)
   (org-pretty-entities . t)
   (org-startup-folded . nil)
