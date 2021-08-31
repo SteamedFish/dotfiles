@@ -221,7 +221,6 @@
   :url https://github.com/org-roam/org-roam-ui
   :straight (org-roam-ui :host github :repo "org-roam/org-roam-ui" :files ("*.el" "out"))
   :blackout (org-roam-ui-mode org-roam-ui-follow-mode)
-  :global-minor-mode org-roam-ui-mode
   ;; TODO
   ;; `kill-buffer-save-emacs' confirm kill process
   ;; befure running `kill-emacs-query-functions' and `kill-emacs-hook'
@@ -230,7 +229,10 @@
   (org-roam-ui-sync-theme . t)
   (org-roam-ui-follow . t)
   (org-roam-ui-update-on-save . t)
-  (org-roam-ui-open-on-start . t))
+  (org-roam-ui-open-on-start . t)
+  :config
+  (unless noninteractive
+    (org-roam-ui-mode t)))
 
 (leaf org-super-agenda
   :url https://github.com/alphapapa/org-super-agenda
