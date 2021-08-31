@@ -17,16 +17,12 @@
   :url https://orgmode.org/
   :straight t
   :blackout org-indent-mode
-  :blackout org-num-mode
   :init
   (setq org-agenda-files (delete (expand-file-name "~/work/org/archive.org")
                                  (file-expand-wildcards (concat org-directory "*.org"))))
   :setq
   (org-startup-indented . t)
   (org-startup-numerated . t)
-  (org-num-skip-tags . '("TOC"))
-  (org-num-skip-footnotes . t)
-  (org-num-max-level . 2)
   (org-hide-emphasis-markers . t)
   (org-pretty-entities . t)
   (org-startup-folded . nil)
@@ -54,6 +50,15 @@
   :bind
   (:org-mode-map
    ([remap org-set-tags-command] . counsel-org-tag)))
+
+(leaf org-num
+  :url https://orgmode.org/
+  :straight nil
+  :blackout org-num-mode
+  :setq
+  (org-num-skip-tags . '("TOC"))
+  (org-num-skip-footnotes . t)
+  (org-num-max-level . 2))
 
 (leaf org-contrib
   :url https://orgmode.org/worg/org-contrib/
