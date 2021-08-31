@@ -222,6 +222,10 @@
   :straight (org-roam-ui :host github :repo "org-roam/org-roam-ui" :files ("*.el" "out"))
   :blackout (org-roam-ui-mode org-roam-ui-follow-mode)
   :global-minor-mode org-roam-ui-mode
+  ;; TODO
+  ;; `kill-buffer-save-emacs' confirm kill process
+  ;; befure running `kill-emacs-query-functions' and `kill-emacs-hook'
+  ;; we need to kill all org-roam-ui processes before `kill-buffer-save-emacs'
   :setq
   (org-roam-ui-sync-theme . t)
   (org-roam-ui-follow . t)
