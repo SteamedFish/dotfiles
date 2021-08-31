@@ -217,6 +217,17 @@
   (unless (file-exists-p org-roam-directory)
     (make-directory org-roam-directory)))
 
+(leaf org-roam-ui
+  :url https://github.com/org-roam/org-roam-ui
+  :straight (org-roam-ui :host github :repo "org-roam/org-roam-ui" :files ("*.el" "out"))
+  :blackout (org-roam-ui-mode org-roam-ui-follow-mode)
+  :global-minor-mode org-roam-ui-mode
+  :setq
+  (org-roam-ui-sync-theme . t)
+  (org-roam-ui-follow . t)
+  (org-roam-ui-update-on-save . t)
+  (org-roam-ui-open-on-start . t))
+
 (leaf org-super-agenda
   :url https://github.com/alphapapa/org-super-agenda
   :straight t
