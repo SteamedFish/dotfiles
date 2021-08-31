@@ -112,7 +112,11 @@
   :url https://github.com/Malabarba/aggressive-indent-mode
   :straight t
   :blackout (global-aggressive-indent-mode aggressive-indent-mode)
-  :global-minor-mode global-aggressive-indent-mode)
+  :global-minor-mode global-aggressive-indent-mode
+  :config
+  ;; don't enable with parinfer-mode
+  (dolist (modes '(emacs-lisp-mode lisp-interaction-mode clojure-mode scheme-mode lisp-mode racket-mode hy-mode))
+    (add-to-list 'aggressive-indent-excluded-modes modes)))
 
 (leaf tree-sitter
   :url https://emacs-tree-sitter.github.io/
