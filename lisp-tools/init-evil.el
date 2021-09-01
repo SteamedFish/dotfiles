@@ -15,6 +15,9 @@
   :global-minor-mode t
   :pre-setq
   (evil-want-keybinding . nil)
+  :bind
+  ("C-x 2" . evil-window-split)
+  ("C-x 3" . evil-window-vsplit)
   :custom
   (evil-search-module . 'evil-search)
   (evil-undo-system . 'undo-fu)
