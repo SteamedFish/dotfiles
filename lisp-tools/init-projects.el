@@ -35,14 +35,14 @@
   ;; counsel-projectile-org-capture
   ;; counsel-projectile-org-agenda
   ;; counsel-projectile
-  ([remap projectile-find-file] . counsel-projectile-find-file)
-  ([remap projectile-find-file-dwim] . counsel-projectile-find-file-dwim)
-  ([remap projectile-find-dir]  . counsel-projectile-find-dir)
+  ([remap projectile-find-file]         . counsel-projectile-find-file)
+  ([remap projectile-find-file-dwim]    . counsel-projectile-find-file-dwim)
+  ([remap projectile-find-dir]          . counsel-projectile-find-dir)
   ([remap projectile-switch-to-buffer]  . counsel-projectile-switch-to-buffer)
-  ([remap projectile-grep]  . counsel-projectile-grep)
-  ([remap projectile-ag]  . counsel-projectile-ag)
-  ([remap projectile-ripgrep]  . counsel-projectile-rg)
-  ([remap projectile-switch-project]  . counsel-projectile-switch-project))
+  ([remap projectile-grep]              . counsel-projectile-grep)
+  ([remap projectile-ag]                . counsel-projectile-ag)
+  ([remap projectile-ripgrep]           . counsel-projectile-rg)
+  ([remap projectile-switch-project]    . counsel-projectile-switch-project))
 
 (provide 'init-projects)
 ;;; init-projects.el ends here
