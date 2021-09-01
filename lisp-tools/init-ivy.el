@@ -38,6 +38,13 @@
   (counsel-describe-variable-function . #'helpful-variable)
   (counsel-describe-symbol-function   . #'helpful-symbol))
 
+(leaf ivy-avy
+  :url https://github.com/abo-abo/avy
+  :straight t
+  :config
+  ;; this bind "C-'" to `avy-isearch' in `isearch-mode-map'
+  (avy-setup-default))
+
 (leaf prescient
   :url https://github.com/raxod502/prescient.el
   :straight t
