@@ -73,7 +73,12 @@
             ("\\.html?\\'"                                                           ,cmd)
             ("\\.md\\'"                                                              ,cmd))))
   (setq dired-omit-files (concat dired-omit-files
-                                 "\\|^.DS_Store$\\|^.projectile$\\|^.git*\\|^.svn$\\|^.vscode$\\|\\.js\\.meta$\\|\\.meta$\\|\\.elc$")))
+                                 "\\|^.DS_Store\\'"
+                                 "\\|^.project\\(?:ile\\)?\\'"
+                                 "\\|^.\\(svn\\|git\\)\\'"
+                                 "\\|^.ccls-cache\\'"
+                                 "\\|\\(?:\\.js\\)?\\.meta\\'"
+                                 "\\|\\.\\(?:elc\\|o\\|pyo\\|swp\\|class\\)\\'")))
 
 (leaf fd-dired
   :url https://github.com/yqrashawn/fd-dired
