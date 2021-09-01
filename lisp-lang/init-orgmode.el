@@ -287,6 +287,11 @@
   :blackout org-pretty-tags-mode
   :global-minor-mode org-pretty-tags-global-mode)
 
+(leaf iscroll
+  :url https://github.com/casouri/iscroll
+  :straight t
+  :hook (text-mode-hook . iscroll-mode))
+
 (leaf org-menu
   :url https://github.com/sheijk/org-menu
   :straight (org-menu :host github :repo "sheijk/org-menu")
