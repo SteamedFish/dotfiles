@@ -64,6 +64,7 @@
 (leaf ivy-rich
   :url https://github.com/Yevgnen/ivy-rich
   :straight t
+  :after all-the-icons-ivy-rich
   :global-minor-mode (ivy-rich-mode ivy-rich-project-root-cache-mode))
 
 (leaf ivy-posframe
