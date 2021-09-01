@@ -55,6 +55,7 @@
   :url https://orgmode.org/
   :straight nil
   :blackout org-num-mode
+  ;; TODO: hl-line-mode will cause org-num looking bad
   :setq
   (org-num-skip-tags . '("TOC"))
   (org-num-skip-footnotes . t)
