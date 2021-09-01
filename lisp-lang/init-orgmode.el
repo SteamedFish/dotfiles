@@ -273,7 +273,9 @@
   :url https://github.com/casouri/valign
   :blackout t
   :straight t
-  :hook (org-mode-hook . valign-mode))
+  :hook
+  (org-mode-hook . valign-mode)
+  (markdown-mode-hook . valign-mode))
 
 (leaf org-alert
   :url https://github.com/spegoraro/org-alert
