@@ -43,6 +43,7 @@
 (leaf all-the-icons-dired
   :url https://github.com/jtbm37/all-the-icons-dired
   :straight t
+  :blackout t
   :hook (dired-mode-hook . all-the-icons-dired-mode))
 
 (leaf dired-aux
