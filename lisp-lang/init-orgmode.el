@@ -197,18 +197,24 @@
                                        (read-only-mode -1)
                                        (text-scale-increase 0)))
          (org-tree-slide-after-narrow-hook . org-display-inline-images))
+  ;; :config
+  ;; different profiles are actually different setq presets
+  ;; we set them by ourself
+  ;; (org-tree-slide-presentation-profile)
   :setq
   (org-tree-slide-header . t)
+  (org-tree-slide-content-margin-top . 2)
+  (org-tree-slide-slide-in-blank-lines . 10)
   (org-tree-slide-slide-in-effect . t)
-  (org-tree-slide-heading-emphasis . t)
+  (org-tree-slide-heading-emphasis . nil)
   (org-tree-slide-cursor-init . t)
   (org-tree-slide-modeline-display . 'outside)
   (org-tree-slide-skip-done . nil)
+  (org-tree-slide-never-touch-face . t)
   (org-tree-slide-skip-comments . t)
   (org-tree-slide-skip-outline-level . 0)
   (org-tree-slide-breadcrumbs . " ➥ ")
-  :config
-  (org-tree-slide-presentation-profile))
+  (org-tree-slide-breadcrumbs-hide-todo-state . nil))
 
 (leaf org-roam
   :url https://www.orgroam.com
