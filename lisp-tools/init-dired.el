@@ -77,9 +77,20 @@
 
 (leaf fd-dired
   :url https://github.com/yqrashawn/fd-dired
+  :tag "TODO"
+  :disabled t
   :straight t
   :require t
   :ensure-system-package fd)
+
+(leaf dired-fdclone
+  :url https://github.com/knu/dired-fdclone.el
+  :tag "TODO"
+  :disabled t
+  :straight t
+  :config
+  ;; thie will conflict with evil-collections
+  (dired-fdclone))
 
 (provide 'init-dired)
 ;;; init-dired.el ends here
