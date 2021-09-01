@@ -77,10 +77,10 @@
 
 (leaf fd-dired
   :url https://github.com/yqrashawn/fd-dired
-  :tag "TODO"
-  :disabled t
   :straight t
   :require t
+  :bind
+  ([remap find-dired] . fd-dired)
   :ensure-system-package fd)
 
 (leaf dired-fdclone
