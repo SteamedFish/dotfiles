@@ -28,6 +28,9 @@
 (leaf evil-collection
   :url "https://github.com/emacs-evil/evil-collection"
   :straight t
+  :setq
+  (evil-collection-calendar-want-org-bindings . t)
+  (evil-collection-outline-bind-tab-p . nil)
   :config
   (evil-collection-init)
   (blackout 'evil-collection-unimpaired-mode))
