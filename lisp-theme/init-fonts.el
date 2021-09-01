@@ -94,6 +94,7 @@
   :url "https://github.com/domtronn/all-the-icons.el"
   :straight t
   :config
+  ;; TODO: when running in noninteractive mode, `font-family-list' won't return fonts
   (unless (or (member "all-the-icons" (font-family-list)) IS-GUI)
     (all-the-icons-install-fonts)))
 
