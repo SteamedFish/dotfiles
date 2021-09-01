@@ -69,6 +69,7 @@
 (require 'init-elisp)
 (require 'init-rust)
 (require 'init-golang)
+(require 'init-python)
 (require 'init-yaml)
 (require 'init-plantuml)
 
