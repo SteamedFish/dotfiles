@@ -193,11 +193,26 @@
 
 (leaf writeroom-mode
   :url https://github.com/joostkremers/writeroom-mode
+  :doc "implements a distraction-free writing mode"
   :straight t
   :hook
   (writeroom-mode-hook . mixed-pitch-mode)
   :setq
   (writeroom-restore-window-config . t))
+
+(leaf olivetti
+  :url https://github.com/rnkn/olivetti
+  :doc "A simple Emacs minor mode for a nice writing environment."
+  :straight t
+  :hook
+  (olivetti-mode-hook . mixed-pitch-mode))
+
+(leaf darkroom
+  :url https://github.com/joaotavora/darkroom
+  :doc "Remove visual distractions and focus on writing."
+  :straight t
+  :hook
+  (darkroom-mode-hook . mixed-pitch-mode))
 
 (leaf solaire-mode
   :url https://github.com/hlissner/emacs-solaire-mode
