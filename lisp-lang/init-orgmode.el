@@ -180,8 +180,10 @@
   :straight t
   :bind
   (:org-tree-slide-mode-map
+   ;; TODO: configure for evil normal mode
    ("<left>" . org-tree-slide-move-previous-tree)
-   ("<right>" . org-tree-slide-move-next-tree))
+   ("<right>" . org-tree-slide-move-next-tree)
+   ("q" . org-tree-slide-mode))
   :hook ((org-tree-slide-play-hook . (lambda ()
                                        (text-scale-increase 3)
                                        (read-only-mode 1)
@@ -195,8 +197,8 @@
                                        (read-only-mode -1)
                                        (text-scale-increase 0)))
          (org-tree-slide-after-narrow-hook . org-display-inline-images))
-  :pre-setq
-  (org-tree-slide-header . nil)
+  :setq
+  (org-tree-slide-header . t)
   (org-tree-slide-slide-in-effect . t)
   (org-tree-slide-heading-emphasis . t)
   (org-tree-slide-cursor-init . t)
@@ -204,7 +206,7 @@
   (org-tree-slide-skip-done . nil)
   (org-tree-slide-skip-comments . t)
   (org-tree-slide-skip-outline-level . 0)
-  (org-tree-slide-breadcrumbs . "-->")
+  (org-tree-slide-breadcrumbs . " ➥ ")
   :config
   (org-tree-slide-presentation-profile))
 
