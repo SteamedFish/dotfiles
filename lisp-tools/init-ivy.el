@@ -19,11 +19,21 @@
   ;; the default keybinding of C-x C-r was #'find-file-read-only
   ;; which is not very useful
   ("C-x C-r" . counsel-recentf)
+  :pre-setq
+  (ivy-re-builders-alist . '((counsel-rg      . ivy--regex-plus)
+                             (swiper          . ivy--regex-plus)
+                             (swiper-isearch  . ivy--regex-plus)
+                             (t               . ivy--regex-fuzzy)))
+  (ivy-more-chars-alist . '((counsel-rg      . 1)
+                            (counsel-search  . 2)
+                            (counsel-grep    . 2)
+                            (t               . 3)))
+  (ivy-flx-limit . 10000)
   :setq
   (ivy-use-selectable-prompt . t)
   (ivy-use-virtual-buffers . t)
   (ivy-fixed-height-minibuffer . t)
-  (ivy-re-builders-alist . '((t . ivy--regex-fuzzy)))
+  (ivy-sort-max-size . 7500)
   (counsel-describe-function-function . #'helpful-callable)
   (counsel-describe-variable-function . #'helpful-variable)
   (counsel-describe-symbol-function   . #'helpful-symbol))
@@ -37,8 +47,14 @@
 (leaf ivy-prescient
   :url https://github.com/raxod502/prescient.el
   :after counsel
+  :disabled t
   :straight t
   :global-minor-mode ivy-prescient-mode)
+
+(leaf flx
+  :url https://github.com/lewang/flx
+  :straight t
+  :require t)
 
 (leaf all-the-icons-ivy-rich
   :url https://github.com/seagle0128/all-the-icons-ivy-rich
