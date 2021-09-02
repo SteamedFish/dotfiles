@@ -13,6 +13,7 @@
   :url https://github.com/zevlg/telega.el
   :straight t
   :doc "use s for filter, M-g to move and g a / g A for other functions"
+  :doc "to make animated stickers move, install https://github.com/zevlg/tgs2png"
   :commands telega
   :ensure-system-package (cmake make gperf)
   :hook
