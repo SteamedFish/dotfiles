@@ -23,18 +23,18 @@
   :config
   (let* ((fonts-alist
           (cond
-           (IS-LINUX '(("Rec Mono Duotone" . "ttf-recursive")
-                       ("Sarasa Mono SC" . "ttf-sarasa-gothic")
-                       ("Noto Sans Symbols" . "noto-fonts")
-                       ("Noto Color Emoji" . "noto-fonts-emoji")
-                       ("Symbola" . "ttf-symbola")))
-           (IS-MAC '(("Rec Mono Duotone" . "font-recursive-code")
-                     ("Recursive" . "font-recursive")
-                     ("Sarasa Mono SC" . "font-sarasa-gothic")
-                     ("Noto Sans CJK SC" . "font-noto-sans-cjk-sc")
-                     ("Noto Sans Symbols" . "font-noto-sans-symbols")
-                     ("Noto Sans Symbols2" . "font-noto-sans-symbols-2")))
-           (t '(())))))
+           (IS-LINUX '(("Rec Mono Duotone"    . "ttf-recursive")
+                       ("Sarasa Mono SC"      . "ttf-sarasa-gothic")
+                       ("Noto Sans Symbols"   . "noto-fonts")
+                       ("Noto Color Emoji"    . "noto-fonts-emoji")
+                       ("Symbola"             . "ttf-symbola")))
+           (IS-MAC   '(("Rec Mono Duotone"    . "font-recursive-code")
+                       ("Recursive"           . "font-recursive")
+                       ("Sarasa Mono SC"      . "font-sarasa-gothic")
+                       ("Noto Sans CJK SC"    . "font-noto-sans-cjk-sc")
+                       ("Noto Sans Symbols"   . "font-noto-sans-symbols")
+                       ("Noto Sans Symbols2"  . "font-noto-sans-symbols-2")))
+           (t        '(())))))
 
     (cl-loop for (key . value) in fonts-alist
              unless (member key (font-family-list))
