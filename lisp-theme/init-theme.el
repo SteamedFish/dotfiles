@@ -214,6 +214,15 @@
   :hook
   (darkroom-mode-hook . mixed-pitch-mode))
 
+(leaf centered-window
+  :url https://github.com/anler/centered-window-mode
+  :doc "Global minor mode that centers the text of the window."
+  :straight t
+  :setq
+  (cwm-centered-window-width . 200)
+  (cwm-use-vertical-padding . t)
+  (cwm-frame-internal-border . 0))
+
 (leaf solaire-mode
   :url https://github.com/hlissner/emacs-solaire-mode
   :straight t
