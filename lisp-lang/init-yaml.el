@@ -16,19 +16,17 @@
 (leaf ansible
   :url https://github.com/k1LoW/emacs-ansible
   :straight t
-  :config (blackout 'ansible)
-  :init
-  (defun my-ansible-enable-maybe ()
-    "Return non-nil if `ansible' should be enabled for the current file."
-    (when
-        (and (stringp buffer-file-name)
-             (string-match
-              ".*\\(main\.yml\\|site\.yml\\|encrypted\.yml\\|roles/.+\.yml\\|group_vars/.+\\|host_vars/.+\\|ansible/.+\\)"
-              buffer-file-name))
-      (ansible 1)
-      (ansible-doc-mode 1)
-      (add-to-list 'company-backends 'company-ansible)))
- :hook (yaml-mode-hook . my-ansible-enable-maybe))
+  :hook (yaml-mode-hook . (lambda ()
+                            "Return non-nil if `ansible' should be enabled for the current file."
+                            (when
+                                (and (stringp buffer-file-name)
+                                     (string-match
+                                      ".*\\(main\.yml\\|site\.yml\\|encrypted\.yml\\|roles/.+\.yml\\|group_vars/.+\\|host_vars/.+\\|ansible/.+\\)"
+                                      buffer-file-name))
+                              (ansible 1)
+                              (ansible-doc-mode 1)
+                              (blackout 'ansible)
+                              (add-to-list 'company-backends 'company-ansible)))))
 
 (leaf ansible-doc
   :url https://github.com/emacsorphanage/ansible-doc
