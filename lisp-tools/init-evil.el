@@ -35,5 +35,11 @@
   (evil-collection-init)
   (blackout 'evil-collection-unimpaired-mode))
 
+(leaf evil-goggles
+  :url https://github.com/edkolev/evil-goggles
+  :doc "displays a visual hint when editing with evil"
+  :straight t
+  :global-minor-mode t)
+
 (provide 'init-evil)
 ;;; init-evil.el ends here
