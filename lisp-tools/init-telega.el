@@ -36,21 +36,21 @@
   (:telega-root-mode-map
    ("C-c c"       . telega-chat-with))
   :setq
-  `(telega-directory . ,(expand-file-name (concat my-data-dir "data/telega")))
-  (telega-completing-read-function . 'ivy-completing-read)
-  (telega-use-tracking-for . nil)
-  (telega-chat-ret-always-sends-message . nil)
-  (telega-known-inline-bots . '("@shufmbot"
-                                "@jiebabot"
-                                "@toptoh_bot"
-                                "@nasy_nautc_bot"
-                                "@nasy_words_bot"
-                                "@PythaGataBot"
-                                "@DeezerMusicBot"
-                                "@shuibiaobot"))
-  (telega-chat-history-limit . 100)
-  (telega-sticker-set-download . t)
-  (telega-chat-show-deleted-messages-for . '(all))
+  `(telega-directory                      . ,(expand-file-name (concat my-data-dir "data/telega")))
+  (telega-completing-read-function        . 'ivy-completing-read)
+  (telega-use-tracking-for                . nil)
+  (telega-chat-ret-always-sends-message   . nil)
+  (telega-known-inline-bots               . '("@shufmbot"
+                                              "@jiebabot"
+                                              "@toptoh_bot"
+                                              "@nasy_nautc_bot"
+                                              "@nasy_words_bot"
+                                              "@PythaGataBot"
+                                              "@DeezerMusicBot"
+                                              "@shuibiaobot"))
+  (telega-chat-history-limit              . 100)
+  (telega-sticker-set-download            . t)
+  (telega-chat-show-deleted-messages-for  . '(all))
   :config
   (add-hook 'telega-load-hook #'telega-mode-line-mode)
   ;; (evil-set-initial-state 'telega-chat-mode 'insert)
