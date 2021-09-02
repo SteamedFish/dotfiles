@@ -65,11 +65,11 @@
   (popper-reference-buffers . '(("\\*Messages\\*$"
                                  helpful-mode
                                  help-mode)))
-  ;; (popper-group-function . #'popper-group-by-projectile)
   :global-minor-mode t
   :config
   (when (display-graphic-p)
-    (setq popper-display-function #'display-buffer-in-child-frame)))
+    (setq popper-display-function #'display-buffer-in-child-frame))
+  (setq   popper-group-function   #'popper-group-by-projectile))
 
 (leaf ido
   :tag "builtin"
