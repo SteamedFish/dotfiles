@@ -37,7 +37,7 @@
            (t        '(())))))
 
     (cl-loop for (key . value) in fonts-alist
-             unless (member key (font-family-list))
+             unless (find-font (font-spec :name key))
              do (system-packages-ensure value))))
 
 
@@ -71,7 +71,7 @@
   (defun my-align-with-sarasa-font ()
     "Align chinese and english by setting font to Sarasa"
     (interactive)
-    (when (member "Sarasa Mono SC" (font-family-list))
+    (when (find-font (font-spec :name "Sarasa Mono SC"))
       (setq buffer-face-mode-face 'my-align-by-sarasa)
       (make-variable-buffer-local 'face-font-rescale-alist)
       ;; make symbols smaller
@@ -94,8 +94,7 @@
   :url "https://github.com/domtronn/all-the-icons.el"
   :straight t
   :config
-  ;; TODO: when running in noninteractive mode, `font-family-list' won't return fonts
-  (unless (or (member "all-the-icons" (font-family-list)) IS-GUI)
+  (unless (or (find-font (font-spec :name "all-the-icons")) IS-GUI)
     (all-the-icons-install-fonts)))
 
 (leaf mixed-pitch
