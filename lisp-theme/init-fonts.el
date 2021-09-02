@@ -55,11 +55,11 @@
     (dolist (charset '(han cjk-misc bopomofo))
       (set-fontset-font nil charset chinese-font nil 'prepend)))
   ;; add some symbol fonts for font failback
-  (set-fontset-font t nil "Noto Color Emoji" nil 'append)
-  (set-fontset-font t nil "Apple Color Emoji" nil 'append)
-  (set-fontset-font t nil "Noto Sans Symbols" nil 'append)
-  (set-fontset-font t nil "Noto Sans Symbols2" nil 'append)
-  (set-fontset-font t nil "Symbola" nil 'append))
+  (set-fontset-font t nil "Noto Color Emoji"     nil 'append)
+  (set-fontset-font t nil "Apple Color Emoji"    nil 'append)
+  (set-fontset-font t nil "Noto Sans Symbols"    nil 'append)
+  (set-fontset-font t nil "Noto Sans Symbols2"   nil 'append)
+  (set-fontset-font t nil "Symbola"              nil 'append))
 
 (leaf face-remap
   :tag "builtin"
