@@ -50,6 +50,11 @@
   :config
   (yas-reload-all))
 
+(leaf doom-snippets
+  :url https://github.com/hlissner/doom-snippets
+  :straight (doom-snippets :host github :repo "hlissner/doom-snippets" :files ("*"))
+  :config (doom-snippets-initialize))
+
 (leaf paren
   :tag "builtin"
   :global-minor-mode show-paren-mode)
