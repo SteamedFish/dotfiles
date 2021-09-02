@@ -295,6 +295,7 @@
 (leaf iscroll
   :url https://github.com/casouri/iscroll
   :straight t
+  :blackout t
   :hook (text-mode-hook . iscroll-mode))
 
 (leaf org-menu
