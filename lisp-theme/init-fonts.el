@@ -75,12 +75,12 @@
       (setq buffer-face-mode-face 'my-align-by-sarasa)
       (make-variable-buffer-local 'face-font-rescale-alist)
       ;; make symbols smaller
-      (add-to-list 'face-font-rescale-alist '("-STIXGeneral-" . 0.8))
-      (add-to-list 'face-font-rescale-alist '("-Noto Color Emoji-" . 0.8))
-      (add-to-list 'face-font-rescale-alist '("-Apple Color Emoji-" . 0.8))
-      (add-to-list 'face-font-rescale-alist '("-Noto Sans Symbols-" . 0.8))
-      (add-to-list 'face-font-rescale-alist '("-Noto Sans Symbols2-" . 0.8))
-      (add-to-list 'face-font-rescale-alist '("-Symbola-" . 0.8))
+      (add-to-list 'face-font-rescale-alist '("-STIXGeneral-"         . 0.8))
+      (add-to-list 'face-font-rescale-alist '("-Noto Color Emoji-"    . 0.8))
+      (add-to-list 'face-font-rescale-alist '("-Apple Color Emoji-"   . 0.8))
+      (add-to-list 'face-font-rescale-alist '("-Noto Sans Symbols-"   . 0.8))
+      (add-to-list 'face-font-rescale-alist '("-Noto Sans Symbols2-"  . 0.8))
+      (add-to-list 'face-font-rescale-alist '("-Symbola-"             . 0.8))
       (buffer-face-mode))))
 
 (leaf prog-mode
