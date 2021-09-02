@@ -7,10 +7,10 @@
 ;;; Code:
 
 ;; add to load-path
-(push (expand-file-name "lisp-core" user-emacs-directory) load-path)
+(push (expand-file-name "lisp-core"  user-emacs-directory) load-path)
 (push (expand-file-name "lisp-theme" user-emacs-directory) load-path)
 (push (expand-file-name "lisp-tools" user-emacs-directory) load-path)
-(push (expand-file-name "lisp-lang" user-emacs-directory) load-path)
+(push (expand-file-name "lisp-lang"  user-emacs-directory) load-path)
 
 (defconst my-data-dir (expand-file-name (concat user-emacs-directory ".local/"))
   "The root directory where I put data files")
