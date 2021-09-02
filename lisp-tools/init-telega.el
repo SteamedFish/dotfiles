@@ -38,6 +38,7 @@
    ("C-c c"       . telega-chat-with))
   :setq
   `(telega-directory                      . ,(expand-file-name (concat my-data-dir "data/telega")))
+  `(telega-symbol-forward                 . ,(compose-chars ?💬 ?🠒))
   (telega-completing-read-function        . 'ivy-completing-read)
   (telega-use-tracking-for                . nil)
   (telega-chat-ret-always-sends-message   . nil)
