@@ -25,11 +25,12 @@
   :tag "builtin"
   :doc "Mac like keybindings"
   :bind
-  ("s-a" . mark-whole-buffer)
-  ("s-c" . kill-ring-save)
-  ("s-l" . goto-line)
-  ("s-v" . yank)
-  ("s-z" . undo))
+  ("s-a"         . mark-whole-buffer)
+  ("s-c"         . kill-ring-save)
+  ("s-l"         . goto-line)
+  ("s-v"         . yank)
+  ("s-z"         . undo)
+  ("s-<return>"  . toggle-frame-maximized))
 
 
 (provide 'init-keybindings)
