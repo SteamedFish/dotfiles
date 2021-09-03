@@ -14,24 +14,24 @@
 (leaf cus-start
   :tag "builtin"
   :setq-default
-  (bidi-display-reordering . 'left-to-right)
-  (bidi-paragraph-direction . 'left-to-right)
-  (indent-tabs-mode . nil)
-  (tab-width . 8)
-  (fill-column . 80)
-  (display-line-numbers-widen . t)
+  (bidi-display-reordering       . 'left-to-right)
+  (bidi-paragraph-direction      . 'left-to-right)
+  (indent-tabs-mode              . nil)
+  (tab-width                     . 8)
+  (fill-column                   . 80)
+  (display-line-numbers-widen    . t)
   :setq
-  (user-full-name . "SteamedFish")
-  (user-mail-address . "steamedfish@hotmail.com")
-  (frame-title-format . '("%b - " user-full-name "'s Emacs"))
-  `(read-process-output-max . ,(* 1024 1024))
-  (create-lockfiles . nil)
-  (tabify-regexp . "^\t* [ \t]+")
-  (visible-bell . t)
-  (locale-coding-system . 'utf-8)
-  (enable-recursive-minibuffers . t)
-  (delete-by-moving-to-trash . t)
-  (history-length . 1000)
+  (user-full-name                . "SteamedFish")
+  (user-mail-address             . "steamedfish@hotmail.com")
+  (frame-title-format            . '("%b - " user-full-name "'s Emacs"))
+  `(read-process-output-max      . ,(* 1024 1024))
+  (create-lockfiles              . nil)
+  (tabify-regexp                 . "^\t* [ \t]+")
+  (visible-bell                  . t)
+  (locale-coding-system          . 'utf-8)
+  (enable-recursive-minibuffers  . t)
+  (delete-by-moving-to-trash     . t)
+  (history-length                . 1000)
   :hook
   (prog-mode-hook . (lambda () (setq show-trailing-whitespace t)))
   (text-mode-hook . (lambda () (setq show-trailing-whitespace t)))
@@ -51,8 +51,8 @@
           mac-right-option-modifier 'none
           ns-right-option-modifier  'none))
    (IS-WINDOWS
-    (setq w32-lwindow-modifier 'super
-          w32-rwindow-modifier 'super))))
+    (setq w32-lwindow-modifier      'super
+          w32-rwindow-modifier      'super))))
 
 (leaf ffap
   :tag "builtin"
@@ -64,25 +64,25 @@
   :blackout auto-fill-mode
   :setq
   (kill-do-not-save-duplicates . t)
-  (async-shell-command-buffer . 'new-buffer))
+  (async-shell-command-buffer  . 'new-buffer))
 
 (leaf mule-cmds
   :tag "builtin"
   :config
-  (set-language-environment 'utf-8)
-  (set-default-coding-systems 'utf-8)
-  (prefer-coding-system 'utf-8))
+  (set-language-environment        'utf-8)
+  (set-default-coding-systems      'utf-8)
+  (prefer-coding-system            'utf-8))
 
 (leaf mule
   :tag "builtin"
   :config
-  (set-buffer-file-coding-system 'utf-8)
-  (set-clipboard-coding-system 'utf-8)
-  (set-selection-coding-system 'utf-8)
-  (set-file-name-coding-system 'utf-8)
-  (set-keyboard-coding-system 'utf-8)
-  (set-terminal-coding-system 'utf-8)
-  (modify-coding-system-alist 'process "*" 'utf-8))
+  (set-buffer-file-coding-system   'utf-8)
+  (set-clipboard-coding-system     'utf-8)
+  (set-selection-coding-system     'utf-8)
+  (set-file-name-coding-system     'utf-8)
+  (set-keyboard-coding-system      'utf-8)
+  (set-terminal-coding-system      'utf-8)
+  (modify-coding-system-alist      'process "*" 'utf-8))
 
 (leaf select
   :tag "builtin"
@@ -111,7 +111,7 @@
   :setq
   ;; speed up shell startup
   (exec-path-from-shell-shell-name . "/bin/bash")
-  (exec-path-from-shell-arguments . '("-l"))
+  (exec-path-from-shell-arguments  . '("-l"))
   :config
   (exec-path-from-shell-copy-envs '("PATH"
                                     "MANPATH"

@@ -22,17 +22,17 @@
   :when (fboundp 'module-load)
   :when IS-GUI
   :bind
-  ("C-SPC" . toggle-input-method)
+  ("C-SPC"                    . toggle-input-method)
   (:rime-active-mode-map
-   ("M-j" . rime-inline-ascii))
+   ("M-j"                     . rime-inline-ascii))
   (:rime-mode-map
-   ("M-j" . rime-force-enable))
+   ("M-j"                     . rime-force-enable))
   :pre-setq
-  (default-input-method . "rime")
-  `(rime-user-data-dir . ,(concat user-emacs-directory "etc/rime/"))
+  (default-input-method       . "rime")
+  `(rime-user-data-dir        . ,(concat user-emacs-directory "etc/rime/"))
   :setq
-  (rime-show-candidate . 'posframe)
-  (rime-inline-ascii-trigger . 'shift-l)
+  (rime-show-candidate        . 'posframe)
+  (rime-inline-ascii-trigger  . 'shift-l)
   :init
   ;; TODO: when using emacs-mac, make sure system IME is always disabled
   (when IS-LINUX
@@ -53,14 +53,14 @@
                                    "&& unzip rime-1.7.3-osx.zip"))))
   :hook
   (after-change-major-mode-hook . (lambda () (activate-input-method default-input-method)))
-  (test-mode-hook . (lambda ()
-                      (setq-local
-                       rime-disable-predicates
-                       (cons 'rime-predicate-after-ascii-char-p rime-disable-predicates))))
-  (telega-chat-mode-hook . (lambda ()
-                             (setq-local
-                              rime-disable-predicates
-                              (cons 'rime-predicate-after-ascii-char-p rime-disable-predicates))))
+  (test-mode-hook               . (lambda ()
+                                    (setq-local
+                                     rime-disable-predicates
+                                     (cons 'rime-predicate-after-ascii-char-p rime-disable-predicates))))
+  (telega-chat-mode-hook        . (lambda ()
+                                    (setq-local
+                                     rime-disable-predicates
+                                     (cons 'rime-predicate-after-ascii-char-p rime-disable-predicates))))
   :setq-default
   ;; TODO: set this based on different modes
   (rime-disable-predicates . '(rime-predicate-prog-in-code-p
@@ -88,9 +88,9 @@
   (when IS-LINUX
     (sis-ism-lazyman-config "1" "2" 'fcitx))
   :setq
-  (sis-inline-tighten-head-rule . 0)
-  (sis-inline-tighten-tail-rule . 0)
-  (sis-inline-single-space-close . t)
+  (sis-inline-tighten-head-rule   . 0)
+  (sis-inline-tighten-tail-rule   . 0)
+  (sis-inline-single-space-close  . t)
   :global-minor-mode
   (sis-global-cursor-color-mode
    sis-global-respect-mode

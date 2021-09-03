@@ -18,9 +18,9 @@
     (setq diff-hl-show-hunk-function 'diff-hl-show-hunk-posframe))
   :global-minor-mode global-diff-hl-mode
   :global-minor-mode global-diff-hl-show-hunk-mouse-mode
-  :hook (magit-pre-refresh-hook . diff-hl-magit-pre-refresh)
-  :hook (magit-post-refresh-hook . diff-hl-magit-post-refresh)
-  :hook (dired-mode-hook . diff-hl-dired-mode))
+  :hook (magit-pre-refresh-hook   . diff-hl-magit-pre-refresh)
+  :hook (magit-post-refresh-hook  . diff-hl-magit-post-refresh)
+  :hook (dired-mode-hook          . diff-hl-dired-mode))
 
 (leaf smerge-mode
   :tag "builtin"
@@ -52,9 +52,9 @@
   :url "https://github.com/magit/transient"
   :straight t
   :setq
-  (transient-enable-popup-navigation . t)
-  (transient-show-common-commands . nil)
-  (transient-highlight-mismatched-keys . t))
+  (transient-enable-popup-navigation    . t)
+  (transient-show-common-commands       . nil)
+  (transient-highlight-mismatched-keys  . t))
 
 (leaf transient-posframe
   :url https://github.com/yanghaoxie/transient-posframe

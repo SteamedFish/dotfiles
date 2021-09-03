@@ -93,22 +93,22 @@
   :disabled t
   :pre-setq
   ;; Set header line
-  (bespoke-set-mode-line . 'nil) ;; not working correctly
+  (bespoke-set-mode-line           . 'nil) ;; not working correctly
   ;; Set mode line height
-  (bespoke-set-mode-line-size . 3)
+  (bespoke-set-mode-line-size      . 3)
   ;; Show diff lines in modeline
-  (bespoke-set-git-diff-mode-line . t)
+  (bespoke-set-git-diff-mode-line  . t)
   ;; Set mode-line cleaner
-  (bespoke-set-mode-line-cleaner . t)
+  (bespoke-set-mode-line-cleaner   . t)
   ;; Set evil cursor colors
-  (bespoke-set-evil-cursors . t)
+  (bespoke-set-evil-cursors        . t)
   ;; Use mode line visual bell
-  (bespoke-set-visual-bell . t)
+  (bespoke-set-visual-bell         . t)
   ;; Set use of italics
-  (bespoke-set-italic-comments . t)
-  (bespoke-set-italic-keywords . t)
+  (bespoke-set-italic-comments     . t)
+  (bespoke-set-italic-keywords     . t)
   ;; Set variable pitch
-  (bespoke-set-variable-pitch . t)
+  (bespoke-set-variable-pitch      . t)
   ;; Set initial theme variant
   (bespoke-set-theme 'dark)
   :config (load-theme 'bespoke t))
@@ -119,9 +119,9 @@
   :disabled t
   :global-minor-mode window-divider-mode
   :setq
-  (window-divider-default-right-width . 12)
-  (window-divider-default-bottom-width . 1)
-  (window-divider-default-places . 'right-only))
+  (window-divider-default-right-width   . 12)
+  (window-divider-default-bottom-width  . 1)
+  (window-divider-default-places        . 'right-only))
 
 (leaf hl-todo
   :url "https://github.com/tarsius/hl-todo"
@@ -149,7 +149,7 @@
   :straight t
   :disabled t
   :setq
-  (nord-region-highlight . 'frost)
+  (nord-region-highlight   . 'frost)
   (nord-uniform-mode-lines . t)
   :config (load-theme 'nord t))
 
@@ -157,12 +157,12 @@
   :url https://github.com/hlissner/emacs-doom-themes
   :straight t
   :pre-setq
-  (doom-themes-enable-bold . t)
-  (doom-themes-enable-italic . t)
-  (doom-themes-treemacs-theme . "doom-colors")
+  (doom-themes-enable-bold      . t)
+  (doom-themes-enable-italic    . t)
+  (doom-themes-treemacs-theme   . "doom-colors")
   :setq
-  (doom-nord-brighter-comments . t)
-  (doom-one-brighter-comments . t)
+  (doom-nord-brighter-comments  . t)
+  (doom-one-brighter-comments   . t)
   :config
   (load-theme 'doom-one t)
   (doom-themes-visual-bell-config)
@@ -173,10 +173,10 @@
   :url "https://github.com/seagle0128/doom-modeline"
   :straight t
   :setq
-  (doom-modeline-minor-modes . t)
-  (doom-modeline-enable-word-count . t)
-  (doom-modeline-mu4e . t)
-  (doom-modeline-irc . t)
+  (doom-modeline-minor-modes        . t)
+  (doom-modeline-enable-word-count  . t)
+  (doom-modeline-mu4e               . t)
+  (doom-modeline-irc                . t)
   :global-minor-mode t)
 
 (leaf hl-fill-column

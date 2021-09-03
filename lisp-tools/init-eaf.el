@@ -23,18 +23,18 @@
              :repo "manateelazycat/emacs-application-framework"
              :files ("*"))
   :setq
-  `(eaf-config-location . ,(concat my-data-dir "data/eaf/"))
-  (eaf-find-alternate-file-in-dired . t)
-  ;; (browse-url-browser-function . #'eaf-open-browser)
-  (eaf-browser-continue-where-left-off . t)
-  (eaf-browser-default-search-engine . "duckduckgo")
-  (eaf-browser-dark-mode . t)
-  (eaf-terminal-dark-mode . t)
-  (eaf-pdf-dark-mode . "follow")
-  (eaf-mindmap-dark-mode . "follow")
-  (eaf-browse-blank-page-url . "https://duckduckgo.com/")
-  (eaf-browser-enable-adblocker . t)
-  (eaf-browser-remember-history . t)
+  `(eaf-config-location                 . ,(concat my-data-dir "data/eaf/"))
+  (eaf-find-alternate-file-in-dired     . t)
+  ;; (browse-url-browser-function       . #'eaf-open-browser)
+  (eaf-browser-continue-where-left-off  . t)
+  (eaf-browser-default-search-engine    . "duckduckgo")
+  (eaf-browser-dark-mode                . t)
+  (eaf-terminal-dark-mode               . t)
+  (eaf-pdf-dark-mode                    . "follow")
+  (eaf-mindmap-dark-mode                . "follow")
+  (eaf-browse-blank-page-url            . "https://duckduckgo.com/")
+  (eaf-browser-enable-adblocker         . t)
+  (eaf-browser-remember-history         . t)
   :config
   ;; install dependencies will cause eaf's repo modified,
   ;; which will trigger a rebuild, which cleans up installed dependencies

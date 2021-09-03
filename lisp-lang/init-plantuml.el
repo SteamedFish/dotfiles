@@ -22,8 +22,8 @@
                                    "/usr/share/java/plantuml/plantuml.jar")))
   (plantuml-default-exec-mode . 'executable)
   :config
-  (add-to-list 'auto-mode-alist '("\\.plantuml\\'" . plantuml-mode))
-  (add-to-list 'org-src-lang-modes '("plantuml" . plantuml)))
+  (add-to-list 'auto-mode-alist    '("\\.plantuml\\'" . plantuml-mode))
+  (add-to-list 'org-src-lang-modes '("plantuml"       . plantuml)))
 
 (leaf flycheck-plantuml
   :url https://github.com/alexmurray/flycheck-plantuml

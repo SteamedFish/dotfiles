@@ -14,22 +14,22 @@
   :global-minor-mode global-company-mode
   :blackout t
   :pre-setq
-  (company-idle-delay . 0.1)
-  (company-minimum-prefix-length . 1)
-  (company-auto-commit . nil)
-  (company-show-quick-access . t)
-  (company-backends . '((company-capf :with company-yasnippet)
-                        (company-dabbrev-code
-                         company-keywords
-                         company-files)
-                        company-dabbrev))
-  (company-global-modes . '(not
-                            message-mode
-                            help-mode
-                            gud-mode
-                            eshell-mode
-                            shell-mode
-                            vterm-mode)))
+  (company-idle-delay             . 0.1)
+  (company-minimum-prefix-length  . 1)
+  (company-auto-commit            . nil)
+  (company-show-quick-access      . t)
+  (company-backends               . '((company-capf :with company-yasnippet)
+                                      (company-dabbrev-code
+                                       company-keywords
+                                       company-files)
+                                      company-dabbrev))
+  (company-global-modes           . '(not
+                                      message-mode
+                                      help-mode
+                                      gud-mode
+                                      eshell-mode
+                                      shell-mode
+                                      vterm-mode)))
 
 (leaf company-prescient
   :url https://github.com/raxod502/prescient.el
@@ -77,7 +77,7 @@
   :straight t
   :disabled t
   :setq
-  (corfu-auto . t)
+  (corfu-auto               . t)
   (corfu-echo-documentation . nil)
   :global-minor-mode corfu-global-mode)
 

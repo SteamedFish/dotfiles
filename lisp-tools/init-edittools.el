@@ -86,11 +86,11 @@
   :blackout t
   :pre-setq
   (parinfer-rust-auto-download . t)
-  `(parinfer-rust-library . ,(concat my-data-dir "data/parinfer-rust/"
-                                     (cond
-                                      (IS-MAC "parinfer-rust-darwin.so")
-                                      (IS-LINUX "parinfer-rust-linux.so")
-                                      (IS-WINDOWS "parinfer-rust-windows.dll")))))
+  `(parinfer-rust-library      . ,(concat my-data-dir "data/parinfer-rust/"
+                                          (cond
+                                           (IS-MAC "parinfer-rust-darwin.so")
+                                           (IS-LINUX "parinfer-rust-linux.so")
+                                           (IS-WINDOWS "parinfer-rust-windows.dll")))))
 
 (leaf parinfer
   :url "https://github.com/DogLooksGood/parinfer-mode"
@@ -147,7 +147,7 @@
   (format-all-show-errors . 'warnings)
   :blackout format-all-mode
   :hook
-  (prog-mode-hook . format-all-mode)
+  (prog-mode-hook       . format-all-mode)
   (format-all-mode-hook . format-all-ensure-formatter))
 
 (leaf better-jumper
@@ -156,8 +156,8 @@
   :blackout (better-jumper-mode better-jumper-local-mode)
   :global-minor-mode t
   :bind
-  ([remap evil-jump-forward] . better-jumper-jump-forward)
-  ([remap evil-jump-backward] . better-jumper-jump-backward)
+  ([remap evil-jump-forward]     . better-jumper-jump-forward)
+  ([remap evil-jump-backward]    . better-jumper-jump-backward)
   ([remap xref-pop-marker-stack] . better-jumper-jump-backward))
 
 (leaf dtrt-indent
@@ -176,17 +176,17 @@
   :hook (prog-mode-hook . smartparens-mode)
   :blackout t
   :setq
-  (sp-highlight-pair-overlay . nil)
-  (sp-highlight-wrap-overlay . nil)
+  (sp-highlight-pair-overlay     . nil)
+  (sp-highlight-wrap-overlay     . nil)
   (sp-highlight-wrap-tag-overlay . nil)
   :require smartparens-config)
 
 (leaf tramp
   :tag "builtin"
   :setq
-  (tramp-default-method . "ssh")
-  (tramp-completion-reread-directory-timeout . 60)
-  (tramp-verbose . 2))
+  (tramp-default-method                       . "ssh")
+  (tramp-completion-reread-directory-timeout  . 60)
+  (tramp-verbose                              . 2))
 
 (provide 'init-edittools)
 ;;; init-edittools.el ends here

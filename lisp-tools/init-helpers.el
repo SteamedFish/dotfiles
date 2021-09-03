@@ -100,8 +100,8 @@
   :global-minor-mode t
   :setq
   (maple-minibuffer:position-type . 'frame-center)
-  (maple-minibuffer:width . 0.7)
-  (maple-minibuffer:action . '(read-from-minibuffer read-string))
+  (maple-minibuffer:width         . 0.7)
+  (maple-minibuffer:action        . '(read-from-minibuffer read-string))
   (maple-minibuffer:ignore-action . '(evil-ex
                                       eval-expression
                                       evil-ex-search-forward
