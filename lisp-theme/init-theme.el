@@ -219,9 +219,9 @@
   :doc "Global minor mode that centers the text of the window."
   :straight t
   :setq
-  (cwm-centered-window-width . 200)
-  (cwm-use-vertical-padding . t)
-  (cwm-frame-internal-border . 0))
+  (cwm-centered-window-width  . 300)
+  (cwm-use-vertical-padding   . t)
+  (cwm-frame-internal-border  . 100))
 
 (leaf solaire-mode
   :url https://github.com/hlissner/emacs-solaire-mode
