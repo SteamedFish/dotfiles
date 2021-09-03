@@ -15,11 +15,11 @@
   :when IS-GUI
   :ensure-system-package plantuml
   :setq
-  `(org-plantuml-jar-path . ,(cond
-                              (IS-MAC
-                               "/usr/local/opt/plantuml/libexec/plantuml.jar")
-                              (IS-LINUX
-                               "/usr/share/java/plantuml/plantuml.jar")))
+  `(plantuml-jar-path         . ,(cond
+                                  (IS-MAC
+                                   "/usr/local/opt/plantuml/libexec/plantuml.jar")
+                                  (IS-LINUX
+                                   "/usr/share/java/plantuml/plantuml.jar")))
   (plantuml-default-exec-mode . 'executable)
   :config
   (add-to-list 'auto-mode-alist '("\\.plantuml\\'" . plantuml-mode))
