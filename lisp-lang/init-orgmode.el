@@ -265,7 +265,6 @@
   (elgantt-header-type . 'outline)
   (elgantt-insert-blank-line-between-top-level-header . t)
   (elgantt-startup-folded . nil)
-  (elgantt-show-header-depth . t)
   (elgantt-draw-overarching-headers . t))
 
 (leaf literate-calc-mode
