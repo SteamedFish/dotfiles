@@ -22,14 +22,6 @@
              :host github
              :repo "manateelazycat/emacs-application-framework"
              :files ("*"))
-  :commands (eaf-open-browser eaf-open eaf-open-browser-with-history
-             eaf-open-camera eaf-open-terminal eaf-file-sender-qrcode
-             eaf-file-sender-qrcode-in-dired eaf-file-receiver-qrcode
-             eaf-open-airshare eaf-open-rss-reader eaf-create-mindmap
-             eaf-open-mindmap eaf-open-office eaf-open-demo
-             eaf-open-this-from-dired
-             eaf-describe-bindings eaf-open-bookmark eaf-open-external
-             eaf-get-path-or-url eaf-toggle-fullscreen eaf-share-path-or-url)
   :setq
   `(eaf-config-location . ,(concat my-data-dir "data/eaf/"))
   (eaf-find-alternate-file-in-dired . t)
