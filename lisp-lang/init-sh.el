@@ -17,7 +17,7 @@
 (leaf company-shell
   :url https://github.com/Alexander-Miller/company-shell
   :straight t
-  :disable t
+  :disabled t
   :config
   (add-to-list 'company-backends '(company-shell company-shell-env)))
 
