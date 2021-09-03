@@ -11,7 +11,9 @@
 
 (leaf yaml-mode
   :url https://github.com/yoshiki/yaml-mode
-  :straight t)
+  :straight t
+  :hook
+  (yaml-mode-hook . lsp))
 
 (leaf ansible
   :url https://github.com/k1LoW/emacs-ansible
