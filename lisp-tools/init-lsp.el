@@ -12,11 +12,15 @@
   :url https://emacs-lsp.github.io/lsp-mode/
   :straight t
   :setq
-  (lsp-restart . 'auto-restart)
-  (lsp-enable-file-watchers . nil)
-  (lsp-eldoc-render-all . t)
-  (lsp-enable-semantic-highlighting . t)
-  (lsp-completion-provider . :none)
+  ;; TODO: change lsp-keymap-prefix
+  (lsp-restart                       . 'auto-restart)
+  (lsp-enable-file-watchers          . nil)
+  (lsp-eldoc-enable-hover            . nil)
+  (lsp-eldoc-render-all              . t)
+  (lsp-enable-semantic-highlighting  . t)
+  (lsp-completion-provider           . :none)
+  (lsp-enable-dap-auto-configure     . t)
+  (lsp-dired-mode                    . t)
   :hook
   (lsp-mode-hook . (lambda ()
                      (lsp-enable-which-key-integration)
@@ -27,10 +31,11 @@
   :url https://emacs-lsp.github.io/lsp-ui/
   :straight t
   :setq
-  (lsp-ui-doc-position . 'bottom)
-  (lsp-ui-sideline-ignore-duplicate . t)
-  (lsp-ui-sideline-update-mode . 'point)
-  (lsp-ui-doc-enable . t))
+  (lsp-ui-doc-position               . 'bottom)
+  (lsp-ui-sideline-ignore-duplicate  . t)
+  (lsp-ui-sideline-update-mode       . 'point)
+  (lsp-ui-doc-enable                 . t)
+  (lsp-ui-imenu-auto-refresh         . t))
 
 (leaf company-lsp
   :url https://github.com/tigersoldier/company-lsp
@@ -49,8 +54,7 @@
 
 (leaf dap-mode
   :url https://emacs-lsp.github.io/dap-mode/
-  :straight t
-  :global-minor-mode dap-auto-configure-mode)
+  :straight t)
 
 (leaf lsp-treemacs
   :url https://github.com/emacs-lsp/lsp-treemacs
