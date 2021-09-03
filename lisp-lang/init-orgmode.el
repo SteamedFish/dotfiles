@@ -21,35 +21,35 @@
   (setq org-agenda-files (delete (expand-file-name "~/work/org/archive.org")
                                  (file-expand-wildcards (concat org-directory "*.org"))))
   :setq
-  (org-startup-indented . t)
-  (org-startup-numerated . t)
-  (org-hide-emphasis-markers . t)
-  (org-pretty-entities . t)
-  (org-startup-folded . nil)
-  (org-link-descriptive . t)
-  (org-log-done . 'time)
-  (org-catch-invisible-edits . 'smart)
-  `(org-archive-location . ,(concat org-directory "archive.org::* From %s"))
-  (org-log-done . 'time)
-  (org-log-done-with-time . t)
-  `(org-ellipsis . ,(if (char-displayable-p ?) "  " nil))
-  (org-startup-with-inline-images . t)
-  (org-html-validation-link . nil)
-  (org-agenda-include-diary . t)
-  (org-fontify-whole-heading-line . t)
-  (org-fontify-done-headline . t)
-  (org-fontify-quote-and-verse-blocks . t)
+  (org-startup-indented                . t)
+  (org-startup-numerated               . t)
+  (org-hide-emphasis-markers           . t)
+  (org-pretty-entities                 . t)
+  (org-startup-folded                  . nil)
+  (org-link-descriptive                . t)
+  (org-log-done                        . 'time)
+  (org-catch-invisible-edits           . 'smart)
+  `(org-archive-location               . ,(concat org-directory "archive.org::* From %s"))
+  (org-log-done                        . 'time)
+  (org-log-done-with-time              . t)
+  `(org-ellipsis                       . ,(if (char-displayable-p ?) "  " nil))
+  (org-startup-with-inline-images      . t)
+  (org-html-validation-link            . nil)
+  (org-agenda-include-diary            . t)
+  (org-fontify-whole-heading-line      . t)
+  (org-fontify-done-headline           . t)
+  (org-fontify-quote-and-verse-blocks  . t)
   :config
   (custom-theme-set-faces 'user
                           '(org-level-1 ((t (:height 1.75 :inherit outline-1))))
-                          '(org-level-2 ((t (:height 1.5 :inherit outline-2))))
+                          '(org-level-2 ((t (:height 1.5  :inherit outline-2))))
                           '(org-level-3 ((t (:height 1.25 :inherit outline-3))))
-                          '(org-level-4 ((t (:height 1.1 :inherit outline-4)))))
+                          '(org-level-4 ((t (:height 1.1  :inherit outline-4)))))
   :hook
-  (org-babel-after-execute-hook . org-redisplay-inline-images)
+  (org-babel-after-execute-hook   . org-redisplay-inline-images)
   :bind
   (:org-mode-map
-   ([remap org-set-tags-command] . counsel-org-tag)))
+   ([remap org-set-tags-command]  . counsel-org-tag)))
 
 (leaf org-num
   :url https://orgmode.org/
@@ -57,9 +57,9 @@
   :blackout org-num-mode
   ;; TODO: hl-line-mode will cause org-num looking bad
   :setq
-  (org-num-skip-tags . '("TOC"))
-  (org-num-skip-footnotes . t)
-  (org-num-max-level . 2))
+  (org-num-skip-tags       . '("TOC"))
+  (org-num-skip-footnotes  . t)
+  (org-num-max-level       . 2))
 
 (leaf org-contrib
   :url https://orgmode.org/worg/org-contrib/
@@ -135,11 +135,11 @@
   :ensure-system-package pandoc
   :require t
   :setq
-  (org-pandoc-options . '((standalone . t)))
-  (org-pandoc-options-for-beamer-pdf . '((pdf-engine . "xelatex")))
-  (org-pandoc-options-for-latex-pdf . '((pdf-engine . "xelatex")))
+  (org-pandoc-options                 . '((standalone . t)))
+  (org-pandoc-options-for-beamer-pdf  . '((pdf-engine . "xelatex")))
+  (org-pandoc-options-for-latex-pdf   . '((pdf-engine . "xelatex")))
   ;; special extensions for markdown_github output
-  (org-pandoc-format-extensions . '(markdown_github+pipe_tables+raw_html)))
+  (org-pandoc-format-extensions       . '(markdown_github+pipe_tables+raw_html)))
 
 (leaf org-mime
   :url https://github.com/org-mime/org-mime
@@ -169,11 +169,11 @@
   :doc "automatically show emphasis markers"
   :straight t
   :setq
-  (org-appear-autolinks . t)
-  (org-appear-autosubmarkers . t)
-  (org-appear-autoemphasis . t)
-  (org-appear-autoentities . t)
-  (org-appear-autokeywords . t)
+  (org-appear-autolinks       . t)
+  (org-appear-autosubmarkers  . t)
+  (org-appear-autoemphasis    . t)
+  (org-appear-autoentities    . t)
+  (org-appear-autokeywords    . t)
   :hook (org-mode-hook . org-appear-mode))
 
 (leaf org-tree-slide
@@ -205,27 +205,27 @@
   ;; we set them by ourself
   ;; (org-tree-slide-presentation-profile)
   :setq
-  (org-tree-slide-header . t)
-  (org-tree-slide-content-margin-top . 2)
-  (org-tree-slide-slide-in-blank-lines . 10)
-  (org-tree-slide-slide-in-effect . t)
-  (org-tree-slide-heading-emphasis . nil)
-  (org-tree-slide-cursor-init . t)
-  (org-tree-slide-modeline-display . 'outside)
-  (org-tree-slide-skip-done . nil)
-  (org-tree-slide-never-touch-face . t)
-  (org-tree-slide-skip-comments . t)
-  (org-tree-slide-skip-outline-level . 0)
-  (org-tree-slide-breadcrumbs . " ➥ ")
-  (org-tree-slide-breadcrumbs-hide-todo-state . nil))
+  (org-tree-slide-header                       . t)
+  (org-tree-slide-content-margin-top           . 2)
+  (org-tree-slide-slide-in-blank-lines         . 10)
+  (org-tree-slide-slide-in-effect              . t)
+  (org-tree-slide-heading-emphasis             . nil)
+  (org-tree-slide-cursor-init                  . t)
+  (org-tree-slide-modeline-display             . 'outside)
+  (org-tree-slide-skip-done                    . nil)
+  (org-tree-slide-never-touch-face             . t)
+  (org-tree-slide-skip-comments                . t)
+  (org-tree-slide-skip-outline-level           . 0)
+  (org-tree-slide-breadcrumbs                  . " ➥ ")
+  (org-tree-slide-breadcrumbs-hide-todo-state  . nil))
 
 (leaf org-roam
   :url https://www.orgroam.com
   :straight t
   :after org
   :setq
-  `(org-roam-directory . ,(concat org-directory "roam/"))
-  (org-roam-v2-ack . t)
+  `(org-roam-directory  . ,(concat org-directory "roam/"))
+  (org-roam-v2-ack      . t)
   :config
   (unless (file-exists-p org-roam-directory)
     (make-directory org-roam-directory)))
@@ -239,10 +239,10 @@
   ;; befure running `kill-emacs-query-functions' and `kill-emacs-hook'
   ;; we need to kill all org-roam-ui processes before `kill-buffer-save-emacs'
   :setq
-  (org-roam-ui-sync-theme . t)
-  (org-roam-ui-follow . t)
-  (org-roam-ui-update-on-save . t)
-  (org-roam-ui-open-on-start . t)
+  (org-roam-ui-sync-theme      . t)
+  (org-roam-ui-follow          . t)
+  (org-roam-ui-update-on-save  . t)
+  (org-roam-ui-open-on-start   . t)
   :config
   (unless noninteractive
     (org-roam-ui-mode t)))
@@ -262,10 +262,10 @@
   :doc "M-x elgantt-open"
   :straight (elgantt :host github :repo "legalnonsense/elgantt")
   :setq
-  (elgantt-header-type . 'outline)
-  (elgantt-insert-blank-line-between-top-level-header . t)
-  (elgantt-startup-folded . nil)
-  (elgantt-draw-overarching-headers . t))
+  (elgantt-header-type                                 . 'outline)
+  (elgantt-insert-blank-line-between-top-level-header  . t)
+  (elgantt-startup-folded                              . nil)
+  (elgantt-draw-overarching-headers                    . t))
 
 (leaf literate-calc-mode
   :url https://github.com/sulami/literate-calc-mode.el
@@ -276,8 +276,8 @@
   :blackout t
   :straight t
   :hook
-  (org-mode-hook . valign-mode)
-  (markdown-mode-hook . valign-mode))
+  (org-mode-hook       . valign-mode)
+  (markdown-mode-hook  . valign-mode))
 
 (leaf org-alert
   :url https://github.com/spegoraro/org-alert
@@ -311,15 +311,15 @@
   :straight (emacs-reveal :host gitlab :repo "oer/emacs-reveal" :files ("*" ".*"))
   :disabled t
   :pre-setq
-  `(oer-reveal-org-includes-dir . ,(concat my-data-dir "etc/oer-reveal-org-include-dir"))
+  `(oer-reveal-org-includes-dir         . ,(concat my-data-dir "etc/oer-reveal-org-include-dir"))
   :setq
-  (emacs-reveal-managed-install-p . t)
-  (org-re-reveal-theme . "moon")
-  (org-re-reveal-embed-local-resources . nil)
-  (org-re-reveal-progress . t)
-  (org-re-reveal-single-file . nil)
-  (org-re-reveal-slide-number . t)
-  (org-re-reveal-export-notes-to-pdf . t)
+  (emacs-reveal-managed-install-p       . t)
+  (org-re-reveal-theme                  . "moon")
+  (org-re-reveal-embed-local-resources  . nil)
+  (org-re-reveal-progress               . t)
+  (org-re-reveal-single-file            . nil)
+  (org-re-reveal-slide-number           . t)
+  (org-re-reveal-export-notes-to-pdf    . t)
   :config
   (oer-reveal-setup-submodules t)
   (oer-reveal-generate-include-files t)
