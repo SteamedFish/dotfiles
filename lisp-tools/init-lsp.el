@@ -20,6 +20,7 @@
   (lsp-enable-semantic-highlighting  . t)
   (lsp-completion-provider           . :none)
   (lsp-enable-dap-auto-configure     . t)
+  (lsp-headerline-breadcrumb-enable  . nil)
   (lsp-dired-mode                    . t)
   :hook
   (lsp-mode-hook . (lambda ()
