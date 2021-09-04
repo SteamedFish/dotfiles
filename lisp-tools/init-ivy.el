@@ -113,7 +113,8 @@
 (leaf ivy-posframe
   :url https://github.com/tumashu/ivy-posframe
   :straight t
-  :unless (file-directory-p (straight--build-dir "maple-minibuffer"))
+  ;; :unless (file-directory-p (straight--build-dir "maple-minibuffer"))
+  :when IS-LINUX ;; TODO: I prefer maple-minibuffer, but it has some issue on Linux
   :when IS-GUI
   :blackout t
   :global-minor-mode t)
