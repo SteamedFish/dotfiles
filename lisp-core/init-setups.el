@@ -61,7 +61,6 @@
   (native-comp-verbose               . 0)
   (native-comp-always-compile        . t)
   (native-comp-speed                 . 2)
-  (native-comp-deferred-compilation  . noninteractive)
   :config
   ;; TODO: this is not working
   (add-to-list 'native-comp-eln-load-path (concat my-data-dir "data/eln-cache/")))
