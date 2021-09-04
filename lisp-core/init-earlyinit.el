@@ -24,7 +24,7 @@
 
 (when (featurep 'comp)
   (setq native-comp-deferred-compilation noninteractive)
-  (add-to-list 'native-comp-eln-load-path (concat user-emacs-directory ".local/data/enl-cache")))
+  (add-to-list 'native-comp-eln-load-path (concat user-emacs-directory ".local/data/eln-cache")))
 
 ;; Don't resize the frame when font size changes
 (setq frame-inhibit-implied-resize t)
