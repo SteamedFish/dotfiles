@@ -22,6 +22,10 @@
 (push '(tool-bar-lines . 0)   default-frame-alist)
 (push '(vertical-scroll-bars) default-frame-alist)
 
+(when (featurep 'comp)
+  (setq native-comp-deferred-compilation noninteractive)
+  (add-to-list 'native-comp-eln-load-path (concat user-emacs-directory ".local/data/enl-cache")))
+
 ;; Don't resize the frame when font size changes
 (setq frame-inhibit-implied-resize t)
 
