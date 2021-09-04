@@ -47,7 +47,11 @@
   :unless noninteractive ;; `set-fontset-font' will cause segfault in noninteractive mode
   :config
   (set-face-attribute 'default nil :font (font-spec :family "Rec Mono Duotone" :size 14))
-  (set-face-font 'variable-pitch "Recursive")
+  (cond
+   (IS-LINUX
+    (set-face-font 'variable-pitch "Recursive Sans Casual Static"))
+   (IS-MAC
+    (set-face-font 'variable-pitch "Recursive")))
   (set-face-font 'fixed-pitch "Rec Mono Duotone")
   (let ((chinese-font (cond
                        (IS-MAC "Hiragino Sans GB")
