@@ -54,6 +54,18 @@
     (setq w32-lwindow-modifier      'super
           w32-rwindow-modifier      'super))))
 
+(leaf comp
+  :tag "builtin"
+  :when (featurep 'comp)
+  :setq
+  (native-comp-verbose               . 0)
+  (native-comp-always-compile        . t)
+  (native-comp-speed                 . 2)
+  (native-comp-deferred-compilation  . noninteractive)
+  :config
+  ;; TODO: this is not working
+  (add-to-list 'native-comp-eln-load-path (concat my-data-dir "data/eln-cache/")))
+
 (leaf ffap
   :tag "builtin"
   :setq
