@@ -39,6 +39,7 @@
   :url https://github.com/edkolev/evil-goggles
   :doc "displays a visual hint when editing with evil"
   :straight t
+  :disabled t
   :blackout t
   :global-minor-mode t)
 
