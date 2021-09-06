@@ -53,6 +53,11 @@
   :global-minor-mode size-indication-mode
   :global-minor-mode column-number-mode)
 
+(leaf rainbow-delimiters
+  :url https://github.com/Fanael/rainbow-delimiters
+  :straight t
+  :hook (prog-mode-hook . rainbow-delimiters-mode))
+
 (leaf hl-line
   :tag "builtin"
   :global-minor-mode global-hl-line-mode)
