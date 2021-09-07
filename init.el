@@ -54,6 +54,7 @@
 (require 'init-ivy)
 (require 'init-edittools)
 (require 'init-company)
+(require 'init-checkers)
 (require 'init-lsp)
 (require 'init-calendar)
 (require 'init-smalltools)
