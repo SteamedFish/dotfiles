@@ -53,14 +53,26 @@
                                    "&& unzip rime-1.7.3-osx.zip"))))
   :hook
   (after-change-major-mode-hook . (lambda () (activate-input-method default-input-method)))
-  (test-mode-hook               . (lambda ()
-                                    (setq-local
-                                     rime-disable-predicates
-                                     (cons 'rime-predicate-after-ascii-char-p rime-disable-predicates))))
-  (telega-chat-mode-hook        . (lambda ()
-                                    (setq-local
-                                     rime-disable-predicates
-                                     (cons 'rime-predicate-after-ascii-char-p rime-disable-predicates))))
+  ;; ((test-mode-hook telega-chat-mode-hook) . (lambda ()
+  ;;                                             (setq-local
+  ;;                                              rime-disable-predicates
+  ;;                                              (cons 'rime-predicate-after-ascii-char-p rime-disable-predicates))))
+  ((prog-mode-hook minibuffer-setup-hook) . (lambda ()
+                                              ;; (setq-local
+                                              ;;  rime-disable-predicates
+                                              ;;  (cons 'rime-predicate-after-alphabet-char-p rime-disable-predicates))
+                                              ;; (setq-local
+                                              ;;  rime-disable-predicates
+                                              ;;  (cons 'rime-predicate-after-ascii-char-p rime-disable-predicates))
+                                              (setq-local
+                                               rime-disable-predicates
+                                               (cons 'rime-predicate-punctuation-after-ascii-p rime-disable-predicates))
+                                              (setq-local
+                                               rime-disable-predicates
+                                               (cons 'rime-predicate-space-after-ascii-p rime-disable-predicates))
+                                              (setq-local
+                                               rime-disable-predicates
+                                               (cons 'rime-predicate-space-after-cc-p rime-disable-predicates))))
   :setq-default
   ;; TODO: set this based on different modes
   (rime-disable-predicates . '(rime-predicate-prog-in-code-p
@@ -71,6 +83,8 @@
                                (lambda () (minibufferp))
                                rime-predicate-org-latex-mode-p
                                (lambda () (button-at (point)))
+                               rime-predicate-after-alphabet-char-p
+                               rime-predicate-after-ascii-char-p
                                rime-predicate-current-uppercase-letter-p
                                rime-predicate-tex-math-or-command-p)))
 
