@@ -33,6 +33,15 @@
   :straight t
   :bind ("C-c e" . macrostep-expand))
 
+(leaf elisp-autofmt
+  :url https://gitlab.com/ideasman42/emacs-elisp-autofmt
+  :straight (elisp-autofmt
+             :host gitlab
+             :repo "ideasman42/emacs-elisp-autofmt"
+             :files (:defaults "elisp-autofmt"))
+  :hook
+  (emacs-lisp-mode-hook . elisp-autofmt-save-hook-for-this-buffer))
+
 
 (provide 'init-elisp)
 ;;; init-elisp.el ends here
