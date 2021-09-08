@@ -44,6 +44,15 @@
   :config
   (add-to-list 'company-backends '(company-anaconda :with company-capf)))
 
+(leaf pyimport
+  :url https://github.com/Wilfred/pyimport
+  :doc "M-x pyimport-remove-unused M-x pyimport-insert-missing"
+  :config
+  (unless (executable-find "pyflakes")
+    (cond
+     (IS-MAC   (async-shell-command "pip install pyflakes"))
+     (IS-LINUX (system-packages-ensure "python-pyflakes")))))
+
 (leaf py-isort
   :url https://github.com/paetzke/py-isort.el
   :doc "M-x py-isort-buffer M-x py-isort-region"
