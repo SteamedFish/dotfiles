@@ -44,5 +44,15 @@
   :config
   (add-to-list 'company-backends '(company-anaconda :with company-capf)))
 
+(leaf py-isort
+  :url https://github.com/paetzke/py-isort.el
+  :doc "M-x py-isort-buffer M-x py-isort-region"
+  :straight t
+  :config
+  (unless (executable-find "isort")
+    (cond
+     (IS-MAC   (system-packages-ensure "isort"))
+     (IS-LINUX (system-packages-ensure "python-isort")))))
+
 (provide 'init-python)
 ;;; init-python.el ends here
