@@ -23,7 +23,7 @@
   :config
   (when IS-MAC (blackout 'projectile-mode))
   (projectile-add-known-project (expand-file-name "~/.config/emacs"))
-  (dolist (dir '("~/work/" "~/projects"))
+  (dolist (dir '("~/work" "~/projects"))
     (when (file-directory-p dir)
       (add-to-list 'projectile-project-search-path (expand-file-name dir)))))
 
