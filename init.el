@@ -74,6 +74,7 @@
 (require 'init-python)
 (require 'init-yaml)
 (require 'init-plantuml)
+(require 'init-web)
 
 (provide 'init)
 ;;; init.el ends here
