@@ -114,12 +114,17 @@
 
 (leaf lsp-grammarly
   :url https://github.com/emacs-grammarly/lsp-grammarly
-  :straight t)
-;; TODO: install keytar-cli and configure usrname/password
-;; Don't globally enable it for every text buffer.
-;; Enable it manually.
-;; :hook
-;; (text-mode-hook . lsp))
+  :straight t
+  ;; TODO: install keytar-cli and configure usrname/password
+  ;; Don't globally enable it for every text buffer.
+  ;; Enable it manually.
+  ;; :hook
+  ;; (text-mode-hook . lsp)
+  :config
+  (unless (file-exists-p
+           (concat lsp-server-install-dir
+                   "npm//@emacs-grammarly/unofficial-grammarly-language-server/bin/unofficial-grammarly-language-server"))
+    (lsp-install-server nil 'grammarly-ls)))
 
 (provide 'init-checkers)
 ;;; init-checkers.el ends here
