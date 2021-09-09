@@ -114,8 +114,7 @@
 
 (leaf lsp-grammarly
   :url https://github.com/emacs-grammarly/lsp-grammarly
-  :straight t
-  :require t)
+  :straight t)
 ;; TODO: install keytar-cli and configure usrname/password
 ;; Don't globally enable it for every text buffer.
 ;; Enable it manually.
