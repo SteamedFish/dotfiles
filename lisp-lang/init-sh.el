@@ -12,7 +12,12 @@
 (leaf sh-script
   :tag "builtin"
   :hook
-  (sh-mode-hook . lsp))
+  (sh-mode-hook . lsp)
+  :config
+  (unless (file-exists-p
+           (concat lsp-server-install-dir
+                   "npm/bash-language-server/bin/bash-language-server"))
+    (lsp-install-server nil 'bash-ls)))
 
 (leaf company-shell
   :url https://github.com/Alexander-Miller/company-shell
