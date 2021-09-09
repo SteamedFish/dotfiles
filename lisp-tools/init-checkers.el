@@ -103,5 +103,24 @@
   (flyspell-lazy-window-idle-seconds . 3)
   :global-minor-mode flyspell-lazy-mode)
 
+(leaf grammarly
+  :url https://github.com/emacs-grammarly/grammarly
+  :straight t)
+
+(leaf flycheck-grammarly
+  :url https://github.com/emacs-grammarly/flycheck-grammarly
+  :straight t
+  :require t)
+
+(leaf lsp-grammarly
+  :url https://github.com/emacs-grammarly/lsp-grammarly
+  :straight t
+  :require t)
+;; TODO: install keytar-cli and configure usrname/password
+;; Don't globally enable it for every text buffer.
+;; Enable it manually.
+;; :hook
+;; (text-mode-hook . lsp))
+
 (provide 'init-checkers)
 ;;; init-checkers.el ends here
