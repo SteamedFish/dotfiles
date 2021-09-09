@@ -59,10 +59,9 @@
                        (IS-MAC "Hiragino Sans GB")
                        (t "Noto Sans CJK SC"))))
     (dolist (charset '(han cjk-misc bopomofo))
-      (set-fontset-font nil charset chinese-font nil 'prepend)))
-  (dolist (charset '(han cjk-misc bopomofo))
-    (set-fontset-font nil charset "HanaMinA" nil 'append)
-    (set-fontset-font nil charset "HanaMinB" nil 'append))
+      (set-fontset-font nil charset chinese-font nil 'prepend)
+      (set-fontset-font nil charset "HanaMinA"   nil 'append)
+      (set-fontset-font nil charset "HanaMinB"   nil 'append)))
   ;; add some symbol fonts for font failback
   (set-fontset-font t nil "Noto Color Emoji"     nil 'append)
   (set-fontset-font t nil "Apple Color Emoji"    nil 'append)
