@@ -1,10 +1,10 @@
-;;; init-company.el --- Language Server Protocal -*- lexical-binding: t; -*-
+;;; init-company.el --- completion framework -*- lexical-binding: t; -*-
 ;;
 ;; This file is not part of GNU Emacs.
 
 ;;; Commentary:
 
-;;  Language Server Protocal
+;;  company completion framework
 
 ;;; Code:
 
