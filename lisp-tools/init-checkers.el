@@ -97,6 +97,7 @@
   :url https://github.com/rolandwalker/flyspell-lazy
   :doc "Improve Emacs flyspell responsiveness using idle timers."
   :straight t
+  :disabled t
   :setq
   (flyspell-lazy-idle-seconds        . 1)
   (flyspell-lazy-window-idle-seconds . 3)
