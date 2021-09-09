@@ -94,7 +94,7 @@
   :disabled t
   :straight t
   :config
-  ;; thie will conflict with evil-collections
+  ;; this will conflict with evil-collections
   (dired-fdclone))
 
 (provide 'init-dired)
