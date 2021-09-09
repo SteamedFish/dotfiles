@@ -13,7 +13,12 @@
   :url https://github.com/yoshiki/yaml-mode
   :straight t
   :hook
-  (yaml-mode-hook . lsp))
+  (yaml-mode-hook . lsp)
+  :config
+  (unless (file-exists-p
+           (concat lsp-server-install-dir
+                   "npm/yaml-language-server/bin/yaml-language-server"))
+    (lsp-install-server nil 'yamlls)))
 
 (leaf ansible
   :url https://github.com/k1LoW/emacs-ansible
