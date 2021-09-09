@@ -12,6 +12,14 @@
   :tag "builtin"
   :blackout t)
 
+(leaf eldoc-box
+  :url https://github.com/casouri/eldoc-box
+  :straight t
+  :when IS-GUI
+  :disabled t
+  :blackout (eldoc-box-hover-mode eldoc-box-hover-at-point-mode)
+  :hook (emacs-lisp-mode-hook . eldoc-box-hover-at-point-mode))
+
 (leaf highlight-defined
   :url "https://github.com/Fanael/highlight-defined"
   :straight t
