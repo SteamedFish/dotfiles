@@ -29,16 +29,17 @@
    ("M-j"                     . rime-force-enable))
   :pre-setq
   (default-input-method       . "rime")
-  `(rime-user-data-dir        . ,(concat user-emacs-directory "etc/rime/"))
   :setq
   (rime-show-candidate        . 'posframe)
   (rime-inline-ascii-trigger  . 'shift-l)
   :init
   ;; TODO: when using emacs-mac, make sure system IME is always disabled
   (when IS-LINUX
+    (setq rime-user-data-dir (expand-file-name "~/.config/fcitx/rime/"))
     (unless (executable-find "rime_patch")
       (system-packages-ensure "librime")))
   (when IS-MAC
+    (setq rime-user-data-dir (expand-file-name "~/Library/Rime/"))
     (system-packages-ensure "unzip")
     (setq rime-librime-root (concat my-data-dir "data/librime/dist"))
     (unless (file-exists-p (concat my-data-dir "data/librime/"))
