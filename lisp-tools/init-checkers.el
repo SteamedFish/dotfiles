@@ -107,6 +107,17 @@
   :url https://github.com/emacs-grammarly/grammarly
   :straight t)
 
+(leaf keytar
+  :url https://github.com/emacs-grammarly/keytar
+  :straight t
+  ;; TODO: configure usrname/password
+  :pre-setq
+  `(keytar-install-dir . ,(concat my-data-dir "data/keytar"))
+  :config
+  (unless (file-exists-p (concat my-data-dir
+                                 "data/keytar/bin/keytar"))
+    (keytar-install)))
+
 (leaf flycheck-grammarly
   :url https://github.com/emacs-grammarly/flycheck-grammarly
   :straight t
@@ -115,7 +126,6 @@
 (leaf lsp-grammarly
   :url https://github.com/emacs-grammarly/lsp-grammarly
   :straight t
-  ;; TODO: install keytar-cli and configure usrname/password
   ;; Don't globally enable it for every text buffer.
   ;; Enable it manually.
   ;; :hook
