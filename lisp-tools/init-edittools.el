@@ -72,6 +72,14 @@
   :url https://gitlab.com/ideasman42/emacs-undo-fu
   :straight t)
 
+(leaf ialign
+  :url https://github.com/mkcms/interactive-align
+  :doc "M-x ialign"
+  :doc "visual version of align-regexp command"
+  :straight t
+  :setq
+  (ialign-pcre-mode . t))
+
 (leaf parinfer-rust-mode
   :url "https://github.com/justinbarclay/parinfer-rust-mode"
   :straight t
