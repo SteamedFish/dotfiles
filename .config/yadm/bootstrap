@@ -155,6 +155,12 @@ install_spacevim() {
     fi
 }
 
+install_doomvim() {
+    if ! [ -d "$HOME/.config/nvim" ]; then
+        git clone https://github.com/NTBBloodbath/doom-nvim.git "$HOME/.config/nvim"
+    fi
+}
+
 install_pip() {
     for apps in "${pip_apps[@]}"; do
         pip3 install "$apps"

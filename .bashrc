@@ -98,10 +98,10 @@ fi
 if [ -n "$(command -v bat)" ];then
     alias cat='bat'
 fi
-# if [ -n "$(command -v nvim)" ];then
-#     alias vim='nvim'
-#     alias vi='nvim'
-# fi
+if [ -n "$(command -v nvim)" ];then
+    alias vim='nvim'
+    alias vi='nvim'
+fi
 
 if [ -n "$(command -v direnv)" ]; then
     if [ -n "$BASH" ]; then
