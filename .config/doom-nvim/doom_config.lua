@@ -82,7 +82,7 @@ local doom = {
   -- false : Disable preservation of last editing position
   -- true  : Enable preservation of last editing position
   -- @default = false
-  preserve_edit_pos = false,
+  preserve_edit_pos = true,
 
   -- Allow overriding the default Doom Nvim keybinds
   -- false : Default keybinds cannot be overwritten
@@ -141,7 +141,7 @@ local doom = {
   -- false : Shows absolute number lines
   -- true  : Shows relative number lines
   -- @default = true
-  relative_num = true,
+  relative_num = false,
 
   -- Enable winwidth
   -- false : Manually set win width
@@ -283,7 +283,7 @@ local doom = {
     terminal_colors = true,
     -- If the Neovim instance should be transparent
     -- @default = false
-    transparent_background = false,
+    transparent_background = true,
   },
 
   -- Set gui fonts here
