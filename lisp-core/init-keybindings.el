@@ -21,6 +21,12 @@
   :tag "builtin"
   :global-minor-mode t)
 
+(leaf winum
+  :url https://github.com/deb0ch/emacs-winum
+  :doc "C-x w"
+  :straight t
+  :global-minor-mode winum-mode)
+
 (leaf simple
   :tag "builtin"
   :doc "Mac like keybindings"
