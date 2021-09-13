@@ -84,7 +84,8 @@
 (leaf prescient
   :url https://github.com/raxod502/prescient.el
   :straight t
-  :disabled t
+  :setq
+  (prescient-sort-full-matches-first . t)
   :global-minor-mode prescient-persist-mode)
 
 (leaf ivy-prescient
