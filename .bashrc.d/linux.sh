@@ -5,8 +5,8 @@ if [ "$OSTYPE" != "linux-gnu" ]; then
     return
 fi
 
-if $CLICOLOR ; then
-    if ! alias ls > /dev/null 2>&1; then
+if $CLICOLOR; then
+    if ! alias ls >/dev/null 2>&1; then
         alias ls='ls --color=auto'
     fi
 fi
@@ -36,7 +36,7 @@ else
 fi
 
 # extra PATHs
-for i in /home/linuxbrew/.linuxbrew $HOME/.linuxbrew /snap/bin /opt/puppetlabs/bin; do
+for i in /home/linuxbrew/.linuxbrew $HOME/.linuxbrew /snap /opt/puppetlabs/bin; do
     if [ -d "$i" ]; then
         export PATH="$i/bin:$i/sbin/$PATH"
     fi
@@ -46,11 +46,11 @@ unset i
 if [ -n "$BASH" ]; then
     # Change the window title of X terminals
     case ${TERM} in
-        xterm*|rxvt*|Eterm*|aterm|kterm|gnome*|interix|konsole*)
-            PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/\~}\007"'
-            ;;
-        screen*)
-            PROMPT_COMMAND='echo -ne "\033_${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/\~}\033\\"'
-            ;;
+    xterm* | rxvt* | Eterm* | aterm | kterm | gnome* | interix | konsole*)
+        PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/\~}\007"'
+        ;;
+    screen*)
+        PROMPT_COMMAND='echo -ne "\033_${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/\~}\033\\"'
+        ;;
     esac
 fi
