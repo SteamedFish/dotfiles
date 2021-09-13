@@ -19,8 +19,8 @@ local doom = {
     "tabline",            -- Tabline, shows your buffers list at top
     -- "zen",             -- Distraction free environment
     "which-key",          -- Keybindings popup menu like Emacs' guide-key
-    -- "indentlines",     -- Show indent lines
-    -- "show_registers",  -- popup that shows register contents
+    "indentlines",     -- Show indent lines
+    "show_registers",  -- popup that shows register contents
   },
   doom = {
     -- "neorg",           -- Life Organization Tool
@@ -31,7 +31,7 @@ local doom = {
     "auto-session",       -- A small automated session manager for Neovim
     "terminal",           -- Terminal for Neovim (NOTE: needed for runner and compiler)
     "explorer",           -- Tree explorer
-    -- "ranger",          -- Ranger File Browser, requires ranger file browser
+    "ranger",          -- Ranger File Browser, requires ranger file browser
     "symbols",            -- LSP symbols and tags
     -- "minimap",         -- Code minimap, requires github.com/wfxr/code-minimap
     "gitsigns",           -- Git signs
@@ -72,7 +72,7 @@ local doom = {
     "suda",            -- Write and read files without sudo permissions
     -- "lazygit",         -- LazyGit integration for Neovim, requires LazyGit
     "neogit",          -- Magit for Neovim
-    -- "colorizer",       -- Fastest colorizer for Neovim
+    "colorizer",       -- Fastest colorizer for Neovim
     "range-highlight",    -- hightlights ranges you have entered in commandline
   },
   web = {
