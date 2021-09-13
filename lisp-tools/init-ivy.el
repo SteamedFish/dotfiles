@@ -89,8 +89,8 @@
 
 (leaf ivy-prescient
   :url https://github.com/raxod502/prescient.el
+  :comment TODO: disable flx?
   :after counsel
-  :disabled t
   :straight t
   :global-minor-mode ivy-prescient-mode)
 
