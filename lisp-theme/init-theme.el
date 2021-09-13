@@ -49,6 +49,8 @@
   :tag "builtin"
   :hook
   (text-mode-hook . visual-line-mode)
+  :setq
+  (visual-line-fringe-indicators . '(left-curly-arrow right-curly-arrow))
   :blackout visual-line-mode
   :global-minor-mode size-indication-mode
   :global-minor-mode column-number-mode)
