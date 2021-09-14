@@ -61,6 +61,15 @@
   (org-num-skip-footnotes  . t)
   (org-num-max-level       . 2))
 
+(leaf org-capture
+  :bind
+  ("C-x c" . org-capture)
+  :config
+  (setq org-capture-templates
+        `(("i" "Inbox" entry  (file "inbox.org")
+           ,(concat "* TODO %?\n"
+                    "/Entered on/ %U")))))
+
 (leaf org-contrib
   :url https://orgmode.org/worg/org-contrib/
   :straight t
