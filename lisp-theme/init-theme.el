@@ -198,6 +198,14 @@
   :when IS-GUI
   :global-minor-mode mode-icons-mode)
 
+(leaf page-break-lines
+  :url https://github.com/purcell/page-break-lines
+  :doc "turn page break symbol ^L into horizontal rules"
+  :straight t
+  ;; :global-minor-mode global-page-break-lines-mode
+  :hook
+  (text-mode-hook . page-break-lines-mode))
+
 (leaf writeroom-mode
   :url https://github.com/joostkremers/writeroom-mode
   :doc "implements a distraction-free writing mode"
