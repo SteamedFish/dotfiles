@@ -17,8 +17,9 @@
   (evil-want-keybinding                . nil)
   (evil-disable-insert-state-bindings  . t)
   :bind
-  ("C-x 2"                             . evil-window-split)
-  ("C-x 3"                             . evil-window-vsplit)
+  (:ctl-x-map
+   ("2"                                . evil-window-split)
+   ("3"                                . evil-window-vsplit))
   :custom
   (evil-search-module                  . 'evil-search)
   (evil-undo-system                    . 'undo-fu)

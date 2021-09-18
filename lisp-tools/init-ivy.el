@@ -41,7 +41,8 @@
   ([remap yank-pop]                       . counsel-yank-pop)
   ;; the default keybinding of C-x C-r was #'find-file-read-only
   ;; which is not very useful
-  ("C-x C-r" . counsel-recentf)
+  (:ctl-x-map
+   ("C-r" . counsel-recentf))
   :pre-setq
   ;; (ivy-re-builders-alist . '((counsel-rg      . ivy--regex-plus)
   ;;                            (swiper          . ivy--regex-plus)

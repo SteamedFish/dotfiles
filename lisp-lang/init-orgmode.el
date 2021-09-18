@@ -63,7 +63,8 @@
 
 (leaf org-capture
   :bind
-  ("C-x c" . org-capture)
+  (:ctl-x-map
+   ("c" . org-capture))
   :config
   (setq org-capture-templates
         `(("i" "Inbox" entry  (file "inbox.org")
