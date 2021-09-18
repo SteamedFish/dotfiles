@@ -43,10 +43,10 @@
   ;; which is not very useful
   ("C-x C-r" . counsel-recentf)
   :pre-setq
-  (ivy-re-builders-alist . '((counsel-rg      . ivy--regex-plus)
-                             (swiper          . ivy--regex-plus)
-                             (swiper-isearch  . ivy--regex-plus)
-                             (t               . ivy--regex-fuzzy)))
+  ;; (ivy-re-builders-alist . '((counsel-rg      . ivy--regex-plus)
+  ;;                            (swiper          . ivy--regex-plus)
+  ;;                            (swiper-isearch  . ivy--regex-plus)
+  ;;                            (t               . ivy--regex-fuzzy)))
   (ivy-more-chars-alist  . '((counsel-rg      . 1)
                              (counsel-search  . 2)
                              (counsel-grep    . 2)
@@ -84,6 +84,8 @@
 (leaf prescient
   :url https://github.com/raxod502/prescient.el
   :straight t
+  :pre-setq
+  (prescient-filter-method           . '(literal regexp initialism fuzzy))
   :setq
   (prescient-sort-full-matches-first . t)
   :global-minor-mode prescient-persist-mode)
