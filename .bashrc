@@ -98,6 +98,9 @@ if [ -n "$(command -v fdfind)" ]; then
 fi
 if [ -n "$(command -v bat)" ]; then
     alias cat='bat'
+    if [ -n "$(command -v col)" ]; then
+        export MANPAGER="sh -c 'col -bx | bat -l man --paging=always -p'"
+    fi
 fi
 if [ -n "$(command -v nvim)" ]; then
     alias vim='nvim'
