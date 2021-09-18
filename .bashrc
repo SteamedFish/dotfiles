@@ -12,8 +12,8 @@ export GOPATH=$HOME/.go
 
 # do nothing if not running interactively
 case $- in
-    *i*) ;;
-    *) return;;
+*i*) ;;
+*) return ;;
 esac
 
 # enable color support
@@ -21,7 +21,7 @@ if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
     export CLICOLOR=true
 fi
 
-if $CLICOLOR ;then
+if $CLICOLOR; then
     if [ -x /usr/bin/dircolors ]; then
         if [ -r ~/.dircolors ]; then
             eval "$(dircolors -b ~/.dircolors)"
@@ -74,15 +74,16 @@ if $CLICOLOR; then
     export LESS_TERMCAP_se=$'\E[0m'        # reset reverse video
     export LESS_TERMCAP_us=$'\E[1;32m'     # begin underline
     export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
+    export GROFF_NO_SGR=1                  # For Konsole and Gnome-terminal
 fi
 alias cp='cp -iv'
 alias mv='mv -iv'
 alias rm='rm -iv'
 alias rsync='rsync --progress --human-readable'
-if [ -n "$(command -v lsd)" ];then
+if [ -n "$(command -v lsd)" ]; then
     alias ls='lsd'
     alias tree='lsd --tree'
-elif [ -n "$(command -v exa)" ];then
+elif [ -n "$(command -v exa)" ]; then
     if [[ "$OSTYPE" == "linux-android" ]] || [[ "$OS" == "OSX" ]]; then
         alias ls='exa --git --extended'
         alias tree='exa --tree --git --extended'
@@ -91,14 +92,14 @@ elif [ -n "$(command -v exa)" ];then
         alias tree='exa --tree --git --icons --extended --color=auto'
     fi
 fi
-if [ -n "$(command -v fdfind)" ];then
+if [ -n "$(command -v fdfind)" ]; then
     # Debian use this name
     alias fd='fdfind'
 fi
-if [ -n "$(command -v bat)" ];then
+if [ -n "$(command -v bat)" ]; then
     alias cat='bat'
 fi
-if [ -n "$(command -v nvim)" ];then
+if [ -n "$(command -v nvim)" ]; then
     alias vim='nvim'
     alias vi='nvim'
 fi

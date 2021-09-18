@@ -8,8 +8,8 @@
 	<true/>
 	<key>Coprocess MRU</key>
 	<array>
-		<string>/usr/local/bin/iterm2-recv-zmodem.sh</string>
 		<string>/usr/local/bin/iterm2-send-zmodem.sh</string>
+		<string>/usr/local/bin/iterm2-recv-zmodem.sh</string>
 	</array>
 	<key>Custom Color Presets</key>
 	<dict>
