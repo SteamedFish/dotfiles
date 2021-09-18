@@ -131,5 +131,11 @@
   :doc "use M-x fanyi-dwim to translate"
   :straight t)
 
+(leaf google-translate
+  :url https://github.com/atykhonov/google-translate
+  :tag "TODO"
+  :straight t
+  :require 'google-translate-default-ui)
+
 (provide 'init-chinese)
 ;;; init-chinese.el ends here
