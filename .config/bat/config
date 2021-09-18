@@ -2,3 +2,4 @@
 --color=auto
 --paging=never
 --style=snip,plain,header
+--wrap=never
