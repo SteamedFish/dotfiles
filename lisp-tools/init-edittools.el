@@ -203,7 +203,16 @@
   :setq
   (tramp-default-method                       . "ssh")
   (tramp-completion-reread-directory-timeout  . 60)
-  (tramp-verbose                              . 2))
+  (tramp-verbose                              . 2)
+  :config
+  ;; use `/yadm::<file>' to access yadm controlled files
+  (add-to-list 'tramp-methods
+               '("yadm"
+                 (tramp-login-program "yadm")
+                 (tramp-login-args (("enter")))
+                 (tramp-login-env (("SHELL") ("/bin/sh")))
+                 (tramp-remote-shell "/bin/sh")
+                 (tramp-remote-shell-args ("-c")))))
 
 (provide 'init-edittools)
 ;;; init-edittools.el ends here
