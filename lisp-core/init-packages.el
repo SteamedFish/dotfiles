@@ -70,7 +70,12 @@
 
 (leaf system-packages
   :url https://gitlab.com/jabranham/system-packages
-  :setq (system-packages-noconfirm . t))
+  :setq (system-packages-noconfirm . t)
+  :config
+  (when IS-MAC
+    ;; emacs-app-nightly will use apt-get for some reason
+    (setq system-packages-package-manager 'brew
+          system-packages-use-sudo        nil)))
 
 (leaf blackout
   :url https://github.com/raxod502/blackout)
