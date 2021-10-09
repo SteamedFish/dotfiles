@@ -105,12 +105,14 @@
 
 (leaf grammarly
   :url https://github.com/emacs-grammarly/grammarly
-  :straight t)
+  :straight t
+  :config
+  (setq grammarly-username (auth-source-pass-get "login" "grammarly.com")
+        grammarly-password (auth-source-pass-get 'secret "grammarly.com")))
 
 (leaf keytar
   :url https://github.com/emacs-grammarly/keytar
   :straight t
-  ;; TODO: configure usrname/password
   :pre-setq
   `(keytar-install-dir . ,(concat my-data-dir "data/keytar"))
   :config
@@ -125,6 +127,7 @@
 
 (leaf lsp-grammarly
   :url https://github.com/emacs-grammarly/lsp-grammarly
+  :doc "Login manually with M-x lsp-grammarly-login"
   :straight t
   ;; Don't globally enable it for every text buffer.
   ;; Enable it manually.
