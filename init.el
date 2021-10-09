@@ -61,6 +61,7 @@
 (require 'init-version-control)
 (require 'init-chinese)
 (require 'init-eaf)
+(require 'init-pass)
 (require 'init-telega)
 
 ;; lisp-lang
