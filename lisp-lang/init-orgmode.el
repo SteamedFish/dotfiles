@@ -303,6 +303,18 @@
   :blackout org-pretty-tags-mode
   :global-minor-mode org-pretty-tags-global-mode)
 
+(leaf org-gcal
+  :url https://github.com/myuhe/org-gcal.el
+  :doc "when first running you must run it manually to let it popup login window"
+  :straight t
+  :init
+  (run-at-time "5 min" 300 #'org-gcal-sync t)
+  :config
+  (setq org-gcal-client-id     (auth-source-pass-get "login" "shopee/gcal")
+        org-gcal-client-secret (auth-source-pass-get 'secret "shopee/gcal"))
+  (setq org-gcal-fetch-file-alist
+        `((,(auth-source-pass-get "login" "shopee/email") . ,(expand-file-name (concat org-directory "gcal.org"))))))
+
 (leaf iscroll
   :url https://github.com/casouri/iscroll
   :straight t
