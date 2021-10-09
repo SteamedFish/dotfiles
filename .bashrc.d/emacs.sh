@@ -28,7 +28,7 @@ function emacs {
         return
     fi
     args=("$*")
-    for ((i=0; i <= ${#args}; i++)); do
+    for ((i = 0; i <= ${#args}; i++)); do
         local a=${args[i]}
         # NOTE: -c for creating new frame
         if [[ ${a:0:1} == '-' && ${a} != '-c' && ${a} != '--' ]]; then
@@ -47,7 +47,7 @@ function emacs {
     fi
 }
 
-if [ -d "$HOME/emacs-distros/spacemacs" ] && \
+if [ -d "$HOME/emacs-distros/spacemacs" ] &&
     [ -f "$HOME/.emacs-profiles.el" ]; then
     for distro in centaur spacemacs; do
         eval "
