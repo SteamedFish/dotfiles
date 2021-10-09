@@ -13,9 +13,6 @@
   :straight t
   :when (fboundp 'module-load)
   :hook
-  (vterm-mode-hook . (lambda()
-                       (make-variable-buffer-local confirm-kill-processes)
-                       (setq-local confirm-kill-processes nil)))
   (vterm-mode-hook . evil-insert-state)
   :config
   (unless (executable-find "vterm-ctrl")
