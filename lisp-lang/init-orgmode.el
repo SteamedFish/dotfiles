@@ -250,6 +250,8 @@
   ;; `kill-buffer-save-emacs' confirm kill process
   ;; befure running `kill-emacs-query-functions' and `kill-emacs-hook'
   ;; we need to kill all org-roam-ui processes before `kill-buffer-save-emacs'
+  :advice
+  (:before save-buffers-kill-terminal httpd-stop)
   :setq
   (org-roam-ui-sync-theme      . t)
   (org-roam-ui-follow          . t)
