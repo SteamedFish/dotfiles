@@ -191,11 +191,11 @@
   :straight t
   :bind
   (:org-tree-slide-mode-map
-   ;; TODO: configure for evil normal mode
    ("<left>" . org-tree-slide-move-previous-tree)
    ("<right>" . org-tree-slide-move-next-tree)
    ("q" . org-tree-slide-mode))
   :hook ((org-tree-slide-play-hook . (lambda ()
+                                       (evil-normal-state)
                                        (text-scale-increase 3)
                                        (read-only-mode 1)
                                        (writeroom-mode 1)
