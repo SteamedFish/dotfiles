@@ -24,6 +24,11 @@
   :url https://github.com/volrath/password-store-otp.el
   :straight t)
 
+(leaf auth-source-pass
+  :tag "builtin"
+  :config
+  (auth-source-pass-enable))
+
 (leaf ivy-pass
   :url https://github.com/ecraven/ivy-pass
   :straight t
