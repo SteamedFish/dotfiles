@@ -246,8 +246,8 @@
   :url https://github.com/org-roam/org-roam-ui
   :straight (org-roam-ui :host github :repo "org-roam/org-roam-ui" :files ("*.el" "out"))
   :blackout (org-roam-ui-mode org-roam-ui-follow-mode)
-  :advice
-  (:before save-buffers-kill-emacs httpd-stop)
+  ;; :advice
+  ;; (:before save-buffers-kill-emacs httpd-stop)
   :setq
   (org-roam-ui-sync-theme      . t)
   (org-roam-ui-follow          . t)
