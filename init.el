@@ -47,6 +47,7 @@
 (require 'init-treemacs)
 
 ;; lisp-tools
+(require 'init-notifier)
 (require 'init-projects)
 (require 'init-dired)
 (require 'init-helpers)
