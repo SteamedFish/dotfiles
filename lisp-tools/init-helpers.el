@@ -53,6 +53,19 @@
   :straight nil
   :bind (([remap list-buffers] . ibuffer)))
 
+(leaf ibuffer-projectile
+  :url https://github.com/purcell/ibuffer-projectile
+  :straight t
+  :hook
+  (ibuffer-hook . ibuffer-projectile-set-filter-groups))
+
+(leaf ibuffer-vc
+  :url https://github.com/purcell/ibuffer-vc
+  :straight t
+  :disabled t
+  :hook
+  (ibuffer-hook . ibuffer-vc-set-filter-groups-by-vc-root))
+
 (leaf help
   :tag "builtin"
   :straight nil
