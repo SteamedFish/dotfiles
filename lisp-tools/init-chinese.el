@@ -84,6 +84,7 @@
                                (lambda () (minibufferp))
                                rime-predicate-org-latex-mode-p
                                (lambda () (button-at (point)))
+                               (lambda () (string= major-mode "vterm-mode"))
                                rime-predicate-after-alphabet-char-p
                                rime-predicate-after-ascii-char-p
                                rime-predicate-current-uppercase-letter-p
