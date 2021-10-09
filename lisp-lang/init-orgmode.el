@@ -309,6 +309,8 @@
   :straight t
   :init
   (run-at-time "5 min" 300 #'org-gcal-sync t)
+  :setq
+  (org-gcal-notify-p . nil)
   :config
   (setq org-gcal-client-id     (auth-source-pass-get "login" "shopee/gcal")
         org-gcal-client-secret (auth-source-pass-get 'secret "shopee/gcal"))
