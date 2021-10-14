@@ -62,18 +62,15 @@
       (set-fontset-font nil charset chinese-font nil 'prepend)
       (set-fontset-font nil charset "HanaMinA"   nil 'append)
       (set-fontset-font nil charset "HanaMinB"   nil 'append)))
-  ;; add some symbol fonts for font failback
-  (set-fontset-font nil 'symbol "Noto Color Emoji"     nil 'append)
-  (set-fontset-font nil 'symbol "Apple Color Emoji"    nil 'prepend)
-  (set-fontset-font nil 'symbol "Noto Sans Symbols"    nil 'append)
-  (set-fontset-font nil 'symbol "Noto Sans Symbols2"   nil 'append)
-  (set-fontset-font nil 'symbol "Symbola"              nil 'append)
 
-  (set-fontset-font t   nil     "Noto Color Emoji"     nil 'append)
-  (set-fontset-font t   nil     "Apple Color Emoji"    nil 'append)
-  (set-fontset-font t   nil     "Noto Sans Symbols"    nil 'append)
-  (set-fontset-font t   nil     "Noto Sans Symbols2"   nil 'append)
-  (set-fontset-font t   nil     "Symbola"              nil 'append))
+  (set-fontset-font nil 'emoji "Noto Color Emoji"     nil 'append)
+  (set-fontset-font nil 'emoji "Apple Color Emoji"    nil 'prepend)
+  (set-fontset-font nil 'emoji "Noto Sans Symbols"    nil 'append)
+  (set-fontset-font nil 'emoji "Noto Sans Symbols2"   nil 'append)
+  (set-fontset-font nil 'emoji "Symbola"              nil 'append)
+
+  ;; font fallback
+  (set-fontset-font t   nil    "Symbola"              nil 'append))
 
 (leaf face-remap
   :tag "builtin"
