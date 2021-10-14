@@ -54,6 +54,10 @@
   (telega-sticker-set-download            . t)
   (telega-chat-show-deleted-messages-for  . '(all))
   :config
+  ;; telega uses svg to render some lines.
+  ;; the length of the line will be calculated wrong if we use buffer local mode
+  ;; disable some of the lines
+  (delete '(underline-bar (telega-svg-create-horizontal-bar 1 0.7 telega-symbol-underline-bar)) telega-symbols-emojify)
   (add-hook 'telega-load-hook #'telega-mode-line-mode)
   ;; (evil-set-initial-state 'telega-chat-mode 'insert)
   (add-to-list 'all-the-icons-mode-icon-alist
