@@ -11,6 +11,7 @@
 (leaf vterm
   :url https://github.com/akermu/emacs-libvterm
   :straight t
+  :comment TODO: use buffer-local-mode to configure a nerd font for vterm
   :when (fboundp 'module-load)
   :hook
   (vterm-mode-hook . evil-insert-state)
