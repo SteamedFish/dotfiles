@@ -21,5 +21,16 @@
   (unless (executable-find "vterm-ctrl")
     (system-packages-ensure "libvterm")))
 
+(leaf multi-vterm
+  :url https://github.com/suonlight/multi-vterm
+  :straight t
+  :bind
+  ;; FIXME: this remap is not working
+  ([remap vterm] . multi-vterm)
+  :config
+  (evil-define-key 'normal vterm-mode-map (kbd ",c")  #'multi-vterm)
+  (evil-define-key 'normal vterm-mode-map (kbd ",n")  #'multi-vterm-next)
+  (evil-define-key 'normal vterm-mode-map (kbd ",p")  #'multi-vterm-prev))
+
 (provide 'init-term)
 ;;; init-term.el ends here
