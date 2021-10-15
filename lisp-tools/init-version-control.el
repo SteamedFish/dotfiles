@@ -34,15 +34,7 @@
   :url "https://magit.vc/"
   :straight t
   :hook
-  (after-save-hook . magit-after-save-refresh-status)
-  :init
-  ;;HACK: magit requires projecct-swith-commands, which only avaliable after Emacs 28.1
-  (when (version< emacs-version "28.1")
-    (setq project-switch-commands  '((project-find-file "Find file")
-                                     (project-find-regexp "Find regexp")
-                                     (project-dired "Dired")
-                                     (project-vc-dir "VC-Dir")
-                                     (project-eshell "Eshell")))))
+  (after-save-hook . magit-after-save-refresh-status))
 
 (leaf forge
   :url https://github.com/magit/forge
