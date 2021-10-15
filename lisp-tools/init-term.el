@@ -14,6 +14,8 @@
   :when (fboundp 'module-load)
   :hook
   (vterm-mode-hook . evil-insert-state)
+  :setq
+  (vterm-always-compile-module . t)
   :config
   (unless (executable-find "vterm-ctrl")
     (system-packages-ensure "libvterm")))
