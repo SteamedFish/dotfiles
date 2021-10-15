@@ -33,12 +33,12 @@
   (delete-by-moving-to-trash     . t)
   (history-length                . 1000)
   (frame-resize-pixelwise        . t)
+  (use-short-answers             . t)
   :hook
   (prog-mode-hook . (lambda () (setq show-trailing-whitespace t)))
   (text-mode-hook . (lambda () (setq show-trailing-whitespace t)))
   (conf-mode-hook . (lambda () (setq show-trailing-whitespace t)))
   :init
-  (fset 'yes-or-no-p 'y-or-n-p)
   (set-charset-priority 'unicode)
   (cond
    (IS-MAC
