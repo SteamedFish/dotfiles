@@ -204,8 +204,8 @@
   (tramp-default-method                       . "ssh")
   (tramp-completion-reread-directory-timeout  . 60)
   (tramp-verbose                              . 2)
+  :require t ;; must require to make `tramp-methods' available
   :config
-  ;; BUG FIXME recentf will provide a warning Warning: Method ‘yadm’ is not known.
   ;; use `/yadm::<file>' to access yadm controlled files
   ;; use `(magit-status "/yadm::")' to access magit directly
   (add-to-list 'tramp-methods
@@ -217,7 +217,7 @@
                  (tramp-remote-shell-args ("-c"))))
   ;; leaf's :bind don't handle lambda correctly
   (define-key ctl-x-map
-    (kbd "G") (lambda () (interactive)(magit-status "/yadm::"))))
+              (kbd "G") (lambda () (interactive)(magit-status "/yadm::"))))
 
 (provide 'init-edittools)
 ;;; init-edittools.el ends here
