@@ -139,6 +139,13 @@
   :straight t
   :hook (org-mode-hook . toc-org-mode))
 
+(leaf org-bars
+  :url https://github.com/tonyaldon/org-bars
+  :doc adds bars to the virtual indentation
+  :straight (org-bars :host github :repo "tonyaldon/org-bars")
+  :disabled t
+  :hook (org-mode-hook . org-bars-mode))
+
 (leaf ox-pandoc
   :url https://github.com/kawabata/ox-pandoc
   :straight t
