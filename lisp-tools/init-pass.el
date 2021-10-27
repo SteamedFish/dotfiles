@@ -26,6 +26,8 @@
 
 (leaf auth-source-pass
   :tag "builtin"
+  :doc use (auth-source-pass-get "login" "xxxx") to get username
+  :doc use (auth-source-pass-get 'secret "xxxx") to get password
   :config
   (auth-source-pass-enable))
 
