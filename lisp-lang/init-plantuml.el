@@ -32,5 +32,14 @@
   :require t
   :config (flycheck-plantuml-setup))
 
+(leaf ob-plantuml
+  :comment provided by org-plus-contrib
+  :require t
+  :setq
+  (org-plantuml-jar-path . plantuml-jar-path)
+  :config
+  (add-to-list 'org-babel-default-header-args:plantuml
+               '(:cmdline . "-charset utf-8")))
+
 (provide 'init-plantuml)
 ;;; init-plantuml.el ends here
