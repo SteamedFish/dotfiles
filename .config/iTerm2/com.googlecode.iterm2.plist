@@ -8,8 +8,8 @@
 	<true/>
 	<key>Coprocess MRU</key>
 	<array>
-		<string>/usr/local/bin/iterm2-send-zmodem.sh</string>
 		<string>/usr/local/bin/iterm2-recv-zmodem.sh</string>
+		<string>/usr/local/bin/iterm2-send-zmodem.sh</string>
 	</array>
 	<key>Custom Color Presets</key>
 	<dict>
@@ -1140,6 +1140,8 @@
 			<string></string>
 			<key>Show Status Bar</key>
 			<false/>
+			<key>Show Timestamps</key>
+			<integer>2</integer>
 			<key>Silence Bell</key>
 			<true/>
 			<key>Smart Cursor Color</key>
@@ -1150,8 +1152,12 @@
 				<dict>
 					<key>algorithm</key>
 					<integer>1</integer>
+					<key>auto-rainbow style</key>
+					<integer>0</integer>
 					<key>font</key>
 					<string>.AppleSystemUIFont 12</string>
+					<key>remove empty components</key>
+					<false/>
 				</dict>
 				<key>components</key>
 				<array>
