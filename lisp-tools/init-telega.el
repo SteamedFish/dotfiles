@@ -49,6 +49,7 @@
                                               "@nasy_words_bot"
                                               "@PythaGataBot"
                                               "@DeezerMusicBot"
+                                              "@nixcaosaysbot"
                                               "@shuibiaobot"))
   (telega-chat-history-limit              . 100)
   (telega-sticker-set-download            . t)
