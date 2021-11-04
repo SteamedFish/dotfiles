@@ -297,6 +297,17 @@
   (org-mode-hook       . valign-mode)
   (markdown-mode-hook  . valign-mode))
 
+(leaf restclient
+  :url https://github.com/pashky/restclient.el
+  :straight t)
+
+(leaf ob-restclient
+  :url https://github.com/alf/ob-restclient.el
+  :straight t
+  :require t
+  :config
+  (org-babel-do-load-languages 'org-babel-load-languages '((restclient . t))))
+
 (leaf org-alert
   :url https://github.com/spegoraro/org-alert
   :straight t
