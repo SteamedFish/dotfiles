@@ -84,11 +84,7 @@ if [ -f "$HOME/.zinit/bin/zinit.zsh" ]; then
     fi
 
     if [ -n "$(command -v wakatime)" ]; then
-        if [ -n "$(command -v brew)" ]; then
-            export ZSH_WAKATIME_BIN=$(brew --prefix)/bin/wakatime
-        else
-            export ZSH_WAKATIME_BIN=/usr/bin/wakatime
-        fi
+        export ZSH_WAKATIME_BIN=$(command -v wakatime)
         zinit light sobolevn/wakatime-zsh-plugin
     fi
 
