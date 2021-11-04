@@ -86,6 +86,7 @@
       (setq buffer-face-mode-face 'my-align-by-sarasa)
       (make-variable-buffer-local 'face-font-rescale-alist)
       ;; make symbols smaller, 14 * 0.93 = 13 14 * 0.86 = 12, 14 * 0.79 = 11
+      (add-to-list 'face-font-rescale-alist '("-Noto Sans CJK SC-"    . 0.86))
       (add-to-list 'face-font-rescale-alist '("-STIXGeneral-"         . 0.86))
       (add-to-list 'face-font-rescale-alist '("-Apple Color Emoji-"   . 0.79))
       (buffer-face-mode))))
