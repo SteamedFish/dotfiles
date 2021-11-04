@@ -83,10 +83,12 @@ if [ -f "$HOME/.zinit/bin/zinit.zsh" ]; then
         zinit light iam4x/zsh-iterm-touchbar
     fi
 
+    # by default wakatime-zsh-plugin searches for binary wakatime-cli
+    # but wakatime-cli may install just wakatime
     if [ -n "$(command -v wakatime)" ]; then
         export ZSH_WAKATIME_BIN=$(command -v wakatime)
-        zinit light sobolevn/wakatime-zsh-plugin
     fi
+    zinit light sobolevn/wakatime-zsh-plugin
 
 fi
 
