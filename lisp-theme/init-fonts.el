@@ -77,19 +77,14 @@
   :blackout buffer-face-mode
   :when IS-GUI
   :config
-  (make-face 'my-align-by-sarasa)
-  (set-face-font 'my-align-by-sarasa (font-spec :family "Sarasa Mono SC"))
-  (defun my-align-with-sarasa-font ()
-    "Align chinese and english by setting font to Sarasa"
+  (defun my-align-font ()
+    "Align chinese and english by adjust font sizes"
     (interactive)
-    (when (find-font (font-spec :name "Sarasa Mono SC"))
-      (setq buffer-face-mode-face 'my-align-by-sarasa)
-      (make-variable-buffer-local 'face-font-rescale-alist)
-      ;; make symbols smaller, 14 * 0.93 = 13 14 * 0.86 = 12, 14 * 0.79 = 11
-      (add-to-list 'face-font-rescale-alist '("-Noto Sans CJK SC-"    . 0.86))
-      (add-to-list 'face-font-rescale-alist '("-STIXGeneral-"         . 0.86))
-      (add-to-list 'face-font-rescale-alist '("-Apple Color Emoji-"   . 0.79))
-      (buffer-face-mode))))
+    (make-variable-buffer-local 'face-font-rescale-alist)
+    ;; make symbols smaller, 14 * 0.93 = 13 14 * 0.86 = 12, 14 * 0.79 = 11
+    (add-to-list 'face-font-rescale-alist '("-Noto Sans CJK SC-"    . 0.86))
+    (add-to-list 'face-font-rescale-alist '("-STIXGeneral-"         . 0.86))
+    (add-to-list 'face-font-rescale-alist '("-Apple Color Emoji-"   . 0.79))))
 
 (leaf prog-mode
   :tag "builtin"
