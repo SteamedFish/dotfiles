@@ -60,7 +60,7 @@ if [ -f "$HOME/.zinit/bin/zinit.zsh" ]; then
     # shellcheck source=../.zinit/bin/zinit.zsh
     source "$HOME/.zinit/bin/zinit.zsh"
 
-    if [ -z "$(command -v starship)" ];then
+    if [ -z "$(command -v starship)" ]; then
         zinit light romkatv/powerlevel10k
     fi
 
@@ -79,12 +79,19 @@ if [ -f "$HOME/.zinit/bin/zinit.zsh" ]; then
     zinit ice wait"1" lucid
     zinit load psprint/zsh-navigation-tools
 
-
     if [[ "$OSTYPE" == "darwin"* ]]; then
         zinit light iam4x/zsh-iterm-touchbar
     fi
 
-    zinit light sobolevn/wakatime-zsh-plugin
+    if [ -n "$(command -v wakatime)" ]; then
+        if [ -n "$(command -v brew)" ]; then
+            export ZSH_WAKATIME_BIN=$(brew --prefix)/bin/wakatime
+        else
+            export ZSH_WAKATIME_BIN=/usr/bin/wakatime
+        fi
+        zinit light sobolevn/wakatime-zsh-plugin
+    fi
+
 fi
 
 # shellcheck disable=1090
