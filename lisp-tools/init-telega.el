@@ -69,7 +69,18 @@
                '(telega-chat-mode all-the-icons-fileicon "telegram"
                                   :heigt 1.0
                                   :v-adjust -0.2
-                                  :face all-the-icons-blue)))
+                                  :face all-the-icons-blue))
+  (defun my-telega--set-window-width (width)
+    "Set the width of the telega buffer to WIDTH."
+    (unless (one-window-p)
+      (setq window-size-fixed t)
+      (cond
+       ((> (window-width) width)
+        (shrink-window-horizontally (- (window-width) width)))
+       ((< (window-width) width)
+        (enlarge-window-horizontally (- width (window-width)))))))
+  (add-hook 'telega-chat-mode-hook (lambda() (my-telega--set-window-width 52)))
+  (add-hook 'telega-root-mode-hook (lambda() (my-telega--set-window-width 52))))
 
 (leaf telega-url-shorten
   :url https://github.com/zevlg/telega.el
