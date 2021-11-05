@@ -23,19 +23,23 @@
   :config
   (let* ((fonts-alist
           (cond
-           (IS-LINUX '(("Rec Mono Duotone"    . "ttf-recursive")
-                       ("Sarasa Mono SC"      . "ttf-sarasa-gothic")
-                       ("Noto Sans Symbols"   . "noto-fonts")
-                       ("Noto Color Emoji"    . "noto-fonts-emoji")
-                       ("HanaMinA"            . "ttf-hanazono")
-                       ("Symbola"             . "ttf-symbola")))
-           (IS-MAC   '(("Rec Mono Duotone"    . "font-recursive-code")
-                       ("Recursive"           . "font-recursive")
-                       ("Sarasa Mono SC"      . "font-sarasa-gothic")
-                       ("HanaMinA"            . "font-hanamina")
-                       ("Noto Sans CJK SC"    . "font-noto-sans-cjk-sc")
-                       ("Noto Sans Symbols"   . "font-noto-sans-symbols")
-                       ("Noto Sans Symbols2"  . "font-noto-sans-symbols-2")))
+           (IS-LINUX '(("Rec Mono Duotone"     . "ttf-recursive")
+                       ("Sarasa Mono SC"       . "ttf-sarasa-gothic")
+                       ("Victor Mono"          . "font-victor-mono")
+                       ("VictorMono Nerd Font" . "nerd-fonts-victor-mono")
+                       ("Noto Sans Symbols"    . "noto-fonts")
+                       ("Noto Color Emoji"     . "noto-fonts-emoji")
+                       ("HanaMinA"             . "ttf-hanazono")
+                       ("Symbola"              . "ttf-symbola")))
+           (IS-MAC   '(("Rec Mono Duotone"     . "font-recursive-code")
+                       ("Recursive"            . "font-recursive")
+                       ("Victor Mono"          . "font-victor-mono")
+                       ("VictorMono Nerd Font" . "font-victor-mono-nerd-font")
+                       ("Sarasa Mono SC"       . "font-sarasa-gothic")
+                       ("HanaMinA"             . "font-hanamina")
+                       ("Noto Sans CJK SC"     . "font-noto-sans-cjk-sc")
+                       ("Noto Sans Symbols"    . "font-noto-sans-symbols")
+                       ("Noto Sans Symbols2"   . "font-noto-sans-symbols-2")))
            (t        '(())))))
 
     (cl-loop for (key . value) in fonts-alist
@@ -86,7 +90,15 @@
     (add-to-list 'face-font-rescale-alist '("-Pingfang SC-"         . 0.86))
     (add-to-list 'face-font-rescale-alist '("-Hiragino Sans GB-"    . 0.93))
     (add-to-list 'face-font-rescale-alist '("-STIXGeneral-"         . 0.79))
-    (add-to-list 'face-font-rescale-alist '("-Apple Color Emoji-"   . 0.79))))
+    (add-to-list 'face-font-rescale-alist '("-Apple Color Emoji-"   . 0.79)))
+
+  (make-face 'my-nerd-font)
+  (set-face-font 'my-nerd-font (font-spec :family "VictorMono Nerd Font Mono"))
+  (defun my-nerd-font ()
+    "configure nerd font for buffer"
+    (interactive)
+    (setq buffer-face-mode-face 'my-nerd-font)
+    (buffer-face-mode t)))
 
 (leaf prog-mode
   :tag "builtin"

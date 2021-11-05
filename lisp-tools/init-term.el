@@ -15,6 +15,7 @@
   :when (fboundp 'module-load)
   :hook
   (vterm-mode-hook . evil-insert-state)
+  (vterm-mode-hook . my-nerd-font)
   :setq
   (vterm-always-compile-module . t)
   :config
