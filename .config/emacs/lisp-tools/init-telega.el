@@ -56,7 +56,7 @@
                                               "@shuibiaobot"))
   (telega-chat-history-limit              . 100)
   (telega-sticker-set-download            . t)
-  (telega-chat-fill-column                . 40)
+  (telega-chat-fill-column                . 50)
   (telega-chat-show-deleted-messages-for  . '(all))
   :config
   (add-hook 'telega-load-hook #'telega-mode-line-mode)
@@ -80,8 +80,8 @@
         (shrink-window-horizontally (- (window-width) width)))
        ((< (window-width) width)
         (enlarge-window-horizontally (- width (window-width)))))))
-  (add-hook 'telega-chat-mode-hook (lambda() (my-telega--set-window-width 52)))
-  (add-hook 'telega-root-mode-hook (lambda() (my-telega--set-window-width 52))))
+  (add-hook 'telega-chat-mode-hook (lambda() (my-telega--set-window-width 62)))
+  (add-hook 'telega-root-mode-hook (lambda() (my-telega--set-window-width 62))))
 
 (leaf telega-url-shorten
   :url https://github.com/zevlg/telega.el
