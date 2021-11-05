@@ -55,6 +55,7 @@
                                               "@shuibiaobot"))
   (telega-chat-history-limit              . 100)
   (telega-sticker-set-download            . t)
+  (telega-chat-fill-column                . 40)
   (telega-chat-show-deleted-messages-for  . '(all))
   :config
   (add-hook 'telega-load-hook #'telega-mode-line-mode)
