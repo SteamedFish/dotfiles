@@ -20,6 +20,8 @@
   (telega-open-file-hook . telega-edit-file-mode)
   (telega-chat-mode-hook . my-align-font)
   (telega-root-mode-hook . my-align-font)
+  (telega-chat-mode-hook . mixed-pitch-mode)
+  (telega-root-mode-hook . mixed-pitch-mode)
   (telega-chat-mode-hook . (lambda () (visual-line-mode t)))
   (telega-chat-mode-hook . (lambda ()
                              (set (make-local-variable 'company-backends)
