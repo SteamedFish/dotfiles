@@ -89,7 +89,7 @@
     (add-to-list 'face-font-rescale-alist '("-Noto Sans CJK SC-"    . 0.86))
     (add-to-list 'face-font-rescale-alist '("-Pingfang SC-"         . 0.86))
     (add-to-list 'face-font-rescale-alist '("-Hiragino Sans GB-"    . 0.93))
-    (add-to-list 'face-font-rescale-alist '("-STIXGeneral-"         . 0.79))
+    (add-to-list 'face-font-rescale-alist '("-STIXGeneral-"         . 0.86))
     (add-to-list 'face-font-rescale-alist '("-Apple Color Emoji-"   . 0.79)))
 
   (make-face 'my-nerd-font)
