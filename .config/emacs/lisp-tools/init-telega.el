@@ -41,6 +41,7 @@
   :setq
   `(telega-directory                      . ,(expand-file-name (concat my-data-dir "data/telega")))
   `(telega-symbol-forward                 . ,(compose-chars ?💬 ?🠒))
+  `(telega-symbol-underline-bar           . ,(propertize " " 'face 'telega-webpage-strike-through))
   (telega-completing-read-function        . 'ivy-completing-read)
   (telega-use-tracking-for                . nil)
   (telega-chat-ret-always-sends-message   . nil)
