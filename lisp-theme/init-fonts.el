@@ -52,7 +52,7 @@
   :when IS-GUI
   :unless noninteractive ;; `set-fontset-font' will cause segfault in noninteractive mode
   :config
-  (set-face-attribute 'default nil :font (font-spec :family "Victor Mono" :size 14))
+  (set-face-attribute 'default nil :font (font-spec :family "Rec Mono Duotone" :size 14))
   (cond
    (IS-LINUX
     (set-face-font 'variable-pitch "Recursive Sans Casual Static"))
