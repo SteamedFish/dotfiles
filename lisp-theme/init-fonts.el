@@ -92,12 +92,10 @@
     (add-to-list 'face-font-rescale-alist '("-STIXGeneral-"         . 0.86))
     (add-to-list 'face-font-rescale-alist '("-Apple Color Emoji-"   . 0.79)))
 
-  (make-face 'my-nerd-font)
-  (set-face-font 'my-nerd-font (font-spec :family "VictorMono Nerd Font Mono"))
   (defun my-nerd-font ()
     "configure nerd font for buffer"
     (interactive)
-    (setq buffer-face-mode-face 'my-nerd-font)
+    (setq-local buffer-face-mode-face '(:family "VictorMono Nerd Font Mono"))
     (buffer-face-mode t)))
 
 (leaf prog-mode
