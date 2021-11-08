@@ -137,7 +137,7 @@ setup_mac_system() {
 install_zplugin() {
     if ! [ -d "$HOME/.zinit/bin" ]; then
         mkdir -p "$HOME/.zinit/"
-        git clone https://github.com/zdharma/zinit.git "$HOME/.zinit/bin"
+        git clone https://github.com/zdharma-continuum/zinit.git "$HOME/.zinit/bin"
         zsh -c "source $HOME/.zinit/bin/zinit.zsh; zinit self-update; zinit update --all"
     fi
 }

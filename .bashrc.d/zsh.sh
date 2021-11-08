@@ -68,7 +68,7 @@ if [ -f "$HOME/.zinit/bin/zinit.zsh" ]; then
     zinit light zsh-users/zsh-completions
 
     zinit ice wait atinit"zpcompinit; zpcdreplay"
-    zinit light zdharma/fast-syntax-highlighting
+    zinit light zdharma-continuum/fast-syntax-highlighting
 
     zinit ice wait atload"_zsh_autosuggest_start"
     zinit light zsh-users/zsh-autosuggestions

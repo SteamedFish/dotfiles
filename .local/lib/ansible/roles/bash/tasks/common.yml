@@ -12,7 +12,7 @@
             dest: ~/.zinit/bin
             force: no
             version: master
-            repo: https://github.com/zdharma/zinit.git
+            repo: https://github.com/zdharma-continuum/zinit.git
             recursive: yes
             track_submodules: yes
             update: yes
