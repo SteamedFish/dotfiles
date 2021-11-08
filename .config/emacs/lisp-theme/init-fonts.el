@@ -90,6 +90,7 @@
     (add-to-list 'face-font-rescale-alist '("-Pingfang SC-"         . 0.86))
     (add-to-list 'face-font-rescale-alist '("-Hiragino Sans GB-"    . 0.93))
     (add-to-list 'face-font-rescale-alist '("-STIXGeneral-"         . 0.86))
+    (add-to-list 'face-font-rescale-alist '("-Symbola-"             . 0.93))
     (add-to-list 'face-font-rescale-alist '("-Apple Color Emoji-"   . 0.79)))
 
   (defun my-nerd-font ()
