@@ -27,7 +27,6 @@
   (org-pretty-entities                 . t)
   (org-startup-folded                  . nil)
   (org-link-descriptive                . t)
-  (org-log-done                        . 'time)
   (org-catch-invisible-edits           . 'smart)
   `(org-archive-location               . ,(concat org-directory "archive.org::* From %s"))
   (org-log-done                        . 'time)

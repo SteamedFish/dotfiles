@@ -4,7 +4,7 @@
 
 ;;; Code:
 
-(let ((min-version "27.1"))
+(let ((min-version "28.0"))
   (when (version< emacs-version min-version)
     (error (concat "This config requires at least Emacs %s, "
                    "but you are running Emacs %s")
@@ -24,7 +24,14 @@
 
 (when (featurep 'comp)
   (setq native-comp-deferred-compilation (not noninteractive))
-  (add-to-list 'native-comp-eln-load-path (concat user-emacs-directory ".local/data/eln-cache")))
+  ;; FIXME: not working
+  (setq native-comp-eln-load-path
+        (remove
+         (expand-file-name
+          (concat user-emacs-directory "eln-cache/"))
+         native-comp-eln-load-path))
+  (add-to-list 'native-comp-eln-load-path
+               (expand-file-name (concat user-emacs-directory ".local/data/eln-cache"))))
 
 ;; Don't resize the frame when font size changes
 (setq frame-inhibit-implied-resize t)
