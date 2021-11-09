@@ -29,7 +29,6 @@
                        ("VictorMono Nerd Font" . "nerd-fonts-victor-mono")
                        ("Noto Sans Symbols"    . "noto-fonts")
                        ("Noto Color Emoji"     . "noto-fonts-emoji")
-                       ("Latin Modern Math"    . "otf-latinmodern-math")
                        ("HanaMinA"             . "ttf-hanazono")
                        ("Symbola"              . "ttf-symbola")))
            (IS-MAC   '(("Rec Mono Duotone"     . "font-recursive-code")
@@ -37,7 +36,6 @@
                        ("Victor Mono"          . "font-victor-mono")
                        ("VictorMono Nerd Font" . "font-victor-mono-nerd-font")
                        ("Sarasa Mono SC"       . "font-sarasa-gothic")
-                       ("Latin Modern Math"    . "font-latin-modern-math")
                        ("HanaMinA"             . "font-hanamina")
                        ("Noto Sans CJK SC"     . "font-noto-sans-cjk-sc")
                        ("Noto Sans Symbols"    . "font-noto-sans-symbols")
@@ -69,7 +67,7 @@
       (set-fontset-font nil charset "HanaMinA"   nil 'append)
       (set-fontset-font nil charset "HanaMinB"   nil 'append)))
 
-  (set-fontset-font nil 'mathematical "Latin Modern Math"    nil 'prepend)
+  (set-fontset-font nil 'mathematical "Symbola"       nil 'prepend)
 
   (set-fontset-font nil 'emoji "Noto Color Emoji"     nil 'append)
   (set-fontset-font nil 'emoji "Apple Color Emoji"    nil 'prepend)
@@ -94,7 +92,6 @@
     (add-to-list 'face-font-rescale-alist '("-Pingfang SC-"         . 0.86))
     (add-to-list 'face-font-rescale-alist '("-Hiragino Sans GB-"    . 0.93))
     (add-to-list 'face-font-rescale-alist '("-Fira Sans-"           . 0.86))
-    (add-to-list 'face-font-rescale-alist '("-Latin Modern Math-"   . 0.79))
     (add-to-list 'face-font-rescale-alist '("-Symbola-"             . 0.93))
     (add-to-list 'face-font-rescale-alist '("-Apple Color Emoji-"   . 0.71)))
 
