@@ -249,5 +249,9 @@
   :disabled t
   :global-minor-mode global-prettify-math-mode)
 
+(leaf language-detection
+  :url https://github.com/andreasjansson/language-detection.el
+  :straight t)
+
 (provide 'init-theme)
 ;;; init-theme.el ends here
