@@ -91,7 +91,7 @@
     (add-to-list 'face-font-rescale-alist '("-Hiragino Sans GB-"    . 0.93))
     (add-to-list 'face-font-rescale-alist '("-STIXGeneral-"         . 0.86))
     (add-to-list 'face-font-rescale-alist '("-Symbola-"             . 0.93))
-    (add-to-list 'face-font-rescale-alist '("-Apple Color Emoji-"   . 0.79)))
+    (add-to-list 'face-font-rescale-alist '("-Apple Color Emoji-"   . 0.71)))
 
   (defun my-nerd-font ()
     "configure nerd font for buffer"
