@@ -34,6 +34,7 @@
   (history-length                . 1000)
   (frame-resize-pixelwise        . t)
   (use-short-answers             . t)
+  (word-wrap-by-category         . t)
   :hook
   (prog-mode-hook . (lambda () (setq show-trailing-whitespace t)))
   (text-mode-hook . (lambda () (setq show-trailing-whitespace t)))
