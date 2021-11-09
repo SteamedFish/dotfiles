@@ -243,5 +243,11 @@
   :straight t
   :global-minor-mode solaire-global-mode)
 
+(leaf prettify-math
+  :url https://gitee.com/shaqxu/prettify-math
+  :straight t
+  :disabled t
+  :global-minor-mode global-prettify-math-mode)
+
 (provide 'init-theme)
 ;;; init-theme.el ends here
