@@ -89,7 +89,9 @@
     (add-to-list 'face-font-rescale-alist '("-Noto Sans CJK SC-"    . 0.86))
     (add-to-list 'face-font-rescale-alist '("-Pingfang SC-"         . 0.86))
     (add-to-list 'face-font-rescale-alist '("-Hiragino Sans GB-"    . 0.93))
-    (add-to-list 'face-font-rescale-alist '("-STIXGeneral-"         . 0.86))
+    (add-to-list 'face-font-rescale-alist '("-Iosevka-"             . 0.93))
+    (add-to-list 'face-font-rescale-alist '("-Fira Sans-"           . 0.86))
+    (add-to-list 'face-font-rescale-alist '("-STIXGeneral-"         . 0.71))
     (add-to-list 'face-font-rescale-alist '("-Symbola-"             . 0.93))
     (add-to-list 'face-font-rescale-alist '("-Apple Color Emoji-"   . 0.71)))
 
