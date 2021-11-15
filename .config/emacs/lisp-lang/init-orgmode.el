@@ -61,6 +61,11 @@
   (org-num-skip-footnotes  . t)
   (org-num-max-level       . 2))
 
+(leaf org-src
+  :straight nil
+  :setq
+  (org-src-preserve-indentation . nil))
+
 (leaf org-capture
   :bind
   (:ctl-x-map
