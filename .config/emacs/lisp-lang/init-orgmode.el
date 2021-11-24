@@ -252,7 +252,8 @@
   (org-roam-v2-ack      . t)
   :config
   (unless (file-exists-p org-roam-directory)
-    (make-directory org-roam-directory)))
+    (make-directory org-roam-directory))
+  (org-roam-db-autosync-mode t))
 
 (leaf org-roam-ui
   :url https://github.com/org-roam/org-roam-ui
