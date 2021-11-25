@@ -39,6 +39,7 @@
   (org-fontify-done-headline           . t)
   (org-fontify-quote-and-verse-blocks  . t)
   (org-confirm-babel-evaluate          . nil)
+  (org-tags-column                     . 0)
   :config
   (custom-theme-set-faces 'user
                           '(org-level-1 ((t (:height 1.75 :inherit outline-1))))
