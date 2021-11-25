@@ -142,7 +142,9 @@
   :url https://github.com/snosov1/toc-org
   :doc "Table of Contensts"
   :straight t
-  :hook (org-mode-hook . toc-org-mode))
+  :hook (org-mode-hook . toc-org-mode)
+  :setq
+  (toc-org-max-depth . 5))
 
 (leaf org-bars
   :url https://github.com/tonyaldon/org-bars
