@@ -69,11 +69,6 @@
   ;; TODO: this is not working
   (add-to-list 'native-comp-eln-load-path (concat my-data-dir "data/eln-cache/")))
 
-(leaf ffap
-  :tag "builtin"
-  :setq
-  (ffap-machine-p-known . 'reject))
-
 (leaf simple
   :tag "builtin"
   :blackout auto-fill-mode

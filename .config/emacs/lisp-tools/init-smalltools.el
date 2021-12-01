@@ -8,6 +8,17 @@
 
 ;;; Code:
 
+(leaf ffap
+  :tag "builtin"
+  :doc ffap: find file at point
+  :require t
+  :setq
+  (ffap-machine-p-local   . 'reject)
+  (ffap-machine-p-known   . 'reject)
+  (ffap-machine-p-unknown . 'reject)
+  :config
+  (ffap-bindings))
+
 (leaf rg
   :url https://github.com/dajva/rg.el
   :doc "C-c s to search"
