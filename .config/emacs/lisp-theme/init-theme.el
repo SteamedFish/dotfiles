@@ -64,6 +64,11 @@
   :tag "builtin"
   :global-minor-mode global-hl-line-mode)
 
+(leaf minions
+  :url https://github.com/tarsius/minions
+  :straight t
+  :global-minor-mode minions-mode)
+
 (leaf svg-tag-mode
   :url "https://github.com/rougier/svg-tag-mode"
   :tag "TODO"
