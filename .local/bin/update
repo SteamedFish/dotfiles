@@ -338,7 +338,7 @@ self_update() {
 update_vim() {
     echo "updating vim"
     cd "$HOME/.vim" && gitpull
-    cd "$HOME/.config/nvim" && gitpull
+    # cd "$HOME/.config/nvim" && gitpull
     # TODO not working currectly
     # run vim +SPUpdate +qall
 }
