@@ -1,7 +1,7 @@
 ---
 version: 2
 profile: UTF-8
-broadcast: true
+broadcast: false
 forward-agent: true
 iterm2: true
 clusters:
