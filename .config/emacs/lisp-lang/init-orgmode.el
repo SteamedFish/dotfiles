@@ -322,6 +322,8 @@
   :url https://github.com/spegoraro/org-alert
   :straight t
   :require t
+  ;; org-alert hangs up emacs 29
+  :disabled t
   :config (org-alert-enable))
 
 (leaf org-pretty-tags
