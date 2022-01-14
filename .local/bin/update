@@ -242,7 +242,7 @@ update_homebrew() {
     #run brew bundle --global check
     #run brew bundle --global install
     run brew upgrade --greedy
-    run brew cleanup
+    run brew cleanup --prune=all
 }
 
 update_macports() {
@@ -260,7 +260,7 @@ update_linuxbrew() {
         echo "Updating LinuxBrew"
         run brew update
         run brew upgrade
-        run brew cleanup
+        run brew cleanup --prune=all
     fi
 }
 
