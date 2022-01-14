@@ -69,6 +69,11 @@
   :straight t
   :blackout t)
 
+(leaf xr
+  :url https://github.com/mattiase/xr
+  :doc reverse of rx
+  :straight t)
+
 (leaf esup
   :url https://github.com/jschaf/esup
   :doc "use M-x esup to benchmark emacs startup time"
