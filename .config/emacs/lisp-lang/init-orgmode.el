@@ -158,6 +158,7 @@
   :url https://github.com/kawabata/ox-pandoc
   :straight t
   :ensure-system-package pandoc
+  :unless noninteractive
   :require t
   :setq
   (org-pandoc-options                 . '((standalone . t)))
@@ -300,6 +301,7 @@
 (leaf valign
   :url https://github.com/casouri/valign
   :blackout t
+  :unless noninteractive
   :straight t
   :hook
   (org-mode-hook       . valign-mode)
