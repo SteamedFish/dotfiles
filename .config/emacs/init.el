@@ -65,6 +65,7 @@
 (require 'init-eaf)
 (require 'init-pass)
 (require 'init-telega)
+(require 'init-ement)
 
 ;; lisp-lang
 (require 'init-generic-x)
