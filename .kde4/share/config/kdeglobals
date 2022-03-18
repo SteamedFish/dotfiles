@@ -33,18 +33,46 @@ ForegroundPositive=163,190,140
 ForegroundVisited=82,148,226
 
 [Colors:Complementary]
-BackgroundAlternate=59,64,69
+BackgroundAlternate=30,87,116
+BackgroundNormal=42,46,50
+DecorationFocus=61,174,233
+DecorationHover=61,174,233
+ForegroundActive=61,174,233
+ForegroundInactive=161,169,177
+ForegroundLink=29,153,243
+ForegroundNegative=218,68,83
+ForegroundNeutral=246,116,0
+ForegroundNormal=252,252,252
+ForegroundPositive=39,174,96
+ForegroundVisited=155,89,182
+
+[Colors:Header]
+BackgroundAlternate=42,46,50
 BackgroundNormal=49,54,59
-DecorationFocus=30,146,255
-DecorationHover=61,174,230
-ForegroundActive=246,116,0
-ForegroundInactive=175,176,179
-ForegroundLink=61,174,230
-ForegroundNegative=237,21,21
-ForegroundNeutral=201,206,59
-ForegroundNormal=239,240,241
-ForegroundPositive=17,209,22
-ForegroundVisited=61,174,230
+DecorationFocus=61,174,233
+DecorationHover=61,174,233
+ForegroundActive=61,174,233
+ForegroundInactive=161,169,177
+ForegroundLink=29,153,243
+ForegroundNegative=218,68,83
+ForegroundNeutral=246,116,0
+ForegroundNormal=252,252,252
+ForegroundPositive=39,174,96
+ForegroundVisited=155,89,182
+
+[Colors:Header][Inactive]
+BackgroundAlternate=49,54,59
+BackgroundNormal=42,46,50
+DecorationFocus=61,174,233
+DecorationHover=61,174,233
+ForegroundActive=61,174,233
+ForegroundInactive=161,169,177
+ForegroundLink=29,153,243
+ForegroundNegative=218,68,83
+ForegroundNeutral=246,116,0
+ForegroundNormal=252,252,252
+ForegroundPositive=39,174,96
+ForegroundVisited=155,89,182
 
 [Colors:Selection]
 BackgroundAlternate=29,153,243
@@ -108,7 +136,7 @@ Name=Nordic-Darker
 font=Recursive,10,-1,5,50,0,0,0,0,0,Sans Casual
 menuFont=Recursive,10,-1,5,50,0,0,0,0,0,Sans Casual
 shadeSortColumn=true
-smallestReadableFont=Recursive,9,-1,5,50,0,0,0,0,0,Sans Casual
+smallestReadableFont=Recursive,8,-1,5,50,0,0,0,0,0,Sans Casual
 toolBarFont=Recursive,10,-1,5,50,0,0,0,0,0,Sans Casual
 widgetStyle=Breeze
 
