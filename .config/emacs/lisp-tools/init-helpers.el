@@ -109,6 +109,8 @@
   :url https://github.com/honmaple/emacs-maple-minibuffer
   :straight (maple-minibuffer :host github :repo "honmaple/emacs-maple-minibuffer")
   :when IS-GUI
+  ;; currently it has issues on linux
+  :unless IS-LINUX
   ;; :unless (file-directory-p (straight--build-dir "ivy-posframe"))
   :global-minor-mode t
   :setq
