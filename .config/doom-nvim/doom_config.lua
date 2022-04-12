@@ -7,9 +7,10 @@
 --
 --   2. Nvim, this one defines all the custom configurations that you want to
 --      use in Neovim, e.g. a colorscheme italic_comments global variable
+--
 
 -- {{{ Doom
-local doom = {
+local  doom = {
   -- Autosave
   -- false : Disable autosave
   -- true  : Enable autosave
@@ -20,7 +21,7 @@ local doom = {
   -- false : Disable format on save
   -- true  : Enable format on save
   -- @default = false
-  fmt_on_save = false,
+  fmt_on_save = true,
 
   -- Disable Vim macros
   -- false : Enable Vim macros
@@ -51,7 +52,9 @@ local doom = {
   -- false : ignores undo Directories (this code block will be ignored)
   -- true  : enable undo files/undo dirs.
   -- @default = false
-  backup = false, -- WARNING: if you change this to false and you have an undo dir already, it will REMOVE the undodir (loss of data might take place)
+  -- WARNING: if you change this to false and you have an undo dir already,
+  --          it will REMOVE the undodir (loss of data might take place)
+  backup = false,
 
   -- Enable Line wrapping
   -- false : disables line wrapping
@@ -63,7 +66,7 @@ local doom = {
   -- false : disables show mode
   -- true  : enables show mode
   -- @default = false
-  show_mode = false,
+  show_mode = true,
 
   -- Enable scroll off
   -- false : disables scroll off
@@ -124,7 +127,7 @@ local doom = {
   -- false : disables auto comment
   -- true  : enables auto comment
   -- @default = false
-  auto_comment = false,
+  auto_comment = true,
 
   -- Show indent lines
   -- @default = true
@@ -138,6 +141,12 @@ local doom = {
   expand_tabs = true,
 
   -- Set numbering
+  -- false : Enable  number lines
+  -- true  : Disable number lines
+  -- @default = false
+  disable_numbering = false,
+
+  -- Set numbering style
   -- false : Shows absolute number lines
   -- true  : Shows relative number lines
   -- @default = true
@@ -184,6 +193,46 @@ local doom = {
   -- true  : enables dashboard status line
   -- @default = true
   dashboard_statline = true,
+
+  -- Show the editing file path in your status line
+  -- false : show only file name on status line
+  -- true  : show file name and the updir in status line
+  statusline_show_file_path = true,
+
+  -- Set the keybindings modules that you want to use
+  -- false : disables keybindings module
+  -- true  : enables keybindings module
+  keybinds_modules = {
+    -- Core doom keybindings
+    core = true,
+    -- Movement keybindings, jump between your windows, buffers and code
+    movement = true,
+    -- Leader keybindings, a bunch of useful keybindings managed by space key
+    -- WARNING: disabling this will break which-key plugin if the plugin is enabled
+    leader = true,
+    -- Completion and snippets keybindings
+    completion = true,
+  },
+
+  -- sequences used for escaping insert mode
+  -- @default = { 'jk', 'kj' }
+  escape_sequences = { },
+
+  -- Disable or enable Doom autocommands, this can break some configuration options (they will stop working)
+  -- e.g. preserve_edit_pos or autosave
+  --
+  -- false : enable autocommands module
+  -- true  : disable autocommands module
+  -- @default = false
+  disable_autocommands = false,
+
+  -- Enable LSP diagnostics virtual text
+  -- @default = false
+  enable_lsp_virtual_text = false,
+
+  -- Use floating windows for plugins manager (packer) operations
+  -- @default = false
+  use_floating_win_packer = false,
 
   -- Default indent size
   -- @default = 4
@@ -273,7 +322,7 @@ local doom = {
     enable_treesitter = true,
     -- If the comments should be italic
     -- @default = false
-    italic_comments = false,
+    italic_comments = true,
     -- If the telescope plugin window should be colored
     -- @default = true
     telescope_highlights = true,
@@ -283,7 +332,7 @@ local doom = {
     terminal_colors = true,
     -- If the Neovim instance should be transparent
     -- @default = false
-    transparent_background = true,
+    transparent_background = false,
   },
 
   -- Set gui fonts here
@@ -292,17 +341,34 @@ local doom = {
   guifont = "FiraCode Nerd Font",
   guifont_size = "15",
 
-  -- change Which Key background color
+  -- Change Which Key background color
   -- can use hex, or normal color names (eg: Red, Gree, Blue)
   -- @default = #202328
   whichkey_bg = "#202328",
 
-  -- set your custom lsp diagnostic symbols below
+  -- Set your custom lsp diagnostic symbols below
   lsp_error = "",
-  lsp_warning = "",
+  lsp_warn = "",
   lsp_hint = "",
-  lsp_information = "",
+  lsp_info = "",
   lsp_virtual_text = " ",
+
+  -- Set your linters for the programming languages that you use,
+  -- see https://github.com/mfussenegger/nvim-lint#available-linters
+  linters = {
+    c = {},
+    cpp = {},
+    css = {},
+    html = {},
+    javascript = {},
+    lua = {},
+    markdown = {},
+    nix = {},
+    python = {},
+    ruby = {},
+    sh = {},
+    typescript = {},
+  },
 
   -- Set your dashboard custom colors below
   -- @default = doom emacs' default dashboard colors
@@ -316,7 +382,7 @@ local doom = {
   -- Set your custom dashboard header below
   -- @default = doom emacs' default dashboard header
   dashboard_custom_header = {},
-}
+},
 -- }}}
 
 -- {{{ Nvim
@@ -324,14 +390,23 @@ local nvim = {
   -- Set custom Neovim global variables
   -- @default = {}
   -- example:
-  --   { ['sonokai_style'] = 'andromeda' }
+  --   {
+  --     ['sonokai_style'] = 'andromeda',
+  --     ['modelineexpr'] = true,
+  --   }
+  --
+  --   modeline feature was turned off to reduce security exploit surfaces.
+  --   Since modeline now uses whitelist approach since nvim 0.4 /vim 8.1,
+  --   enabling this is as safe as external packages such as securemodelines.
+  --   See https://github.com/neovim/neovim/issues/2865
+  --
   global_variables = {},
 
   -- Set custom autocommands
   -- @default = {}
   -- example:
   --   augroup_name = {
-  --      { 'BufNewFile,BufRead', 'doomrc', 'set ft=lua'}
+  --      { 'BufNewFile,BufRead', 'doom_modules.lua', 'set ft=lua'}
   --   }
   autocmds = {},
 
@@ -362,9 +437,14 @@ local nvim = {
   -- @default = {}
   -- example:
   --   {
-  --      hello_custom_func = function()
-  --        print("Hello, custom functions!")
-  --      end
+  --      {
+  --         hello_custom_func = function()
+  --           print("Hello, custom functions!")
+  --         end,
+  --         -- If the function should be ran on neovim launch or if it should
+  --         -- be a global function accesible from anywhere
+  --         run_on_start = false,
+  --      },
   --   }
   functions = {},
 
@@ -375,7 +455,7 @@ local nvim = {
   --      { ['shiftwidth'] = 4 }
   --   }
   options = {},
-}
+},
 -- }}}
 
 return {
