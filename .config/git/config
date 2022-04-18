@@ -55,3 +55,5 @@
 	diffFilter = delta --color-only
 [init]
 	defaultBranch = master
+[http]
+	version = HTTP/1.1
