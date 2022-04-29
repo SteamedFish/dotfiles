@@ -140,16 +140,7 @@
   :ensure-system-package tree-sitter
   :global-minor-mode global-tree-sitter-mode
   :hook
-  (tree-sitter-after-on-hook . tree-sitter-hl-mode)
-  :config
-  (defun my-reload-tree-sitter-a (&optional overlay prop value)
-    "HACK: overlays will break tree sitter. Try reload it everytime a overlay triggers."
-    (interactive)
-    (when (and (boundp 'tree-sitter-mode) tree-sitter-mode)
-      (tree-sitter--teardown)
-      (tree-sitter--setup)
-      (tree-sitter--do-parse)))
-  :advice (:after overlay-put my-reload-tree-sitter-a))
+  (tree-sitter-after-on-hook . tree-sitter-hl-mode))
 
 (leaf tree-sitter-langs
   :url https://github.com/emacs-tree-sitter/tree-sitter-langs
