@@ -18,7 +18,7 @@
   (lsp-eldoc-enable-hover            . nil)
   (lsp-eldoc-render-all              . t)
   (lsp-enable-semantic-highlighting  . t)
-  (lsp-completion-provider           . :none)
+  (lsp-completion-provider           . :capf)
   (lsp-enable-dap-auto-configure     . t)
   (lsp-headerline-breadcrumb-enable  . nil)
   (lsp-dired-mode                    . t)
@@ -41,6 +41,7 @@
 (leaf company-lsp
   :url https://github.com/tigersoldier/company-lsp
   :straight t
+  :disabled t ;; lsp nologer support company-lsp
   :after company
   :require t
   :config
