@@ -2,6 +2,7 @@
     name = SteamedFish
     email = 69167+SteamedFish@users.noreply.github.com
     signingkey = 7BD83D6E2E868CC8
+	useConfigOnly = true
 [github]
     user = SteamedFish
 [grep]
@@ -14,6 +15,8 @@
 	includeIssuesSection = false
 [commit]
 	gpgsign = true
+[format]
+	Signoff = true
 [gitflow "release.branch"]
 	sign = true
 [gitflow "release.finish"]
@@ -57,3 +60,12 @@
 	defaultBranch = master
 [http]
 	version = HTTP/1.1
+[branch]
+	autoSetupMerge = true
+[column]
+	ui = auto
+[fetch]
+	parallel = 0
+[status]
+	submoduleSummary = true
+	showStash = true
