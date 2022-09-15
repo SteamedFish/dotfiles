@@ -16,7 +16,7 @@
 [commit]
 	gpgsign = true
 [format]
-    signOff = true
+	signOff = true
 [gitflow "release.branch"]
 	sign = true
 [gitflow "release.finish"]
