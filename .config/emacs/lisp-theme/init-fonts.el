@@ -39,7 +39,7 @@
                        ("HanaMinA"             . "font-hanamina")
                        ("Noto Sans CJK SC"     . "font-noto-sans-cjk-sc")
                        ("Noto Sans Symbols"    . "font-noto-sans-symbols")
-                       ("Noto Sans Symbols2"   . "font-noto-sans-symbols-2")))
+                       ("Noto Sans Symbols 2"   . "font-noto-sans-symbols-2")))
            (t        '(())))))
 
     (cl-loop for (key . value) in fonts-alist
