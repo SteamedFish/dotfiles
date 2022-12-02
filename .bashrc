@@ -102,6 +102,12 @@ if [ -n "$(command -v bat)" ]; then
         export MANPAGER="sh -c 'col -bx | bat -l man --paging=always -p'"
     fi
 fi
+if [ -n "$(command -v batcat)" ]; then
+    alias cat='batcat'
+    if [ -n "$(command -v col)" ]; then
+        export MANPAGER="sh -c 'col -bx | batcat -l man --paging=always -p'"
+    fi
+fi
 if [ -n "$(command -v nvim)" ]; then
     alias vim='nvim'
     alias vi='nvim'
