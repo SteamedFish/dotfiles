@@ -13,3 +13,6 @@ patch:
     style/color_scheme_dark: purity_of_form_custom
     show_notifications_when: never
     preset_color_schemes/purity_of_form_custom/candidate_list_layout: linear
+    preset_color_schemes/purity_of_form_custom/font_point: 14
+    preset_color_schemes/purity_of_form_custom/label_font_face: Hiragino Sans GB W6
+    preset_color_schemes/purity_of_form_custom/comment_font_face: Hiragino Sans GB W6
