@@ -1,5 +1,6 @@
 patch:
     style/horizontal: true
+    style/text_orientation: horizontal
     style/inline_preedit: true
     style/font_face: Hiragino Sans GB W6
     style/font_point: 14
@@ -7,15 +8,8 @@ patch:
     style/corner_radius: 10       # 窗口圓角半徑
     style/border_height: 0        # 窗口邊界高度，大於圓角半徑才有效果
     style/border_width: 0         # 窗口邊界寬度，大於圓角半徑才有效果
-    style/color_scheme: lost_temple
     style/alpha: 0.70
+    style/color_scheme: purity_of_form_custom
+    style/color_scheme_dark: purity_of_form_custom
     show_notifications_when: never
-
-# 註：預設的配色方案及代碼（指定爲 style/color_scheme ）
-#   碧水 - aqua
-#   青天 - azure
-#   明月 - luna
-#   墨池 - ink
-#   孤寺 - lost_temple
-#   暗堂 - dark_temple
-#   星際我爭霸 - starcraft
+    preset_color_schemes/purity_of_form_custom/candidate_list_layout: linear
