@@ -7,7 +7,10 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-source /etc/profile
+test -f /etc/profile && source /etc/profile
+if [ -n "$TERMUX_VERSION" ]; then
+    test -f "$PREFIX/etc/profile" && source "$PREFIX/etc/profile"
+fi	
 source "$HOME/.bashrc"
 
 # do nothing if not running interactively
