@@ -23,4 +23,4 @@ elif [ -n "$(command -v archey)" ];then
 fi
 
 # Added by OrbStack: command-line tools and integration
-[ -f "$HOME/.orbstack/shell/init.zh" ] && source $HOME/.orbstack/shell/init.zsh 2>/dev/null || :
+[ -f "$HOME/.orbstack/shell/init.zsh" ] && source $HOME/.orbstack/shell/init.zsh 2>/dev/null || :
