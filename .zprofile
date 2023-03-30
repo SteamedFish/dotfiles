@@ -21,3 +21,6 @@ if [ -n "$(command -v neofetch)" ];then
 elif [ -n "$(command -v archey)" ];then
     archey -c -o
 fi
+
+# Added by OrbStack: command-line tools and integration
+[ -f "$HOME/.orbstack/shell/init.zh" ] && source $HOME/.orbstack/shell/init.zsh 2>/dev/null || :
