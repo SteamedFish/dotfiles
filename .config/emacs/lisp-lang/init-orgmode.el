@@ -336,6 +336,8 @@
   :url https://github.com/myuhe/org-gcal.el
   :doc "when first running you must run it manually to let it popup login window"
   :straight t
+  ;; switched to org-caldav
+  :disabled t
   :init
   (run-at-time "5 min" 300 #'org-gcal-sync t)
   :setq
@@ -345,6 +347,25 @@
         org-gcal-client-secret (auth-source-pass-get 'secret "shopee/gcal"))
   (setq org-gcal-fetch-file-alist
         `((,(auth-source-pass-get "login" "shopee/email") . ,(expand-file-name (concat org-directory "gcal.org"))))))
+
+(leaf oauth2
+  :url https://elpa.gnu.org/packages/oauth2.html
+  :straight t
+  :doc required by org-caldav)
+
+(leaf org-caldav
+  :url https://github.com/dengste/org-caldav
+  :straight t
+  :setq
+  (org-caldav-url  . 'google)
+  :config
+  (setq org-caldav-calendar-id (concat (auth-source-pass-get "login" "shopee/email") "@group.galendar.google.com"))
+  (setq org-caldav-oauth2-client-id     (auth-source-pass-get "login" "shopee/gcal")
+        org-caldav-oauth2-client-secret (auth-source-pass-get 'secret "shopee/gcal"))
+  (setq org-caldav-files
+        (list (expand-file-name (concat org-directory "gcal.org"))))
+  (setq org-caldav-inbox
+        (expand-file-name (concat org-directory "gcal.org"))))
 
 (leaf iscroll
   :url https://github.com/casouri/iscroll
