@@ -15,6 +15,8 @@
   :doc "use s for filter, M-g to move and g a / g A for other functions"
   :doc "to make animated stickers move, install https://github.com/zevlg/tgs2png"
   :commands telega
+  ;; I no longer use telega, I switched to matrix from telegram.
+  :disabled t
   :ensure-system-package (cmake make gperf)
   :hook
   (telega-open-file-hook . telega-edit-file-mode)
