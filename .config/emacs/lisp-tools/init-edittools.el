@@ -208,7 +208,7 @@
                  (tramp-remote-shell-args ("-c"))))
   ;; leaf's :bind don't handle lambda correctly
   (define-key ctl-x-map
-              (kbd "G") (lambda () (interactive)(magit-status "/yadm::"))))
+    (kbd "G") (lambda () (interactive)(magit-status "/yadm::"))))
 
 (provide 'init-edittools)
 ;;; init-edittools.el ends here
