@@ -358,6 +358,8 @@
   :straight t
   :setq
   (org-caldav-url  . 'google)
+  :init
+  (run-at-time "5 min" 300 #'org-caldav-sync)
   :config
   ;;(setq org-caldav-calendar-id (concat (url-hexify-string (auth-source-pass-get "login" "shopee/email")) "@group.v.calendar.google.com"))
   (setq org-caldav-calendar-id (auth-source-pass-get "login" "shopee/email"))
