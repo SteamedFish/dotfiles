@@ -21,17 +21,19 @@
   :when (or IS-MAC IS-LINUX)
   :when (fboundp 'module-load)
   :when IS-GUI
+  :disabled nil
   :bind
-  ("C-SPC"                    . toggle-input-method)
+  ("C-SPC"                         . toggle-input-method)
   (:rime-active-mode-map
-   ("M-j"                     . rime-inline-ascii))
+   ("M-j"                          . rime-inline-ascii))
   (:rime-mode-map
-   ("M-j"                     . rime-force-enable))
+   ("M-j"                          . rime-force-enable))
   :pre-setq
-  (default-input-method       . "rime")
+  (default-input-method            . "rime")
+  (default-transient-input-method  . "rime")
   :setq
-  (rime-show-candidate        . 'posframe)
-  (rime-inline-ascii-trigger  . 'shift-l)
+  (rime-show-candidate             . 'posframe)
+  (rime-inline-ascii-trigger       . 'shift-l)
   :init
   ;; TODO: when using emacs-mac, make sure system IME is always disabled
   (when IS-LINUX
@@ -47,13 +49,19 @@
     (unless (file-exists-p (concat my-data-dir "data/librime/dist/bin/rime_patch"))
       (require 'url)
       (url-copy-file
-       "https://github.com/rime/librime/releases/download/1.8.5/rime-1.8.5-osx.zip"
-       (concat my-data-dir "data/librime/rime-1.8.5-osx.zip")
+       "https://github.com/rime/librime/releases/download/1.8.5/rime-08dd95f-macOS.tar.bz2"
+       (concat my-data-dir "data/librime/rime-1.8.5-osx.tar.bz2")
        t)
       (async-shell-command (concat "cd " my-data-dir "data/librime"
-                                   "&& unzip rime-1.8.5-osx.zip"))))
+                                   "&& tar xvf rime-1.8.5-osx.tar.bz2"))
+      (url-copy-file
+       "https://github.com/rime/librime/releases/download/1.8.5/rime-deps-08dd95f-macOS.tar.bz2"
+       (concat my-data-dir "data/librime/rime-deps-1.8.5-osx.tar.bz2")
+       t)
+      (async-shell-command (concat "cd " my-data-dir "data/librime"
+                                   "&& tar xvf rime-deps-1.8.5-osx.tar.bz2"))))
   :hook
-  (after-change-major-mode-hook . (lambda () (activate-input-method default-input-method)))
+  (after-change-major-mode-hook . activate-transient-input-method)
   ;; ((test-mode-hook telega-chat-mode-hook) . (lambda ()
   ;;                                             (setq-local
   ;;                                              rime-disable-predicates
