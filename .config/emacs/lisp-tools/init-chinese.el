@@ -47,11 +47,11 @@
     (unless (file-exists-p (concat my-data-dir "data/librime/dist/bin/rime_patch"))
       (require 'url)
       (url-copy-file
-       "https://github.com/rime/librime/releases/download/1.7.3/rime-1.7.3-osx.zip"
-       (concat my-data-dir "data/librime/rime-1.7.3-osx.zip")
+       "https://github.com/rime/librime/releases/download/1.8.5/rime-1.8.5-osx.zip"
+       (concat my-data-dir "data/librime/rime-1.8.5-osx.zip")
        t)
       (async-shell-command (concat "cd " my-data-dir "data/librime"
-                                   "&& unzip rime-1.7.3-osx.zip"))))
+                                   "&& unzip rime-1.8.5-osx.zip"))))
   :hook
   (after-change-major-mode-hook . (lambda () (activate-input-method default-input-method)))
   ;; ((test-mode-hook telega-chat-mode-hook) . (lambda ()
