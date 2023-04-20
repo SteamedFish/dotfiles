@@ -64,12 +64,6 @@
            ispell-extra-args '("--sug-mode=ultra"
                                "--run-together"))
 
-     (unless ispell-aspell-dict-dir
-       (setq ispell-aspell-dict-dir
-             (ispell-get-aspell-config-value "dict-dir")))
-     (unless ispell-aspell-data-dir
-       (setq ispell-aspell-data-dir
-             (ispell-get-aspell-config-value "data-dir")))
      (unless ispell-personal-dictionary
        (setq ispell-personal-dictionary
              (expand-file-name (concat "ispell/" ispell-dictionary ".pws")
