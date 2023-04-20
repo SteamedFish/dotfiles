@@ -64,11 +64,9 @@
            ispell-extra-args '("--sug-mode=ultra"
                                "--run-together"))
 
-     ;; TODO: ispell-dictionary may be nil
      (unless ispell-personal-dictionary
        (setq ispell-personal-dictionary
-             (expand-file-name (concat "ispell/" ispell-dictionary ".pws")
-                               (concat my-data-dir "etc/")))))
+             (concat my-data-dir "etc/"))))
     (`hunspell
      (setq ispell-program-name "hunspell"))
     (`enchant
