@@ -359,7 +359,8 @@
   :setq
   (org-caldav-url  . 'google)
   :config
-  (setq org-caldav-calendar-id (concat (url-hexify-string (auth-source-pass-get "login" "shopee/email")) "@group.v.calendar.google.com"))
+  ;;(setq org-caldav-calendar-id (concat (url-hexify-string (auth-source-pass-get "login" "shopee/email")) "@group.v.calendar.google.com"))
+  (setq org-caldav-calendar-id (auth-source-pass-get "login" "shopee/email"))
   (setq org-caldav-oauth2-client-id     (auth-source-pass-get "login" "shopee/gcal")
         org-caldav-oauth2-client-secret (auth-source-pass-get 'secret "shopee/gcal"))
   (setq org-caldav-files
