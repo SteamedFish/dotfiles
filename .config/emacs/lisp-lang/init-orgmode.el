@@ -348,16 +348,15 @@
   (setq org-gcal-fetch-file-alist
         `((,(auth-source-pass-get "login" "shopee/email") . ,(expand-file-name (concat org-directory "gcal.org"))))))
 
-(leaf oauth2
-  :url https://elpa.gnu.org/packages/oauth2.html
-  :straight t
-  :doc required by org-caldav)
-
 (leaf org-caldav
   :url https://github.com/dengste/org-caldav
   :straight t
   :setq
-  (org-caldav-url  . 'google)
+  (org-caldav-url                     . 'google)
+  (org-caldav-resume-aborted          . 'always)
+  (org-caldav-delete-org-entries      . 'always)
+  (org-caldav-delete-calendar-entries . 'always)
+  (org-caldav-show-sync-results       . nil)
   :init
   (run-at-time "5 min" 300 #'org-caldav-sync)
   :config

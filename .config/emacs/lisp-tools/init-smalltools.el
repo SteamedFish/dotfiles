@@ -8,6 +8,20 @@
 
 ;;; Code:
 
+(leaf plstore
+  :tag "builtin"
+  :doc secure plist store
+  :doc oauth2 uses plstore to save the oauth2 auth key
+  :setq
+  (plstore-cache-passphrase-for-symmetric-encryption . t))
+
+(leaf oauth2
+  :url https://elpa.gnu.org/packages/oauth2.html
+  :straight t
+  :doc required by org-caldav
+  :config
+  (setq oauth2-token-file (concat my-data-dir "oauth2.plstore")))
+
 (leaf ffap
   :tag "builtin"
   :doc ffap: find file at point
