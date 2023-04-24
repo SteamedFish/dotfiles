@@ -7,7 +7,7 @@ set -E
 
 cd "$HOME"
 
-run () {
+run() {
     # execute any programs
     # -r, --retry    retry time when execute fail. default 0
     # -n, --dry-run  perform a trial run with no changes made
@@ -28,7 +28,7 @@ run () {
     params="$(getopt -n run -o '+r:n' -l 'retry:,dry-run' -- "$@")"
     if ! eval set -- "$params"; then
         echo "Incorrect options provided to $0"
-        cat << EOF
+        cat <<EOF
 run: execute any programs
     -r, --retry    retry time when execute fail. default 0
     -n, --dry-run  perform a trial run with no changes made
@@ -40,22 +40,22 @@ EOF
 
     while true; do
         case "$1" in
-            -r|--retry)
-                retry=$2
-                shift 2
-                ;;
-            -n|--dry-run)
-                dry_run=true
-                shift
-                ;;
-            --)
-                shift
-                break
-                ;;
-            *)
-                echo "Unrecognized Options" >&2
-                exit 1
-                ;;
+        -r | --retry)
+            retry=$2
+            shift 2
+            ;;
+        -n | --dry-run)
+            dry_run=true
+            shift
+            ;;
+        --)
+            shift
+            break
+            ;;
+        *)
+            echo "Unrecognized Options" >&2
+            exit 1
+            ;;
         esac
     done
 
@@ -82,7 +82,6 @@ EOF
 
         retry=$((retry - 1))
 
-
         if [ "$retry" -le 0 ]; then
             echo "no more retry"
             echo "run $* failed! Please check it " >&2
@@ -106,7 +105,6 @@ gitpull() {
         run -r 5 git submodule update --recursive --init
     fi
 }
-
 
 get_sudo() {
     if [ -z "$(command -v sudo)" ]; then
@@ -142,7 +140,7 @@ update_mac_system() {
 }
 
 update_linux_system() {
-    if  [[ -f /etc/arch-release ]]; then
+    if [[ -f /etc/arch-release ]]; then
         if [ -n "$(command -v yay)" ]; then
             PACMAN_CMD="yay"
         else
@@ -175,7 +173,7 @@ update_linux_system() {
         run sudo apt upgrade
         run sudo apt autoremove
         run sudo apt clean
-    elif  [[ -f /etc/gentoo-release ]]; then
+    elif [[ -f /etc/gentoo-release ]]; then
         if [ -n "$(command -v layman)" ]; then
             run -r 5 sudo layman -S
         fi
@@ -204,11 +202,11 @@ update_linux_system() {
             run sudo eclean -d distfiles
             run sudo eclean -d packages
         fi
-    elif  [[ -f /etc/redhat-release ]]; then
-      run sudo dnf update
-      run sudo dnf upgrade
-      run sudo dnf autoremove
-      run sudo dnf clean all
+    elif [[ -f /etc/redhat-release ]]; then
+        run sudo dnf update
+        run sudo dnf upgrade
+        run sudo dnf autoremove
+        run sudo dnf clean all
     elif [[ $(uname -o) == "Android" ]]; then
         run apt update
         run apt upgrade
@@ -262,7 +260,7 @@ update_linuxbrew() {
 }
 
 update_snap() {
-    if [ -d "/snap" ] ; then
+    if [ -d "/snap" ]; then
         echo "Updating snap"
         run sudo snap refresh
     fi
@@ -271,22 +269,21 @@ update_snap() {
 update_pip() {
     echo "Updating Pip"
     case $OSTYPE in
-        linux*)
-            if [ -n "$(command -v pip)" ]; then
-                pip list --user --format=columns | tail -n +3 | cut -d ' ' -f 1 | run xargs -n1 pip install --user -U
-            fi
-            ;;
-        darwin*)
-            if [ -n "$(command -v pip2)" ]; then
-                pip2 list --format=columns | tail -n +3 | cut -d ' ' -f 1 | grep -v 'pip' | run xargs -n1 pip2 install -U
-            fi
-            if [ -n "$(command -v pip3)" ]; then
-                pip3 list --format=columns | tail -n +3 | cut -d ' ' -f 1 | grep -v 'pip' | run xargs -n1 pip3 install -U
-            fi
-            ;;
+    linux*)
+        if [ -n "$(command -v pip)" ]; then
+            pip list --user --format=columns | tail -n +3 | cut -d ' ' -f 1 | run xargs -n1 pip install --user -U
+        fi
+        ;;
+    darwin*)
+        if [ -n "$(command -v pip2)" ]; then
+            pip2 list --format=columns | tail -n +3 | cut -d ' ' -f 1 | grep -v 'pip' | run xargs -n1 pip2 install -U
+        fi
+        if [ -n "$(command -v pip3)" ]; then
+            pip3 list --format=columns | tail -n +3 | cut -d ' ' -f 1 | grep -v 'pip' | run xargs -n1 pip3 install -U
+        fi
+        ;;
     esac
 }
-
 
 update_gem() {
     echo "Updating ruby gems"
@@ -296,7 +293,6 @@ update_gem() {
         run gem update
     fi
 }
-
 
 update_go() {
     echo "Updating go packages"
@@ -309,10 +305,9 @@ update_rust() {
     fi
     # https://github.com/nabijaczleweli/cargo-update
     if [ -n "$(command -v cargo-install-update)" ]; then
-       cargo-install-update install-update -a
+        cargo-install-update install-update -a
     fi
 }
-
 
 self_update() {
     echo "updating yadm"
@@ -335,7 +330,7 @@ self_update() {
 update_vim() {
     echo "updating vim"
     for dir in "$HOME/.vim" "$HOME/.config/vim" "$HOME/.config/nvim"; do
-        if [ -d "$dir" ] ; then
+        if [ -d "$dir" ]; then
             cd "$dir" && gitpull
         fi
     done
@@ -343,13 +338,12 @@ update_vim() {
     # run vim +SPUpdate +qall
 }
 
-
 update_emacs() {
     if [ -d "$HOME/.config/emacs/.git" ]; then
         cd "$HOME/.config/emacs" && run -r 5 git pull
     fi
     if [ -f "$HOME/.config/emacs/init.el" ]; then
-        run -r 5 emacs --batch --debug-init --load ~/.config/emacs/init.el  --load ~/.config/emacs/extra/update-emacs.el
+        run -r 5 emacs --batch --debug-init --load ~/.config/emacs/init.el --load ~/.config/emacs/extra/update-emacs.el
     else
         update_doom
     fi
@@ -400,7 +394,6 @@ update_doom() {
     done
 }
 
-
 update_optools() {
     echo "updating optools"
     for _DIR in "work"; do
@@ -434,41 +427,41 @@ update() {
         get_sudo
     fi
     case $OSTYPE in
-        linux*)
-            self_update
-            update_zsh
-            update_linux_system
-            update_linuxbrew
-            update_snap
-            update_vim
-            update_pip
-            update_rust
-            update_emacs
-            update_optools
-            update_backup
-            ;;
-        darwin*)
-            self_update
-            update_zsh
-            update_context
-            update_mac_system
-            update_mas
-            update_homebrew
-            update_macports
-            update_pip
-            update_gem
-            update_go
-            update_rust
-            update_vim
-            update_emacs
-            update_optools
-            ;;
-        cygwin*)
-            echo "unsupported os type $OSTYPE"
-            ;;
-        *)
-            echo "unsupported os type $OSTYPE"
-            ;;
+    linux*)
+        self_update
+        update_zsh
+        update_linux_system
+        update_linuxbrew
+        update_snap
+        update_vim
+        update_pip
+        update_rust
+        update_emacs
+        update_optools
+        update_backup
+        ;;
+    darwin*)
+        self_update
+        update_zsh
+        update_context
+        update_mac_system
+        update_mas
+        update_homebrew
+        update_macports
+        update_pip
+        update_gem
+        update_rust
+        update_vim
+        update_emacs
+        update_optools
+        update_go
+        ;;
+    cygwin*)
+        echo "unsupported os type $OSTYPE"
+        ;;
+    *)
+        echo "unsupported os type $OSTYPE"
+        ;;
     esac
 }
 
