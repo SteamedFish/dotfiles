@@ -339,7 +339,8 @@
   ;; switched to org-caldav
   :disabled t
   :init
-  (run-at-time "5 min" 300 #'org-gcal-sync t)
+  ;;(run-at-time "5 min" 300 #'org-gcal-sync t)
+  (run-at-time nil 3600 #'org-gcal-sync t)
   :setq
   (org-gcal-notify-p . nil)
   :config
