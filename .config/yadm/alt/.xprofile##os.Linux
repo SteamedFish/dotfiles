@@ -5,6 +5,13 @@ usermodmap=$HOME/.Xmodmap
 sysresources=/etc/X11/xinit/.Xresources
 sysmodmap=/etc/X11/xinit/.Xmodmap
 
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx
+export XIM=fcitx
+export XIM_PROGRAM="fcitx"
+export QT_QPA_PLATFORMTHEME=qt5ct
+
 # merge in defaults and keymaps
 
 if [ -f $sysresources ]; then

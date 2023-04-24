@@ -75,6 +75,9 @@
   (when IS-MAC
     ;; emacs-app-nightly will use apt-get for some reason
     (setq system-packages-package-manager 'brew
+          system-packages-use-sudo        nil))
+  (when IS-TERMUX
+    (setq system-packages-package-manager 'apt
           system-packages-use-sudo        nil)))
 
 (leaf blackout

@@ -21,7 +21,8 @@
 (defconst IS-LINUX   (eq system-type 'gnu/linux))
 (defconst IS-WINDOWS (memq system-type '(cygwin windows-nt ms-dos)))
 (defconst IS-BSD     (or IS-MAC (eq system-type 'berkeley-unix)))
-(defconst IS-ANDROID
+(defconst IS-ANDROID (eq system-type 'android))
+(defconst IS-TERMUX
   ;; If running inside Android Termux
   (string-match-p "-linux-android$" system-configuration))
 
