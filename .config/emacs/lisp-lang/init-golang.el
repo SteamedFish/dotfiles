@@ -30,7 +30,7 @@
     (cond
      (IS-LINUX (system-packages-ensure "go-tools"))
      (IS-MAC (async-shell-command
-              "GO111MODULE=on go get -u golang.org/x/tools/cmd/guru")))))
+              "GO111MODULE=on go install golang.org/x/tools/cmd/guru")))))
 
 (leaf go-dlv
   :url https://github.com/benma/go-dlv.el
@@ -41,7 +41,7 @@
     (cond
      (IS-LINUX (system-packages-ensure "delve"))
      (IS-MAC (async-shell-command
-              "GO111MODULE=on go get -u github.com/go-delve/delve/cmd/dlv")))))
+              "GO111MODULE=on go install github.com/go-delve/delve/cmd/dlv")))))
 
 (leaf go-fill-struct
   :url https://github.com/s-kostyaev/go-fill-struct
@@ -49,7 +49,7 @@
   :config
   (unless (executable-find "fillstruct")
     (async-shell-command
-     "GO111MODULE=on go get -u github.com/davidrjenni/reftools/cmd/fillstruct")))
+     "GO111MODULE=on go install github.com/davidrjenni/reftools/cmd/fillstruct")))
 
 (leaf go-impl
   :url https://github.com/emacsorphanage/go-impl
@@ -70,12 +70,12 @@
                           "--redownloadall "
                           "-S go-impl"))))
      (IS-MAC (async-shell-command
-              "GO111MODULE=on go get -u github.com/josharian/impl@latest"))))
+              "GO111MODULE=on go install github.com/josharian/impl@latest"))))
   (unless (executable-find "godoc")
     (cond
      (IS-LINUX (system-packages-ensure "go-tools"))
      (IS-MAC (async-shell-command
-              "GO111MODULE=on go get -u golang.org/x/tools/cmd/godoc")))))
+              "GO111MODULE=on go install golang.org/x/tools/cmd/godoc")))))
 
 (leaf flycheck-golangci-lint
   :url https://github.com/weijiangan/flycheck-golangci-lint
@@ -105,7 +105,7 @@
   :config
   (unless (executable-find "gocode")
     (async-shell-command
-     "GO111MODULE=on go get -u github.com/nsf/gocode")))
+     "GO111MODULE=on go install github.com/nsf/gocode")))
 
 (leaf go-tag
   :url https://github.com/brantou/emacs-go-tag
@@ -127,7 +127,7 @@
                           "-S gomodifytags"))))
      (IS-MAC
       (async-shell-command
-       "GO111MODULE=on go get -u github.com/fatih/gomodifytags@latest")))))
+       "GO111MODULE=on go install github.com/fatih/gomodifytags@latest")))))
 
 (leaf go-gen-test
   :url https://github.com/s-kostyaev/go-gen-test
@@ -135,7 +135,7 @@
   :config
   (unless (executable-find "gotests")
     (async-shell-command
-     "GO111MODULE=on go get -u github.com/cweill/gotests/...")))
+     "GO111MODULE=on go install github.com/cweill/gotests/...")))
 
 (leaf gotest
   :url https://github.com/nlamirault/gotest.el
