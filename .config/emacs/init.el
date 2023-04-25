@@ -35,6 +35,16 @@
    ;; set to t if running in noninteractive mode; otherwise nil
    (t noninteractive)))
 
+;; https://marek-g.github.io/posts/tips_and_tricks/emacs_on_android/
+(when IS-ANDROID
+  ;; Add Termux binaries to PATH environment
+  (let ((termuxpath "/data/data/com.termux/files/usr/bin"))
+    (setenv "PATH" (concat (getenv "PATH") ":" termuxpath))
+    (setq exec-path (append exec-path (list termuxpath)))))
+(when IS-ANDROID
+  (setq tls-program '("gnutls-cli -p %p %h"
+                      "gnutls-cli -p %p %h --protocols ssl3")))
+
 ;; lisp-core
 (require 'init-earlyinit)
 (require 'init-packages)
