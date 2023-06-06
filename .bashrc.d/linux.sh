@@ -35,6 +35,8 @@ else
     alias ping="ping -O"
 fi
 
+export MAKEFLAGS="-j$(nproc)"
+
 # extra PATHs
 for i in /home/linuxbrew/.linuxbrew $HOME/.linuxbrew /snap /opt/puppetlabs/bin; do
     if [ -d "$i" ]; then
