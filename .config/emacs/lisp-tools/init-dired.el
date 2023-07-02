@@ -13,7 +13,7 @@
   :setq
   (dired-recursive-deletes . 'always)
   (dired-recursive-copies . 'always)
-  (dired-listing-switches . "-alh --group-directories-first")
+  (dired-listing-switches . "-alhG1v --group-directories-first")
   (dired-auto-revert-buffer . t)
   :config
   (when IS-MAC
