@@ -7,3 +7,4 @@ imports_granularity = "Crate"
 group_imports = "StdExternallcrate"
 unstable_features = true
 use_try_shorthand = true
+edition = "2021"
