@@ -83,13 +83,13 @@ alias rsync='rsync --progress --human-readable'
 if [ -n "$(command -v lsd)" ]; then
     alias ls='lsd'
     alias tree='lsd --tree'
-elif [ -n "$(command -v exa)" ]; then
+elif [ -n "$(command -v eza)" ]; then
     if [[ "$OSTYPE" == "linux-android" ]] || [[ "$OS" == "OSX" ]]; then
-        alias ls='exa --git --extended'
-        alias tree='exa --tree --git --extended'
+        alias ls='eza --git --extended'
+        alias tree='eza --tree --git --extended'
     else
-        alias ls='exa --git --icons --extended --color=auto'
-        alias tree='exa --tree --git --icons --extended --color=auto'
+        alias ls='eza --git --icons --extended --color=auto'
+        alias tree='eza --tree --git --icons --extended --color=auto'
     fi
 fi
 if [ -n "$(command -v fdfind)" ]; then
