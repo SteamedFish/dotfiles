@@ -8,8 +8,8 @@
 	<true/>
 	<key>Coprocess MRU</key>
 	<array>
-		<string>/usr/local/bin/iterm2-send-zmodem.sh</string>
 		<string>/usr/local/bin/iterm2-recv-zmodem.sh</string>
+		<string>/usr/local/bin/iterm2-send-zmodem.sh</string>
 	</array>
 	<key>Custom Color Presets</key>
 	<dict>
@@ -1510,6 +1510,31 @@
 	<false/>
 	<key>QuitWhenAllWindowsClosed</key>
 	<true/>
+	<key>SGTRecentFileSearches</key>
+	<array>
+		<dict>
+			<key>attributes</key>
+			<array>
+				<string>kMDItemDisplayName</string>
+				<string>_kMDItemFileName</string>
+				<string>kMDItemPhotosTitle</string>
+			</array>
+			<key>enforceStrictMatch</key>
+			<false/>
+			<key>exactMatch</key>
+			<false/>
+			<key>name</key>
+			<string>gnupg</string>
+			<key>scope</key>
+			<integer>4</integer>
+			<key>type</key>
+			<string>com.apple.finder</string>
+			<key>values</key>
+			<array>
+				<string>gnupg</string>
+			</array>
+		</dict>
+	</array>
 	<key>SavePasteHistory</key>
 	<true/>
 	<key>SeparateStatusBarsPerPane</key>
