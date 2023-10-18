@@ -5,7 +5,7 @@
 
 ;;; Commentary:
 
-;;  sh mode
+;; Debian development tools
 
 ;;; Code:
 
