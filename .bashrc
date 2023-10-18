@@ -79,7 +79,7 @@ fi
 alias cp='cp -iv'
 alias mv='mv -iv'
 alias rm='rm -iv'
-alias rsync='rsync --progress --human-readable'
+alias rsync='rsync --partial --secluded-args --progress --human-readable --info=PROGRESS2'
 if [ -n "$(command -v lsd)" ]; then
     alias ls='lsd'
     alias tree='lsd --tree'
