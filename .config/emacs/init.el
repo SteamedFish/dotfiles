@@ -90,6 +90,7 @@
 (require 'init-yaml)
 (require 'init-plantuml)
 (require 'init-web)
+(require 'init-debiandev)
 
 (provide 'init)
 ;;; init.el ends here
