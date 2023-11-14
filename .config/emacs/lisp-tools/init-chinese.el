@@ -21,7 +21,7 @@
   :when (or IS-MAC IS-LINUX)
   :when (fboundp 'module-load)
   :when IS-GUI
-  :disabled nil
+  :disabled t
   :bind
   ("C-SPC"                         . toggle-input-method)
   (:rime-active-mode-map
