@@ -2,8 +2,8 @@
 
 # do nothing if not running interactively
 case $- in
-    *i*) ;;
-    *) return;;
+*i*) ;;
+*) return ;;
 esac
 
 # if [ -n "$(command -v toilet)" ]; then
@@ -16,9 +16,11 @@ esac
 #     figlet -f mini -w 300 SteamedFish
 # fi
 
-if [ -n "$(command -v neofetch)" ];then
+if [ -n "$(command -v fastfetch)" ]; then
+    fastfetch
+elif [ -n "$(command -v neofetch)" ]; then
     neofetch
-elif [ -n "$(command -v archey)" ];then
+elif [ -n "$(command -v archey)" ]; then
     archey -c -o
 fi
 
