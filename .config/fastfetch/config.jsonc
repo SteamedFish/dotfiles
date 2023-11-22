@@ -20,24 +20,16 @@
     },
     "monitor",
     "poweradapter",
-    "break",
-    "uptime",
     {
       "type": "battery",
       "temp": true
     },
+    "break",
+    "uptime",
     "bluetooth",
     "shell",
-    "display",
-    "brightness",
-    "command",
-    "opencl",
-    "opengl",
     "packages",
     "terminal",
-    "locale",
-    "users",
-    "wifi",
     "weather"
   ]
 }
