@@ -339,6 +339,9 @@ update_vim() {
 }
 
 update_emacs() {
+    if [ -z "$(command -v emacs)" ]; then
+        return
+    fi
     if [ -d "$HOME/.config/emacs/.git" ]; then
         cd "$HOME/.config/emacs" && run -r 5 git pull
     fi
