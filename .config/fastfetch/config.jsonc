@@ -25,6 +25,7 @@
     },
     "break",
     "uptime",
+    "kernel",
     "bluetooth",
     "shell",
     "packages",
