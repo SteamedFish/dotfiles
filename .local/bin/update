@@ -416,6 +416,13 @@ update_optools() {
     done
 }
 
+update_grafana() {
+    if [ -z "$(command -v grafana)" ]; then
+        return
+    fi
+    run sudo grafana cli plugins update-all
+}
+
 update_backup() {
     # backup the whole system
     if [ -n "$(command -v systemctl)" ]; then
@@ -442,6 +449,7 @@ update() {
         update_emacs
         update_optools
         update_backup
+        update_grafana
         ;;
     darwin*)
         self_update
