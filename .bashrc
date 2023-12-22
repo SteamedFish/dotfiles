@@ -80,17 +80,18 @@ alias cp='cp -iv'
 alias mv='mv -iv'
 alias rm='rm -iv'
 alias rsync='rsync --partial --secluded-args --progress --human-readable --info=PROGRESS2'
-if [ -n "$(command -v lsd)" ]; then
-    alias ls='lsd'
-    alias tree='lsd --tree'
-elif [ -n "$(command -v eza)" ]; then
-    if [[ "$OSTYPE" == "linux-android" ]] || [[ "$OS" == "OSX" ]]; then
+if [ -n "$(command -v eza)" ]; then
+    if [[ "$OSTYPE" == "linux-android" ]]; then
+        # not support --icons
         alias ls='eza --git --extended'
         alias tree='eza --tree --git --extended'
     else
         alias ls='eza --git --icons --extended --color=auto'
         alias tree='eza --tree --git --icons --extended --color=auto'
     fi
+elif [ -n "$(command -v lsd)" ]; then
+    alias ls='lsd'
+    alias tree='lsd --tree'
 fi
 if [ -n "$(command -v fdfind)" ]; then
     # Debian use this name
