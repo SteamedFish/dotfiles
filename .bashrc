@@ -86,8 +86,8 @@ if [ -n "$(command -v eza)" ]; then
         alias ls='eza --git --extended'
         alias tree='eza --tree --git --extended'
     else
-        alias ls='eza --git --icons --extended --color=auto'
-        alias tree='eza --tree --git --icons --extended --color=auto'
+        alias ls='eza --git --icons --color=auto --header --group --mounts'
+        alias tree='eza --tree --git --icons --color=auto'
     fi
 elif [ -n "$(command -v lsd)" ]; then
     alias ls='lsd'
