@@ -59,7 +59,8 @@
 [init]
 	defaultBranch = master
 [http]
-	version = HTTP/1.1
+	lowSpeedTime = 999999
+	postBuffer = 524288000
 [branch]
 	autoSetupMerge = true
 [column]
@@ -69,3 +70,4 @@
 [status]
 	submoduleSummary = true
 	showStash = true
+[http]
