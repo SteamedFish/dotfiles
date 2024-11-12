@@ -14,12 +14,6 @@ alias open='xdg-open'
 alias pbcopy='xclip -selection c -i'
 alias pbpaste='xclip -selection c -o'
 
-export GTK_IM_MODULE=fcitx
-export QT_IM_MODULE=fcitx
-export XMODIFIERS=@im=fcitx
-export XIM=fcitx
-export XIM_PROGRAM="fcitx"
-
 if [ -f "$HOME"/.ssh/id_rsa ]; then
     export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/ssh-agent.socket"
 fi
