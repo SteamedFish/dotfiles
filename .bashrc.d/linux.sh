@@ -14,7 +14,7 @@ alias open='xdg-open'
 alias pbcopy='xclip -selection c -i'
 alias pbpaste='xclip -selection c -o'
 
-if [ -f "$HOME"/.ssh/id_rsa ]; then
+if [ -f "$HOME"/.ssh/id_ed25519 ]; then
     export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/ssh-agent.socket"
 fi
 
