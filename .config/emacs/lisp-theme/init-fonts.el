@@ -25,8 +25,8 @@
           (cond
            (IS-LINUX '(("Rec Mono Duotone"     . "ttf-recursive")
                        ("Sarasa Mono SC"       . "ttf-sarasa-gothic")
-                       ("Victor Mono"          . "font-victor-mono")
-                       ("VictorMono Nerd Font" . "nerd-fonts-victor-mono")
+                       ("Victor Mono"          . "ttf-victor-mono")
+                       ("VictorMono Nerd Font" . "ttf-victor-mono-nerd")
                        ("Noto Sans Symbols"    . "noto-fonts")
                        ("Noto Color Emoji"     . "noto-fonts-emoji")
                        ("HanaMinA"             . "ttf-hanazono")
