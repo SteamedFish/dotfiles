@@ -31,6 +31,11 @@
   :when (and IS-LINUX IS-GUI)
   :global-minor-mode menu-bar-mode)
 
+(leaf mouse
+  :tag "builtin"
+  :when IS-GUI
+  :global-minor-mode context-menu-mode)
+
 (leaf fringe
   :tag "builtin"
   :config
