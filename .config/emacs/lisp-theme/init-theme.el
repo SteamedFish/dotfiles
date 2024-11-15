@@ -26,6 +26,11 @@
         (modify-frame-parameters nil (list (cons 'alpha 100))))))
   :bind ("s-u" . my-toggle-transparency))
 
+(leaf menu-bar-mode
+  :tag "builtin"
+  :when (and IS-LINUX IS-GUI)
+  :global-minor-mode menu-bar-mode)
+
 (leaf fringe
   :tag "builtin"
   :config
