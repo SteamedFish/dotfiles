@@ -156,10 +156,10 @@ update_linux_system() {
             run "${PACMAN_CMD}" -Fy
             run "${PACMAN_CMD}" -Syu
         fi
-        if [ -n "$(command -v pikaur)" ]; then
-            # update git packages
-            run pikaur -Sua --devel --needed
-        fi
+        #if [ -n "$(command -v pikaur)" ]; then
+        #    # update git packages
+        #    run pikaur -Sua --devel --needed
+        #fi
         if [ -n "$(command -v pacdiff)" ]; then
             run sudo pacdiff # pacman-contrib
         elif [ -n "$(command -v etc-update)" ]; then
