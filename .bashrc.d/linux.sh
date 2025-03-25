@@ -14,6 +14,12 @@ alias open='xdg-open'
 alias pbcopy='xclip -selection c -i'
 alias pbpaste='xclip -selection c -o'
 
+for dir in "/var/lib/snapd/desktop" "/var/lib/flatpak/exports/share" "$HOME/.local/share/flatpak/exports/share"; do
+    if [ -d "$dir" ]; then
+        export XDG_DATA_DIRS="$XDG_DATA_DIRS:$dir"
+    fi
+done
+
 if [ -f "$HOME"/.ssh/id_ed25519 ]; then
     export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/ssh-agent.socket"
 fi
