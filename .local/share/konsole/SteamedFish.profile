@@ -1,6 +1,6 @@
 [Appearance]
 ColorScheme=nord
-Font=Rec Mono Casual,12,-1,5,50,0,0,0,0,0
+Font=RecMonoDuotone Nerd Font,12,-1,5,50,0,0,0,0,0
 UseFontLineChararacters=true
 
 [General]
