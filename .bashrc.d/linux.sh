@@ -11,8 +11,13 @@ if $CLICOLOR; then
     fi
 fi
 alias open='xdg-open'
-alias pbcopy='xclip -selection c -i'
-alias pbpaste='xclip -selection c -o'
+if [ -n "$(command -v wl-copy)" ]; then
+    alias pbcopy='wl-copy'
+    alias pbpaste='wl-paste'
+else
+    alias pbcopy='xclip -selection c -i'
+    alias pbpaste='xclip -selection c -o'
+fi
 
 for dir in "/var/lib/snapd/desktop" "/var/lib/flatpak/exports/share" "$HOME/.local/share/flatpak/exports/share"; do
     if [ -d "$dir" ]; then
