@@ -29,7 +29,6 @@
     "bluetooth",
     "shell",
     "packages",
-    "terminal",
-    "weather"
+    "terminal"
   ]
 }
