@@ -26,6 +26,8 @@ for dir in "/var/lib/snapd/desktop" "/var/lib/flatpak/exports/share" "$HOME/.loc
 done
 unset dir
 
+export SYSTEMD_LESS="FRXMK"
+
 if [ -f "$HOME"/.ssh/id_ed25519 ]; then
     export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/ssh-agent.socket"
 fi
