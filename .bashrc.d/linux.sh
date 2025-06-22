@@ -58,6 +58,14 @@ if [ -S "$XDG_RUNTIME_DIR/docker.sock" ]; then
     export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
 fi
 
+# ROCm support for special GPUs
+if [ -n "$(command -v rocminfo)" ]; then
+    if rocminfo | grep -qw gfx1150; then # Radeon 890M
+        export HSA_OVERRIDE_GFX_VERSION=11.5.1
+        export PYTORCH_ROCM_ARCH=gfx1151
+    fi
+fi
+
 if [ -n "$BASH" ]; then
     # Change the window title of X terminals
     case ${TERM} in
