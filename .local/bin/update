@@ -135,8 +135,10 @@ update_context() {
 }
 
 update_mac_system() {
-    echo "updating system"
-    run sudo softwareupdate -i -a
+    if [ -n "$(command -v softwareupdate)" ]; then
+        echo "updating mac system"
+        run sudo softwareupdate -i -a
+    fi
 }
 
 update_linux_system() {
@@ -225,22 +227,29 @@ update_zsh() {
 }
 
 update_mas() {
-    echo "updating mac appstore"
-    run mas outdated
-    run mas upgrade
+    if [ -n "$(command -v mas)" ]; then
+        echo "updating mac appstore"
+        run mas outdated
+        run mas upgrade
+    fi
 }
 
 update_homebrew() {
-    echo "Updating HomeBrew"
-    run brew update
-    #run brew bundle --global check
-    #run brew bundle --global install
-    run brew upgrade --greedy
-    run brew cleanup --prune=all
+    if [ -n "$(command -v brew)" ]; then
+        echo "Updating HomeBrew"
+        run brew update
+        #run brew bundle --global check
+        #run brew bundle --global install
+        run brew upgrade --greedy
+        run brew cleanup --prune=all
+    fi
 }
 
 update_macports() {
     if [ ! -f "/opt/local/bin/port" ]; then
+        return
+    fi
+    if [ -z "$(command -v port)" ]; then
         return
     fi
     echo "updating macports"
@@ -250,6 +259,9 @@ update_macports() {
 }
 
 update_linuxbrew() {
+    if [ -z "$(command -v brew)" ]; then
+        return
+    fi
     if [ -d "/home/linuxbrew/.linuxbrew" ] || [ -d "$HOME/.linuxbrew" ]; then
         echo "Updating LinuxBrew"
         run brew update
@@ -259,7 +271,7 @@ update_linuxbrew() {
 }
 
 update_snap() {
-    if [ -d "/snap" ]; then
+    if [ -d "/snap" ] && [ -n "$(command -v snap)" ]; then
         echo "Updating snap"
         run sudo snap refresh
     fi
@@ -288,14 +300,16 @@ update_gem() {
     echo "Updating ruby gems"
     if [[ -x "/usr/local/opt/ruby/bin/gem" ]]; then
         run /usr/local/opt/ruby/bin/gem update
-    else
+    elif [ -n "$(command -v gem)" ]; then
         run gem update
     fi
 }
 
 update_go() {
-    echo "Updating go packages"
-    GO111MODULE=off run go get -u all
+    if [ -n "$(command -v go)" ]; then
+        echo "Updating go packages"
+        GO111MODULE=off run go get -u all
+    fi
 }
 
 update_rust() {
