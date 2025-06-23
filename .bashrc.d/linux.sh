@@ -53,10 +53,7 @@ for i in /home/linuxbrew/.linuxbrew $HOME/.linuxbrew /snap /opt/puppetlabs/bin; 
 done
 unset i
 
-# docker
-if [ -n "$(command -v nerdctl)" ]; then
-    alias docker="nerdctl"
-fi
+# rootless docker
 if [ -S "$XDG_RUNTIME_DIR/containerd-rootless/api.sock" ] && [ -n "$(command -v nerdctl)" ]; then
     # nerdctl detects rootless docker automatically
     :

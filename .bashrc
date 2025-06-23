@@ -125,6 +125,10 @@ if [ -n "$(command -v direnv)" ]; then
     fi
 fi
 
+if [ -n "$(command -v nerdctl)" ]; then
+    alias docker="nerdctl"
+fi
+
 if [ -e "$HOME/.bashrc.d" ]; then
     for i in "$HOME/.bashrc.d/"*.sh; do
         if [ -r "$i" ]; then
