@@ -28,7 +28,7 @@ unset dir
 
 export SYSTEMD_LESS="FRXMK"
 
-if [ -f "$HOME"/.ssh/id_ed25519 ]; then
+if [ -S "${XDG_RUNTIME_DIR}/ssh-agent.socket" ]; then
     export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/ssh-agent.socket"
 fi
 
