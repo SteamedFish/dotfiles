@@ -53,6 +53,11 @@ for i in /home/linuxbrew/.linuxbrew $HOME/.linuxbrew /snap /opt/puppetlabs/bin; 
 done
 unset i
 
+if [ -n "$(command -v systemctl)" ]; then
+    # This will not affect systemd services started before PATH is imported.
+    systemctl --user import-environment PATH
+fi
+
 # rootless docker
 if [ -S "$XDG_RUNTIME_DIR/containerd-rootless/api.sock" ] && [ -n "$(command -v nerdctl)" ]; then
     # nerdctl detects rootless docker automatically
