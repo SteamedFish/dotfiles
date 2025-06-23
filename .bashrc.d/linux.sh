@@ -11,7 +11,7 @@ if $CLICOLOR; then
     fi
 fi
 alias open='xdg-open'
-if [ -n "$(command -v wl-copy)" ]; then
+if [ -n "$(command -v wl-copy)" ] && [ "$XDG_SESSION_TYPE" = "wayland" ]; then
     alias pbcopy='wl-copy'
     alias pbpaste='wl-paste'
 else
