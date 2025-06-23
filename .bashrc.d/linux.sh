@@ -54,7 +54,9 @@ done
 unset i
 
 # rootless docker
-if [ -S "$XDG_RUNTIME_DIR/docker.sock" ]; then
+if [ -S "$XDG_RUNTIME_DIR/containerd-rootless/api.sock" ] && [ -n "$(command -v nerdctl)" ]; then
+    alias docker="nerdctl"
+elif [ -S "$XDG_RUNTIME_DIR/docker.sock" ]; then
     export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
 fi
 
