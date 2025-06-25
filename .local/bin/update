@@ -461,7 +461,6 @@ update() {
         update_rust
         update_emacs
         update_optools
-        update_backup
         update_grafana
         ;;
     darwin*)
