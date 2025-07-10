@@ -74,6 +74,10 @@ if [ -n "$(command -v rocminfo)" ]; then
     fi
 fi
 
+if [ -d "/opt/rocm" ]; then
+    export ROCM_PATH=/opt/rocm
+fi
+
 if [ -n "$BASH" ]; then
     # Change the window title of X terminals
     case ${TERM} in
