@@ -58,6 +58,11 @@ if [ -n "$(command -v systemctl)" ]; then
     systemctl --user import-environment PATH
 fi
 
+# nvm
+if [ -f "/usr/share/nvm/init-nvm.sh" ]; then
+    source /usr/share/nvm/init-nvm.sh
+fi
+
 # rootless docker
 if [ -S "$XDG_RUNTIME_DIR/containerd-rootless/api.sock" ] && [ -n "$(command -v nerdctl)" ]; then
     # nerdctl detects rootless docker automatically
