@@ -13,6 +13,7 @@
   :tag "builtin"
   :hook
   (sh-mode-hook . lsp)
+  :ensure-system-package shellcheck
   :config
   (unless (file-exists-p
            (concat lsp-server-install-dir
