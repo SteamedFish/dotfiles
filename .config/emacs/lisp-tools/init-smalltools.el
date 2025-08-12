@@ -33,6 +33,18 @@
   :config
   (ffap-bindings))
 
+(leaf aider
+  :straight t
+  :doc AI assisted programming in Emacs with Aider
+  ;;TODO ensure aider-chat is installed
+  :config
+  (setq aider-args `("--config" ,(expand-file-name "~/.aider.conf.yml")))
+  ;; Optional: Set a key binding for the transient menu
+  (global-set-key (kbd "C-c a") 'aider-transient-menu) ;; for wider screen
+  ;; or use aider-transient-menu-2cols / aider-transient-menu-1col, for narrow screen
+  (aider-magit-setup-transients)) ;; add aider magit function to magit menu
+
+
 (leaf rg
   :url https://github.com/dajva/rg.el
   :doc "C-c s to search"
