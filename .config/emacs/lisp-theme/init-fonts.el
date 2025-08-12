@@ -112,7 +112,7 @@
   :url "https://github.com/domtronn/all-the-icons.el"
   :straight t
   :config
-  (unless (or (find-font (font-spec :name "all-the-icons")) IS-GUI)
+  (unless (or (find-font (font-spec :name "all-the-icons")) noninteractive)
     (all-the-icons-install-fonts)))
 
 (leaf mixed-pitch
