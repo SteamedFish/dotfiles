@@ -78,7 +78,8 @@ if $CLICOLOR; then
 fi
 alias cp='cp -iv'
 alias mv='mv -iv'
-alias rm='rm -iv'
+alias rm='rm -Iv'
+alias ln='ln -iv'
 alias rsync='rsync --partial --secluded-args --progress --human-readable --info=PROGRESS2'
 if [ -n "$(command -v eza)" ]; then
     if [[ "$OSTYPE" == "linux-android" ]]; then
