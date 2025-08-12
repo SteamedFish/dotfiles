@@ -13,7 +13,7 @@
   :tag "builtin"
   :when IS-GUI
   :hook (window-setup-hook . toggle-frame-maximized)
-  :hook (window-setup-hook . (lambda () (modify-frame-parameters nil (list (cons 'alpha 80)))))
+  :hook (window-setup-hook . (lambda () (modify-frame-parameters nil (list (cons 'alpha 100)))))
   :init
   (defun my-toggle-transparency ()
     "toggle frame transparency between 80 and 100"
