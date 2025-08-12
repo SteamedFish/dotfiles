@@ -26,7 +26,7 @@
 (leaf lsp-pyright
   :url https://github.com/emacs-lsp/lsp-pyright
   :straight t
-  :disabled t)
+  :ensure-system-package pyright)
 
 (leaf anaconda-mode
   :url https://github.com/pythonic-emacs/anaconda-mode
