@@ -103,7 +103,6 @@
   :url "https://github.com/laishulu/emacs-smart-input-source"
   :straight t
   :unless (fboundp 'rime-mode)
-  :disabled t
   :config
   (when (eq window-system 'mac)
     (sis-ism-lazyman-config

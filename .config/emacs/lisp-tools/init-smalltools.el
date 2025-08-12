@@ -106,6 +106,7 @@
 (leaf netease-cloud-music
   :url "https://github.com/SpringHan/netease-cloud-music.el"
   :require (cl-macs)
+  :disabled t
   :straight (netease-cloud-music
              :host github
              :repo "SpringHan/netease-cloud-music.el")

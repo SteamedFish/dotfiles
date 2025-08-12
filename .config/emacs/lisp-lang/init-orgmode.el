@@ -251,6 +251,7 @@
   :url https://www.orgroam.com
   :straight t
   :after org
+  :disabled t
   :setq
   `(org-roam-directory  . ,(concat org-directory "roam/"))
   (org-roam-v2-ack      . t)
@@ -261,6 +262,7 @@
 
 (leaf org-roam-ui
   :url https://github.com/org-roam/org-roam-ui
+  :disabled t
   :straight (org-roam-ui :host github :repo "org-roam/org-roam-ui" :files ("*.el" "out"))
   :blackout (org-roam-ui-mode org-roam-ui-follow-mode)
   ;; :advice
@@ -352,6 +354,7 @@
 (leaf org-caldav
   :url https://github.com/dengste/org-caldav
   :straight t
+  :disabled t
   :setq
   (org-caldav-url                     . 'google)
   (org-caldav-resume-aborted          . 'always)
