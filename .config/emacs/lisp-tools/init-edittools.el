@@ -137,10 +137,12 @@
   :require t
   :blackout t
   :when (functionp 'module-load)
-  :ensure-system-package tree-sitter
   :global-minor-mode global-tree-sitter-mode
   :hook
-  (tree-sitter-after-on-hook . tree-sitter-hl-mode))
+  (tree-sitter-after-on-hook . tree-sitter-hl-mode)
+  :config
+  (unless (file-exists-p "/usr/lib/libtree-sitter.so")
+    (ensure-system-package "tree-sitter")))
 
 (leaf tree-sitter-langs
   :url https://github.com/emacs-tree-sitter/tree-sitter-langs
