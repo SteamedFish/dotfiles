@@ -12,9 +12,6 @@
 (leaf python
   :tag "builtin"
   :hook
-  ;; emacs-lsp by default will use pylsp as language server
-  ;; we may also enable lsp-python-ms or pyright
-  ;; TODO: check if pylsp has installed
   (python-mode-hook . lsp))
 
 (leaf lsp-python-ms
