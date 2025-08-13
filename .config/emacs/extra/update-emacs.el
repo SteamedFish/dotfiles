@@ -36,5 +36,8 @@
         (package-menu-execute 'noquery)
       (user-error nil)))))
 
+(if (fboundp 'lsp-update-servers)
+    (lsp-update-servers))
+
 (provide 'update-emacs)
 ;;; update-emacs.el ends here
