@@ -44,6 +44,14 @@
   ;; or use aider-transient-menu-2cols / aider-transient-menu-1col, for narrow screen
   (aider-magit-setup-transients)) ;; add aider magit function to magit menu
 
+(leaf copilot
+  :url https://github.com/copilot-emacs/copilot.el
+  :doc M-x copilot-login
+  :straight t
+  :hook (prog-mode-hook . copilot-mode)
+  :config
+  (unless (file-exists-p (concat my-data-dir "data/copilot/bin/copilot-language-server"))
+    (copilot-install-server)))
 
 (leaf rg
   :url https://github.com/dajva/rg.el
