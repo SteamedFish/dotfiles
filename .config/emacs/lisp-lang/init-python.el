@@ -26,7 +26,11 @@
 (leaf lsp-pyright
   :url https://github.com/emacs-lsp/lsp-pyright
   :straight t
-  :ensure-system-package pyright)
+  ;;:ensure-system-package pyright
+  :config
+  (unless (file-exists-p
+           (concat lsp-server-install-dir "npm/pyright/bin/pyright"))
+    (lsp-install-server nil 'pyright)))
 
 (leaf anaconda-mode
   :url https://github.com/pythonic-emacs/anaconda-mode
