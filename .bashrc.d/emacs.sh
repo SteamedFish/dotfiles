@@ -10,11 +10,6 @@ if [[ "$OSTYPE" == "linux-android" ]]; then
     return
 fi
 
-if [ -x "$HOME/.local/bin/Emacs.AppImage" ]; then
-    alias emacs="$HOME/.local/bin/Emacs.AppImage"
-    alias emacsclient="$HOME/.local/bin/Emacs.AppImage --emacs-appimage-run-as emacsclient"
-fi
-
 if [ "$INSIDE_EMACS" = "vterm" ]; then
     alias vi='emacsclient -n'
     alias vim='emacsclient -n'
