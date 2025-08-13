@@ -141,8 +141,9 @@
   :hook
   (tree-sitter-after-on-hook . tree-sitter-hl-mode)
   :config
-  (unless (file-exists-p "/usr/lib/libtree-sitter.so")
-    (ensure-system-package "tree-sitter")))
+  (unless (or (file-exists-p "/usr/lib/libtree-sitter.so")
+              (file-exists-p "/usr/lib/x86_64-linux-gnu/libtree-sitter.so.0.0"))
+    (system-packages-ensure "tree-sitter")))
 
 (leaf tree-sitter-langs
   :url https://github.com/emacs-tree-sitter/tree-sitter-langs
