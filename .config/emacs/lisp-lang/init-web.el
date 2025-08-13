@@ -40,11 +40,11 @@
   :config
   (unless (file-exists-p
            (concat lsp-server-install-dir
-                   "npm/vscode-html-languageserver-bin/bin/html-languageserver"))
+                   "npm/vscode-langservers-extracted/bin/vscode-html-language-server"))
     (lsp-install-server nil 'html-ls))
   (unless (file-exists-p
            (concat lsp-server-install-dir
-                   "npm/vscode-css-languageserver-bin/bin/css-languageserver"))
+                   "npm/vscode-langservers-extracted/bin/vscode-css-language-server"))
     (lsp-install-server nil 'css-ls))
   (unless (file-exists-p
            (concat lsp-server-install-dir
