@@ -36,6 +36,7 @@
 (leaf aider
   :straight t
   :doc AI assisted programming in Emacs with Aider
+  :url https://github.com/tninja/aider.el
   ;;TODO ensure aider-chat is installed
   :config
   (setq aider-args `("--config" ,(expand-file-name "~/.aider.conf.yml")))
