@@ -78,7 +78,7 @@ if $CLICOLOR; then
 fi
 alias cp='cp -iv'
 alias mv='mv -iv'
-alias rm='rm -Iv'
+alias rm='rm -iv'
 alias ln='ln -iv'
 alias rsync='rsync --partial --secluded-args --progress --human-readable --info=PROGRESS2'
 if [ -n "$(command -v eza)" ]; then
