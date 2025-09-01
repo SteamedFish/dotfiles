@@ -100,13 +100,21 @@ if [ -n "$(command -v fdfind)" ]; then
 fi
 if [ -n "$(command -v bat)" ]; then
     alias cat='bat'
-    if [ -n "$(command -v col)" ]; then
+    if [ -n "$(command -v batman)" ]; then
+        eval "$(batman --export-env)"
+    elif [ -n "$(command -v awk)" ]; then
+        export MANPAGER="sh -c 'awk '\''{ gsub(/\x1B\[[0-9;]*m/, \"\", \$0); gsub(/.\x08/, \"\", \$0); print }'\'' | bat -p -lman'"
+    elif [ -n "$(command -v col)" ]; then
         export MANPAGER="sh -c 'col -bx | bat -l man --paging=always -p'"
     fi
 fi
 if [ -n "$(command -v batcat)" ]; then
     alias cat='batcat'
-    if [ -n "$(command -v col)" ]; then
+    if [ -n "$(command -v batman)" ]; then
+        eval "$(batman --export-env)"
+    elif [ -n "$(command -v awk)" ]; then
+        export MANPAGER="sh -c 'awk '\''{ gsub(/\x1B\[[0-9;]*m/, \"\", \$0); gsub(/.\x08/, \"\", \$0); print }'\'' | batcat -p -lman'"
+    elif [ -n "$(command -v col)" ]; then
         export MANPAGER="sh -c 'col -bx | batcat -l man --paging=always -p'"
     fi
 fi
