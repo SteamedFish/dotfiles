@@ -108,6 +108,7 @@ if [ -n "$(command -v bat)" ]; then
         export MANPAGER="sh -c 'col -bx | bat -l man --paging=always -p'"
     fi
     if [ "$(basename "$SHELL")" = "zsh" ]; then
+        #alias -g -- -h='-h 2>&1 | bat --language=help --style=plain'
         alias -g -- --help='--help 2>&1 | bat --language=help --style=plain'
     fi
 fi
