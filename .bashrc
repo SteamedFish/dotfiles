@@ -122,6 +122,12 @@ if [ -n "$(command -v batcat)" ]; then
         export MANPAGER="sh -c 'col -bx | batcat -l man --paging=always -p'"
     fi
 fi
+if [ -n "$(command -v lesspipe.sh)" ]; then
+    # lesspipe already set in /etc/profile.d/lesspipe.sh
+    :
+elif [ -n "$(command -v batpipe)" ]; then
+    eval "$(batpipe)"
+fi
 if [ -n "$(command -v nvim)" ]; then
     alias vim='nvim'
     alias vi='nvim'
