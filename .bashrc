@@ -134,6 +134,8 @@ if [ -n "$(command -v nvim)" ]; then
 fi
 if [ -n "$(command -v dool)" ]; then
     alias dstat='dool'
+elif [ -n "$(command -v dstat)" ]; then
+    alias dool='dstat'
 fi
 
 if [ -n "$(command -v direnv)" ]; then
