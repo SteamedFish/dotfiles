@@ -50,16 +50,16 @@ if $CLICOLOR; then
     fi
     if [ -n "$(command -v grc)" ]; then
         for _dir in "/etc" "/etc/profile.d" "/usr/share/grc" "/usr/local/etc"; do
-            if [ -n "$BASH" ]; then
-                if [ -f "${_dir}/grc.bashrc" ]; then
-                    # shellcheck disable=SC1091
-                    source "${_dir}/grc.bashrc"
-                    break
-                fi
-            elif [ "$(basename "$SHELL")" = "zsh" ]; then
+            if [ "$(basename "$SHELL")" = "zsh" ]; then
                 if [ -f "${_dir}/grc.zsh" ]; then
                     # shellcheck disable=SC1091
                     source "${_dir}/grc.zsh"
+                    break
+                fi
+            elif [ -n "$BASH" ]; then
+                if [ -f "${_dir}/grc.bashrc" ]; then
+                    # shellcheck disable=SC1091
+                    source "${_dir}/grc.bashrc"
                     break
                 fi
             fi
@@ -139,10 +139,10 @@ elif [ -n "$(command -v dstat)" ]; then
 fi
 
 if [ -n "$(command -v direnv)" ]; then
-    if [ -n "$BASH" ]; then
-        eval "$(direnv hook bash)"
-    elif [ "$(basename "$SHELL")" = "zsh" ]; then
+    if [ "$(basename "$SHELL")" = "zsh" ]; then
         eval "$(direnv hook zsh)"
+    elif [ -n "$BASH" ]; then
+        eval "$(direnv hook bash)"
     fi
 fi
 
@@ -151,10 +151,10 @@ if [ -n "$(command -v nerdctl)" ]; then
 fi
 
 if [ -n "$(command -v easytier-cli)" ]; then
-    if [ -n "$BASH" ]; then
-        eval "$(easytier-cli gen-autocomplete bash)"
-    elif [ "$(basename "$SHELL")" = "zsh" ]; then
+    if [ "$(basename "$SHELL")" = "zsh" ]; then
         eval "$(easytier-cli gen-autocomplete zsh)"
+    elif [ -n "$BASH" ]; then
+        eval "$(easytier-cli gen-autocomplete bash)"
     fi
 fi
 
