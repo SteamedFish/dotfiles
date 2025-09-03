@@ -37,7 +37,7 @@ export GPG_TTY
 
 # by default Linux don't show pings that don't get replied
 # we want to show that
-if [ -n "$(command -v grc)" ]; then
+if [ -n "$(command -v grc)" ] && $CLICOLOR; then
     alias ping="grc --colour=auto ping -O"
 else
     alias ping="ping -O"
