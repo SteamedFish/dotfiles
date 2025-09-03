@@ -1,5 +1,11 @@
 #!/usr/bin/zsh
-#
+
+# do nothing if not running interactively
+case $- in
+    *i*) ;;
+    *) return;;
+esac
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -10,14 +16,8 @@ fi
 test -f /etc/profile && source /etc/profile
 if [ -n "$TERMUX_VERSION" ]; then
     test -f "$PREFIX/etc/profile" && source "$PREFIX/etc/profile"
-fi	
+fi
 source "$HOME/.bashrc"
-
-# do nothing if not running interactively
-case $- in
-    *i*) ;;
-    *) return;;
-esac
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
