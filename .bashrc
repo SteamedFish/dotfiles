@@ -150,6 +150,14 @@ if [ -n "$(command -v nerdctl)" ]; then
     alias docker="nerdctl"
 fi
 
+if [ -n "$(command -v easytier-cli)" ]; then
+    if [ -n "$BASH" ]; then
+        eval "$(easytier-cli gen-autocomplete bash)"
+    elif [ "$(basename "$SHELL")" = "zsh" ]; then
+        eval "$(easytier-cli gen-autocomplete zsh)"
+    fi
+fi
+
 if [ -e "$HOME/.bashrc.d" ]; then
     for i in "$HOME/.bashrc.d/"*.sh; do
         if [ -r "$i" ]; then
