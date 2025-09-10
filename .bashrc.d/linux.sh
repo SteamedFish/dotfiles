@@ -74,8 +74,13 @@ fi
 # ROCm support for special GPUs
 if [ -n "$(command -v rocminfo)" ]; then
     if rocminfo | grep -qw gfx1150; then # Radeon 890M
+        # This is confirmed not working with HX370
         export HSA_OVERRIDE_GFX_VERSION=11.5.1
         export PYTORCH_ROCM_ARCH=gfx1151
+    elif rocminfo | grep -qw gfx1103; then # Radeon 780M
+        # This is confirmed working with 8845HS
+        export HSA_OVERRIDE_GFX_VERSION=11.0.2
+        export PYTORCH_ROCM_ARCH=gfx1102
     fi
 fi
 
