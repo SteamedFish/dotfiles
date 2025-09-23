@@ -76,8 +76,10 @@ if [ -f "$HOME/.zinit/bin/zinit.zsh" ]; then
     zinit ice wait lucid
     zinit load hlissner/zsh-autopair
 
-    zinit ice wait"1" lucid
-    zinit load z-shell/zsh-navigation-tools
+    if [ -z "$(command -v atuin)" ]; then
+        zinit ice wait"1" lucid
+        zinit load z-shell/zsh-navigation-tools
+    fi
 
     if [[ "$OSTYPE" == "darwin"* ]]; then
         zinit light iam4x/zsh-iterm-touchbar
