@@ -82,6 +82,14 @@ if [ -n "$(command -v zoxide)" ]; then
     fi
 fi
 
+if [ -n "$(command -v atuin)" ]; then
+    if [ "$(basename "$SHELL")" = "zsh" ]; then
+        eval "$(atuin init zsh)"
+    elif [ -n "$BASH" ]; then
+        eval "$(atuin init bash)"
+    fi
+fi
+
 #if [ -n "$(command -v easytier-cli)" ]; then
 #    if [ "$(basename "$SHELL")" = "zsh" ]; then
 #        eval "$(easytier-cli gen-autocomplete zsh)"

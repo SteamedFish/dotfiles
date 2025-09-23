@@ -1,0 +1,7 @@
+auto_sync = true
+update_check = false
+sync_address = "https://atuin.steamedfish.org"
+store_failed = true
+
+[dotfiles]
+enabled = false
