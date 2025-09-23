@@ -74,10 +74,10 @@ if [ -n "$(command -v nerdctl)" ]; then
     alias docker="nerdctl"
 fi
 
-if [ -n "$(command -v easytier-cli)" ]; then
-    if [ "$(basename "$SHELL")" = "zsh" ]; then
-        eval "$(easytier-cli gen-autocomplete zsh)"
-    elif [ -n "$BASH" ]; then
-        eval "$(easytier-cli gen-autocomplete bash)"
-    fi
-fi
+#if [ -n "$(command -v easytier-cli)" ]; then
+#    if [ "$(basename "$SHELL")" = "zsh" ]; then
+#        eval "$(easytier-cli gen-autocomplete zsh)"
+#    elif [ -n "$BASH" ]; then
+#        eval "$(easytier-cli gen-autocomplete bash)"
+#    fi
+#fi
