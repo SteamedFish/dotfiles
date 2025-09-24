@@ -84,9 +84,9 @@ fi
 
 if [ -n "$(command -v atuin)" ]; then
     if [ "$(basename "$SHELL")" = "zsh" ]; then
-        eval "$(atuin init zsh)"
+        eval "$(atuin init zsh --disable-up-arrow)"
     elif [ -n "$BASH" ]; then
-        eval "$(atuin init bash)"
+        eval "$(atuin init bash --disable-up-arrow)"
     fi
 fi
 

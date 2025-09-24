@@ -78,7 +78,7 @@ sync_address = "https://atuin.steamedfish.org"
 # inline_height_shell_up_key_binding = 0
 
 ## Invert the UI - put the search bar at the top , Default to `false`
-# invert = false
+invert = true
 
 ## enable or disable showing a preview of the selected command
 ## useful when the command is longer than the terminal width and is cut off
