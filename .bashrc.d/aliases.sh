@@ -27,7 +27,7 @@ if [ -n "$(command -v bat)" ]; then
     if [ -n "$(command -v batman)" ]; then
         eval "$(batman --export-env)"
     elif [ -n "$(command -v awk)" ]; then
-        export MANPAGER="sh -c 'awk '\''{ gsub(/\x1B\[[0-9;]*m/, \"\", \$0); gsub(/.\x08/, \"\", \$0); print }'\'' | bat -p -lman'"
+        export MANPAGER="sh -c 'awk '\''{ gsub(/\x1B\[[0-9;]*m/, \"\", \$0); gsub(/.\x08/, \"\", \$0); print }'\'' | bat -p --paging=always -lman'"
     elif [ -n "$(command -v col)" ]; then
         export MANPAGER="sh -c 'col -bx | bat -l man --paging=always -p'"
     fi
@@ -41,7 +41,7 @@ if [ -n "$(command -v batcat)" ]; then
     if [ -n "$(command -v batman)" ]; then
         eval "$(batman --export-env)"
     elif [ -n "$(command -v awk)" ]; then
-        export MANPAGER="sh -c 'awk '\''{ gsub(/\x1B\[[0-9;]*m/, \"\", \$0); gsub(/.\x08/, \"\", \$0); print }'\'' | batcat -p -lman'"
+        export MANPAGER="sh -c 'awk '\''{ gsub(/\x1B\[[0-9;]*m/, \"\", \$0); gsub(/.\x08/, \"\", \$0); print }'\'' | batcat -p --paging=always -lman'"
     elif [ -n "$(command -v col)" ]; then
         export MANPAGER="sh -c 'col -bx | batcat -l man --paging=always -p'"
     fi
