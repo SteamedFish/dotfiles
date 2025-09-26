@@ -30,32 +30,6 @@
 	helper = store
 [color]
 	ui = true
-[core]
-	pager = delta
-[delta]
-	plus-color = "#012800"
-	minus-color = "#340001"
-	syntax-theme = Nord
-	line-numbers = true
-	side-by-side = false
-	commit-style = raw
-	hunk-header-style = syntax
-	zero-style = syntax
-	commit-decoration-style = box
-	file-decoration-style =
-	hyperlinks = false
-	inspect-raw-lines = true
-	keep-plus-minus-markers = false
-	max-line-distance = 0.6
-	max-line-length = 512
-	navigate = false
-	paging = auto
-	side-by-side = false
-	syntax-theme = Nord
-	width = 79
-	tabs = 4
-[interactive]
-	diffFilter = delta --color-only
 [init]
 	defaultBranch = master
 [http]
@@ -70,4 +44,13 @@
 [status]
 	submoduleSummary = true
 	showStash = true
-[http]
+[difftool]
+    prompt = false
+[pager]
+    difftool = true
+[diff]
+    tool = difftastic
+    external=difft
+[difftool "difftastic"]
+    # See `man git-difftool` for a description of MERGED, LOCAL and REMOTE.
+    cmd = difft "$MERGED" "$LOCAL" "abcdef1" "100644" "$REMOTE" "abcdef2" "100644"
