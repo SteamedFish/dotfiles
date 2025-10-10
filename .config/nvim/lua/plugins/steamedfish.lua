@@ -49,6 +49,11 @@ return {
   },
   {
     "mason-org/mason.nvim",
-    opts = { ensure_installed = { "shellcheck" } },
+    opts = {
+      ensure_installed = {
+        "shellcheck",
+        "gitui",
+      },
+    },
   },
 }
