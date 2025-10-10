@@ -1,5 +1,3 @@
-vim.opt.relativenumber = false
-vim.opt.wrap = true
 return {
   {
     "wakatime/vim-wakatime",
