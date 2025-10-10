@@ -5,10 +5,15 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export LESS="-R"
 export CVS_RSH=ssh
-export EDITOR="vim"
 export MYSQL_PS1="(\u@\h) [\d]> "
 export PATH=$PATH:$HOME/.go/bin:$HOME/.cargo/bin:$HOME/.local/bin
 export GOPATH=$HOME/.go
+
+if [ -n "$(command -v nvim)" ]; then
+    export EDITOR="nvim"
+elif [ -n "$(command -v vim)" ]; then
+    export EDITOR="vim"
+fi
 
 # do nothing if not running interactively
 case $- in
