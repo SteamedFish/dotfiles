@@ -445,6 +445,14 @@ update_backup() {
     fi
 }
 
+update_ollama() {
+    if [ -n "$(command -v ollama)" ] && systemctl status ollama.service >/dev/null; then
+        ollama list | tail -n +2 | awk '{print $1}' | while read -r model; do
+            ollama pull "$model"
+        done
+    fi
+}
+
 update() {
     if [[ $(uname -o) != "Android" ]]; then
         get_sudo
@@ -460,6 +468,7 @@ update() {
         update_pip
         update_rust
         update_emacs
+        update_ollama
         update_optools
         update_grafana
         ;;
