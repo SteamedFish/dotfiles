@@ -1,5 +1,3 @@
-background_opacity = 0.7
-
 [colors]
 draw_bold_text_with_bright_colors = true
 
@@ -40,10 +38,6 @@ yellow = "#ebcb8b"
 [colors.primary]
 background = "#2e3440"
 dim_foreground = "#a5abb6"
-foreground = "#d8dee9"
-
-[colors.search.bar]
-background = "#434c5e"
 foreground = "#d8dee9"
 
 [colors.search.matches]
