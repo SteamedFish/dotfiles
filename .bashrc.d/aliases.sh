@@ -55,6 +55,7 @@ fi
 if [ -n "$(command -v nvim)" ]; then
     alias vim='nvim'
     alias vi='nvim'
+    alias vimdiff='nvim -d'
 fi
 if [ -n "$(command -v dool)" ]; then
     alias dstat='dool'
