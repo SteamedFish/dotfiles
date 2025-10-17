@@ -6,23 +6,6 @@
 // Input device configuration.
 // Find the full list of options on the wiki:
 // https://yalter.github.io/niri/Configuration:-Input
-
-// include is avaliable in next niri release
-//include "noctalia-shell.kdl"
-window-rule {
-    geometry-corner-radius 20
-    clip-to-geometry true
-}
-
-layer-rule {
-    match namespace="^quickshell-overview$"
-    place-within-backdrop true
-}
-
-debug {
-    honor-xdg-activation-with-invalid-serial
-}
-
 input {
     keyboard {
         xkb {
@@ -156,6 +139,7 @@ layout {
         proportion 0.33333
         proportion 0.5
         proportion 0.66667
+        proportion 1.0
 
         // Fixed sets the width in logical pixels exactly.
         // fixed 1920
@@ -165,7 +149,7 @@ layout {
     // preset-window-heights { }
 
     // You can change the default width of the new windows.
-    default-column-width { proportion 0.5; }
+    default-column-width { proportion 1.0; }
     // If you leave the brackets empty, the windows themselves will decide their initial width.
     // default-column-width {}
 
@@ -183,10 +167,10 @@ layout {
     // You can change how the focus ring looks.
     focus-ring {
         // Uncomment this line to disable the focus ring.
-        // off
+        off
 
         // How many logical pixels the ring extends out from the windows.
-        width 4
+        width 1
 
         // Colors can be set in a variety of ways:
         // - CSS named colors: "red"
@@ -218,15 +202,18 @@ layout {
         // inactive-gradient from="#505050" to="#808080" angle=45 relative-to="workspace-view"
     }
 
+    background-color "transparent"
+
     // You can also add a border. It's similar to the focus ring, but always visible.
     border {
         // The settings are the same as for the focus ring.
         // If you enable the border, you probably want to disable the focus ring.
-        off
+        //off
 
-        width 4
-        active-color "#ffc87f"
-        inactive-color "#505050"
+        width 2
+
+        //active-color "#ffc87f"
+        //inactive-color "#505050"
 
         // Color of the border around windows that request your attention.
         urgent-color "#9b0000"
@@ -236,13 +223,15 @@ layout {
         //
         // active-gradient from="#e5989b" to="#ffb4a2" angle=45 relative-to="workspace-view" in="oklch longer hue"
 
+        active-gradient from="#0DB7D4" to="#9778D0" angle=90
+        inactive-color "#04404A"
         // inactive-gradient from="#505050" to="#808080" angle=45 relative-to="workspace-view"
     }
 
     // You can enable drop shadows for windows.
     shadow {
         // Uncomment the next line to enable shadows.
-        // on
+        on
 
         // By default, the shadow draws only around its window, and not behind it.
         // Uncomment this setting to make the shadow draw behind its window.
@@ -281,12 +270,21 @@ layout {
     // Left and right struts will cause the next window to the side to always be visible.
     // Top and bottom struts will simply add outer gaps in addition to the area occupied by
     // layer-shell panels and regular gaps.
-    struts {
-        // left 64
-        // right 64
-        // top 64
-        // bottom 64
+    /-struts {
+        left 2
+        right 2
+        top 2
+        bottom 2
     }
+}
+
+layer-rule {
+    match namespace="^quickshell-overview$"
+    place-within-backdrop true
+}
+layer-rule {
+    match namespace="^swww-daemon$"
+    place-within-backdrop true
 }
 
 // Add lines like this to spawn processes at startup.
@@ -297,6 +295,33 @@ layout {
 // This line starts waybar, a commonly used bar for Wayland compositors.
 // spawn-at-startup "waybar"
 spawn-at-startup "uwsm" "app" "--" "qs" "-c" "noctalia-shell"
+spawn-at-startup "uwsm" "app" "--" "swww-daemon"
+
+environment {
+    MOZ_ENABLE_WAYLAND "1"
+    MOZ_DBUS_REMOTE "1"
+    //GDK_BACKEND "wayland"
+    //QT_AUTO_SCREEN_SCALE_FACTOR "1"
+    //QT_WAYLAND_FORCE_DPI "physical"
+    //EGL_PLATFORM "wayland"
+    //CLUTTER_BACKEND "wayland"
+    //TERM "kitty"
+    //TERMINAL "kitty"
+    //_JAVA_AWT_WM_NONREPARENTING "1"
+    //ELECTRON_OZONE_PLATFORM_HINT "auto"
+    //QT_QPA_PLATFORMTHEME "qt6ct"
+    //nv GSK_RENDERER "ngl"
+    //nv NVD_BACKEND "direct"
+    //nv LIBVA_DRIVER_NAME "nvidia"
+    //nv GBM_BACKEND "nvidia-drm"
+    //nv VDPAU_DRIVER "nvidia"
+    //nv __GLX_VENDOR_LIBRARY_NAME "nvidia"
+    //nv __GL_VRR_ALLOWED "1"
+    //nv __GL_GSYNC_ALLOWED "1"
+    //nv __GL_SHADER_DISK_CACHE_SKIP_CLEANUP "1"
+    //nv __GL_YIELD "USLEEP"
+    //nv __EGL_VENDOR_LIBRARY_FILENAMES "/usr/share/glvnd/egl_vendor.d/10_nvidia.json"
+}
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
@@ -355,6 +380,11 @@ window-rule {
     open-floating true
 }
 
+window-rule {
+    match app-id="steam" title=r#"^notificationtoasts_\d+_desktop$"#
+    default-floating-position x=10 y=10 relative-to="bottom-right"
+}
+
 // Example: block out two password managers from screen capture.
 // (This example rule is commented out with a "/-" in front.)
 /-window-rule {
@@ -369,9 +399,13 @@ window-rule {
 
 // Example: enable rounded corners for all windows.
 // (This example rule is commented out with a "/-" in front.)
-/-window-rule {
-    geometry-corner-radius 12
+window-rule {
+    geometry-corner-radius 5
     clip-to-geometry true
+}
+
+debug {
+    honor-xdg-activation-with-invalid-serial
 }
 
 binds {
@@ -397,7 +431,7 @@ binds {
     // Use spawn-sh to run a shell command. Do this if you need pipes, multiple commands, etc.
     // Note: the entire command goes as a single argument. It's passed verbatim to `sh -c`.
     // For example, this is a standard bind to toggle the screen reader (orca).
-    Super+Alt+S allow-when-locked=true hotkey-overlay-title=null { spawn-sh "pkill orca || exec orca"; }
+    //Super+Alt+S allow-when-locked=true hotkey-overlay-title=null { spawn-sh "pkill orca || exec orca"; }
 
     // Example volume keys mappings for PipeWire & WirePlumber.
     // The allow-when-locked=true property makes them work even when the session is locked.
