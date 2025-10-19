@@ -296,6 +296,7 @@ layer-rule {
 // spawn-at-startup "waybar"
 spawn-at-startup "uwsm" "app" "--" "qs" "-c" "noctalia-shell"
 spawn-at-startup "uwsm" "app" "--" "swww-daemon"
+spawn-at-startup "uwsm" "app" "--" "udiskie" "-t"
 
 environment {
     MOZ_ENABLE_WAYLAND "1"
