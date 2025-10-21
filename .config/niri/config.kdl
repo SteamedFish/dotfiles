@@ -379,7 +379,26 @@ window-rule {
     // - Flatpak Firefox (app-id is "org.mozilla.firefox")
     match app-id=r#"firefox$"# title="^Picture-in-Picture$"
     match app-id=r#"^moe\.launcher\.an-anime-game-launcher$"#
+    match app-id=r#"^org\.telegram\.desktop$"# title="^Media viewer$"
+    match app-id=r#"^Feishu$"# title="^群聊会话记录$"
     open-floating true
+}
+
+window-rule {
+    match app-id=r#"^genshinimpact\.exe$"#
+    open-fullscreen true
+}
+
+window-rule {
+    match app-id=r#"^org\.telegram\.desktop$"#
+    exclude title="^Media viewer$"
+    default-column-width {proportion 0.33333;}
+}
+
+window-rule {
+    match app-id=r#"^Feishu$"#
+    exclude title="^群聊会话记录"
+    default-column-width {proportion 0.33333;}
 }
 
 window-rule {
