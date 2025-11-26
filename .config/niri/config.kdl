@@ -121,7 +121,7 @@ output "Invalid Vendor Codename - RTK 0x5BD2 0x0003D8D9" {
 // https://yalter.github.io/niri/Configuration:-Layout
 layout {
     // Set gaps around windows in logical pixels.
-    gaps 16
+    gaps 5
 
     // When to center a column when changing focus, options are:
     // - "never", default behavior, focusing an off-screen column will keep at the left
@@ -358,6 +358,16 @@ animations {
     // slowdown 3.0
 }
 
+workspace "browser" {
+}
+
+workspace "chat" {
+    open-on-output "BOE Display Unknown"
+}
+
+workspace "game" {
+}
+
 // Window rules let you adjust behavior for individual windows.
 // Find more information on the wiki:
 // https://yalter.github.io/niri/Configuration:-Window-Rules
@@ -379,6 +389,16 @@ window-rule {
     // - Flatpak Firefox (app-id is "org.mozilla.firefox")
     match app-id=r#"firefox$"# title="^Picture-in-Picture$"
     match app-id=r#"^moe\.launcher\.an-anime-game-launcher$"#
+    open-floating true
+}
+
+window-rule {
+    match app-id=r#"^org\.telegram\.desktop$"#
+    match app-id=r#"^Feishu$"#
+    open-on-workspace "chat"
+}
+
+window-rule {
     match app-id=r#"^org\.telegram\.desktop$"# title="^Media viewer$"
     match app-id=r#"^Feishu$"# title="^群聊会话记录$"
     match app-id=r#"^Feishu$"# title="^图片$"
@@ -388,10 +408,12 @@ window-rule {
 window-rule {
     match app-id=r#"^genshinimpact\.exe$"#
     open-fullscreen true
+    open-on-workspace "game"
 }
 
 window-rule {
     match app-id=r#"^Alacritty$"#
+    match app-id=r#"^kitty$"#
     default-column-width {proportion 0.5;}
 }
 
@@ -399,12 +421,14 @@ window-rule {
     match app-id=r#"^org\.telegram\.desktop$"#
     exclude title="^Media viewer$"
     default-column-width {proportion 0.33333;}
+    open-on-workspace "chat"
 }
 
 window-rule {
     match app-id=r#"^Feishu$"#
     exclude title="^群聊会话记录"
     default-column-width {proportion 0.33333;}
+    open-on-workspace "chat"
 }
 
 window-rule {
@@ -451,7 +475,7 @@ binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
 
     // Suggested binds for running programs: terminal, app launcher, screen locker.
-    Mod+T hotkey-overlay-title="Open a Terminal: alacritty" { spawn "alacritty"; }
+    Mod+T hotkey-overlay-title="Open a Terminal: " { spawn "kitty"; }
     //Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
     Mod+D hotkey-overlay-title="Run an Application: " { spawn "qs" "-c" "noctalia-shell" "ipc" "call" "launcher" "toggle"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
