@@ -145,12 +145,15 @@ update_linux_system() {
     if [[ -f /etc/arch-release ]]; then
         if [ -n "$(command -v yay)" ]; then
             PACMAN_CMD="yay"
+            run yay -Y --gendb
         else
             PACMAN_CMD="sudo pacman"
         fi
 
         run "${PACMAN_CMD}" -Fy
         run "${PACMAN_CMD}" -Syu
+        #run "${PACMAN_CMD}" -Yc
+
         #if [ -n "$(command -v pikaur)" ]; then
         #    # update git packages
         #    run pikaur -Sua --devel --needed
