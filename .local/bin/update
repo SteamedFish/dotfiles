@@ -456,6 +456,12 @@ update_ollama() {
     fi
 }
 
+update_mastodon() {
+    if [ -f "/home/mastodon/update.sh" ]; then
+        sudo su - mastodon -c 'cd /home/mastodon/ && bash -x update.sh'
+    fi
+}
+
 update() {
     if [[ $(uname -o) != "Android" ]]; then
         get_sudo
@@ -474,6 +480,7 @@ update() {
         update_ollama
         update_optools
         update_grafana
+        update_mastodon
         ;;
     darwin*)
         self_update
