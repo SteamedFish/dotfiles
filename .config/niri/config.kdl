@@ -400,6 +400,7 @@ workspace "chat" {
 }
 
 workspace "game" {
+    open-on-output "Invalid Vendor Codename - RTK 0x5BD2 0x0003D8D9"
 }
 
 // Window rules let you adjust behavior for individual windows.
