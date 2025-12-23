@@ -24,7 +24,7 @@ if [ -n "$(command -v fdfind)" ]; then
 fi
 if [ -n "$(command -v bat)" ]; then
     alias cat='bat'
-    export MANPAGER="bat --paging=auto -plman"
+    export MANPAGER="bat --paging=auto -plman --theme 'Monokai Extended'"
     #if [ -n "$(command -v batman)" ]; then
     #    eval "$(batman --export-env)"
     #elif [ -n "$(command -v awk)" ]; then
@@ -39,7 +39,7 @@ if [ -n "$(command -v bat)" ]; then
 fi
 if [ -n "$(command -v batcat)" ]; then
     alias cat='batcat'
-    export MANPAGER="batcat --paging=auto -plman"
+    export MANPAGER="batcat --paging=auto -plman --theme 'Monokai Extended'"
     #if [ -n "$(command -v batman)" ]; then
     #    eval "$(batman --export-env)"
     #elif [ -n "$(command -v awk)" ]; then
