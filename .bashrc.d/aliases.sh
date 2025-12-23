@@ -24,13 +24,14 @@ if [ -n "$(command -v fdfind)" ]; then
 fi
 if [ -n "$(command -v bat)" ]; then
     alias cat='bat'
-    if [ -n "$(command -v batman)" ]; then
-        eval "$(batman --export-env)"
-    elif [ -n "$(command -v awk)" ]; then
-        export MANPAGER="sh -c 'awk '\''{ gsub(/\x1B\[[0-9;]*m/, \"\", \$0); gsub(/.\x08/, \"\", \$0); print }'\'' | bat -p --paging=always -lman'"
-    elif [ -n "$(command -v col)" ]; then
-        export MANPAGER="sh -c 'col -bx | bat -l man --paging=always -p'"
-    fi
+    export MANPAGER="bat --paging=auto -plman"
+    #if [ -n "$(command -v batman)" ]; then
+    #    eval "$(batman --export-env)"
+    #elif [ -n "$(command -v awk)" ]; then
+    #    export MANPAGER="sh -c 'awk '\''{ gsub(/\x1B\[[0-9;]*m/, \"\", \$0); gsub(/.\x08/, \"\", \$0); print }'\'' | bat -p --paging=always -lman'"
+    #elif [ -n "$(command -v col)" ]; then
+    #    export MANPAGER="sh -c 'col -bx | bat -l man --paging=always -p'"
+    #fi
     if [ "$(basename "$SHELL")" = "zsh" ]; then
         #alias -g -- -h='-h 2>&1 | bat --language=help --style=plain'
         alias -g -- --help='--help 2>&1 | bat --language=help --style=plain'
@@ -38,12 +39,17 @@ if [ -n "$(command -v bat)" ]; then
 fi
 if [ -n "$(command -v batcat)" ]; then
     alias cat='batcat'
-    if [ -n "$(command -v batman)" ]; then
-        eval "$(batman --export-env)"
-    elif [ -n "$(command -v awk)" ]; then
-        export MANPAGER="sh -c 'awk '\''{ gsub(/\x1B\[[0-9;]*m/, \"\", \$0); gsub(/.\x08/, \"\", \$0); print }'\'' | batcat -p --paging=always -lman'"
-    elif [ -n "$(command -v col)" ]; then
-        export MANPAGER="sh -c 'col -bx | batcat -l man --paging=always -p'"
+    export MANPAGER="batcat --paging=auto -plman"
+    #if [ -n "$(command -v batman)" ]; then
+    #    eval "$(batman --export-env)"
+    #elif [ -n "$(command -v awk)" ]; then
+    #    export MANPAGER="sh -c 'awk '\''{ gsub(/\x1B\[[0-9;]*m/, \"\", \$0); gsub(/.\x08/, \"\", \$0); print }'\'' | batcat -p --paging=always -lman'"
+    #elif [ -n "$(command -v col)" ]; then
+    #    export MANPAGER="sh -c 'col -bx | batcat -l man --paging=always -p'"
+    #fi
+    if [ "$(basename "$SHELL")" = "zsh" ]; then
+        #alias -g -- -h='-h 2>&1 | batcat --language=help --style=plain'
+        alias -g -- --help='--help 2>&1 | batcat --language=help --style=plain'
     fi
 fi
 if [ -n "$(command -v lesspipe.sh)" ]; then
