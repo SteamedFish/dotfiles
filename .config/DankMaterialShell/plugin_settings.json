@@ -1,0 +1,14 @@
+{
+  "dankDesktopWeather": {
+    "enabled": true
+  },
+  "niriWindows": {
+    "enabled": true
+  },
+  "linuxWallpaperEngine": {
+    "enabled": true
+  },
+  "displayMirror": {
+    "enabled": true
+  }
+}
