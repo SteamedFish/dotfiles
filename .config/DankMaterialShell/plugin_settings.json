@@ -6,7 +6,12 @@
     "enabled": true
   },
   "linuxWallpaperEngine": {
-    "enabled": true
+    "enabled": true,
+    "monitorScenes": {
+      "HDMI-A-1": "1764643511",
+      "HDMI-A-2": "2867182492",
+      "DP-1": "2861575921"
+    }
   },
   "displayMirror": {
     "enabled": true
