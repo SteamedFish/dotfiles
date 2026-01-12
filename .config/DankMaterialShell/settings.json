@@ -116,7 +116,7 @@
   "keyboardLayoutNameCompactMode": false,
   "runningAppsCurrentWorkspace": false,
   "runningAppsGroupByApp": false,
-  "centeringMode": "index",
+  "centeringMode": "geometric",
   "clockDateFormat": "",
   "lockDateFormat": "",
   "mediaSize": 1,
@@ -237,7 +237,9 @@
   "updaterCustomCommand": "",
   "updaterTerminalAdditionalParams": "",
   "displayNameMode": "system",
-  "screenPreferences": {},
+  "screenPreferences": {
+    "wallpaper": []
+  },
   "showOnLastDisplay": {},
   "barConfigs": [
     {
@@ -250,28 +252,82 @@
       ],
       "showOnLastDisplay": true,
       "leftWidgets": [
-        "launcherButton",
-        "workspaceSwitcher",
-        "focusedWindow"
+        {
+          "id": "launcherButton",
+          "enabled": true
+        },
+        {
+          "id": "workspaceSwitcher",
+          "enabled": true
+        },
+        {
+          "id": "separator",
+          "enabled": true
+        },
+        {
+          "id": "focusedWindow",
+          "enabled": true
+        },
+        {
+          "id": "separator",
+          "enabled": true
+        },
+        {
+          "id": "runningApps",
+          "enabled": true
+        }
       ],
       "centerWidgets": [
         "music",
         "clock",
-        "weather"
+        "weather",
+        {
+          "id": "displayMirror",
+          "enabled": true
+        },
+        {
+          "id": "separator",
+          "enabled": true
+        },
+        {
+          "id": "cpuUsage",
+          "enabled": true,
+          "minimumWidth": true
+        },
+        {
+          "id": "memUsage",
+          "enabled": true,
+          "minimumWidth": true
+        },
+        {
+          "id": "cpuTemp",
+          "enabled": true,
+          "minimumWidth": true
+        },
+        {
+          "id": "network_speed_monitor",
+          "enabled": true
+        },
+        {
+          "id": "separator",
+          "enabled": true
+        }
       ],
       "rightWidgets": [
         "systemTray",
         "clipboard",
-        "cpuUsage",
-        "memUsage",
         "notificationButton",
         "battery",
-        "controlCenterButton"
+        "controlCenterButton",
+        {
+          "id": "powerMenuButton",
+          "enabled": true
+        }
       ],
       "spacing": 4,
       "innerPadding": 4,
       "bottomGap": 0,
-      "transparency": 1,
+      "transparency": 0.7,
       "widgetTransparency": 1,
       "squareCorners": false,
       "noBackground": false,
@@ -289,7 +345,7 @@
       "fontScale": 1,
       "autoHide": false,
       "autoHideDelay": 250,
-      "openOnOverview": false,
+      "openOnOverview": true,
       "visible": true,
       "popupGapsAuto": true,
       "popupGapsManual": 4,

@@ -8,12 +8,18 @@
   "linuxWallpaperEngine": {
     "enabled": true,
     "monitorScenes": {
-      "HDMI-A-1": "1764643511",
+      "HDMI-A-1": "2861575921",
       "HDMI-A-2": "2867182492",
-      "DP-1": "2861575921"
+      "DP-1": "843475502"
     }
   },
   "displayMirror": {
-    "enabled": true
+    "enabled": true,
+    "autoRefresh": true
+  },
+  "dankLauncherKeys": {
+    "enabled": true,
+    "noTrigger": false,
+    "trigger": "\\"
   }
 }
