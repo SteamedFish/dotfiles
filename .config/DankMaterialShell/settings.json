@@ -39,7 +39,7 @@
   "controlCenterShowNetworkIcon": true,
   "controlCenterShowBluetoothIcon": true,
   "controlCenterShowAudioIcon": true,
-  "controlCenterShowVpnIcon": true,
+  "controlCenterShowVpnIcon": false,
   "controlCenterShowBrightnessIcon": false,
   "controlCenterShowMicIcon": false,
   "controlCenterShowBatteryIcon": false,
@@ -133,7 +133,7 @@
   "networkPreference": "auto",
   "vpnLastConnected": "",
   "iconTheme": "System Default",
-  "launcherLogoMode": "apps",
+  "launcherLogoMode": "os",
   "launcherLogoCustomPath": "",
   "launcherLogoColorOverride": "",
   "launcherLogoColorInvertOnMode": false,
@@ -182,8 +182,8 @@
   "showDock": false,
   "dockAutoHide": false,
   "dockGroupByApp": true,
-  "dockOpenOnOverview": false,
-  "dockPosition": 1,
+  "dockOpenOnOverview": true,
+  "dockPosition": 3,
   "dockSpacing": 4,
   "dockBottomGap": 0,
   "dockMargin": 0,
@@ -236,7 +236,7 @@
   "updaterUseCustomCommand": false,
   "updaterCustomCommand": "",
   "updaterTerminalAdditionalParams": "",
-  "displayNameMode": "system",
+  "displayNameMode": "model",
   "screenPreferences": {
     "wallpaper": []
   },
@@ -278,7 +278,6 @@
         }
       ],
       "centerWidgets": [
-        "music",
         "clock",
         "weather",
         {
@@ -291,13 +290,11 @@
         },
         {
           "id": "cpuUsage",
-          "enabled": true,
-          "minimumWidth": true
+          "enabled": true
         },
         {
           "id": "memUsage",
-          "enabled": true,
-          "minimumWidth": true
+          "enabled": true
         },
         {
           "id": "cpuTemp",
@@ -307,17 +304,12 @@
         {
           "id": "network_speed_monitor",
           "enabled": true
-        },
-        {
-          "id": "separator",
-          "enabled": true
         }
       ],
       "rightWidgets": [
         "systemTray",
         "clipboard",
         "notificationButton",
-        "battery",
         "controlCenterButton",
         {
           "id": "powerMenuButton",
