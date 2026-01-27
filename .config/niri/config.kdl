@@ -432,6 +432,7 @@ window-rule {
     match app-id=r#"^org\.telegram\.desktop$"#
     match app-id=r#"^Feishu$"#
     match app-id=r#"^Element$"#
+    match app-id=r#"^wechat$"#
     open-on-workspace "chat"
 }
 
@@ -463,6 +464,13 @@ window-rule {
 
 window-rule {
     match app-id=r#"^Feishu$"#
+    exclude title="^群聊会话记录"
+    default-column-width {proportion 0.33333;}
+    open-on-workspace "chat"
+}
+
+window-rule {
+    match app-id=r#"^wechat$"#
     exclude title="^群聊会话记录"
     default-column-width {proportion 0.33333;}
     open-on-workspace "chat"
@@ -772,3 +780,5 @@ binds {
     // moving the mouse or pressing any other key.
     Mod+Shift+P { power-off-monitors; }
 }
+
+include "dms/cursor.kdl"
