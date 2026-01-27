@@ -108,12 +108,12 @@ input {
     // automatically.
     position x=1280 y=0
 }
-output "BOE Display Unknown" {
+/-output "BOE Display Unknown" {
     mode "2560x1600@130.000"
     scale 1.5
     position x=2560 y=374
 }
-output "Invalid Vendor Codename - RTK 0x5BD2 0x0003D8D9" {
+/-output "Invalid Vendor Codename - RTK 0x5BD2 0x0003D8D9" {
     mode "2560x1600@144.000"
     scale 1.0
     position x=0 y=0
@@ -782,3 +782,5 @@ binds {
 }
 
 include "dms/cursor.kdl"
+
+include "dms/outputs.kdl"
