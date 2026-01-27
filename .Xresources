@@ -5,5 +5,3 @@
 #include ".Xresources.d/XTerm"
 #include ".Xresources.d/URxvt"
 #include ".Xresources.d/Emacs"
-Xcursor.theme: breeze_cursors
-Xcursor.size: 24
