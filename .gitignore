@@ -5,6 +5,3 @@
 *.~undo-tree~
 bin/auth.conf
 .git-credentials
-
-# AI-generated documentation
-AGENTS.md
