@@ -22,35 +22,20 @@ if [ -n "$(command -v fdfind)" ]; then
     # Debian use this name
     alias fd='fdfind'
 fi
+# Setup bat/batcat (Debian uses 'batcat' name)
+_setup_bat_aliases() {
+    local bat_cmd="$1"
+    alias cat="$bat_cmd"
+    export MANPAGER="$bat_cmd --paging=auto -plman --theme 'Monokai Extended'"
+    if [ "$(basename "$SHELL")" = "zsh" ]; then
+        alias -g -- --help="--help 2>&1 | $bat_cmd --language=help --style=plain"
+    fi
+}
+
 if [ -n "$(command -v bat)" ]; then
-    alias cat='bat'
-    export MANPAGER="bat --paging=auto -plman --theme 'Monokai Extended'"
-    #if [ -n "$(command -v batman)" ]; then
-    #    eval "$(batman --export-env)"
-    #elif [ -n "$(command -v awk)" ]; then
-    #    export MANPAGER="sh -c 'awk '\''{ gsub(/\x1B\[[0-9;]*m/, \"\", \$0); gsub(/.\x08/, \"\", \$0); print }'\'' | bat -p --paging=always -lman'"
-    #elif [ -n "$(command -v col)" ]; then
-    #    export MANPAGER="sh -c 'col -bx | bat -l man --paging=always -p'"
-    #fi
-    if [ "$(basename "$SHELL")" = "zsh" ]; then
-        #alias -g -- -h='-h 2>&1 | bat --language=help --style=plain'
-        alias -g -- --help='--help 2>&1 | bat --language=help --style=plain'
-    fi
-fi
-if [ -n "$(command -v batcat)" ]; then
-    alias cat='batcat'
-    export MANPAGER="batcat --paging=auto -plman --theme 'Monokai Extended'"
-    #if [ -n "$(command -v batman)" ]; then
-    #    eval "$(batman --export-env)"
-    #elif [ -n "$(command -v awk)" ]; then
-    #    export MANPAGER="sh -c 'awk '\''{ gsub(/\x1B\[[0-9;]*m/, \"\", \$0); gsub(/.\x08/, \"\", \$0); print }'\'' | batcat -p --paging=always -lman'"
-    #elif [ -n "$(command -v col)" ]; then
-    #    export MANPAGER="sh -c 'col -bx | batcat -l man --paging=always -p'"
-    #fi
-    if [ "$(basename "$SHELL")" = "zsh" ]; then
-        #alias -g -- -h='-h 2>&1 | batcat --language=help --style=plain'
-        alias -g -- --help='--help 2>&1 | batcat --language=help --style=plain'
-    fi
+    _setup_bat_aliases "bat"
+elif [ -n "$(command -v batcat)" ]; then
+    _setup_bat_aliases "batcat"
 fi
 if [ -n "$(command -v lesspipe.sh)" ]; then
     # lesspipe already set in /etc/profile.d/lesspipe.sh
