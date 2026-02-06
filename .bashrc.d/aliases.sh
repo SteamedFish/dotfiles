@@ -25,9 +25,11 @@ fi
 # Setup bat/batcat (Debian uses 'batcat' name)
 _setup_bat_aliases() {
     local bat_cmd="$1"
+    # shellcheck disable=SC2139
     alias cat="$bat_cmd"
     export MANPAGER="$bat_cmd --paging=auto -plman --theme 'Monokai Extended'"
     if [ "$(basename "$SHELL")" = "zsh" ]; then
+        # shellcheck disable=SC2139
         alias -g -- --help="--help 2>&1 | $bat_cmd --language=help --style=plain"
     fi
 }
