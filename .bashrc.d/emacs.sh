@@ -48,7 +48,8 @@ function emacs {
         fi
         return
     fi
-    args=("$*")
+    local args=("$*")
+    local i
     for ((i = 0; i <= ${#args}; i++)); do
         local a=${args[i]}
         # NOTE: -c for creating new frame

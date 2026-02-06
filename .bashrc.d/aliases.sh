@@ -39,6 +39,7 @@ if [ -n "$(command -v bat)" ]; then
 elif [ -n "$(command -v batcat)" ]; then
     _setup_bat_aliases "batcat"
 fi
+unset -f _setup_bat_aliases
 if [ -n "$(command -v lesspipe.sh)" ]; then
     # lesspipe already set in /etc/profile.d/lesspipe.sh
     :
