@@ -141,6 +141,7 @@ update_mac_system() {
 }
 
 update_linux_system() {
+    local PACMAN_CMD
     if [[ -f /etc/arch-release ]]; then
         if [ -n "$(command -v yay)" ]; then
             PACMAN_CMD="yay"
