@@ -71,7 +71,6 @@ function emacs {
 
 if [ -d "$HOME/emacs-distros/spacemacs" ] &&
     [ -f "$HOME/.emacs-profiles.el" ]; then
-    local distro
     for distro in centaur spacemacs; do
         eval "
         function $distro {
