@@ -48,7 +48,7 @@ export MAKEFLAGS="-j$(nproc)"
 # extra PATHs
 for i in /home/linuxbrew/.linuxbrew $HOME/.linuxbrew /snap /opt/puppetlabs/bin; do
     if [ -d "$i" ]; then
-        export PATH="$i/bin:$i/sbin/$PATH"
+        export PATH="$i/bin:$i/sbin:$PATH"
     fi
 done
 unset i
