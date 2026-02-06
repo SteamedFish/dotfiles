@@ -5,15 +5,13 @@ if [ -z "$BASH" ]; then
 fi
 
 # History
-export HISTCONTROL=ignoredups
 export HISTCONTROL=ignoreboth
-export HISTTIMEFORMAT="%F %T"
 export HISTTIMEFORMAT="[%Y-%m-%d %H:%M:%S]  "
 export HISTFILESIZE=-1
 shopt -s histappend
 
 # PS1
-if $CLICOLOR ;then
+if $CLICOLOR; then
     if [ "$TERM" == "eterm-color" ]; then
         # emacs handles wrong with color reset
         export PS1='\[\033[01;32m\]\u\[\033[01;34m\]@\[\033[01;32m\]\h:\[\033[01;34m\]\w\[\033[00m\]\$ '
@@ -40,7 +38,7 @@ if [ -n "$BASH_VERSION" ] && [ -z "$BASH_COMPLETION" ]; then
         # shellcheck source=.bash_completion
         . "$HOME/.bash_completion"
     fi
-    if [ -n "$(command -v pandoc)" ];then
+    if [ -n "$(command -v pandoc)" ]; then
         eval "$(pandoc --bash-completion)"
     fi
 fi
