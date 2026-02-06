@@ -106,10 +106,16 @@ Design solutions that handle all scenarios gracefully without exceptions.
 **Before writing code:**
 1. Read `plan/TODO.md` and `plan/CHANGELOG.md` to understand current state
 2. Read all relevant documentation
-3. Understand constraints, boundaries, and validation rules
-4. Trace complete data paths (input → transformations → output)
-5. Review adjacent files for established patterns
-6. Clarify all ambiguities
+3. **Review existing implementations** — search the codebase for similar functionality to reuse
+4. Understand constraints, boundaries, and validation rules
+5. Trace complete data paths (input → transformations → output)
+6. Review adjacent files for established patterns
+7. Clarify all ambiguities
+
+**Avoid reinventing the wheel:**
+- Search for existing utilities, helpers, and shared functions before writing new ones
+- Check if similar logic exists elsewhere that can be extracted and reused
+- Prefer extending or composing existing code over duplicating it
 
 ### 4.2 Implementation Discipline
 
