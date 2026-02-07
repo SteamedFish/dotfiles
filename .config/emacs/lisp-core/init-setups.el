@@ -6,6 +6,10 @@
 
 ;;; Code:
 
+;;
+;;; Builtin packages - Core settings
+;;
+
 (leaf startup
   :tag "builtin"
   :setq
@@ -76,6 +80,10 @@
   (kill-do-not-save-duplicates . t)
   (async-shell-command-buffer  . 'new-buffer))
 
+;;
+;;; Builtin packages - Encoding
+;;
+
 (leaf mule-cmds
   :tag "builtin"
   :config
@@ -99,6 +107,10 @@
   :unless IS-WINDOWS
   :setq (selection-coding-system . 'utf-8))
 
+;;
+;;; Builtin packages - Customization & History
+;;
+
 (leaf cus-edit
   :tag "builtin"
   :init
@@ -107,34 +119,6 @@
   (when (and (bound-and-true-p custom-file) (file-exists-p custom-file))
     (load custom-file)))
 
-(leaf no-littering
-  :url "https://github.com/emacscollective/no-littering"
-  :straight t
-  :require t
-  :pre-setq `((no-littering-etc-directory . ,(expand-file-name "etc/" my-data-dir))
-              (no-littering-var-directory . ,(expand-file-name "data/" my-data-dir))))
-
-(leaf exec-path-from-shell
-  :url https://github.com/purcell/exec-path-from-shell
-  :straight t
-  :when IS-GUI
-  :setq
-  ;; speed up shell startup
-  (exec-path-from-shell-shell-name . "/bin/bash")
-  (exec-path-from-shell-arguments  . '("-l"))
-  :config
-  (exec-path-from-shell-copy-envs '("PATH"
-                                    "MANPATH"
-                                    "GOPATH"
-                                    "GO111MODULE"
-                                    "GOPROXY"
-                                    "PYTHONPATH"
-                                    "SHELL"
-                                    "SSH_AUTH_SOCK"
-                                    "SSH_AGENT_PID"
-                                    "GPG_AGENT_INFO")))
-
-;; remember last location
 (leaf saveplace
   :tag "builtin"
   :unless noninteractive
@@ -166,6 +150,10 @@
   :tag "builtin"
   :require t)
 
+;;
+;;; Builtin packages - Performance & Server
+;;
+
 (leaf so-long
   :tag "builtin"
   :global-minor-mode global-so-long-mode
@@ -177,6 +165,37 @@
   :require t
   :config (unless (server-running-p)
             (server-start)))
+
+;;
+;;; Third-party packages - Environment & Data
+;;
+
+(leaf no-littering
+  :url "https://github.com/emacscollective/no-littering"
+  :straight t
+  :require t
+  :pre-setq `((no-littering-etc-directory . ,(expand-file-name "etc/" my-data-dir))
+              (no-littering-var-directory . ,(expand-file-name "data/" my-data-dir))))
+
+(leaf exec-path-from-shell
+  :url https://github.com/purcell/exec-path-from-shell
+  :straight t
+  :when IS-GUI
+  :setq
+  ;; speed up shell startup
+  (exec-path-from-shell-shell-name . "/bin/bash")
+  (exec-path-from-shell-arguments  . '("-l"))
+  :config
+  (exec-path-from-shell-copy-envs '("PATH"
+                                    "MANPATH"
+                                    "GOPATH"
+                                    "GO111MODULE"
+                                    "GOPROXY"
+                                    "PYTHONPATH"
+                                    "SHELL"
+                                    "SSH_AUTH_SOCK"
+                                    "SSH_AGENT_PID"
+                                    "GPG_AGENT_INFO")))
 
 (provide 'init-setups)
 ;;; init-setups.el ends here

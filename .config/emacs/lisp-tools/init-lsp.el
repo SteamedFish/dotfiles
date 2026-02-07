@@ -38,22 +38,6 @@
   (lsp-ui-doc-enable                 . t)
   (lsp-ui-imenu-auto-refresh         . t))
 
-(leaf company-lsp
-  :url https://github.com/tigersoldier/company-lsp
-  :straight t
-  :disabled t ;; lsp nologer support company-lsp
-  :after company
-  :require t
-  :config
-  (push 'company-lsp company-backends))
-
-(leaf lsp-ivy
-  :url https://github.com/emacs-lsp/lsp-ivy
-  :straight t
-  :bind
-  (:lsp-mode-map
-   ([remap xref-find-apropos] . lsp-ivy-workspace-symbol)))
-
 (leaf dap-mode
   :url https://emacs-lsp.github.io/dap-mode/
   :straight t)

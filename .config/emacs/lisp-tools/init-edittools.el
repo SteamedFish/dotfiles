@@ -8,6 +8,10 @@
 
 ;;; Code:
 
+;;
+;;; Builtin packages - Core editing
+;;
+
 (leaf indent
   :tag "builtin"
   :setq (tab-always-indent . 'complete))
@@ -20,6 +24,51 @@
   (unless backup-directory-alist
     (setq backup-directory-alist `(("." . ,(concat my-data-dir
                                                    "backups"))))))
+
+(leaf paren
+  :tag "builtin"
+  :global-minor-mode show-paren-mode)
+
+(leaf mouse
+  :tag "builtin"
+  :setq
+  (mouse-yank-at-point . t))
+
+(leaf ediff-wind
+  :tag "builtin"
+  :setq (ediff-choose-window-setup-function . 'ediff-setup-windows-plain))
+
+(leaf autorevert
+  :tag "builtin"
+  :blackout t
+  :custom
+  (auto-revert-use-notify . nil)
+  :global-minor-mode global-auto-revert-mode)
+
+(leaf tramp
+  :tag "builtin"
+  :setq
+  (tramp-default-method                       . "ssh")
+  (tramp-completion-reread-directory-timeout  . 60)
+  (tramp-verbose                              . 2)
+  :require t ;; must require to make `tramp-methods' available
+  :config
+  ;; use `/yadm::<file>' to access yadm controlled files
+  ;; use `(magit-status "/yadm::")' to access magit directly
+  (add-to-list 'tramp-methods
+               '("yadm"
+                 (tramp-login-program     "yadm")
+                 (tramp-login-args        (("enter")))
+                 (tramp-login-env         (("SHELL") ("/bin/sh")))
+                 (tramp-remote-shell      "/bin/sh")
+                 (tramp-remote-shell-args ("-c"))))
+  ;; leaf's :bind don't handle lambda correctly
+  (define-key ctl-x-map
+    (kbd "G") (lambda () (interactive)(magit-status "/yadm::"))))
+
+;;
+;;; Editing tools - Whitespace & Cleanup
+;;
 
 (leaf whitespace-cleanup-mode
   :url https://github.com/purcell/whitespace-cleanup-mode
@@ -35,6 +84,10 @@
   :setq
   (ws-butler-keep-whitespace-before-point . nil)
   :global-minor-mode ws-butler-global-mode)
+
+;;
+;;; Editing tools - Snippets & Templates
+;;
 
 (leaf yasnippet
   :url http://joaotavora.github.io/yasnippet/
@@ -55,22 +108,27 @@
   :straight (doom-snippets :host github :repo "hlissner/doom-snippets" :files ("*"))
   :config (doom-snippets-initialize))
 
-(leaf paren
-  :tag "builtin"
-  :global-minor-mode show-paren-mode)
-
-(leaf mouse
-  :tag "builtin"
-  :setq
-  (mouse-yank-at-point . t))
-
-(leaf ediff-wind
-  :tag "builtin"
-  :setq (ediff-choose-window-setup-function . 'ediff-setup-windows-plain))
+;;
+;;; Editing tools - Undo & Navigation
+;;
 
 (leaf undo-fu
   :url https://gitlab.com/ideasman42/emacs-undo-fu
   :straight t)
+
+(leaf better-jumper
+  :url https://github.com/gilbertw1/better-jumper
+  :straight t
+  :blackout (better-jumper-mode better-jumper-local-mode)
+  :global-minor-mode t
+  :bind
+  ([remap evil-jump-forward]     . better-jumper-jump-forward)
+  ([remap evil-jump-backward]    . better-jumper-jump-backward)
+  ([remap xref-pop-marker-stack] . better-jumper-jump-backward))
+
+;;
+;;; Editing tools - Alignment & Indentation
+;;
 
 (leaf ialign
   :url https://github.com/mkcms/interactive-align
@@ -79,6 +137,29 @@
   :straight t
   :setq
   (ialign-pcre-mode . t))
+
+(leaf dtrt-indent
+  :url https://github.com/jscheid/dtrt-indent/
+  :doc "guess file indent settings"
+  :blackout t
+  :straight t
+  :setq
+  (dtrt-indent-run-after-smie . t)
+  :global-minor-mode dtrt-indent-global-mode)
+
+(leaf aggressive-indent
+  :url https://github.com/Malabarba/aggressive-indent-mode
+  :straight t
+  :blackout (global-aggressive-indent-mode aggressive-indent-mode)
+  :global-minor-mode global-aggressive-indent-mode
+  :config
+  ;; don't enable with parinfer-mode
+  (dolist (modes '(emacs-lisp-mode lisp-interaction-mode clojure-mode scheme-mode lisp-mode racket-mode hy-mode))
+    (add-to-list 'aggressive-indent-excluded-modes modes)))
+
+;;
+;;; Editing tools - Parentheses & Structure editing
+;;
 
 (leaf parinfer-rust-mode
   :url "https://github.com/justinbarclay/parinfer-rust-mode"
@@ -114,22 +195,21 @@
   :blackout t
   :setq (parinfer-extensions . '(defaults pretty-parens smart-tab smart-yank evil)))
 
-(leaf autorevert
-  :tag "builtin"
-  :blackout t
-  :custom
-  (auto-revert-use-notify . nil)
-  :global-minor-mode global-auto-revert-mode)
-
-(leaf aggressive-indent
-  :url https://github.com/Malabarba/aggressive-indent-mode
+(leaf smartparens
+  :url https://github.com/Fuco1/smartparens
+  :doc "use M-x sp-cheat-sheet for help"
   :straight t
-  :blackout (global-aggressive-indent-mode aggressive-indent-mode)
-  :global-minor-mode global-aggressive-indent-mode
-  :config
-  ;; don't enable with parinfer-mode
-  (dolist (modes '(emacs-lisp-mode lisp-interaction-mode clojure-mode scheme-mode lisp-mode racket-mode hy-mode))
-    (add-to-list 'aggressive-indent-excluded-modes modes)))
+  :hook (prog-mode-hook . smartparens-mode)
+  :blackout t
+  :setq
+  (sp-highlight-pair-overlay     . nil)
+  (sp-highlight-wrap-overlay     . nil)
+  (sp-highlight-wrap-tag-overlay . nil)
+  :require smartparens-config)
+
+;;
+;;; Editing tools - Syntax & Formatting
+;;
 
 (leaf tree-sitter
   :url https://emacs-tree-sitter.github.io/
@@ -160,58 +240,6 @@
   :hook
   (prog-mode-hook       . format-all-mode)
   (format-all-mode-hook . format-all-ensure-formatter))
-
-(leaf better-jumper
-  :url https://github.com/gilbertw1/better-jumper
-  :straight t
-  :blackout (better-jumper-mode better-jumper-local-mode)
-  :global-minor-mode t
-  :bind
-  ([remap evil-jump-forward]     . better-jumper-jump-forward)
-  ([remap evil-jump-backward]    . better-jumper-jump-backward)
-  ([remap xref-pop-marker-stack] . better-jumper-jump-backward))
-
-(leaf dtrt-indent
-  :url https://github.com/jscheid/dtrt-indent/
-  :doc "guess file indent settings"
-  :blackout t
-  :straight t
-  :setq
-  (dtrt-indent-run-after-smie . t)
-  :global-minor-mode dtrt-indent-global-mode)
-
-(leaf smartparens
-  :url https://github.com/Fuco1/smartparens
-  :doc "use M-x sp-cheat-sheet for help"
-  :straight t
-  :hook (prog-mode-hook . smartparens-mode)
-  :blackout t
-  :setq
-  (sp-highlight-pair-overlay     . nil)
-  (sp-highlight-wrap-overlay     . nil)
-  (sp-highlight-wrap-tag-overlay . nil)
-  :require smartparens-config)
-
-(leaf tramp
-  :tag "builtin"
-  :setq
-  (tramp-default-method                       . "ssh")
-  (tramp-completion-reread-directory-timeout  . 60)
-  (tramp-verbose                              . 2)
-  :require t ;; must require to make `tramp-methods' available
-  :config
-  ;; use `/yadm::<file>' to access yadm controlled files
-  ;; use `(magit-status "/yadm::")' to access magit directly
-  (add-to-list 'tramp-methods
-               '("yadm"
-                 (tramp-login-program     "yadm")
-                 (tramp-login-args        (("enter")))
-                 (tramp-login-env         (("SHELL") ("/bin/sh")))
-                 (tramp-remote-shell      "/bin/sh")
-                 (tramp-remote-shell-args ("-c"))))
-  ;; leaf's :bind don't handle lambda correctly
-  (define-key ctl-x-map
-    (kbd "G") (lambda () (interactive)(magit-status "/yadm::"))))
 
 (provide 'init-edittools)
 ;;; init-edittools.el ends here

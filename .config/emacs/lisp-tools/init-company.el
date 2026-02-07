@@ -8,6 +8,10 @@
 
 ;;; Code:
 
+;;
+;;; Company core
+;;
+
 (leaf company
   :url http://company-mode.github.io/
   :straight t
@@ -31,10 +35,18 @@
                                       shell-mode
                                       vterm-mode)))
 
+;;
+;;; Company extensions - Sorting & Filtering
+;;
+
 (leaf company-prescient
-  :url https://github.com/raxod502/prescient.el
+  :url https://github.com/radian-software/prescient.el
   :straight t
   :global-minor-mode t)
+
+;;
+;;; Company extensions - UI enhancements
+;;
 
 (leaf company-box
   :url https://github.com/sebastiencs/company-box
@@ -59,6 +71,10 @@
   :bind (:company-active-map
          ([remap company-show-doc-buffer] . company-quickhelp-manual-begin)))
 
+;;
+;;; Company extensions - Domain-specific backends
+;;
+
 (leaf company-math
   :url https://github.com/vspinu/company-math
   :straight t
@@ -71,6 +87,10 @@
   :setq `(company-dict-dir . ,(concat my-data-dir "/data/company-dict/"))
   :config
   (add-to-list 'company-backends 'company-dict))
+
+;;
+;;; Alternative completion framework (disabled)
+;;
 
 (leaf corfu
   :url https://github.com/minad/corfu

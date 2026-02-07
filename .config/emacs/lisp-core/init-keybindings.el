@@ -8,6 +8,10 @@
 
 ;;; Code:
 
+;;
+;;; Builtin packages - Window management
+;;
+
 ;; S-left S-right S-up S-down to move windows
 (leaf windmove
   :tag "builtin"
@@ -21,11 +25,9 @@
   :tag "builtin"
   :global-minor-mode t)
 
-(leaf winum
-  :url https://github.com/deb0ch/emacs-winum
-  :doc "C-x w"
-  :straight t
-  :global-minor-mode winum-mode)
+;;
+;;; Builtin packages - Mac-like keybindings
+;;
 
 (leaf simple
   :tag "builtin"
@@ -37,6 +39,16 @@
   ("s-v"         . yank)
   ("s-z"         . undo)
   ("s-<return>"  . toggle-frame-maximized))
+
+;;
+;;; Third-party packages - Window numbering
+;;
+
+(leaf winum
+  :url https://github.com/deb0ch/emacs-winum
+  :doc "C-x w"
+  :straight t
+  :global-minor-mode winum-mode)
 
 
 (provide 'init-keybindings)

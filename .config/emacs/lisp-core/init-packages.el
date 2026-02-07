@@ -35,7 +35,7 @@
   (unless (file-exists-p bootstrap-file)
     (with-current-buffer
         (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
          'silent 'inhibit-cookies)
       (goto-char (point-max))
       (eval-print-last-sexp)))
@@ -81,16 +81,23 @@
           system-packages-use-sudo        nil)))
 
 (leaf blackout
-  :url https://github.com/raxod502/blackout)
+  :url https://github.com/radian-software/blackout)
 
 (leaf straight
-  :url https://github.com/raxod502/straight.el
+  :url https://github.com/radian-software/straight.el
   :ensure-system-package (watchexec python))
 
 ;; experimental/unstable extension of straight.el
 (leaf straight-x
-  :url https://github.com/raxod502/straight.el
+  :url https://github.com/radian-software/straight.el
   :commands (straight-x-fetch-all straight-x-pull-all))
+
+;; convert use-package declarations to leaf
+(leaf leaf-convert
+  :url https://github.com/conao3/leaf-convert.el
+  :straight t
+  :commands (leaf-convert-insert-template
+             leaf-convert-from-use-package))
 
 (provide 'init-packages)
 ;;; init-packages.el ends here

@@ -8,6 +8,23 @@
 ;;
 ;;; Code:
 
+;;
+;;; Builtin packages - Help & Documentation
+;;
+
+(leaf help
+  :tag "builtin"
+  :straight nil
+  :setq (help-window-select . t))
+
+(leaf ibuffer
+  :tag "builtin"
+  :straight nil
+  :bind (([remap list-buffers] . ibuffer)))
+
+;;
+;;; Help extensions - Enhanced documentation
+;;
 
 (leaf helpful
   :url "https://github.com/Wilfred/helpful"
@@ -27,13 +44,16 @@
    ([remap describe-symbol]               . helpful-symbol)
    ([remap Info-goto-emacs-command-node]  . helpful-function)))
 
-
 (leaf elisp-demos
   :url "https://github.com/xuchunyang/elisp-demos"
   :straight t
   :after helpful
   :advice
   (:after helpful-update elisp-demos-advice-helpful-update))
+
+;;
+;;; Help extensions - Discovery & Navigation
+;;
 
 (leaf which-key
   :url "https://github.com/justbur/emacs-which-key"
@@ -48,10 +68,9 @@
   :setq (which-key-posframe-poshandler . 'posframe-poshandler-frame-bottom-center)
   :global-minor-mode t)
 
-(leaf ibuffer
-  :tag "builtin"
-  :straight nil
-  :bind (([remap list-buffers] . ibuffer)))
+;;
+;;; Buffer management - Grouping & Organization
+;;
 
 (leaf ibuffer-projectile
   :url https://github.com/purcell/ibuffer-projectile
@@ -66,10 +85,9 @@
   :hook
   (ibuffer-hook . ibuffer-vc-set-filter-groups-by-vc-root))
 
-(leaf help
-  :tag "builtin"
-  :straight nil
-  :setq (help-window-select . t))
+;;
+;;; Window management - Popups & Special buffers
+;;
 
 (leaf popper
   :url https://github.com/karthink/popper
@@ -83,6 +101,10 @@
   (when (display-graphic-p)
     (setq popper-display-function #'display-buffer-in-child-frame))
   (setq   popper-group-function   #'popper-group-by-projectile))
+
+;;
+;;; Alternative completion (disabled)
+;;
 
 (leaf ido
   :tag "builtin"
@@ -104,6 +126,10 @@
   :bind ([remap execute-extended-command] . amx)
   :setq
   (amx-history-length . 20))
+
+;;
+;;; Minibuffer enhancements
+;;
 
 (leaf maple-minibuffer
   :url https://github.com/honmaple/emacs-maple-minibuffer

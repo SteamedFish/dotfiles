@@ -8,6 +8,10 @@
 
 ;;; Code:
 
+;;
+;;; Ivy/Counsel/Swiper - Core completion framework
+;;
+
 (leaf counsel
   :url https://oremacs.com/swiper/
   :straight t
@@ -39,7 +43,6 @@
   ([remap swiper]                      . counsel-grep-or-swiper)
   ([remap insert-char]                 . counsel-unicode-char)
   ([remap yank-pop]                    . counsel-yank-pop)
-  ([remap load-theme]                  . counsel-load-theme)
   ;; the default keybinding of C-x C-r was #'find-file-read-only
   ;; which is not very useful
   (:ctl-x-map
@@ -60,7 +63,6 @@
   (ivy-use-virtual-buffers             . t)
   (ivy-fixed-height-minibuffer         . t)
   (ivy-sort-max-size                   . 7500)
-  (ivy-use-virtual-buffers             . nil)
   (ivy-virtual-abbreviate              . 'full)
   (ivy-initial-inputs-alist            . nil)
   (counsel-describe-function-function  . #'helpful-callable)
@@ -88,8 +90,12 @@
   ;; this bind "C-'" to `avy-isearch' in `isearch-mode-map'
   (avy-setup-default))
 
+;;
+;;; Ivy extensions - Sorting & Filtering
+;;
+
 (leaf prescient
-  :url https://github.com/raxod502/prescient.el
+  :url https://github.com/radian-software/prescient.el
   :straight t
   :pre-setq
   (prescient-filter-method           . '(literal regexp initialism fuzzy))
@@ -98,7 +104,7 @@
   :global-minor-mode prescient-persist-mode)
 
 (leaf ivy-prescient
-  :url https://github.com/raxod502/prescient.el
+  :url https://github.com/radian-software/prescient.el
   :comment TODO: disable flx?
   :after counsel
   :straight t
@@ -108,6 +114,10 @@
   :url https://github.com/lewang/flx
   :straight t
   :require t)
+
+;;
+;;; Ivy extensions - Visual enhancements
+;;
 
 (leaf all-the-icons-ivy-rich
   :url https://github.com/seagle0128/all-the-icons-ivy-rich
