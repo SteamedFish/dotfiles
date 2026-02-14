@@ -18,8 +18,13 @@ This skill is split into specialized sub-skills for different package types:
 | Sub-Skill | Use When |
 |-----------|----------|
 | **archlinux-pkgbuild/vcs-packages** | Creating VCS packages (Git, SVN, CVS, Mercurial, Bazaar) with pkgver() functions |
-| **archlinux-pkgbuild/language-ecosystems** | Packaging language-specific projects (Node.js, Python, Perl, Ruby, Go, Rust, Haskell, OCaml, Java, R, Lisp, Free Pascal) |
-| **archlinux-pkgbuild/specialized-packages** | Specialized package types (Wine, Electron, Fonts, Web apps, DKMS, CMake, MinGW, Kernel modules, Eclipse, Meson, KDE, CLR, Init systems) |
+| **archlinux-pkgbuild/systemd-services** | Working with systemd services, user management (DynamicUser vs sysusers.d), tmpfiles.d cleanup, service sandboxing, converting non-systemd init scripts |
+| **archlinux-pkgbuild/compiled-languages** | Packaging compiled languages (Go, Rust, Haskell, OCaml, Free Pascal, Java) with language-specific build flags and installation patterns |
+| **archlinux-pkgbuild/interpreted-languages** | Packaging interpreted languages (Node.js, Python, Ruby, PHP, Perl, R, Shell scripts, Lisp) with package managers and module installations |
+| **archlinux-pkgbuild/build-systems** | Working with CMake or Meson build systems - CMAKE_INSTALL_PREFIX, CMAKE_BUILD_TYPE, RPATH handling, meson setup/compile patterns |
+| **archlinux-pkgbuild/cross-platform** | Packaging cross-platform compatibility layers (Wine, MinGW, Electron, CLR/.NET) with WINEPREFIX, mingw-w64, electron-builder, Mono runtime |
+| **archlinux-pkgbuild/desktop-integration** | Packaging desktop environment integrations (GNOME, KDE, Eclipse, Font packages) with GSettings schemas, KDE frameworks, fontconfig |
+| **archlinux-pkgbuild/system-packages** | Packaging system-level components (DKMS modules, kernel modules, lib32, nonfree software, web apps, split packages) with specialized installation requirements |
 
 **Load sub-skills as needed** using the skill tool when working with these specialized package types.
 
@@ -112,15 +117,18 @@ package() {
 | Requirement | Rule | Violation Example |
 |-------------|------|-------------------|
 | **Paths** | NEVER /usr/local/, ALWAYS /usr/ | /usr/local/bin → /usr/bin |
+| **System locations** | Vendor config to /usr/lib/, NOT /etc/ | /etc/sysusers.d/ → /usr/lib/sysusers.d/ |
+| **File naming** | Use package name in system configs | device.rules → 99-$pkgname.rules |
 | **Dependencies** | List ALL direct deps (no transitives) | Missing runtime library dep |
 | **Architecture** | 'x86_64' or 'any' | Missing arch= field |
 | **Checksums** | Use sha256sums or sha512sums | Using md5sums only |
 | **optdepends** | Format: 'pkg: description' | 'pkg' without description |
 | **pkgdesc** | ~80 chars, no package name | "example is a tool..." |
-| **Validation** | namcap PKGBUILD + package | Skipping namcap tests |
+| **Validation** | namcap PKGBUILD + package (required), namcap -i (recommended) | Skipping namcap tests |
 | **Variables** | Quote: "$pkgdir" "$srcdir" | $pkgdir/usr (unquoted) |
 | **License** | SPDX format | 'GPLv3' instead of 'GPL3' |
 | **Email** | Obfuscate in comments | user@domain.com → user at domain dot com |
+| **Config files** | List in backup=() array | User modifications get overwritten on upgrade |
 
 ## Step-by-Step Implementation
 
@@ -174,7 +182,7 @@ ldd /path/to/binary
 find-libprovides /path/to/built/files
 ```
 
-### Step 3: FHS Compliance
+### Step 3: FHS Compliance and System Package Locations
 
 **Correct installation paths:**
 
@@ -190,6 +198,59 @@ find-libprovides /path/to/built/files
 | App data | /usr/share/$pkgname | /usr/local/share |
 | Config | /etc | /usr/etc |
 | State data | /var/lib/$pkgname | /var/$pkgname |
+
+**CRITICAL: System Package Locations (Vendor Config)**
+
+**RULE: Vendor-provided configuration ALWAYS goes to `/usr/lib/`, NOT `/etc/`.**
+
+| Config Type | System Package Location (CORRECT) | User Override Location | WRONG Path |
+|-------------|-----------------------------------|------------------------|------------|
+| systemd user definitions | `/usr/lib/sysusers.d/$pkgname.conf` | `/etc/sysusers.d/` | `/etc/sysusers.d/$pkgname.conf` |
+| systemd tmpfiles config | `/usr/lib/tmpfiles.d/$pkgname.conf` | `/etc/tmpfiles.d/` | `/etc/tmpfiles.d/$pkgname.conf` |
+| udev rules | `/usr/lib/udev/rules.d/$pkgname.rules` | `/etc/udev/rules.d/` | `/etc/udev/rules.d/$pkgname.rules` |
+| systemd services | `/usr/lib/systemd/system/$pkgname.service` | `/etc/systemd/system/` | `/etc/systemd/system/$pkgname.service` |
+| systemd network | `/usr/lib/systemd/network/$pkgname.network` | `/etc/systemd/network/` | `/etc/systemd/network/$pkgname.network` |
+| modprobe.d | `/usr/lib/modprobe.d/$pkgname.conf` | `/etc/modprobe.d/` | `/etc/modprobe.d/$pkgname.conf` |
+| modules-load.d | `/usr/lib/modules-load.d/$pkgname.conf` | `/etc/modules-load.d/` | `/etc/modules-load.d/$pkgname.conf` |
+| PAM config | `/usr/lib/pam.d/$pkgname` | `/etc/pam.d/` | `/etc/pam.d/$pkgname` (sometimes valid) |
+| environment.d | `/usr/lib/environment.d/$pkgname.conf` | `/etc/environment.d/` | `/etc/environment.d/$pkgname.conf` |
+
+**WHY THIS MATTERS:**
+
+1. **Separation of concerns**: `/etc/` is **EXCLUSIVELY for user modifications**, `/usr/lib/` is for **package-provided defaults**
+2. **Update semantics**: System updates NEVER touch `/etc/` (protects user config), but can overwrite `/usr/lib/`
+3. **Conflict prevention**: Two packages installing to same path in `/usr/lib/` is VALID (systemd merges), but in `/etc/` causes pacman conflicts
+4. **Search order**: systemd/udev search `/etc/` first (user overrides), then `/usr/lib/` (package defaults)
+
+**File Naming Convention for System Locations:**
+
+**ALWAYS use package name as basename** to prevent conflicts:
+
+```bash
+# ✅ CORRECT: Package name as filename
+install -Dm644 "$srcdir/myapp.sysusers" "$pkgdir/usr/lib/sysusers.d/myapp.conf"
+install -Dm644 "$srcdir/myapp.tmpfiles" "$pkgdir/usr/lib/tmpfiles.d/myapp.conf"
+install -Dm644 "$srcdir/myapp.rules" "$pkgdir/usr/lib/udev/rules.d/99-myapp.rules"
+
+# ❌ WRONG: Generic or inconsistent names
+install -Dm644 "$srcdir/myapp.sysusers" "$pkgdir/usr/lib/sysusers.d/users.conf"  # Conflicts!
+install -Dm644 "$srcdir/myapp.tmpfiles" "$pkgdir/usr/lib/tmpfiles.d/cleanup.conf"  # Unclear ownership
+install -Dm644 "$srcdir/myapp.rules" "$pkgdir/usr/lib/udev/rules.d/device.rules"  # Which package?
+```
+
+**If multiple related files needed, include package name:**
+
+```bash
+# ✅ CORRECT: Multiple configs with package prefix
+/usr/lib/tmpfiles.d/myapp-runtime.conf
+/usr/lib/tmpfiles.d/myapp-cache.conf
+/usr/lib/sysusers.d/myapp-primary.conf
+/usr/lib/sysusers.d/myapp-secondary.conf
+
+# ❌ WRONG: No package identification
+/usr/lib/tmpfiles.d/runtime.conf  # What package?
+/usr/lib/tmpfiles.d/cache.conf    # Conflict risk
+```
 
 **Fix paths in prepare():**
 ```bash
@@ -234,7 +295,9 @@ sha256sums=('SKIP')
 
 ### Step 5: Validation with namcap
 
-**MANDATORY: Run namcap twice**
+**MANDATORY: Run namcap validation at TWO levels**
+
+#### Level 1: Standard Validation (REQUIRED - must pass)
 
 ```bash
 # 1. Check PKGBUILD file
@@ -247,6 +310,42 @@ makepkg -f
 # 3. Check generated package
 namcap *.pkg.tar.zst
 # Must show no errors or warnings (or document why safe to ignore)
+```
+
+**CRITICAL: DO NOT proceed if standard namcap reports errors.**
+
+#### Level 2: Detailed Validation (STRONGLY RECOMMENDED - fix what you can)
+
+**After passing standard validation, run detailed checks:**
+
+```bash
+# 4. Detailed PKGBUILD analysis
+namcap -i PKGBUILD
+# Shows informational messages, style suggestions, potential improvements
+
+# 5. Detailed package analysis  
+namcap -i *.pkg.tar.zst
+# Shows additional warnings about permissions, paths, best practices
+```
+
+**The `-i` flag reveals:**
+- Style inconsistencies (not blocking but should fix)
+- Potential improvements (optional dependencies, documentation)
+- False positives (may show warnings for valid choices - use judgment)
+
+**Approach to `-i` output:**
+- Errors/Warnings: **Fix as many as practical**
+- Informational: **Review and fix obvious issues**
+- False positives: **Document why ignored** (not all `-i` output requires action)
+
+**Example: `-i` output handling:**
+```bash
+# Example warning from namcap -i
+W: Dependency included but no file depends on it (glibc)
+
+# Evaluation:
+# - If glibc is indirect dep: Remove from depends=()
+# - If glibc provides runtime library: Keep and document
 ```
 
 **Common namcap errors and fixes:**
@@ -319,8 +418,10 @@ git push origin master
 
 | Mistake | Why It's Wrong | Correct Approach |
 |---------|---------------|------------------|
-| Skipping namcap | Violates Arch packaging standards | Always run namcap on PKGBUILD and .pkg.tar.zst |
+| Skipping namcap | Violates Arch packaging standards | Always run namcap on PKGBUILD and .pkg.tar.zst (required), plus namcap -i (recommended) |
 | Using /usr/local/ | Breaks FHS compliance | Use /usr/ paths only |
+| Vendor config in /etc/ | Wrong separation of concerns, conflict risk | Use /usr/lib/sysusers.d/, /usr/lib/tmpfiles.d/, /usr/lib/udev/rules.d/ |
+| Generic filenames in system dirs | Package conflicts, unclear ownership | Always use package name: /usr/lib/sysusers.d/$pkgname.conf |
 | Missing direct dependencies | Runtime failures | Use find-libdeps, ldd to find all direct deps |
 | Including transitive deps | Violates packaging policy | Only list direct dependencies |
 | Using 'SKIP' for non-VCS | Security risk | Generate real checksums with updpkgsums |
@@ -372,8 +473,13 @@ rm -rf "$pkgdir/usr/share/doc"  # If upstream installs docs incorrectly
 **For specialized package types, load the appropriate sub-skill:**
 
 - **VCS packages** (-git, -svn, -cvs): Use **archlinux-pkgbuild/vcs-packages**
-- **Language ecosystems** (Node.js, Python, Ruby, Go, etc.): Use **archlinux-pkgbuild/language-ecosystems**
-- **Specialized types** (Wine, Electron, Fonts, DKMS, etc.): Use **archlinux-pkgbuild/specialized-packages**
+- **Systemd services** (DynamicUser, tmpfiles.d, sandboxing, init conversion): Use **archlinux-pkgbuild/systemd-services**
+- **Compiled languages** (Go, Rust, Haskell, OCaml, Free Pascal, Java): Use **archlinux-pkgbuild/compiled-languages**
+- **Interpreted languages** (Node.js, Python, Ruby, PHP, Perl, R, Shell, Lisp): Use **archlinux-pkgbuild/interpreted-languages**
+- **Build systems** (CMake, Meson): Use **archlinux-pkgbuild/build-systems**
+- **Cross-platform** (Wine, MinGW, Electron, CLR): Use **archlinux-pkgbuild/cross-platform**
+- **Desktop integration** (GNOME, KDE, Eclipse, Fonts): Use **archlinux-pkgbuild/desktop-integration**
+- **System packages** (DKMS, kernel modules, lib32, nonfree, web apps, split): Use **archlinux-pkgbuild/system-packages**
 
 ## Final Checklist
 
@@ -385,13 +491,27 @@ Before submitting or deploying:
 - [ ] Direct runtime dependencies in depends=()
 - [ ] Build dependencies in makedepends=()
 - [ ] Checksums generated (not 'SKIP' unless VCS)
-- [ ] `namcap PKGBUILD` passes with no errors
+- [ ] User-modifiable config files listed in backup=() array
+- [ ] `namcap PKGBUILD` passes with no errors (REQUIRED)
+- [ ] `namcap -i PKGBUILD` reviewed and issues addressed (RECOMMENDED)
 - [ ] `makepkg -f` builds successfully
-- [ ] `namcap *.pkg.tar.zst` passes with no errors
+- [ ] `namcap *.pkg.tar.zst` passes with no errors (REQUIRED)
+- [ ] `namcap -i *.pkg.tar.zst` reviewed and issues addressed (RECOMMENDED)
 - [ ] Package installs and runs correctly
 - [ ] .SRCINFO generated and matches PKGBUILD
 - [ ] License file installed to /usr/share/licenses/$pkgname/
 - [ ] Documentation installed to /usr/share/doc/$pkgname/
+- [ ] System config files use /usr/lib/* paths (NOT /etc/* for vendor configs)
+- [ ] System config files named with package name (e.g., $pkgname.conf, not generic names)
+
+**For systemd services:**
+- [ ] Evaluated DynamicUser=yes vs systemd-sysusers.d (prefer DynamicUser when possible)
+- [ ] If persistent state needed: Used StateDirectory= or sysusers.d (NOT .install scripts)
+- [ ] tmpfiles.d used for directory management and cleanup (NOT separate timers)
+- [ ] tmpfiles.d Age field used for automatic cleanup (NOT custom scripts)
+- [ ] Comprehensive sandboxing applied (run through sandboxing checklist)
+- [ ] Converted non-systemd init scripts properly (OpenRC/sysvinit → systemd)
+- [ ] `systemd-analyze security myapp.service` reviewed
 
 ## Resources
 
