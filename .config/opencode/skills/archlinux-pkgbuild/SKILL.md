@@ -203,6 +203,9 @@ yay -Ss package-name  # or paru -Ss
 - depends (if any runtime dependencies)
 - package() function
 
+**Optional but recommended fields:**
+- install="$pkgname.install" : Specifies a post-install script with user instructions
+
 **Package naming conventions:**
 - VCS packages: suffix -git, -svn, -hg, -bzr, -cvs, -darcs (see **archlinux-pkgbuild/vcs-packages** sub-skill)
 - Prebuilt binaries: suffix -bin (when sources available)
@@ -522,6 +525,236 @@ backup=(
 **Pacman behavior:** Modified files → Creates .pacnew (user merges manually)
 
 **Detailed reference:** See @config-file-handling.md for backup=() rules, .pacnew workflow, and examples
+
+## Post-Install Scripts (.install files)
+
+**Use .install files to provide post-installation instructions, perform setup tasks, or notify users of manual configuration requirements.**
+
+### When to Use .install Files
+
+| Use Case | Example |
+|----------|---------|
+| Complex configuration needed | Database setup, web server configuration |
+| Manual steps required | Creating config files from templates, setting up credentials |
+| Important warnings | Security notices, breaking changes |
+| Service activation | Systemd service enable/start instructions |
+| First-time setup | Interactive wizards, initial configuration |
+
+### .install File Structure
+
+```bash
+# /path/to/pkgname.install
+post_install() {
+    cat <<EOF
+
+==> Package Name
+==> ============
+
+1. First setup step:
+   - Detailed instructions
+   - Commands to run
+
+2. Second setup step:
+   - More instructions
+
+For more information: https://upstream.docs
+
+EOF
+}
+
+post_upgrade() {
+    # IMPORTANT: Only include upgrade-relevant information
+    # DO NOT blindly call post_install() unless ALL instructions apply to upgrades
+    
+    # If upgrade needs specific instructions (migrations, breaking changes):
+    cat <<EOF
+
+==> Upgrade Notes
+==> =============
+
+- Review configuration files (check .pacnew files)
+- Database migration steps (if applicable)
+- Breaking changes in this version
+- Service restart commands
+
+EOF
+    
+    # ANTI-PATTERN: Don't do this unless initial setup truly applies to upgrades
+    # post_install  # ❌ Wrong if it contains one-time setup instructions
+}
+
+pre_remove() {
+    # Optional: cleanup before removal
+    # Use sparingly - most cleanup should be manual
+}
+
+post_remove() {
+    # Optional: notify about leftover data
+    cat <<EOF
+
+==> Removal Complete
+==> =================
+
+User data remains in /var/lib/pkgname/
+Remove manually if needed: sudo rm -rf /var/lib/pkgname
+
+EOF
+}
+```
+
+### PKGBUILD Integration
+
+**Reference the .install file in PKGBUILD:**
+
+```bash
+# In PKGBUILD
+pkgname=myapp
+install="$pkgname.install"  # Add after optdepends=(), before source=()
+```
+
+**The .install file must:**
+- Be named `$pkgname.install`
+- Be in the same directory as PKGBUILD
+- NOT be listed in source=() (it's metadata, not a source file)
+- Use proper shell syntax (functions, no syntax errors)
+
+### Best Practices
+
+| Do | Don't |
+|----|-------|
+| Provide clear, actionable instructions | Dump verbose documentation |
+| Use heredoc (cat <<EOF) for formatting | Use multiple echo statements |
+| Keep messages concise (< 30 lines) | Write essay-length instructions |
+| Separate one-time vs upgrade instructions | Call post_install from post_upgrade blindly |
+| Test .install script for syntax errors | Assume it will work without testing |
+| Focus on WHAT user must do | Explain package internals in detail |
+
+### CRITICAL: post_install vs post_upgrade Distinction
+
+**post_install()**: One-time initial setup instructions
+- Database creation and schema import
+- Initial configuration file setup
+- Web server configuration from scratch
+- User/group creation
+- First-time setup wizards
+- Installation verification steps
+
+**post_upgrade()**: Upgrade-relevant information ONLY
+- Configuration file changes (.pacnew review)
+- Database migrations/schema updates
+- Breaking changes between versions
+- Service restart requirements
+- Deprecated feature warnings
+- Changelog references
+
+**Decision Rule:**
+```
+If instruction is ONLY needed on first install → post_install() only
+If instruction is ONLY needed on upgrade → post_upgrade() only  
+If instruction applies to BOTH → Consider calling post_install() from post_upgrade()
+
+⚠️  ANTI-PATTERN: Always calling post_install() from post_upgrade()
+Only do this if ALL post_install instructions genuinely apply to upgrades.
+```
+
+**Examples:**
+
+❌ **WRONG** - Upgrade shows unnecessary one-time setup:
+```bash
+post_install() {
+    cat <<EOF
+1. Create database and import schema  # ❌ Only needed once
+2. Configure web server               # ❌ Only needed once
+3. Run installation wizard            # ❌ Only needed once
+EOF
+}
+post_upgrade() {
+    post_install  # ❌ Confuses users with irrelevant steps
+}
+```
+
+✅ **CORRECT** - Clear separation:
+```bash
+post_install() {
+    cat <<EOF
+1. Create database: createdb myapp
+2. Import schema: psql myapp < /usr/share/myapp/schema.sql
+3. Configure: edit /etc/webapps/myapp/config.php
+4. Start service: systemctl start myapp
+EOF
+}
+
+post_upgrade() {
+    cat <<EOF
+1. Check for new config options (.pacnew files)
+2. Run migrations: myapp-migrate --run
+3. Restart service: systemctl restart myapp
+Changelog: https://github.com/project/releases
+EOF
+}
+```
+
+✅ **ACCEPTABLE** - When instructions truly apply to both:
+```bash
+post_install() {
+    cat <<EOF
+Review configuration at /etc/myapp/config.yaml
+Restart service: systemctl restart myapp
+EOF
+}
+
+post_upgrade() {
+    post_install  # ✅ OK - these steps apply to upgrades too
+}
+```
+
+### Example: Web Application
+
+```bash
+# webapp.install
+post_install() {
+    cat <<EOF
+
+==> Webapp Installation
+==> ====================
+
+1. Create database:
+   $ sudo -u postgres createdb webappdb
+
+2. Configure:
+   $ sudo nano /usr/share/webapps/webapp/config.php
+
+3. Set up web server (Apache example):
+   $ sudo ln -s /etc/httpd/conf/extra/webapp.conf /etc/httpd/conf/extra/
+   $ sudo systemctl restart httpd
+
+4. Complete setup:
+   Visit: http://localhost/webapp/install
+
+Documentation: https://webapp.example/docs
+
+EOF
+}
+
+post_upgrade() {
+    post_install
+}
+```
+
+### Validation
+
+```bash
+# Check .install syntax
+bash -n pkgname.install
+
+# Verify it's referenced in PKGBUILD
+grep "^install=" PKGBUILD
+
+# Verify it's included in package
+namcap *.pkg.tar.zst | grep -i install
+```
+
+**Note:** The .install file is automatically included in the package when `install=` is set. Do NOT manually install it in package().
 
 ## Specialized Package Types
 

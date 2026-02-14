@@ -333,17 +333,22 @@ package() {
 
 **PHP packages contain libraries, frameworks, and extensions for PHP.**
 
+> **IMPORTANT:** Most PHP applications are web applications.  
+> When packaging PHP web applications, you MUST also follow the **Web Application Guidelines** in `archlinux-pkgbuild/system-packages`.  
+> See: Web Application Packaging section for directory structure, configuration separation, writable directories, and web server integration.
+
 ### PHP Key Rules
 
 | Rule | Description |
 |------|-------------|
 | **Package naming** | `php-*packagename*` (lowercase, hyphens) |
 | **Library directory** | `/usr/share/php/` for pure PHP libraries |
+| **Web applications** | `/usr/share/webapps/appname/` - See system-packages skill for full guidelines |
 | **Extensions directory** | `/usr/lib/php/modules/` for compiled extensions |
 | **Architecture** | `any` for pure PHP; `x86_64` for compiled extensions |
 | **Autoloading** | Include Composer autoloader or provide autoload script |
 | **php.ini integration** | Extensions need config in `/etc/php/conf.d/` |
-| **Dependencies** | Include `php` in depends array |
+| **Dependencies** | Include `php` in depends array; verify extensions exist (no php-intl, php-mbstring) |
 
 ### PHP Template (Library)
 
@@ -418,6 +423,47 @@ package() {
 | Autoload not working | Composer autoloader missing | Include `vendor/autoload.php` or create custom |
 | Wrong architecture | Extension marked as `any` | Use `x86_64` for compiled extensions |
 | phpize not found | php-dev not in makedepends | Add `php-dev` to makedepends |
+| php-intl dependency error | Package doesn't exist | Built into `php` - remove from depends=() |
+| php-mbstring dependency error | Package doesn't exist | Built into `php` - remove from depends=() |
+| Web app writable dirs in /usr | FHS violation | See system-packages skill for proper structure |
+
+### PHP Web Applications
+
+**For PHP web applications, you MUST follow the guidelines in `archlinux-pkgbuild/system-packages`.**
+
+Key requirements:
+- Install to `/usr/share/webapps/appname/`
+- Config files in `/etc/webapps/appname/` with symlinks
+- Writable directories in `/var/lib/appname/` (use systemd-tmpfiles.d)
+- Provide Apache/Nginx example configs in `/etc/webapps/appname/`
+- Use `backup=()` for configuration files
+- **Add PHP module enabling instructions to .install file if extensions need enabling:**
+  - Check which extensions require php.ini configuration (use `pacman -Ql php | grep "\.so$"`)
+  - Built-in extensions like `mbstring` are always enabled (no action needed)
+  - Extensions with `.so` files (e.g., `gd`, `intl`) may need enabling in `/etc/php/php.ini`
+  - **Example .install template:**
+    ```bash
+    post_install() {
+        cat <<EOF
+    ==> PHP Extensions
+        Required PHP extensions: gd, intl
+        
+        Install packages:
+            pacman -S php-gd
+        
+        Enable extensions in /etc/php/php.ini:
+            Uncomment or add these lines:
+                extension=gd
+                extension=intl
+        
+        Restart web server:
+            systemctl restart httpd    # Apache
+            systemctl restart php-fpm  # Nginx
+    EOF
+    }
+    ```
+
+**See the Web Application Packaging section in system-packages skill for complete guidelines, directory structure, and templates.**
 
 ---
 

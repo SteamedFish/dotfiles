@@ -449,10 +449,11 @@ post_upgrade() {
 |--------------|------------------|
 | Application code | `/usr/share/webapps/appname/` |
 | Configuration files | `/etc/webapps/appname/` |
-| Writable data | `/var/lib/appname/` |
-| Logs | `/var/log/appname/` |
-| Cache | `/var/cache/appname/` |
+| Writable data | `/var/lib/appname/` (use tmpfiles.d) |
+| Logs | `/var/log/appname/` (use tmpfiles.d) |
+| Cache | `/var/cache/appname/` (use tmpfiles.d) |
 | Web server configs | `/etc/webapps/appname/apache.example.conf` |
+| tmpfiles.d config | `/usr/lib/tmpfiles.d/appname.conf` |
 
 ### Web Application Template
 
@@ -471,9 +472,11 @@ optdepends=(
     'mysql: Database backend'
 )
 backup=('etc/webapps/example/config.php')
+install=$pkgname.install
 source=("https://example.com/releases/$pkgname-$pkgver.tar.gz"
         'apache.example.conf'
-        'nginx.example.conf')
+        'nginx.example.conf'
+        "$pkgname.tmpfiles")
 sha256sums=('...')
 
 package() {
@@ -483,6 +486,9 @@ package() {
     install -dm755 "$pkgdir/usr/share/webapps/$pkgname"
     cp -r * "$pkgdir/usr/share/webapps/$pkgname/"
     
+    # Remove writable directories from application (will be created by tmpfiles.d)
+    rm -rf "$pkgdir/usr/share/webapps/$pkgname"/{uploads,cache,logs,data}
+    
     # Move config to /etc
     install -dm755 "$pkgdir/etc/webapps/$pkgname"
     mv "$pkgdir/usr/share/webapps/$pkgname/config.php" \
@@ -490,9 +496,13 @@ package() {
     ln -s "/etc/webapps/$pkgname/config.php" \
         "$pkgdir/usr/share/webapps/$pkgname/config.php"
     
-    # Create writable directories
-    install -dm755 -o http -g http "$pkgdir/var/lib/$pkgname"
-    install -dm755 -o http -g http "$pkgdir/var/log/$pkgname"
+    # Create symlinks to /var/lib (actual dirs created by tmpfiles.d at runtime)
+    ln -s /var/lib/$pkgname/uploads "$pkgdir/usr/share/webapps/$pkgname/uploads"
+    ln -s /var/lib/$pkgname/cache "$pkgdir/usr/share/webapps/$pkgname/cache"
+    
+    # Install systemd-tmpfiles.d configuration
+    install -Dm644 "$srcdir/$pkgname.tmpfiles" \
+        "$pkgdir/usr/lib/tmpfiles.d/$pkgname.conf"
     
     # Install example web server configs
     install -Dm644 "$srcdir/apache.example.conf" \
@@ -505,12 +515,114 @@ package() {
 }
 ```
 
+### Web Application systemd-tmpfiles.d
+
+**MANDATORY for writable directories in /var:** Use systemd-tmpfiles.d instead of creating directories in package().
+
+**Why tmpfiles.d:**
+- User-configurable cleanup policies (Age field)
+- Proper ownership handling (User/Group fields)
+- Runtime directory creation (survives system updates)
+- Standard Arch Linux practice
+
+**tmpfiles.d template (appname.tmpfiles):**
+```conf
+# systemd-tmpfiles configuration for appname
+# See tmpfiles.d(5) for details
+
+# Type Path                    Mode User  Group Age Argument
+d     /var/lib/appname          0755 http  http  -   -
+d     /var/lib/appname/uploads  0755 http  http  -   -
+d     /var/lib/appname/cache    0755 http  http  30d -
+d     /var/log/appname          0755 http  http  -   -
+```
+
+**Field explanations:**
+- `Type`: `d` = Create directory if not exists
+- `Path`: Absolute path to directory
+- `Mode`: Permissions (0755, 0700, etc.)
+- `User/Group`: Ownership (http for web applications)
+- `Age`: Cleanup policy (`-` = never, `30d` = 30 days, `7d` = 7 days)
+- `Argument`: Additional args (usually `-`)
+
+**PKGBUILD integration:**
+```bash
+source=('...' "$pkgname.tmpfiles")
+sha256sums=('...')
+
+package() {
+    # Install tmpfiles.d configuration
+    install -Dm644 "$srcdir/$pkgname.tmpfiles" \
+        "$pkgdir/usr/lib/tmpfiles.d/$pkgname.conf"
+    
+    # DO NOT create directories with install -dm755
+    # Directories are created at runtime by systemd-tmpfiles
+    
+    # Create symlinks to /var directories (optional, if app needs them)
+    ln -s /var/lib/$pkgname/uploads "$pkgdir/usr/share/webapps/$pkgname/uploads"
+}
+```
+
+**.install file:**
+```bash
+post_install() {
+    cat <<EOF
+==> Configuration and setup instructions...
+==> 
+==> Writable directories are automatically created in /var/lib/$pkgname/
+==> by systemd-tmpfiles.d during package installation.
+EOF
+}
+
+post_upgrade() {
+    # Only show upgrade-relevant information
+    # Database setup is one-time, not needed on upgrades
+    cat <<EOF
+
+==> Web Application Upgrade Notes
+==> 
+
+1. Configuration Review:
+   - Check for .pacnew files: /etc/webapps/$pkgname/
+   - Review new configuration options
+
+2. Database Migrations (if applicable):
+   - Check for migration scripts in /usr/share/webapps/$pkgname/updates/
+   - Run database updates through application update interface
+
+3. Service Restart:
+   - Restart web server: systemctl restart httpd (or nginx + php-fpm)
+
+4. Directories:
+   - Writable directories maintained automatically at /var/lib/$pkgname/
+
+Changelog: https://upstream.project/releases
+EOF
+}
+```
+
+**IMPORTANT:** 
+- **DO NOT call `systemd-tmpfiles` manually** in .install files
+- Pacman automatically invokes systemd-tmpfiles during installation/upgrade via hooks
+- .install files should **ONLY print information**, not perform actions
+- Directories are created automatically when the package is installed
+
+**Common tmpfiles.d patterns:**
+
+| Directory Type | Mode | User:Group | Age | Rationale |
+|----------------|------|------------|-----|-----------|
+| Uploads/Data | 0755 | http:http | `-` | Persistent data, never auto-clean |
+| Cache | 0755 | http:http | `30d` | Auto-clean old cache files |
+| Sessions | 0700 | http:http | `7d` | Clean old sessions weekly |
+| Logs | 0755 | http:http | `-` | Keep logs (use logrotate instead) |
+| Temp files | 1777 | root:root | `1d` | Shared temp, clean daily |
+
 ### Web Application Security
 
 **Configuration separation:**
 - Code: `/usr/share/webapps/` (root:root, 644/755)
 - Config: `/etc/webapps/` (root:root, 640/750 or http:http for writable)
-- Data: `/var/lib/appname/` (http:http, 755/700)
+- Data: `/var/lib/appname/` (http:http, 755/700) - **Created by tmpfiles.d**
 
 **PHP open_basedir:**
 ```apache
@@ -521,9 +633,11 @@ php_admin_value open_basedir "/tmp:/usr/share/webapps/example:/etc/webapps/examp
 
 | Issue | Cause | Fix |
 |-------|-------|-----|
-| Writable /usr/share | Wrong permissions | Move writable dirs to /var/lib/ |
+| Writable /usr/share | Wrong permissions | Move writable dirs to /var/lib/, use tmpfiles.d |
 | Config in /usr/share | Not separated | Move to /etc/webapps/, symlink back |
 | Web server required | In depends | Move to optdepends |
 | No example configs | Not provided | Create apache/nginx example configs |
-| Wrong ownership | Not using http:http | Set ownership for writable dirs |
+| Wrong ownership | Using install -o/-g in package() | Use tmpfiles.d with User/Group fields |
+| Directories not created | Missing tmpfiles.d | Create .tmpfiles file (pacman hooks call systemd-tmpfiles automatically) |
+| Symlinks to non-existing /var | Dirs created at runtime | Normal - tmpfiles.d creates them on install |
 | open_basedir errors | Paths not whitelisted | Add all needed paths to open_basedir |
