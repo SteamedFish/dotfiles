@@ -37,7 +37,9 @@ digraph pkgbuild_workflow {
     "2. Write PKGBUILD" [shape=box];
     "3. Run namcap on PKGBUILD" [shape=box];
     "PKGBUILD passes?" [shape=diamond];
-    "4. Build package with makepkg" [shape=box];
+    "devtools installed?" [shape=diamond];
+    "4a. Build in clean chroot" [shape=box];
+    "4b. Build with makepkg (warn user)" [shape=box];
     "5. Run namcap on package" [shape=box];
     "Package passes?" [shape=diamond];
     "6. Test installation" [shape=box];
@@ -51,8 +53,11 @@ digraph pkgbuild_workflow {
     "3. Run namcap on PKGBUILD" -> "PKGBUILD passes?";
     "PKGBUILD passes?" -> "Fix violations" [label="NO"];
     "Fix violations" -> "3. Run namcap on PKGBUILD";
-    "PKGBUILD passes?" -> "4. Build package with makepkg" [label="YES"];
-    "4. Build package with makepkg" -> "5. Run namcap on package";
+    "PKGBUILD passes?" -> "devtools installed?" [label="YES"];
+    "devtools installed?" -> "4a. Build in clean chroot" [label="YES (preferred)"];
+    "devtools installed?" -> "4b. Build with makepkg (warn user)" [label="NO"];
+    "4a. Build in clean chroot" -> "5. Run namcap on package";
+    "4b. Build with makepkg (warn user)" -> "5. Run namcap on package";
     "5. Run namcap on package" -> "Package passes?";
     "Package passes?" -> "Fix violations" [label="NO"];
     "Package passes?" -> "6. Test installation" [label="YES"];
@@ -61,56 +66,140 @@ digraph pkgbuild_workflow {
 }
 ```
 
-## PKGBUILD Structure Template
+## Building Methods: Clean Chroot vs Direct makepkg
+
+**PREFERRED METHOD: Clean Chroot Building**
+
+Building in a clean chroot prevents:
+- Missing dependencies (unwanted linking from your system)
+- Incomplete `depends=()` arrays
+- Building for stable repos while having testing packages installed
+
+**When to use each method:**
+
+| Method | When to Use | Requirements |
+|--------|-------------|--------------|
+| **Clean chroot** (PREFERRED) | AUR submissions, official packaging, ensuring correct dependencies | `devtools` package installed |
+| **Direct makepkg** (FALLBACK) | Quick local builds, prototyping, when devtools unavailable | Just `base-devel` |
+
+**CRITICAL: If using direct makepkg, ALWAYS warn the user that the package was NOT built in a clean chroot and may have incorrect dependencies.**
+
+### Clean Chroot Quick Start
+
+**One-command build (recommended for most users):**
 
 ```bash
-# Maintainer: Your Name <your.email at domain dot com>
-pkgname=example
-pkgver=1.0.0
-pkgrel=1
-pkgdesc="Brief package description (~80 chars, no self-reference)"
-arch=('x86_64')  # or ('any') for architecture-independent
-url="https://example.com"
-license=('GPL')  # Use SPDX identifiers
-depends=(
-    'dependency1'
-    'dependency2>=1.0'
-)
-makedepends=(
-    'git'
-    'cmake'
-)
-optdepends=(
-    'optional-pkg: description of optional feature'
-)
-source=("$pkgname-$pkgver.tar.gz::https://example.com/releases/$pkgname-$pkgver.tar.gz")
-sha256sums=('SKIP')  # Use updpkgsums to generate
+# For AUR/extra packages (most common)
+extra-x86_64-build
 
-prepare() {
-    cd "$srcdir/$pkgname-$pkgver"
-    # Patching, fixing paths goes here
-}
-
-build() {
-    cd "$srcdir/$pkgname-$pkgver"
-    ./configure --prefix=/usr
-    make
-}
-
-check() {
-    cd "$srcdir/$pkgname-$pkgver"
-    make test
-}
-
-package() {
-    cd "$srcdir/$pkgname-$pkgver"
-    make DESTDIR="$pkgdir" install
-    
-    # Install documentation
-    install -Dm644 README.md "$pkgdir/usr/share/doc/$pkgname/README.md"
-    install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
-}
+# The script automatically:
+# - Creates chroot in /var/lib/archbuild/ (if needed)
+# - Updates the chroot
+# - Builds your package in isolation
+# - Use -c flag to reset chroot if needed
 ```
+
+**Available build scripts:**
+
+| Target Repository | Command | When to Use |
+|-------------------|---------|-------------|
+| extra (stable) | `extra-x86_64-build` | Most AUR packages, stable builds |
+| extra-testing | `extra-testing-x86_64-build` | Testing pre-release packages |
+| multilib (32-bit) | `multilib-build` | 32-bit compatibility packages |
+| multilib-testing | `multilib-testing-build` | Testing 32-bit packages |
+
+**Common flags:**
+- `-c` : Clean/reset the chroot before building (use after breakage)
+- `-I package.pkg.tar.zst` : Pre-install custom dependencies
+
+**Example with custom dependencies:**
+```bash
+# Build package that depends on another custom package
+extra-x86_64-build -- -I ~/custom-dep-1.0-1-x86_64.pkg.tar.zst
+```
+
+### Manual Clean Chroot Setup (Advanced)
+
+**Only needed if you want custom chroot location or configuration:**
+
+```bash
+# 1. Install devtools
+sudo pacman -S devtools
+
+# 2. Create chroot directory
+mkdir ~/chroot
+CHROOT=$HOME/chroot
+
+# 3. Initialize chroot (root subdirectory is mandatory)
+mkarchroot $CHROOT/root base-devel
+
+# 4. (Optional) Edit chroot config
+# - Mirrorlist: $CHROOT/root/etc/pacman.d/mirrorlist
+# - Pacman config: $CHROOT/root/etc/pacman.conf
+# - Makepkg config: ~/.makepkg.conf (used by makechrootpkg)
+
+# 5. Update chroot before building
+arch-nspawn $CHROOT/root pacman -Syu
+
+# 6. Build package (run in PKGBUILD directory)
+makechrootpkg -c -r $CHROOT
+
+# The -c flag ensures working chroot is cleaned before build
+```
+
+**Custom pacman.conf/makepkg.conf (use with caution):**
+```bash
+mkarchroot -C custom-pacman.conf -M custom-makepkg.conf $CHROOT/root base-devel
+```
+
+**Building with custom dependencies:**
+```bash
+makechrootpkg -c -r $CHROOT -I custom-dep-1.0-1-x86_64.pkg.tar.zst
+```
+
+**Passing arguments to makepkg:**
+```bash
+# Force check() to run
+makechrootpkg -c -r $CHROOT -- --check
+
+# Skip integrity checks (for development)
+makechrootpkg -c -r $CHROOT -- --skipchecksums
+```
+
+### Fallback: Direct makepkg Build
+
+**Use ONLY when clean chroot is not available.**
+
+```bash
+# Build package
+makepkg -f
+
+# CRITICAL: After building, ALWAYS inform user:
+echo "⚠️  WARNING: Package built with direct makepkg (NOT in clean chroot)"
+echo "⚠️  Dependencies may be incomplete or incorrect"
+echo "⚠️  For production use, install 'devtools' and rebuild in clean chroot"
+```
+
+**When this is acceptable:**
+- Local development/testing
+- Quick prototyping
+- No plans to distribute package
+
+**When this is NOT acceptable:**
+- AUR submission
+- Distribution to others
+- Official packaging
+
+## PKGBUILD Structure Template
+
+**See @pkgbuild-template.sh in this directory for a complete annotated template.**
+
+**Quick structure overview:**
+- **Variables**: pkgname, pkgver, pkgrel, pkgdesc, arch, url, license, depends, makedepends
+- **prepare()**: Patching, fixing paths (optional)
+- **build()**: Compile sources (usually required)
+- **check()**: Run test suite (optional but recommended)
+- **package()**: Install to $pkgdir (MANDATORY)
 
 ## Quick Reference: Critical Requirements
 
@@ -129,6 +218,7 @@ package() {
 | **License** | SPDX format | 'GPLv3' instead of 'GPL3' |
 | **Email** | Obfuscate in comments | user@domain.com → user at domain dot com |
 | **Config files** | List in backup=() array | User modifications get overwritten on upgrade |
+| **Desktop files** | GUI apps need .desktop in /usr/share/applications/ | App won't appear in menus |
 
 ## Step-by-Step Implementation
 
@@ -184,91 +274,18 @@ find-libprovides /path/to/built/files
 
 ### Step 3: FHS Compliance and System Package Locations
 
-**Correct installation paths:**
+**For detailed FHS paths and vendor config rules**, see **@fhs-and-vendor-config.md** in this directory.
 
-| Content | Correct Path | WRONG Path |
-|---------|-------------|------------|
-| Binaries | /usr/bin | /usr/local/bin, /bin |
-| Libraries | /usr/lib | /usr/local/lib, /lib |
-| Headers | /usr/include | /usr/local/include |
-| App modules | /usr/lib/$pkgname | /usr/libexec |
-| Documentation | /usr/share/doc/$pkgname | /usr/doc |
-| Licenses | /usr/share/licenses/$pkgname | /usr/share/doc |
-| Man pages | /usr/share/man | /usr/man |
-| App data | /usr/share/$pkgname | /usr/local/share |
-| Config | /etc | /usr/etc |
-| State data | /var/lib/$pkgname | /var/$pkgname |
+**Critical Quick Reference:**
 
-**CRITICAL: System Package Locations (Vendor Config)**
+| Type | Correct | WRONG |
+|------|---------|-------|
+| Binaries | `/usr/bin` | `/usr/local/bin` |
+| System services | `/usr/lib/systemd/system/` | `/etc/systemd/system/` |
+| Sysusers/tmpfiles | `/usr/lib/{sysusers,tmpfiles}.d/` | `/etc/{sysusers,tmpfiles}.d/` |
+| Udev rules | `/usr/lib/udev/rules.d/` | `/etc/udev/rules.d/` |
 
-**RULE: Vendor-provided configuration ALWAYS goes to `/usr/lib/`, NOT `/etc/`.**
-
-| Config Type | System Package Location (CORRECT) | User Override Location | WRONG Path |
-|-------------|-----------------------------------|------------------------|------------|
-| systemd user definitions | `/usr/lib/sysusers.d/$pkgname.conf` | `/etc/sysusers.d/` | `/etc/sysusers.d/$pkgname.conf` |
-| systemd tmpfiles config | `/usr/lib/tmpfiles.d/$pkgname.conf` | `/etc/tmpfiles.d/` | `/etc/tmpfiles.d/$pkgname.conf` |
-| udev rules | `/usr/lib/udev/rules.d/$pkgname.rules` | `/etc/udev/rules.d/` | `/etc/udev/rules.d/$pkgname.rules` |
-| systemd services | `/usr/lib/systemd/system/$pkgname.service` | `/etc/systemd/system/` | `/etc/systemd/system/$pkgname.service` |
-| systemd network | `/usr/lib/systemd/network/$pkgname.network` | `/etc/systemd/network/` | `/etc/systemd/network/$pkgname.network` |
-| modprobe.d | `/usr/lib/modprobe.d/$pkgname.conf` | `/etc/modprobe.d/` | `/etc/modprobe.d/$pkgname.conf` |
-| modules-load.d | `/usr/lib/modules-load.d/$pkgname.conf` | `/etc/modules-load.d/` | `/etc/modules-load.d/$pkgname.conf` |
-| PAM config | `/usr/lib/pam.d/$pkgname` | `/etc/pam.d/` | `/etc/pam.d/$pkgname` (sometimes valid) |
-| environment.d | `/usr/lib/environment.d/$pkgname.conf` | `/etc/environment.d/` | `/etc/environment.d/$pkgname.conf` |
-
-**WHY THIS MATTERS:**
-
-1. **Separation of concerns**: `/etc/` is **EXCLUSIVELY for user modifications**, `/usr/lib/` is for **package-provided defaults**
-2. **Update semantics**: System updates NEVER touch `/etc/` (protects user config), but can overwrite `/usr/lib/`
-3. **Conflict prevention**: Two packages installing to same path in `/usr/lib/` is VALID (systemd merges), but in `/etc/` causes pacman conflicts
-4. **Search order**: systemd/udev search `/etc/` first (user overrides), then `/usr/lib/` (package defaults)
-
-**File Naming Convention for System Locations:**
-
-**ALWAYS use package name as basename** to prevent conflicts:
-
-```bash
-# ✅ CORRECT: Package name as filename
-install -Dm644 "$srcdir/myapp.sysusers" "$pkgdir/usr/lib/sysusers.d/myapp.conf"
-install -Dm644 "$srcdir/myapp.tmpfiles" "$pkgdir/usr/lib/tmpfiles.d/myapp.conf"
-install -Dm644 "$srcdir/myapp.rules" "$pkgdir/usr/lib/udev/rules.d/99-myapp.rules"
-
-# ❌ WRONG: Generic or inconsistent names
-install -Dm644 "$srcdir/myapp.sysusers" "$pkgdir/usr/lib/sysusers.d/users.conf"  # Conflicts!
-install -Dm644 "$srcdir/myapp.tmpfiles" "$pkgdir/usr/lib/tmpfiles.d/cleanup.conf"  # Unclear ownership
-install -Dm644 "$srcdir/myapp.rules" "$pkgdir/usr/lib/udev/rules.d/device.rules"  # Which package?
-```
-
-**If multiple related files needed, include package name:**
-
-```bash
-# ✅ CORRECT: Multiple configs with package prefix
-/usr/lib/tmpfiles.d/myapp-runtime.conf
-/usr/lib/tmpfiles.d/myapp-cache.conf
-/usr/lib/sysusers.d/myapp-primary.conf
-/usr/lib/sysusers.d/myapp-secondary.conf
-
-# ❌ WRONG: No package identification
-/usr/lib/tmpfiles.d/runtime.conf  # What package?
-/usr/lib/tmpfiles.d/cache.conf    # Conflict risk
-```
-
-**Fix paths in prepare():**
-```bash
-prepare() {
-    cd "$srcdir/$pkgname-$pkgver"
-    
-    # Fix Makefile paths
-    sed -i 's|/usr/local/|/usr/|g' Makefile
-    
-    # Or use find for multiple files
-    find . -type f -name "Makefile*" -exec sed -i \
-        -e 's|/usr/local/bin|/usr/bin|g' \
-        -e 's|/usr/local/lib|/usr/lib|g' \
-        -e 's|/usr/local/share|/usr/share|g' \
-        -e 's|/usr/local/include|/usr/include|g' \
-        {} +
-}
-```
+**Key Rule:** Vendor configs go to `/usr/lib/`, user overrides go to `/etc/`.
 
 ### Step 4: Checksums
 
@@ -293,76 +310,51 @@ source=("git+https://github.com/user/repo.git")
 sha256sums=('SKIP')
 ```
 
-### Step 5: Validation with namcap
+### Step 5: Build Package
 
-**MANDATORY: Run namcap validation at TWO levels**
-
-#### Level 1: Standard Validation (REQUIRED - must pass)
+**Choose build method based on availability:**
 
 ```bash
-# 1. Check PKGBUILD file
+# Check if devtools is installed
+if command -v extra-x86_64-build &> /dev/null; then
+    # PREFERRED: Clean chroot build
+    extra-x86_64-build
+    echo "✓ Built in clean chroot (dependencies verified)"
+else
+    # FALLBACK: Direct build with warning
+    makepkg -f
+    echo "⚠️  WARNING: Built with direct makepkg (NOT in clean chroot)"
+    echo "⚠️  Dependencies may be incomplete. Install 'devtools' for clean builds."
+fi
+```
+
+**For custom dependencies (clean chroot only):**
+```bash
+extra-x86_64-build -- -I custom-package-1.0-1-x86_64.pkg.tar.zst
+```
+
+### Step 6: Validation with namcap
+
+**MANDATORY validation steps:**
+
+```bash
+# 1. Check PKGBUILD
 namcap PKGBUILD
-# Must show no errors or warnings (or document why safe to ignore)
 
-# 2. Build package
-makepkg -f
-
-# 3. Check generated package
+# 2. Check generated package
 namcap *.pkg.tar.zst
-# Must show no errors or warnings (or document why safe to ignore)
-```
 
-**CRITICAL: DO NOT proceed if standard namcap reports errors.**
-
-#### Level 2: Detailed Validation (STRONGLY RECOMMENDED - fix what you can)
-
-**After passing standard validation, run detailed checks:**
-
-```bash
-# 4. Detailed PKGBUILD analysis
+# 3. Detailed analysis (RECOMMENDED)
 namcap -i PKGBUILD
-# Shows informational messages, style suggestions, potential improvements
-
-# 5. Detailed package analysis  
 namcap -i *.pkg.tar.zst
-# Shows additional warnings about permissions, paths, best practices
 ```
 
-**The `-i` flag reveals:**
-- Style inconsistencies (not blocking but should fix)
-- Potential improvements (optional dependencies, documentation)
-- False positives (may show warnings for valid choices - use judgment)
+**CRITICAL: DO NOT proceed if namcap reports errors.**
 
-**Approach to `-i` output:**
-- Errors/Warnings: **Fix as many as practical**
-- Informational: **Review and fix obvious issues**
-- False positives: **Document why ignored** (not all `-i` output requires action)
+**For comprehensive validation procedures, error explanations, and fixes:**
+See @validation-guide.md
 
-**Example: `-i` output handling:**
-```bash
-# Example warning from namcap -i
-W: Dependency included but no file depends on it (glibc)
-
-# Evaluation:
-# - If glibc is indirect dep: Remove from depends=()
-# - If glibc provides runtime library: Keep and document
-```
-
-**Common namcap errors and fixes:**
-
-| Error | Meaning | Fix |
-|-------|---------|-----|
-| missing-dependency | Runtime dep not listed | Add to depends=() |
-| dependency-not-needed | Transitive dep listed | Remove (only direct deps) |
-| insecure-rpath | Hardcoded library path | Fix build system |
-| file-in-non-standard-dir | Wrong installation path | Fix paths in package() |
-| missing-license | No license file | Install to /usr/share/licenses/$pkgname/ |
-| incorrect-permissions | Wrong file mode | Use install -Dm644 (files) or -Dm755 (bins) |
-| empty-directory | Empty dir in package | Add .gitkeep or use ! in front of rmdir |
-
-**DO NOT proceed if namcap reports errors.** Fix them first.
-
-### Step 6: Test Installation
+### Step 7: Test Installation
 
 ```bash
 # Install locally
@@ -375,11 +367,14 @@ $pkgname --help
 # Check installed files
 pacman -Ql $pkgname
 
+# Verify dependencies (clean chroot builds should be correct)
+pacman -Qi $pkgname | grep Depends
+
 # Remove after testing
 sudo pacman -R $pkgname
 ```
 
-### Step 7: AUR Submission (if applicable)
+### Step 8: AUR Submission (if applicable)
 
 **Generate .SRCINFO:**
 ```bash
@@ -412,21 +407,80 @@ git commit -m "Initial commit: pkgname $pkgver-$pkgrel"
 git push origin master
 ```
 
+## Tracking Upstream Releases with nvchecker
+
+**nvchecker** automates checking for new upstream releases. Use **pkgctl version** commands for integration.
+
+### Quick Start
+
+```bash
+# Auto-generate .nvchecker.toml from PKGBUILD source array
+pkgctl version setup
+
+# Check for new upstream releases
+pkgctl version check
+
+# Update PKGBUILD to new version
+pkgctl version upgrade
+```
+
+### .nvchecker.toml Configuration
+
+Place `.nvchecker.toml` in the same directory as PKGBUILD. The `pkgctl version setup` command auto-creates this by analyzing your `source=()` array.
+
+**Example for GitHub releases:**
+```toml
+[pkgname]
+source = "github"
+github = "owner/repo"
+```
+
+**Example for PyPI:**
+```toml
+[python-package]
+source = "pypi"
+pypi = "package-name"
+```
+
+**Example for GitLab:**
+```toml
+[pkgname]
+source = "gitlab"
+gitlab = "group/project"
+```
+
+**See also:**
+- pkgctl-version(1) man page for full documentation
+- Example configs in official packages (e.g., https://gitlab.archlinux.org/archlinux/packaging/packages/pacman/-/blob/main/.nvchecker.toml)
+- nvchecker documentation: https://nvchecker.readthedocs.io/
+
+### Workflow
+
+1. Initial setup: `pkgctl version setup` (creates .nvchecker.toml)
+2. Periodically check: `pkgctl version check`
+3. When new version found: `pkgctl version upgrade` (updates pkgver)
+4. Review changes, update pkgrel=1, rebuild, test
+5. Commit to AUR
+
+**Note:** nvchecker is particularly useful for maintaining multiple packages or tracking fast-moving projects.
+
 ## Common Mistakes and Red Flags
 
 ### Critical Errors (MUST FIX)
 
 | Mistake | Why It's Wrong | Correct Approach |
 |---------|---------------|------------------|
+| Building with direct makepkg for distribution | Missing/incorrect dependencies, system pollution | Build in clean chroot using `extra-x86_64-build` |
 | Skipping namcap | Violates Arch packaging standards | Always run namcap on PKGBUILD and .pkg.tar.zst (required), plus namcap -i (recommended) |
 | Using /usr/local/ | Breaks FHS compliance | Use /usr/ paths only |
 | Vendor config in /etc/ | Wrong separation of concerns, conflict risk | Use /usr/lib/sysusers.d/, /usr/lib/tmpfiles.d/, /usr/lib/udev/rules.d/ |
 | Generic filenames in system dirs | Package conflicts, unclear ownership | Always use package name: /usr/lib/sysusers.d/$pkgname.conf |
-| Missing direct dependencies | Runtime failures | Use find-libdeps, ldd to find all direct deps |
+| Missing direct dependencies | Runtime failures | Build in clean chroot OR use find-libdeps, ldd to find all direct deps |
 | Including transitive deps | Violates packaging policy | Only list direct dependencies |
 | Using 'SKIP' for non-VCS | Security risk | Generate real checksums with updpkgsums |
 | Unquoted $pkgdir/$srcdir | Shell expansion errors | Always quote: "$pkgdir" "$srcdir" |
 | Self-referencing pkgdesc | Redundant | "Tool for X" not "pkgname is a tool for X" |
+| Missing .desktop file for GUI apps | App won't appear in menus | Install to /usr/share/applications/, validate with desktop-file-validate (see archlinux-pkgbuild/cross-platform sub-skill for examples) |
 | Hardcoded paths in source | Version bump requires edit | Use variables: $pkgname-$pkgver |
 
 ### Warning Signs (CHECK CAREFULLY)
@@ -470,90 +524,22 @@ rm -rf "$pkgdir/usr/share/doc"  # If upstream installs docs incorrectly
 
 ## Configuration File Handling
 
-**User-modifiable config files MUST be listed in the backup=() array to prevent pacman from overwriting them.**
+**User-modifiable config files MUST be listed in backup=() to prevent pacman from overwriting user changes.**
 
-### backup=() Array Rule
-
-**List ALL files in /etc that users might modify:**
+### Quick Rules
 
 ```bash
-# In PKGBUILD
 backup=(
-    'etc/myapp/main.conf'
-    'etc/myapp/database.conf'
-    'etc/myapp/logging.conf'
+    'etc/myapp/main.conf'     # Relative to root, NO leading slash
 )
 ```
 
-**CRITICAL: Paths in backup=() are relative to root, WITHOUT leading slash.**
+**Include in backup=():** All /etc files users might customize, especially credential files  
+**Exclude:** Templates in /usr/share, generated files, service files
 
-✅ Correct: `'etc/myapp/main.conf'`  
-❌ Wrong: `'/etc/myapp/main.conf'`
+**Pacman behavior:** Modified files → Creates .pacnew (user merges manually)
 
-### Pacman Behavior with backup=()
-
-| Scenario | Pacman Behavior | User Impact |
-|----------|----------------|-------------|
-| File NOT modified by user | Replaced with new version silently | Config updated automatically |
-| File modified by user | Creates .pacnew with new version | User manually merges changes |
-| File in backup=() on removal | Creates .pacsave backup | User config preserved after uninstall |
-
-**Without backup=():** Pacman overwrites user modifications on every upgrade. Database credentials, custom settings, all lost.
-
-### What to Include in backup=()
-
-**INCLUDE:**
-- Configuration files users customize (database settings, app config)
-- Files containing credentials or secrets
-- Files in /etc with site-specific settings
-
-**EXCLUDE:**
-- Read-only templates (/usr/share/...)
-- Generated files (.cache, .pid)
-- Files that should ALWAYS be updated (service files)
-
-### Example PKGBUILD
-
-```bash
-pkgname=myapp
-backup=(
-    'etc/myapp/main.conf'      # Frequently customized
-    'etc/myapp/db.conf'        # Contains credentials - MUST preserve
-    'etc/myapp/logging.conf'   # Sometimes customized
-)
-# defaults.conf in /usr/share/ - NOT in backup (read-only template)
-
-package() {
-    # Config files in /etc
-    install -Dm644 main.conf "$pkgdir/etc/myapp/main.conf"
-    install -Dm644 db.conf "$pkgdir/etc/myapp/db.conf"
-    install -Dm644 logging.conf "$pkgdir/etc/myapp/logging.conf"
-    
-    # Template in /usr/share (not in backup)
-    install -Dm644 defaults.conf "$pkgdir/usr/share/myapp/defaults.conf"
-}
-```
-
-### User Workflow with .pacnew Files
-
-After upgrade with modified configs:
-
-```bash
-# Find .pacnew files
-pacdiff
-
-# Or manually
-find /etc -name "*.pacnew"
-
-# View differences
-diff /etc/myapp/main.conf /etc/myapp/main.conf.pacnew
-
-# Merge changes manually
-# Then remove .pacnew file
-rm /etc/myapp/main.conf.pacnew
-```
-
-**Resource:** https://man.archlinux.org/man/pacman.8.en (search "HANDLING CONFIG FILES")
+**Detailed reference:** See @config-file-handling.md for backup=() rules, .pacnew workflow, and examples
 
 ## Specialized Package Types
 
@@ -568,37 +554,17 @@ rm /etc/myapp/main.conf.pacnew
 - **Desktop integration** (GNOME, KDE, Eclipse, Fonts): Use **archlinux-pkgbuild/desktop-integration**
 - **System packages** (DKMS, kernel modules, lib32, nonfree, web apps, split): Use **archlinux-pkgbuild/system-packages**
 
-## Final Checklist
+## Advanced Clean Chroot Techniques
 
-Before submitting or deploying:
+**For advanced clean chroot usage** (tmpfs builds, custom dependencies, major rebuilds, different repositories), see **@clean-chroot-reference.md** in this directory.
 
-- [ ] Package name follows naming conventions (lowercase, appropriate suffix)
-- [ ] All mandatory fields present (pkgname, pkgver, pkgrel, arch, pkgdesc, url, license, source, checksums)
-- [ ] All paths use /usr/ not /usr/local/
-- [ ] Direct runtime dependencies in depends=()
-- [ ] Build dependencies in makedepends=()
-- [ ] Checksums generated (not 'SKIP' unless VCS)
-- [ ] User-modifiable config files listed in backup=() array
-- [ ] `namcap PKGBUILD` passes with no errors (REQUIRED)
-- [ ] `namcap -i PKGBUILD` reviewed and issues addressed (RECOMMENDED)
-- [ ] `makepkg -f` builds successfully
-- [ ] `namcap *.pkg.tar.zst` passes with no errors (REQUIRED)
-- [ ] `namcap -i *.pkg.tar.zst` reviewed and issues addressed (RECOMMENDED)
-- [ ] Package installs and runs correctly
-- [ ] .SRCINFO generated and matches PKGBUILD
-- [ ] License file installed to /usr/share/licenses/$pkgname/
-- [ ] Documentation installed to /usr/share/doc/$pkgname/
-- [ ] System config files use /usr/lib/* paths (NOT /etc/* for vendor configs)
-- [ ] System config files named with package name (e.g., $pkgname.conf, not generic names)
+**Quick troubleshooting:**
 
-**For systemd services:**
-- [ ] Evaluated DynamicUser=yes vs systemd-sysusers.d (prefer DynamicUser when possible)
-- [ ] If persistent state needed: Used StateDirectory= or sysusers.d (NOT .install scripts)
-- [ ] tmpfiles.d used for directory management and cleanup (NOT separate timers)
-- [ ] tmpfiles.d Age field used for automatic cleanup (NOT custom scripts)
-- [ ] Comprehensive sandboxing applied (run through sandboxing checklist)
-- [ ] Converted non-systemd init scripts properly (OpenRC/sysvinit → systemd)
-- [ ] `systemd-analyze security myapp.service` reviewed
+| Problem | Solution |
+|---------|----------|
+| "chroot is locked" | Remove `/var/lib/archbuild/extra-x86_64.lock` |
+| Chroot update fails | Reset with `-c` flag: `extra-x86_64-build -c` |
+| Permission denied | Run with `sudo` or ensure user in `wheel` group |
 
 ## Resources
 
@@ -607,3 +573,6 @@ Before submitting or deploying:
 - FHS specification: https://man.archlinux.org/man/file-hierarchy.7
 - AUR submission: https://wiki.archlinux.org/title/AUR_submission_guidelines
 - namcap: https://wiki.archlinux.org/title/Namcap
+- Clean chroot building: https://wiki.archlinux.org/title/DeveloperWiki:Building_in_a_clean_chroot
+- devtools: https://man.archlinux.org/man/extra/devtools/pkgctl-build.1
+- nvchecker/pkgctl-version: https://man.archlinux.org/man/extra/devtools/pkgctl-version.1
