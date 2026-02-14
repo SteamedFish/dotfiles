@@ -374,7 +374,77 @@ Host aur.archlinux.org
     User aur
 ```
 
-**Clone and commit:**
+**Set up .gitignore:**
+```bash
+# Create .gitignore for PKGBUILD repository
+cat > .gitignore << 'EOF'
+# Build artifacts
+*.pkg.tar.zst
+*.pkg.tar.xz
+*.pkg.tar.gz
+
+# Source tarballs
+*.tar.gz
+*.tar.bz2
+*.tar.xz
+*.zip
+
+# Build directories
+pkg/
+src/
+
+# makepkg metadata (build-time only)
+.BUILDINFO
+.PKGINFO
+.MTREE
+.INSTALL
+
+# Temporary files
+*.log
+*~
+*.swp
+EOF
+```
+
+**CRITICAL .gitignore rules:**
+
+| File | Track? | Why |
+|------|--------|-----|
+| **PKGBUILD** | ✅ YES | Mandatory source file |
+| **.SRCINFO** | ✅ YES | Required for AUR (machine-readable metadata) |
+| **\*.install** | ✅ YES | Post-install script source |
+| **\*.patch** | ✅ YES | Source patches |
+| **Supplementary configs** | ✅ YES | .tmpfiles, .service, example configs |
+| **.INSTALL** | ❌ NO | Build artifact (generated from .install) |
+| **pkg/, src/** | ❌ NO | Build directories |
+| **\*.pkg.tar.*** | ❌ NO | Built packages |
+| **.BUILDINFO, .PKGINFO, .MTREE** | ❌ NO | makepkg metadata |
+
+**Two scenarios for AUR submission:**
+
+**Scenario A: Existing local git repository with PKGBUILD files already tracked**
+
+If you already have a git repository with PKGBUILD, .SRCINFO, and related files:
+
+```bash
+# Add AUR as a remote to existing repository
+cd /path/to/existing/pkgname
+git remote add aur ssh://aur@aur.archlinux.org/pkgname.git
+
+# Push to AUR
+git push aur master
+```
+
+**Benefits:**
+- Keeps existing git history
+- Single repository for both local development and AUR
+- Directory name matches package name
+- No file copying needed
+
+**Scenario B: Starting from scratch (new package)**
+
+If you don't have a git repository yet:
+
 ```bash
 # Clone (empty for new packages)
 git clone ssh://aur@aur.archlinux.org/pkgname.git
@@ -384,13 +454,44 @@ cd pkgname
 cp /path/to/PKGBUILD .
 makepkg --printsrcinfo > .SRCINFO
 
+# Create .gitignore (see above)
+cat > .gitignore << 'EOF'
+# Build artifacts
+*.pkg.tar.zst
+*.pkg.tar.xz
+*.pkg.tar.gz
+
+# Source tarballs
+*.tar.gz
+*.tar.bz2
+*.tar.xz
+*.zip
+
+# Build directories
+pkg/
+src/
+
+# makepkg metadata (build-time only)
+.BUILDINFO
+.PKGINFO
+.MTREE
+.INSTALL
+
+# Temporary files
+*.log
+*~
+*.swp
+EOF
+
 # Commit
-git add PKGBUILD .SRCINFO
+git add PKGBUILD .SRCINFO .gitignore
 git commit -m "Initial commit: pkgname $pkgver-$pkgrel"
 
 # Push
 git push origin master
 ```
+
+**Decision rule:** If you have an existing git repository with the required files (PKGBUILD, .SRCINFO, .gitignore, patches, configs), use **Scenario A**. Only use **Scenario B** when starting completely fresh.
 
 ## Tracking Upstream Releases with nvchecker
 
