@@ -118,53 +118,9 @@ extra-x86_64-build
 extra-x86_64-build -- -I ~/custom-dep-1.0-1-x86_64.pkg.tar.zst
 ```
 
-### Manual Clean Chroot Setup (Advanced)
 
-**Only needed if you want custom chroot location or configuration:**
+For advanced manual chroot setup, see @clean-chroot-reference.md (custom location, custom configs).
 
-```bash
-# 1. Install devtools
-sudo pacman -S devtools
-
-# 2. Create chroot directory
-mkdir ~/chroot
-CHROOT=$HOME/chroot
-
-# 3. Initialize chroot (root subdirectory is mandatory)
-mkarchroot $CHROOT/root base-devel
-
-# 4. (Optional) Edit chroot config
-# - Mirrorlist: $CHROOT/root/etc/pacman.d/mirrorlist
-# - Pacman config: $CHROOT/root/etc/pacman.conf
-# - Makepkg config: ~/.makepkg.conf (used by makechrootpkg)
-
-# 5. Update chroot before building
-arch-nspawn $CHROOT/root pacman -Syu
-
-# 6. Build package (run in PKGBUILD directory)
-makechrootpkg -c -r $CHROOT
-
-# The -c flag ensures working chroot is cleaned before build
-```
-
-**Custom pacman.conf/makepkg.conf (use with caution):**
-```bash
-mkarchroot -C custom-pacman.conf -M custom-makepkg.conf $CHROOT/root base-devel
-```
-
-**Building with custom dependencies:**
-```bash
-makechrootpkg -c -r $CHROOT -I custom-dep-1.0-1-x86_64.pkg.tar.zst
-```
-
-**Passing arguments to makepkg:**
-```bash
-# Force check() to run
-makechrootpkg -c -r $CHROOT -- --check
-
-# Skip integrity checks (for development)
-makechrootpkg -c -r $CHROOT -- --skipchecksums
-```
 
 ### Fallback: Direct makepkg Build
 
@@ -271,6 +227,32 @@ ldd /path/to/binary
 # Find provided libraries
 find-libprovides /path/to/built/files
 ```
+
+**CRITICAL: Validate Package Availability**
+
+Before finalizing your PKGBUILD, **MUST** verify all dependencies exist:
+
+```bash
+# Check official repos
+pacman -Ss package-name
+
+# Check AUR (using yay or paru)
+yay -Ss package-name
+# OR
+paru -Ss package-name
+
+# Validate all dependencies at once
+for pkg in depend1 depend2 makedepend1 optdepend1; do
+    pacman -Ss "^$pkg$" || yay -Ss "^$pkg$" || echo "MISSING: $pkg"
+done
+```
+
+**Rules:**
+- Every `depends=()`, `makedepends=()`, and `optdepends=()` entry MUST exist in official repos or AUR
+- Use exact package names (check `pacman -Ss` or `aur.archlinux.org`)
+- For AUR dependencies, document in comments (AUR packages can't auto-install)
+- Invalid dependencies = namcap errors + installation failures
+
 
 ### Step 3: FHS Compliance and System Package Locations
 

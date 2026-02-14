@@ -111,3 +111,51 @@ extra-x86_64-build -- -I custom.pkg.tar.zst --check
 | Out of space errors | Clean old package caches in chroot |
 | Permission denied | Run with `sudo` or ensure user in `wheel` group |
 | Custom repo not found | Edit `$CHROOT/root/etc/pacman.conf` |
+### Manual Clean Chroot Setup (Advanced)
+
+**Only needed if you want custom chroot location or configuration:**
+
+```bash
+# 1. Install devtools
+sudo pacman -S devtools
+
+# 2. Create chroot directory
+mkdir ~/chroot
+CHROOT=$HOME/chroot
+
+# 3. Initialize chroot (root subdirectory is mandatory)
+mkarchroot $CHROOT/root base-devel
+
+# 4. (Optional) Edit chroot config
+# - Mirrorlist: $CHROOT/root/etc/pacman.d/mirrorlist
+# - Pacman config: $CHROOT/root/etc/pacman.conf
+# - Makepkg config: ~/.makepkg.conf (used by makechrootpkg)
+
+# 5. Update chroot before building
+arch-nspawn $CHROOT/root pacman -Syu
+
+# 6. Build package (run in PKGBUILD directory)
+makechrootpkg -c -r $CHROOT
+
+# The -c flag ensures working chroot is cleaned before build
+```
+
+**Custom pacman.conf/makepkg.conf (use with caution):**
+```bash
+mkarchroot -C custom-pacman.conf -M custom-makepkg.conf $CHROOT/root base-devel
+```
+
+**Building with custom dependencies:**
+```bash
+makechrootpkg -c -r $CHROOT -I custom-dep-1.0-1-x86_64.pkg.tar.zst
+```
+
+**Passing arguments to makepkg:**
+```bash
+# Force check() to run
+makechrootpkg -c -r $CHROOT -- --check
+
+# Skip integrity checks (for development)
+makechrootpkg -c -r $CHROOT -- --skipchecksums
+```
+
