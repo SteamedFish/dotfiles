@@ -42,6 +42,86 @@ backup=(
 - Generated files (.cache, .pid)
 - Files that should ALWAYS be updated (service files)
 
+## Sensitive Configuration Files (Credentials, Secrets)
+
+**When config files contain passwords, API keys, or other sensitive data, they MUST be protected from unauthorized access.**
+
+### Security Requirements
+
+| Scenario | Permissions | Owner:Group | tmpfiles.d Type | Reasoning |
+|----------|-------------|-------------|-----------------|-----------|
+| **App writes to config** | `0660` | `appuser:appgroup` | `z` | Read/write by app only, not world-readable |
+| **App reads only, admin edits** | `0640` | `root:appgroup` | `z` (or install -m) | App can read, only root writes, not world-readable |
+| **Normal config (no secrets)** | `0644` | `root:root` | Default install | Standard readable config |
+
+### Example: Web Application with Credentials
+
+```bash
+# In PKGBUILD
+backup=(
+    'etc/webapps/myapp/config.php'      # App config
+    'etc/webapps/myapp/database.php'    # DATABASE CREDENTIALS - needs 0660
+)
+
+package() {
+    # Install configs normally (pacman will install as root:root 0644)
+    install -Dm644 config.php "$pkgdir/etc/webapps/myapp/config.php"
+    install -Dm644 database.php "$pkgdir/etc/webapps/myapp/database.php"
+    
+    # tmpfiles.d will adjust ownership and permissions at install time
+    install -Dm644 myapp.tmpfiles "$pkgdir/usr/lib/tmpfiles.d/myapp.conf"
+}
+
+# In myapp.tmpfiles:
+# For apps that write their own config (e.g., web installers):
+z /etc/webapps/myapp/config.php      0660 root  http  -   -
+z /etc/webapps/myapp/database.php    0660 root  http  -   -  # Contains DB password!
+
+# Alternative for read-only configs (admin edits manually):
+z /etc/webapps/myapp/database.php    0640 root  http  -   -  # Only root writes
+```
+
+### Why Use systemd-tmpfiles for Permissions?
+
+**DON'T do this in PKGBUILD:**
+```bash
+# ❌ WRONG - pacman tracks ownership/permissions, causes conflicts
+install -Dm660 -o http -g http database.php "$pkgdir/etc/webapps/myapp/database.php"
+```
+
+**DO use tmpfiles.d:**
+```bash
+# ✅ CORRECT - pacman installs as root:root, tmpfiles.d adjusts at runtime
+install -Dm644 database.php "$pkgdir/etc/webapps/myapp/database.php"
+# Then tmpfiles.d changes ownership to root:http 0660
+```
+
+**Reasons:**
+1. Package files should be owned by root in the package
+2. Runtime ownership changes via tmpfiles.d (runs on install/boot)
+3. Prevents pacman conflicts on upgrades
+4. Standard Arch pattern for runtime-modified files
+
+### When Application Writes Configuration
+
+**Scenario:** Web applications with web-based installers (WordPress, Nextcloud, etc.)
+
+**Problem:** Installer needs to write database credentials to `/etc/webapps/app/config.php`
+
+**Solution:**
+1. Directory must be writable by application user (via tmpfiles.d)
+2. Config files must be writable AND not world-readable (0660)
+3. Use tmpfiles.d type `z` to adjust permissions on existing files
+
+**Example (.install file message):**
+```bash
+post_install() {
+    echo "==> Configuration files in /etc/webapps/myapp/ are owned by root:http (0660)"
+    echo "==> This allows the web installer to write database credentials"
+    echo "==> Permissions are restricted - config files are NOT world-readable"
+}
+```
+
 ## Example PKGBUILD
 
 ```bash

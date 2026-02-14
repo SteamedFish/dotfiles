@@ -538,12 +538,33 @@ d     /var/log/appname          0755 http  http  -   -
 ```
 
 **Field explanations:**
-- `Type`: `d` = Create directory if not exists
-- `Path`: Absolute path to directory
+- `Type`: `d` = Create directory if not exists, `z` = Adjust ownership/permissions on existing paths
+- `Path`: Absolute path to directory/file
 - `Mode`: Permissions (0755, 0700, etc.)
 - `User/Group`: Ownership (http for web applications)
 - `Age`: Cleanup policy (`-` = never, `30d` = 30 days, `7d` = 7 days)
 - `Argument`: Additional args (usually `-`)
+
+**For sensitive config files (credentials, secrets):**
+```conf
+# If application writes to config (e.g., web installers):
+# Files are root:http 0660 (root owns, http group can write)
+z     /etc/webapps/appname/config.php      0660 root  http  -   -
+z     /etc/webapps/appname/database.php    0660 root  http  -   -  # Contains DB password!
+
+# Type 'z' adjusts ownership/permissions on files installed by the package
+# root:http 0660 = root owns file (secure), http group can write, NOT world-readable
+# Config directory /etc/webapps/appname remains root:root (default from install)
+```
+
+**Why use type 'z' with root:http for sensitive configs:**
+1. Package installs files as root:root 0644 (normal)
+2. tmpfiles.d changes group to http with 0660 permissions
+3. Root owns the file (safer - only root can delete/rename)
+4. http group can read/write (application can modify config)
+5. Files are NOT world-readable (0660) - protects credentials
+
+**See @config-file-handling.md for detailed security patterns.**
 
 **PKGBUILD integration:**
 ```bash

@@ -524,7 +524,23 @@ backup=(
 
 **Pacman behavior:** Modified files → Creates .pacnew (user merges manually)
 
-**Detailed reference:** See @config-file-handling.md for backup=() rules, .pacnew workflow, and examples
+### Security: Sensitive Configuration Files
+
+**If config files contain credentials/secrets (database passwords, API keys):**
+- Use `0660` permissions (not world-readable)
+- Set ownership via tmpfiles.d type `z`
+- Example: `z /etc/webapps/app/database.php 0660 root http - -`
+
+**If application writes to config (web installers):**
+- Files owned by root, group set to app user (e.g., root:http)
+- Use `0660` for group-writable, not world-readable (security)
+- Directory can remain root:root (only files need group access)
+
+**Detailed reference:** See @config-file-handling.md for:
+- backup=() rules and .pacnew workflow
+- Sensitive config file permissions (0660 vs 0640 vs 0644)
+- Using tmpfiles.d type `z` for ownership/permission changes
+- Security patterns for web applications
 
 ## Post-Install Scripts (.install files)
 
