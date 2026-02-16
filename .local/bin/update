@@ -6,6 +6,52 @@ set -E
 
 cd "$HOME"
 
+# Color definitions
+readonly RED='\033[0;31m'
+readonly GREEN='\033[0;32m'
+readonly YELLOW='\033[1;33m'
+readonly BLUE='\033[0;34m'
+readonly CYAN='\033[0;36m'
+readonly BOLD='\033[1m'
+readonly RESET='\033[0m'
+
+# Helper functions for colored output
+print_success() {
+    echo -e "${GREEN}✓${RESET} $*"
+}
+
+print_error() {
+    echo -e "${RED}✗${RESET} $*" >&2
+}
+
+print_status() {
+    echo -e "${BLUE}→${RESET} $*"
+}
+
+print_info() {
+    echo -e "${CYAN}ℹ${RESET} $*"
+}
+
+print_header() {
+    echo -e "\n${BOLD}${BLUE}═══ $* ═══${RESET}\n"
+}
+
+# Summary tracking
+declare -a UPDATE_SUCCESS=()
+declare -a UPDATE_FAILED=()
+
+# Track update result
+track_update() {
+    local component="$1"
+    local status="$2"  # 0=success, non-zero=failure
+    
+    if [ "$status" -eq 0 ]; then
+        UPDATE_SUCCESS+=("$component")
+    else
+        UPDATE_FAILED+=("$component")
+    fi
+}
+
 run() {
     # execute any programs
     # -r, --retry    retry time when execute fail. default 0
@@ -58,12 +104,11 @@ EOF
         esac
     done
 
-    echo " ========================================================="
+    print_status "$(date "+%F %T") RUNNING: $*"
+    
     while true; do
-        echo "$(date "+%F %T") RUNNING: $* "
-
         if $dry_run; then
-            echo "DRY-RUN: running $*"
+            print_info "DRY-RUN: $*"
             return 0
         fi
 
@@ -73,22 +118,21 @@ EOF
         set -e
 
         if [ "$retcode" -eq 0 ]; then
-            echo "$(date "+%F %T") run $* successfully!"
+            print_success "$(date "+%F %T") $*"
             return "$retcode"
         fi
 
-        echo "$(date "+%F %T") run $* failed!"
+        print_error "$(date "+%F %T") Failed: $*"
 
         retry=$((retry - 1))
 
         if [ "$retry" -le 0 ]; then
-            echo "no more retry"
-            echo "run $* failed! Please check it " >&2
+            print_error "No more retries - $* failed!"
             #return "$retcode"
             return 0
         fi
 
-        echo "retry time left: $retry"
+        echo -e "${YELLOW}⟳${RESET} Retries left: $retry"
 
     done
 
@@ -415,21 +459,20 @@ update_doom() {
 
 update_optools() {
     echo "updating optools"
-    for _DIR in "work"; do
-        if [ -d "$HOME/${_DIR}" ]; then
-            for _PROJECT in "$HOME/${_DIR}"/*; do
-                echo "updating ${_PROJECT}"
-                if [ -f "${_PROJECT}/.git/svn/.metadata" ]; then
-                    cd "${_PROJECT}"
-                    run git svn fetch
-                elif [ -d "${_PROJECT}/.git" ]; then
-                    cd "${_PROJECT}"
-                    run git pull
-                    run git submodule update --remote --recursive
-                fi
-            done
-        fi
-    done
+    local _DIR="work"
+    if [ -d "$HOME/${_DIR}" ]; then
+        for _PROJECT in "$HOME/${_DIR}"/*; do
+            echo "updating ${_PROJECT}"
+            if [ -f "${_PROJECT}/.git/svn/.metadata" ]; then
+                cd "${_PROJECT}"
+                run git svn fetch
+            elif [ -d "${_PROJECT}/.git" ]; then
+                cd "${_PROJECT}"
+                run git pull
+                run git submodule update --remote --recursive
+            fi
+        done
+    fi
 }
 
 update_grafana() {
@@ -462,49 +505,97 @@ update_mastodon() {
     fi
 }
 
+print_summary() {
+    echo
+    echo -e "${BOLD}${BLUE}═══════════════════════════════════════${RESET}"
+    echo -e "${BOLD}${BLUE}         UPDATE SUMMARY${RESET}"
+    echo -e "${BOLD}${BLUE}═══════════════════════════════════════${RESET}"
+    echo
+    
+    if [ ${#UPDATE_SUCCESS[@]} -gt 0 ]; then
+        print_success "Successfully updated (${#UPDATE_SUCCESS[@]}):"
+        for component in "${UPDATE_SUCCESS[@]}"; do
+            echo -e "  ${GREEN}✓${RESET} $component"
+        done
+        echo
+    fi
+    
+    if [ ${#UPDATE_FAILED[@]} -gt 0 ]; then
+        print_error "Failed updates (${#UPDATE_FAILED[@]}):"
+        for component in "${UPDATE_FAILED[@]}"; do
+            echo -e "  ${RED}✗${RESET} $component"
+        done
+        echo
+    fi
+    
+    local total=$((${#UPDATE_SUCCESS[@]} + ${#UPDATE_FAILED[@]}))
+    if [ "$total" -gt 0 ]; then
+        print_info "Total: ${GREEN}${#UPDATE_SUCCESS[@]} successful${RESET}, ${RED}${#UPDATE_FAILED[@]} failed${RESET} (out of $total)"
+    else
+        print_info "No updates were tracked."
+    fi
+    echo
+}
+
+# Execute update function and track result
+run_update() {
+    local func_name="$1"
+    local display_name="$2"
+    
+    print_header "Updating $display_name"
+    set +e
+    "$func_name"
+    local result=$?
+    set -e
+    track_update "$display_name" "$result"
+}
+
 update() {
     if [[ $(uname -o) != "Android" ]]; then
         get_sudo
     fi
     case $OSTYPE in
     linux*)
-        self_update
-        update_zsh
-        update_linux_system
-        update_linuxbrew
-        update_snap
-        update_vim
-        update_pip
-        update_rust
-        update_emacs
-        update_ollama
-        update_optools
-        update_grafana
-        update_mastodon
+        run_update self_update "Dotfiles (self)"
+        run_update update_zsh "ZSH"
+        run_update update_linux_system "Linux System"
+        run_update update_linuxbrew "Linuxbrew"
+        run_update update_snap "Snap"
+        run_update update_vim "Vim"
+        run_update update_pip "Pip"
+        run_update update_rust "Rust"
+        run_update update_emacs "Emacs"
+        run_update update_ollama "Ollama"
+        run_update update_optools "Optools"
+        run_update update_grafana "Grafana"
+        run_update update_mastodon "Mastodon"
         ;;
     darwin*)
-        self_update
-        update_zsh
-        update_context
-        update_mac_system
-        update_mas
-        update_homebrew
-        update_macports
-        update_pip
-        update_gem
-        update_rust
-        update_vim
-        update_emacs
-        update_optools
-        update_go
+        run_update self_update "Dotfiles (self)"
+        run_update update_zsh "ZSH"
+        run_update update_context "ConTeXt"
+        run_update update_mac_system "macOS System"
+        run_update update_mas "Mac App Store"
+        run_update update_homebrew "Homebrew"
+        run_update update_macports "MacPorts"
+        run_update update_pip "Pip"
+        run_update update_gem "Ruby Gems"
+        run_update update_rust "Rust"
+        run_update update_vim "Vim"
+        run_update update_emacs "Emacs"
+        run_update update_optools "Optools"
+        run_update update_go "Go"
         ;;
     cygwin*)
-        echo "unsupported os type $OSTYPE"
+        print_error "Unsupported OS type: $OSTYPE"
         ;;
     *)
-        echo "unsupported os type $OSTYPE"
+        print_error "Unsupported OS type: $OSTYPE"
         ;;
     esac
+    
+    # Print summary at the end
+    print_summary
 }
 
 main() {
