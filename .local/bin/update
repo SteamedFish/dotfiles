@@ -143,6 +143,9 @@ EOF
 
 gitpull() {
     if [ -d .git ]; then
+        local repo_name
+        repo_name="$(basename "$(pwd)")"
+        print_info "Pulling ${CYAN}${repo_name}${RESET}"
         run git reset --hard origin/master
         run -r 5 git pull
         run -r 5 git submodule update --recursive --init
@@ -370,14 +373,16 @@ update_rust() {
 }
 
 self_update() {
-    echo "updating yadm"
     if [ -n "$(command -v yadm)" ]; then
+        print_info "Updating ${CYAN}yadm${RESET}"
         run -r 5 yadm pull
         run yadm alt
     fi
-    echo "updating git repo"
+    
+    print_info "Updating personal git repositories"
     for repo in dotfiles .password-store .gnupg; do
         if [ -d "$HOME/$repo/.git" ]; then
+            print_info "  ${CYAN}~/$repo${RESET}"
             cd "$HOME/$repo"
             run -r 5 git pull
             run -r 5 git submodule update --recursive --init
@@ -458,18 +463,23 @@ update_doom() {
 }
 
 update_optools() {
-    echo "updating optools"
     local _DIR="work"
     if [ -d "$HOME/${_DIR}" ]; then
+        print_info "Updating work projects in ${CYAN}~/${_DIR}${RESET}"
         for _PROJECT in "$HOME/${_DIR}"/*; do
-            echo "updating ${_PROJECT}"
-            if [ -f "${_PROJECT}/.git/svn/.metadata" ]; then
-                cd "${_PROJECT}"
-                run git svn fetch
-            elif [ -d "${_PROJECT}/.git" ]; then
-                cd "${_PROJECT}"
-                run git pull
-                run git submodule update --remote --recursive
+            if [ -d "${_PROJECT}" ]; then
+                local project_name
+                project_name="$(basename "${_PROJECT}")"
+                print_info "  ${CYAN}${project_name}${RESET}"
+                
+                if [ -f "${_PROJECT}/.git/svn/.metadata" ]; then
+                    cd "${_PROJECT}"
+                    run git svn fetch
+                elif [ -d "${_PROJECT}/.git" ]; then
+                    cd "${_PROJECT}"
+                    run git pull
+                    run git submodule update --remote --recursive
+                fi
             fi
         done
     fi
