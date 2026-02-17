@@ -55,6 +55,43 @@ Skip any step = lying, not verifying
 
 **Before claiming "code is ready" or "quality checks pass", verify these:**
 
+### Code Quality Standards
+
+All code must meet these standards before claiming completion:
+
+| Quality Dimension | Definition | Verification |
+|------------------|------------|--------------|
+| **Readability** | Clear structure, meaningful names, logical flow | Review: Can someone unfamiliar understand quickly? |
+| **Maintainability** | Easy to modify, extend, debug | Review: Can features be added without rewrite? |
+| **Testability** | Straightforward to validate behavior | Check: Can you test without mocking everything? |
+| **Efficiency** | Appropriate performance for requirements | Verify: No obvious O(n²) when O(n) possible |
+| **Robustness** | Handles edge cases, errors gracefully | Check: Null, empty, boundary values handled |
+
+**How to verify:** Code review against these criteria BEFORE claiming "complete" or "ready".
+
+### Error Handling Standards
+
+**Before claiming error handling is correct:**
+
+| Principle | Requirement | Verification |
+|-----------|-------------|--------------|
+| **Fail fast** | Detect and report errors early at source | Check: Validation at entry points, not deep in call stack |
+| **Meaningful messages** | Context: what failed, why, how to fix | Review: Error messages include relevant data |
+| **No silent failures** | Never catch and ignore without logging | Grep: No empty `catch {}` blocks |
+| **Graceful degradation** | System continues with reduced functionality | Test: Partial failures don't crash entire system |
+| **Centralized handling** | Consistent error handling patterns | Review: Use common error handler, not ad-hoc `try-catch` |
+
+**Example verification:**
+```bash
+# Check for silent failures
+grep -r "catch.*{[[:space:]]*}" src/
+# Should return 0 matches
+
+# Check for meaningful errors
+grep -r "throw new Error('error')" src/
+# Generic errors should have context
+```
+
 ### Mandatory Code Checking Tools by Language
 
 | Language | Required Tools | Verify Command |
@@ -105,6 +142,100 @@ Before claiming "secure" or "ready to commit":
 | "Optimized" | Before/after benchmarks | benchmark suite |
 
 **Don't claim performance without measurements.**
+
+### Dependency Management Verification
+
+**Before claiming dependencies are properly managed:**
+
+| Requirement | Verification | Tool |
+|-------------|--------------|------|
+| **Use package managers** | npm, pip, cargo, etc. | Check: `package.json`, `requirements.txt`, `Cargo.toml` exist |
+| **Lock versions** | Deterministic builds | Check: `package-lock.json`, `poetry.lock`, `Cargo.lock` committed |
+| **No vulnerabilities** | Security audit passes | Run: `npm audit`, `pip-audit`, `cargo audit` (0 high/critical) |
+| **Keep updated** | Dependencies not ancient | Check: Last updated < 6 months, use dependabot/renovate |
+| **Evaluate before adding** | Maintenance, community, security reviewed | Document: Why this library vs alternatives |
+
+**Add new dependency checklist:**
+- [ ] Actively maintained (commits in last 6 months)
+- [ ] Healthy community (stars, issues response time)
+- [ ] No critical security issues
+- [ ] Minimal transitive dependencies
+- [ ] License compatible with project
+
+**Example verification:**
+```bash
+# Check lock files are committed
+git ls-files | grep -E "(package-lock\.json|poetry\.lock|Cargo\.lock)"
+
+# Run security audit
+npm audit --audit-level=high
+# OR
+pip-audit --require-hashes
+
+# Check dependency freshness
+npm outdated
+```
+
+### Documentation Standards Verification
+
+**Before claiming documentation is complete:**
+
+| Standard | Requirement | Verification |
+|----------|-------------|--------------|
+| **Accurate** | Reflects actual behavior | Test: Follow docs to use feature - does it work? |
+| **Complete** | Covers all relevant aspects | Check: Public APIs, config options, examples documented |
+| **Clear** | Understandable to target audience | Review: Someone unfamiliar can follow without confusion |
+| **Current** | Updated with code changes | Check: Docs modified in same commit as code |
+
+**Documentation types checklist:**
+
+- [ ] **README** - Project purpose, setup, basic usage
+- [ ] **API docs** - All public functions, parameters, return values
+- [ ] **Inline comments** - WHY not WHAT (complex logic, workarounds, gotchas)
+- [ ] **Examples** - Common use cases with working code
+- [ ] **CHANGELOG** - User-facing changes documented
+
+**Inline comment quality:**
+```typescript
+// ❌ BAD: Redundant with code (explains WHAT)
+// Get user by ID
+function getUserById(id: string): User { /*...*/ }
+
+// ✅ GOOD: Explains WHY (adds context)
+// Must query cache first to avoid rate limit on user API
+// Cache miss penalty: 200ms, but prevents 429 errors
+function getUserById(id: string): User { /*...*/ }
+```
+
+**API documentation quality:**
+```typescript
+// ❌ BAD: Missing details
+/**
+ * Retries an operation
+ */
+function retry(fn: Function): Promise<any>
+
+// ✅ GOOD: Complete documentation
+/**
+ * Retries a failed async operation up to 3 times with exponential backoff.
+ * 
+ * @param fn - Async function to retry. Must return Promise.
+ * @param options - Retry configuration (optional)
+ * @param options.maxRetries - Maximum attempts (default: 3)
+ * @param options.backoff - Backoff strategy: 'linear' | 'exponential' (default: 'exponential')
+ * @returns Promise resolving to fn's result
+ * @throws Last error if all retries exhausted
+ * 
+ * @example
+ * const data = await retry(() => fetchUser(id), { maxRetries: 5 });
+ */
+function retry<T>(
+  fn: () => Promise<T>, 
+  options?: RetryOptions
+): Promise<T>
+```
+
+
 
 ## Common Failures
 

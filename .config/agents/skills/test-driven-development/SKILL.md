@@ -77,6 +77,76 @@ test('validates email using EmailValidator', () => {
 
 ---
 
+## Implementation Discipline
+
+**After writing tests and minimal code, maintain quality through these practices:**
+
+### Consistency and Patterns
+
+| Principle | Guideline | Example |
+|-----------|-----------|---------|
+| **Follow established patterns** | Match existing code style, structure, organization | ✅ Use same error handling pattern as rest of codebase ❌ Introduce new error pattern |
+| **Maintain consistency** | Same naming conventions, file structure, module organization | ✅ `getUserById()` matches `getPostById()` ❌ `fetchUser()` when others use `get*()` |
+| **Keep functions focused** | Single responsibility, one clear purpose | ✅ `validateEmail()` ❌ `validateAndSaveEmail()` |
+| **Prefer autonomous methods** | Methods that don't rely on external state | ✅ Pure functions when possible ❌ Hidden dependencies |
+
+### Completion Checklist
+
+After implementing each feature:
+
+- [ ] **Verify tests pass** - Run full test suite, not just new tests
+- [ ] **Update TODO/CHANGELOG** - Mark task complete, document change
+- [ ] **Update documentation** - README, API docs, inline comments (WHY not WHAT)
+- [ ] **Check consistency** - Does new code match existing patterns?
+- [ ] **Review dependencies** - No unnecessary coupling introduced?
+
+### Redundancy Elimination
+
+**Avoid redundant work by understanding upfront:**
+
+| Type | Avoid | Instead |
+|------|-------|---------|
+| **Comments** | Explain WHAT code does (readable from code) | Explain WHY (business logic, tradeoffs, gotchas) |
+| **Tests** | Multiple tests for same behavior | Consolidate similar tests, use parameterized tests |
+| **Code** | Duplicate implementations | Understand constraints first, write once correctly |
+| **Rewrites** | Multiple attempts due to misunderstanding | Read existing code, clarify requirements BEFORE coding |
+
+**Example:**
+```typescript
+// ❌ BAD: Comment explains WHAT (redundant with code)
+// Check if user is authenticated
+if (user.token && user.token.expiresAt > Date.now()) {
+  // ...
+}
+
+// ✅ GOOD: Comment explains WHY (adds context)
+// Must check token expiry here, not in middleware, because
+// admin routes bypass middleware but still need validation
+if (user.token && user.token.expiresAt > Date.now()) {
+  // ...
+}
+```
+
+**Test consolidation:**
+```typescript
+// ❌ BAD: Redundant tests
+test('validates email with @', () => { /*...*/ });
+test('validates email with domain', () => { /*...*/ });
+test('validates email with TLD', () => { /*...*/ });
+
+// ✅ GOOD: Parameterized test
+test.each([
+  ['valid@example.com', true],
+  ['missing-at.com', false],
+  ['no-domain@', false],
+  ['no-tld@example', false],
+])('validates email format: %s → %s', (email, expected) => {
+  expect(isValidEmail(email)).toBe(expected);
+});
+```
+
+---
+
 ## Red-Green-Refactor
 
 ```dot
@@ -237,6 +307,79 @@ Next failing test for next feature.
 | **Minimal** | One thing. "and" in name? Split it. | `test('validates email and domain and whitespace')` |
 | **Clear** | Name describes behavior | `test('test1')` |
 | **Shows intent** | Demonstrates desired API | Obscures what code should do |
+
+## Testing Philosophy
+
+**Test data should mirror production reality:**
+
+### Production-Quality Test Data
+
+| Principle | Guideline | Example |
+|-----------|-----------|---------|
+| **Mirrors production** | Use realistic data structures, values, formats | ✅ `{email: "user@example.com", age: 28}` ❌ `{email: "x", age: 1}` |
+| **Full transformation chain** | Test data through entire processing pipeline | ✅ Input → validate → transform → store → retrieve ❌ Test only transform step |
+| **Satisfies all constraints** | Data passes ALL validation rules | ✅ Check required fields, formats, ranges ❌ Only test happy path |
+| **Includes edge cases** | Empty strings, nulls, boundary values, special chars | ✅ `["", null, 0, -1, "🔥"]` ❌ Only `"test"` |
+
+**Why this matters:** Tests with toy data (x, y, foo, bar) pass but real data fails. Production-quality test data catches real bugs.
+
+**Example:**
+```typescript
+// ❌ BAD: Toy data that doesn't reflect reality
+test('processes user', () => {
+  const user = { name: 'x', email: 'y' };
+  expect(process(user)).toBeTruthy();
+});
+// Missing: age validation, email format, required fields
+
+// ✅ GOOD: Production-realistic data
+test('processes valid user through full pipeline', () => {
+  const user = {
+    name: 'Alice Smith',
+    email: 'alice.smith@example.com',
+    age: 28,
+    preferences: { newsletter: true }
+  };
+  
+  const result = process(user);
+  
+  expect(result.id).toMatch(/^usr_[a-z0-9]+$/);
+  expect(result.name).toBe('Alice Smith');
+  expect(result.email).toBe('alice.smith@example.com');
+});
+
+test('rejects user with invalid email format', () => {
+  const user = {
+    name: 'Bob Jones',
+    email: 'not-an-email',  // Edge case: malformed
+    age: 35
+  };
+  
+  expect(() => process(user)).toThrow('Invalid email format');
+});
+
+test('handles edge cases in user data', () => {
+  const edgeCases = [
+    { name: '', email: 'test@example.com', age: 18 },      // Empty name
+    { name: 'Test', email: '', age: 18 },                  // Empty email  
+    { name: 'Test', email: 'test@example.com', age: 0 },   // Boundary age
+    { name: 'Test', email: 'test@example.com', age: null }, // Null age
+  ];
+  
+  edgeCases.forEach(user => {
+    expect(() => process(user)).toThrow();
+  });
+});
+```
+
+### Test Coverage Checklist
+
+- [ ] **Happy path** - Valid data through full flow
+- [ ] **Validation** - Each constraint violation caught
+- [ ] **Edge cases** - Empty, null, zero, boundary values
+- [ ] **Error cases** - Invalid formats, missing fields, out-of-range
+- [ ] **Data transformation** - Input → output verified at each step
+- [ ] **State changes** - Side effects (DB writes, API calls) verified
 
 ## Why Order Matters
 

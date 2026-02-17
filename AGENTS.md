@@ -9,6 +9,25 @@ Personal Unix/Linux dotfiles. Shell (bash/zsh), Emacs, Neovim, ~40 XDG app confi
 
 **Recent Improvements:**
 
+*2026-02-17 (Later):*
+- **Reorganized skills into flat namespace**: Moved all skills from `.config/agents/skills/superpowers/` to `.config/agents/skills/`
+- **Updated all skill cross-references**: Removed `superpowers:` prefix from all skill references (29 updates across 9 files)
+- **Analysis completed**: No duplications or conflicts found - all skills properly structured and cross-referenced
+- **Skills verified**: All referenced supporting files exist (code-reviewer.md, testing-skills-with-subagents.md, anthropic-best-practices.md, etc.)
+
+*2026-02-17 (Earlier):*
+- **Recovered missing content from commit 8958e6f**: Added all previously removed AGENTS.md sections to appropriate skills
+  - Section 4.1 (Understand Before Implementation) → `writing-plans`
+  - Section 4.2 (Implementation Discipline) → `test-driven-development`
+  - Section 4.3 (Testing Philosophy) → `test-driven-development`
+  - Section 4.4 (Redundancy Elimination) → `test-driven-development`
+  - Section 5.1 (Code Quality table) → `verification-before-completion`
+  - Section 5.2 (Error Handling principles) → `verification-before-completion`
+  - Section 5.4 (Dependency Management) → `verification-before-completion`
+  - Section 5.5 (Documentation standards) → `verification-before-completion`
+  - Section 9.3 (Debugging Protocol 5-step) → `systematic-debugging`
+- **Skills now contain complete methodology**: All quality standards, working methodology, and debugging protocols from original global AGENTS.md
+
 *2026-02-07:*
 - **Reorganized all Emacs leaf statements**: Builtin packages now consistently ordered first, followed by third-party packages grouped by category
 - **Added leaf-convert.el**: Tool for converting use-package declarations to leaf (https://github.com/conao3/leaf-convert.el)

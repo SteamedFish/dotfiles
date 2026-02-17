@@ -17,6 +17,43 @@ Assume they are a skilled developer, but know almost nothing about our toolset o
 
 **Save plans to:** `docs/plans/YYYY-MM-DD-<feature-name>.md`
 
+## Understand Before Planning
+
+**Before writing the plan, understand the problem domain:**
+
+### Research Checklist (5-10 minutes)
+
+- [ ] **Read project documentation** - Check `plan/TODO.md`, `plan/CHANGELOG.md`, or project `AGENTS.md` for context
+- [ ] **Review existing implementations** - Search for similar features to avoid reinventing the wheel
+- [ ] **Search for utilities/helpers** - Look for existing validation, error handling, formatting functions before planning new ones
+- [ ] **Understand constraints** - Identify technical boundaries, performance requirements, compatibility needs
+- [ ] **Trace data paths** - Understand how data flows through the system
+- [ ] **Clarify ambiguities** - Ask your human partner about unclear requirements NOW, not during implementation
+
+**Why this matters:** Planning without context = writing tasks that duplicate code, violate constraints, or solve the wrong problem.
+
+**Example:**
+```markdown
+❌ BAD: Jump straight to planning
+Task 1: Create email validation function
+  - Write validateEmail(email: string): boolean
+  - Add regex pattern for email format
+
+# Codebase already has EmailValidator class in src/utils/validators/!
+
+✅ GOOD: After 5-min research, found existing validator
+Task 1: Extend EmailValidator for new requirement
+  - Modify: src/utils/validators/EmailValidator.ts
+  - Add domain whitelist checking to existing validator
+  - Reuse existing email format validation
+```
+
+**Red flags requiring immediate clarification:**
+- Multiple ways to achieve goal with different trade-offs
+- Unclear requirements or success criteria
+- Missing information about existing systems
+- Contradictory constraints
+
 ## Bite-Sized Task Granularity
 
 **Each step is one action (2-5 minutes):**
@@ -33,7 +70,7 @@ Assume they are a skilled developer, but know almost nothing about our toolset o
 ```markdown
 # [Feature Name] Implementation Plan
 
-> **For Claude:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task.
+> **For Claude:** REQUIRED SUB-SKILL: Use executing-plans to implement this plan task-by-task.
 
 **Goal:** [One sentence describing what this builds]
 
@@ -107,10 +144,10 @@ After saving the plan, offer execution choice:
 **Which approach?"**
 
 **If Subagent-Driven chosen:**
-- **REQUIRED SUB-SKILL:** Use superpowers:subagent-driven-development
+- **REQUIRED SUB-SKILL:** Use subagent-driven-development
 - Stay in this session
 - Fresh subagent per task + code review
 
 **If Parallel Session chosen:**
 - Guide them to open new session in worktree
-- **REQUIRED SUB-SKILL:** New session uses superpowers:executing-plans
+- **REQUIRED SUB-SKILL:** New session uses executing-plans

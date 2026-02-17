@@ -43,6 +43,43 @@ Use for ANY technical issue:
 - You're in a hurry (rushing guarantees rework)
 - Manager wants it fixed NOW (systematic is faster than thrashing)
 
+## Quick Debugging Protocol
+
+**For straightforward bugs, use this abbreviated 5-step protocol:**
+
+### Essential Steps
+
+1. **Reproduce the issue consistently**
+   - Can you trigger it reliably?
+   - What are exact steps?
+   - Does it happen every time or intermittently?
+
+2. **Isolate the minimal failing case**
+   - Reduce to simplest possible reproduction
+   - Remove unrelated factors
+   - Identify smallest code/data that triggers bug
+
+3. **Check error messages and stack traces carefully**
+   - Read complete error message (don't skim)
+   - Note line numbers, file paths, error codes
+   - Stack trace shows path to root cause
+   - Error messages often contain the solution
+
+4. **Search codebase for similar working patterns**
+   - How is this done elsewhere successfully?
+   - What's different between working and broken code?
+   - Reuse proven patterns from same codebase
+
+5. **Consult documentation before guessing**
+   - Read API docs for functions involved
+   - Check library documentation completely
+   - Review project conventions/patterns
+   - Google error message verbatim
+
+**When this protocol isn't enough:** Use the full Four Phases process below for complex multi-component issues.
+
+
+
 ## The Four Phases
 
 You MUST complete each phase before proceeding to the next.
@@ -176,7 +213,7 @@ You MUST complete each phase before proceeding to the next.
    - Automated test if possible
    - One-off test script if no framework
    - MUST have before fixing
-   - Use the `superpowers:test-driven-development` skill for writing proper failing tests
+   - Use the `test-driven-development` skill for writing proper failing tests
 
 2. **Implement Single Fix**
    - Address the root cause identified
@@ -373,8 +410,8 @@ These techniques are part of systematic debugging and available in this director
 - **`condition-based-waiting.md`** - Replace arbitrary timeouts with condition polling
 
 **Related skills:**
-- **superpowers:test-driven-development** - For creating failing test case (Phase 4, Step 1)
-- **superpowers:verification-before-completion** - Verify fix worked before claiming success
+- **test-driven-development** - For creating failing test case (Phase 4, Step 1)
+- **verification-before-completion** - Verify fix worked before claiming success
 
 ## Real-World Impact
 
