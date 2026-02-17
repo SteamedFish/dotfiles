@@ -14,9 +14,16 @@
 
 ### Flowchart Direction
 
+**Top-Down (default, use for most diagrams):**
 ```mermaid
-flowchart TD    %% Top-Down (default, use for most diagrams)
-flowchart LR    %% Left-Right (use for wide/horizontal flows)
+flowchart TD
+    A[Start] --> B[End]
+```
+
+**Left-Right (use for wide/horizontal flows):**
+```mermaid
+flowchart LR
+    A[Start] --> B[End]
 ```
 
 ### Node Shapes
@@ -32,11 +39,18 @@ flowchart LR    %% Left-Right (use for wide/horizontal flows)
 ### Edges (Arrows)
 
 ```mermaid
-A --> B           %% Simple arrow
-A -->|label| B    %% Arrow with label
-A -.->|label| B   %% Dotted arrow (optional/alternate path)
-A ==>|label| B    %% Thick arrow (emphasis)
+flowchart LR
+    A --> B
+    C -->|label| D
+    E -.->|optional| F
+    G ==>|emphasis| H
 ```
+
+**Syntax:**
+- `-->` Simple arrow
+- `-->|label|` Arrow with label
+- `-.->|label|` Dotted arrow (optional/alternate path)
+- `==>|label|` Thick arrow (emphasis)
 
 ## Style Conventions
 
