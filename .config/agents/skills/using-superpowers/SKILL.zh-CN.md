@@ -23,26 +23,25 @@ description: Use when starting any conversation - establishes how to find and us
 
 **在做出任何回应或采取行动之前，先调用相关或被请求的技能。** 即使某个技能只有 1% 的可能性适用，你也应该调用该技能来检查。如果调用的技能最终不适用于当前情况，你不需要使用它。
 
-```dot
-digraph skill_flow {
-    "User message received" [shape=doublecircle];
-    "Might any skill apply?" [shape=diamond];
-    "Invoke Skill tool" [shape=box];
-    "Announce: 'Using [skill] to [purpose]'" [shape=box];
-    "Has checklist?" [shape=diamond];
-    "Create TodoWrite todo per item" [shape=box];
-    "Follow skill exactly" [shape=box];
-    "Respond (including clarifications)" [shape=doublecircle];
-
-    "User message received" -> "Might any skill apply?";
-    "Might any skill apply?" -> "Invoke Skill tool" [label="yes, even 1%"];
-    "Might any skill apply?" -> "Respond (including clarifications)" [label="definitely not"];
-    "Invoke Skill tool" -> "Announce: 'Using [skill] to [purpose]'";
-    "Announce: 'Using [skill] to [purpose]'" -> "Has checklist?";
-    "Has checklist?" -> "Create TodoWrite todo per item" [label="yes"];
-    "Has checklist?" -> "Follow skill exactly" [label="no"];
-    "Create TodoWrite todo per item" -> "Follow skill exactly";
-}
+```mermaid
+flowchart TD
+    A((收到用户消息))
+    B{可能有技能适用？}
+    C[调用 Skill 工具]
+    D[宣布：使用 skill 进行 purpose]
+    E{有检查表？}
+    F[为每个项目创建 TodoWrite 待办事项]
+    G[严格遵循技能]
+    H((回复包括澄清))
+    
+    A --> B
+    B -->|是，即使 1%| C
+    B -->|绝对不| H
+    C --> D
+    D --> E
+    E -->|是| F
+    E -->|否| G
+    F --> G
 ```
 
 ## 危险信号

@@ -336,17 +336,16 @@ Use skill name only, with explicit requirement markers:
 
 ## Flowchart Usage
 
-```dot
-digraph when_flowchart {
-    "Need to show information?" [shape=diamond];
-    "Decision where I might go wrong?" [shape=diamond];
-    "Use markdown" [shape=box];
-    "Small inline flowchart" [shape=box];
-
-    "Need to show information?" -> "Decision where I might go wrong?" [label="yes"];
-    "Decision where I might go wrong?" -> "Small inline flowchart" [label="yes"];
-    "Decision where I might go wrong?" -> "Use markdown" [label="no"];
-}
+```mermaid
+flowchart TD
+    A{Need to show information?}
+    B{Decision where I might go wrong?}
+    C[Use markdown]
+    D[Small inline flowchart]
+    
+    A -->|yes| B
+    B -->|yes| D
+    B -->|no| C
 ```
 
 **Use flowcharts ONLY for:**
@@ -360,41 +359,9 @@ digraph when_flowchart {
 - Linear instructions → Numbered lists
 - Labels without semantic meaning (step1, helper2)
 
-See graphviz-conventions.dot for graphviz style rules.
+See mermaid-conventions.md for Mermaid flowchart style rules.
 
-**Visualizing for your human partner:** Use `render-graphs.js` in this directory to render a skill's flowcharts to SVG:
-```bash
-./render-graphs.js ../some-skill           # Each diagram separately
-./render-graphs.js ../some-skill --combine # All diagrams in one SVG
-```
-
-## Code Examples
-
-**One excellent example beats many mediocre ones**
-
-Choose most relevant language:
-- Testing techniques → TypeScript/JavaScript
-- System debugging → Shell/Python
-- Data processing → Python
-
-**Good example:**
-- Complete and runnable
-- Well-commented explaining WHY
-- From real scenario
-- Shows pattern clearly
-- Ready to adapt (not generic template)
-
-**Don't:**
-- Implement in 5+ languages
-- Create fill-in-the-blank templates
-- Write contrived examples
-
-You're good at porting - one great example is enough.
-
-## File Organization
-
-### Self-Contained Skill
-```
+**Visualizing for your human partner:** Flowcharts use GitHub-native Mermaid syntax and render automatically when viewed on GitHub.
 defense-in-depth/
   SKILL.md    # Everything inline
 ```
@@ -617,9 +584,10 @@ example-js.js, example-py.py, example-go.go
 **Why bad:** Mediocre quality, maintenance burden
 
 ### ❌ Code in Flowcharts
-```dot
-step1 [label="import fs"];
-step2 [label="read file"];
+```mermaid
+flowchart TD
+    step1["import fs"]
+    step2["read file"]
 ```
 **Why bad:** Can't copy-paste, hard to read
 

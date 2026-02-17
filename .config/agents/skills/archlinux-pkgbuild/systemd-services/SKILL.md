@@ -43,22 +43,21 @@ This skill covers systemd-specific packaging concerns:
 
 ### Decision: DynamicUser vs sysusers.d
 
-```dot
-digraph user_decision {
-    "Service needs user?" [shape=diamond];
-    "Persistent state/files?" [shape=diamond];
-    "Needs specific UID?" [shape=diamond];
-    "Use DynamicUser=yes" [shape=box];
-    "Use systemd-sysusers.d" [shape=box];
-    "Run as nobody/root" [shape=box];
-
-    "Service needs user?" -> "Persistent state/files?" [label="YES"];
-    "Service needs user?" -> "Run as nobody/root" [label="NO"];
-    "Persistent state/files?" -> "Needs specific UID?" [label="YES (StateDirectory/data)"];
-    "Persistent state/files?" -> "Use DynamicUser=yes" [label="NO (only runtime)"];
-    "Needs specific UID?" -> "Use systemd-sysusers.d" [label="YES"];
-    "Needs specific UID?" -> "Use DynamicUser=yes" [label="NO"];
-}
+```mermaid
+flowchart TD
+    A{Service needs user?}
+    B{Persistent state/files?}
+    C{Needs specific UID?}
+    D[Use DynamicUser=yes]
+    E[Use systemd-sysusers.d]
+    F[Run as nobody/root]
+    
+    A -->|YES| B
+    A -->|NO| F
+    B -->|YES<br/>StateDirectory/data| C
+    B -->|NO<br/>only runtime| D
+    C -->|YES| E
+    C -->|NO| D
 ```
 
 **Use DynamicUser=yes when:**

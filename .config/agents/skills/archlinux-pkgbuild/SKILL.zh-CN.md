@@ -30,40 +30,39 @@ description: Use when creating Arch Linux PKGBUILD files, packaging software for
 
 ## 强制工作流程
 
-```dot
-digraph pkgbuild_workflow {
-    "Start: Package request" [shape=doublecircle];
-    "1. Check existing packages" [shape=box];
-    "2. Write PKGBUILD" [shape=box];
-    "3. Run namcap on PKGBUILD" [shape=box];
-    "PKGBUILD passes?" [shape=diamond];
-    "devtools installed?" [shape=diamond];
-    "4a. Build in clean chroot" [shape=box];
-    "4b. Build with makepkg (warn user)" [shape=box];
-    "5. Run namcap on package" [shape=box];
-    "Package passes?" [shape=diamond];
-    "6. Test installation" [shape=box];
-    "7. Generate .SRCINFO" [shape=box];
-    "Complete" [shape=doublecircle];
-    "Fix violations" [shape=box];
-
-    "Start: Package request" -> "1. Check existing packages";
-    "1. Check existing packages" -> "2. Write PKGBUILD";
-    "2. Write PKGBUILD" -> "3. Run namcap on PKGBUILD";
-    "3. Run namcap on PKGBUILD" -> "PKGBUILD passes?";
-    "PKGBUILD passes?" -> "Fix violations" [label="NO"];
-    "Fix violations" -> "3. Run namcap on PKGBUILD";
-    "PKGBUILD passes?" -> "devtools installed?" [label="YES"];
-    "devtools installed?" -> "4a. Build in clean chroot" [label="YES (preferred)"];
-    "devtools installed?" -> "4b. Build with makepkg (warn user)" [label="NO"];
-    "4a. Build in clean chroot" -> "5. Run namcap on package";
-    "4b. Build with makepkg (warn user)" -> "5. Run namcap on package";
-    "5. Run namcap on package" -> "Package passes?";
-    "Package passes?" -> "Fix violations" [label="NO"];
-    "Package passes?" -> "6. Test installation" [label="YES"];
-    "6. Test installation" -> "7. Generate .SRCINFO";
-    "7. Generate .SRCINFO" -> "Complete";
-}
+```mermaid
+flowchart TD
+    Start((开始：软件包请求))
+    Step1[1. 检查现有软件包]
+    Step2[2. 编写 PKGBUILD]
+    Step3[3. 在 PKGBUILD 上运行 namcap]
+    Q1{PKGBUILD 通过？}
+    Q2{已安装 devtools？}
+    Step4a[4a. 在干净的 chroot 中构建]
+    Step4b[4b. 使用 makepkg 构建<br/>警告用户]
+    Step5[5. 在软件包上运行 namcap]
+    Q3{软件包通过？}
+    Step6[6. 测试安装]
+    Step7[7. 生成 .SRCINFO]
+    Complete((完成))
+    Fix[修复违规]
+    
+    Start --> Step1
+    Step1 --> Step2
+    Step2 --> Step3
+    Step3 --> Q1
+    Q1 -->|否| Fix
+    Fix --> Step3
+    Q1 -->|是| Q2
+    Q2 -->|是<br/>首选| Step4a
+    Q2 -->|否| Step4b
+    Step4a --> Step5
+    Step4b --> Step5
+    Step5 --> Q3
+    Q3 -->|否| Fix
+    Q3 -->|是| Step6
+    Step6 --> Step7
+    Step7 --> Complete
 ```
 
 ## 构建方法：Clean Chroot 与直接 makepkg 对比

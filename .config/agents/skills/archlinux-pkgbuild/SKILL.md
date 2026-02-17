@@ -30,40 +30,39 @@ This skill is split into specialized sub-skills for different package types:
 
 ## Mandatory Workflow
 
-```dot
-digraph pkgbuild_workflow {
-    "Start: Package request" [shape=doublecircle];
-    "1. Check existing packages" [shape=box];
-    "2. Write PKGBUILD" [shape=box];
-    "3. Run namcap on PKGBUILD" [shape=box];
-    "PKGBUILD passes?" [shape=diamond];
-    "devtools installed?" [shape=diamond];
-    "4a. Build in clean chroot" [shape=box];
-    "4b. Build with makepkg (warn user)" [shape=box];
-    "5. Run namcap on package" [shape=box];
-    "Package passes?" [shape=diamond];
-    "6. Test installation" [shape=box];
-    "7. Generate .SRCINFO" [shape=box];
-    "Complete" [shape=doublecircle];
-    "Fix violations" [shape=box];
-
-    "Start: Package request" -> "1. Check existing packages";
-    "1. Check existing packages" -> "2. Write PKGBUILD";
-    "2. Write PKGBUILD" -> "3. Run namcap on PKGBUILD";
-    "3. Run namcap on PKGBUILD" -> "PKGBUILD passes?";
-    "PKGBUILD passes?" -> "Fix violations" [label="NO"];
-    "Fix violations" -> "3. Run namcap on PKGBUILD";
-    "PKGBUILD passes?" -> "devtools installed?" [label="YES"];
-    "devtools installed?" -> "4a. Build in clean chroot" [label="YES (preferred)"];
-    "devtools installed?" -> "4b. Build with makepkg (warn user)" [label="NO"];
-    "4a. Build in clean chroot" -> "5. Run namcap on package";
-    "4b. Build with makepkg (warn user)" -> "5. Run namcap on package";
-    "5. Run namcap on package" -> "Package passes?";
-    "Package passes?" -> "Fix violations" [label="NO"];
-    "Package passes?" -> "6. Test installation" [label="YES"];
-    "6. Test installation" -> "7. Generate .SRCINFO";
-    "7. Generate .SRCINFO" -> "Complete";
-}
+```mermaid
+flowchart TD
+    Start((Start: Package request))
+    Step1[1. Check existing packages]
+    Step2[2. Write PKGBUILD]
+    Step3[3. Run namcap on PKGBUILD]
+    Q1{PKGBUILD passes?}
+    Q2{devtools installed?}
+    Step4a[4a. Build in clean chroot]
+    Step4b[4b. Build with makepkg<br/>warn user]
+    Step5[5. Run namcap on package]
+    Q3{Package passes?}
+    Step6[6. Test installation]
+    Step7[7. Generate .SRCINFO]
+    Complete((Complete))
+    Fix[Fix violations]
+    
+    Start --> Step1
+    Step1 --> Step2
+    Step2 --> Step3
+    Step3 --> Q1
+    Q1 -->|NO| Fix
+    Fix --> Step3
+    Q1 -->|YES| Q2
+    Q2 -->|YES<br/>preferred| Step4a
+    Q2 -->|NO| Step4b
+    Step4a --> Step5
+    Step4b --> Step5
+    Step5 --> Q3
+    Q3 -->|NO| Fix
+    Q3 -->|YES| Step6
+    Step6 --> Step7
+    Step7 --> Complete
 ```
 
 ## Building Methods: Clean Chroot vs Direct makepkg

@@ -8,17 +8,16 @@
 
 ## 何时使用
 
-```dot
-digraph when_to_use {
-    "测试使用 setTimeout/sleep？" [shape=diamond];
-    "测试时间行为？" [shape=diamond];
-    "记录为什么需要超时" [shape=box];
-    "使用基于条件的等待" [shape=box];
-
-    "测试使用 setTimeout/sleep？" -> "测试时间行为？" [label="是"];
-    "测试时间行为？" -> "记录为什么需要超时" [label="是"];
-    "测试时间行为？" -> "使用基于条件的等待" [label="否"];
-}
+```mermaid
+flowchart TD
+    A{测试使用 setTimeout/sleep？}
+    B{测试时间行为？}
+    C[记录为什么需要超时]
+    D[使用基于条件的等待]
+    
+    A -->|是| B
+    B -->|是| C
+    B -->|否| D
 ```
 
 **用于：**

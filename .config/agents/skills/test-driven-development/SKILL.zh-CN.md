@@ -149,28 +149,31 @@ test.each([
 
 ## 红-绿-重构
 
-```dot
-digraph tdd_cycle {
-    rankdir=LR;
-    understand [label="UNDERSTAND\nContext check", shape=box, style=filled, fillcolor="#ffffcc"];
-    red [label="RED\nWrite failing test", shape=box, style=filled, fillcolor="#ffcccc"];
-    verify_red [label="Verify fails\ncorrectly", shape=diamond];
-    green [label="GREEN\nMinimal code", shape=box, style=filled, fillcolor="#ccffcc"];
-    verify_green [label="Verify passes\nAll green", shape=diamond];
-    refactor [label="REFACTOR\nClean up", shape=box, style=filled, fillcolor="#ccccff"];
-    next [label="Next", shape=ellipse];
-
-    understand -> red;
-    red -> verify_red;
-    verify_red -> green [label="yes"];
-    verify_red -> red [label="wrong\nfailure"];
-    green -> verify_green;
-    verify_green -> refactor [label="yes"];
-    verify_green -> green [label="no"];
-    refactor -> verify_green [label="stay\ngreen"];
-    verify_green -> next;
-    next -> red;
-}
+```mermaid
+flowchart LR
+    A[理解<br/>上下文检查]
+    B[RED<br/>编写失败测试]
+    C{验证失败<br/>正确}
+    D[GREEN<br/>最少代码]
+    E{验证通过<br/>全绿}
+    F[REFACTOR<br/>清理]
+    G((下一个))
+    
+    A --> B
+    B --> C
+    C -->|是| D
+    C -->|错误失败| B
+    D --> E
+    E -->|是| F
+    E -->|否| D
+    F -->|保持绿| E
+    E -->|下一个| G
+    G --> B
+    
+    style A fill:#ffffcc
+    style B fill:#ffcccc
+    style D fill:#ccffcc
+    style F fill:#ccccff
 ```
 
 ### RED - 编写失败的测试

@@ -13,22 +13,20 @@ description: Use when facing 2+ independent tasks that can be worked on without 
 
 ## 何时使用
 
-```dot
-digraph when_to_use {
-    "Multiple failures?" [shape=diamond];
-    "Are they independent?" [shape=diamond];
-    "Single agent investigates all" [shape=box];
-    "One agent per problem domain" [shape=box];
-    "Can they work in parallel?" [shape=diamond];
-    "Sequential agents" [shape=box];
-    "Parallel dispatch" [shape=box];
-
-    "Multiple failures?" -> "Are they independent?" [label="yes"];
-    "Are they independent?" -> "Single agent investigates all" [label="no - related"];
-    "Are they independent?" -> "Can they work in parallel?" [label="yes"];
-    "Can they work in parallel?" -> "Parallel dispatch" [label="yes"];
-    "Can they work in parallel?" -> "Sequential agents" [label="no - shared state"];
-}
+```mermaid
+flowchart TD
+    A{多个失败？}
+    B{它们是独立的吗？}
+    C[单个 Agent 调查所有]
+    D{能并行工作吗？}
+    E[顺序 Agents]
+    F[并行派遣]
+    
+    A -->|是| B
+    B -->|否 - 相关| C
+    B -->|是| D
+    D -->|是| F
+    D -->|否 - 共享状态| E
 ```
 
 **使用时机：**

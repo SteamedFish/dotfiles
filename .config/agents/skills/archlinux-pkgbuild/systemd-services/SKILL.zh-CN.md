@@ -43,22 +43,21 @@ description: Use when packaging services with systemd integration, service user 
 
 ### 决策：DynamicUser 与 sysusers.d 对比
 
-```dot
-digraph user_decision {
-    "Service needs user?" [shape=diamond];
-    "Persistent state/files?" [shape=diamond];
-    "Needs specific UID?" [shape=diamond];
-    "Use DynamicUser=yes" [shape=box];
-    "Use systemd-sysusers.d" [shape=box];
-    "Run as nobody/root" [shape=box];
-
-    "Service needs user?" -> "Persistent state/files?" [label="YES"];
-    "Service needs user?" -> "Run as nobody/root" [label="NO"];
-    "Persistent state/files?" -> "Needs specific UID?" [label="YES (StateDirectory/data)"];
-    "Persistent state/files?" -> "Use DynamicUser=yes" [label="NO (only runtime)"];
-    "Needs specific UID?" -> "Use systemd-sysusers.d" [label="YES"];
-    "Needs specific UID?" -> "Use DynamicUser=yes" [label="NO"];
-}
+```mermaid
+flowchart TD
+    A{服务需要用户？}
+    B{持久状态/文件？}
+    C{需要特定 UID？}
+    D[使用 DynamicUser=yes]
+    E[使用 systemd-sysusers.d]
+    F[以 nobody/root 运行]
+    
+    A -->|是| B
+    A -->|否| F
+    B -->|是<br/>StateDirectory/data| C
+    B -->|否<br/>仅运行时| D
+    C -->|是| E
+    C -->|否| D
 ```
 
 **何时使用 DynamicUser=yes：**

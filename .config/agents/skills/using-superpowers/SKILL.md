@@ -23,26 +23,25 @@ Different platforms may have different skill loading mechanisms—check your pla
 
 **Invoke relevant or requested skills BEFORE any response or action.** Even a 1% chance a skill might apply means that you should invoke the skill to check. If an invoked skill turns out to be wrong for the situation, you don't need to use it.
 
-```dot
-digraph skill_flow {
-    "User message received" [shape=doublecircle];
-    "Might any skill apply?" [shape=diamond];
-    "Invoke Skill tool" [shape=box];
-    "Announce: 'Using [skill] to [purpose]'" [shape=box];
-    "Has checklist?" [shape=diamond];
-    "Create TodoWrite todo per item" [shape=box];
-    "Follow skill exactly" [shape=box];
-    "Respond (including clarifications)" [shape=doublecircle];
-
-    "User message received" -> "Might any skill apply?";
-    "Might any skill apply?" -> "Invoke Skill tool" [label="yes, even 1%"];
-    "Might any skill apply?" -> "Respond (including clarifications)" [label="definitely not"];
-    "Invoke Skill tool" -> "Announce: 'Using [skill] to [purpose]'";
-    "Announce: 'Using [skill] to [purpose]'" -> "Has checklist?";
-    "Has checklist?" -> "Create TodoWrite todo per item" [label="yes"];
-    "Has checklist?" -> "Follow skill exactly" [label="no"];
-    "Create TodoWrite todo per item" -> "Follow skill exactly";
-}
+```mermaid
+flowchart TD
+    Start((User message received))
+    A{Might any skill apply?}
+    B[Invoke Skill tool]
+    C[Announce: 'Using skill to purpose']
+    D{Has checklist?}
+    E[Create TodoWrite todo per item]
+    F[Follow skill exactly]
+    End((Respond including clarifications))
+    
+    Start --> A
+    A -->|yes, even 1%| B
+    A -->|definitely not| End
+    B --> C
+    C --> D
+    D -->|yes| E
+    D -->|no| F
+    E --> F
 ```
 
 ## Red Flags

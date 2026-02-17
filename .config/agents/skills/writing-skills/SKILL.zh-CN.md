@@ -336,17 +336,16 @@ wc -w skills/path/SKILL.md
 
 ## 流程图使用
 
-```dot
-digraph when_flowchart {
-    "Need to show information?" [shape=diamond];
-    "Decision where I might go wrong?" [shape=diamond];
-    "Use markdown" [shape=box];
-    "Small inline flowchart" [shape=box];
-
-    "Need to show information?" -> "Decision where I might go wrong?" [label="yes"];
-    "Decision where I might go wrong?" -> "Small inline flowchart" [label="yes"];
-    "Decision where I might go wrong?" -> "Use markdown" [label="no"];
-}
+```mermaid
+flowchart TD
+    A{需要展示信息？}
+    B{我可能犯错的决策？}
+    C[使用 markdown]
+    D[小型内联流程图]
+    
+    A -->|是| B
+    B -->|是| D
+    B -->|否| C
 ```
 
 **仅在以下情况使用流程图：**
@@ -360,13 +359,9 @@ digraph when_flowchart {
 - 线性指令 → 编号列表
 - 无语义意义的标签（step1、helper2）
 
-请参阅 graphviz-conventions.dot 了解 graphviz 样式规则。
+请参阅 mermaid-conventions.md 了解 Mermaid 流程图样式规则。
 
-**为你的人类伙伴可视化：** 使用此目录中的 `render-graphs.js` 将技能的流程图渲染为 SVG：
-```bash
-./render-graphs.js ../some-skill           # 每个图表单独
-./render-graphs.js ../some-skill --combine # 所有图表在一个 SVG 中
-```
+**为你的人类伙伴可视化：** 流程图使用 GitHub 原生 Mermaid 语法，在 GitHub 上查看时自动渲染。
 
 ## 代码示例
 
@@ -617,9 +612,10 @@ example-js.js、example-py.py、example-go.go
 **为什么不好：** 质量平庸，维护负担
 
 ### ❌ 流程图中的代码
-```dot
-step1 [label="import fs"];
-step2 [label="read file"];
+```mermaid
+flowchart TD
+    step1["import fs"]
+    step2["read file"]
 ```
 **为什么不好：** 无法复制粘贴，难以阅读
 
