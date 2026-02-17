@@ -119,7 +119,7 @@ extra-x86_64-build -- -I ~/custom-dep-1.0-1-x86_64.pkg.tar.zst
 ```
 
 
-For advanced manual chroot setup, see @clean-chroot-reference.md (custom location, custom configs).
+For advanced manual chroot setup, see clean-chroot-reference.md (custom location, custom configs).
 
 
 ### Fallback: Direct makepkg Build
@@ -259,7 +259,7 @@ done
 
 ### Step 3: FHS Compliance and System Package Locations
 
-**For detailed FHS paths and vendor config rules**, see **@fhs-and-vendor-config.md** in this directory.
+**For detailed FHS paths and vendor config rules**, see **fhs-and-vendor-config.md** in this directory.
 
 **Critical Quick Reference:**
 
@@ -337,7 +337,7 @@ namcap -i *.pkg.tar.zst
 **CRITICAL: DO NOT proceed if namcap reports errors.**
 
 **For comprehensive validation procedures, error explanations, and fixes:**
-See @validation-guide.md
+See validation-guide.md
 
 ### Step 7: Test Installation
 
@@ -637,7 +637,7 @@ backup=(
 - Use `0660` for group-writable, not world-readable (security)
 - Directory can remain root:root (only files need group access)
 
-**Detailed reference:** See @config-file-handling.md for:
+**Detailed reference:** See config-file-handling.md for:
 - backup=() rules and .pacnew workflow
 - Sensitive config file permissions (0660 vs 0640 vs 0644)
 - Using tmpfiles.d type `z` for ownership/permission changes
@@ -888,7 +888,7 @@ namcap *.pkg.tar.zst | grep -i install
 
 ## Advanced Clean Chroot Techniques
 
-**For advanced clean chroot usage** (tmpfs builds, custom dependencies, major rebuilds, different repositories), see **@clean-chroot-reference.md** in this directory.
+**For advanced clean chroot usage** (tmpfs builds, custom dependencies, major rebuilds, different repositories), see **clean-chroot-reference.md** in this directory.
 
 **Quick troubleshooting:**
 

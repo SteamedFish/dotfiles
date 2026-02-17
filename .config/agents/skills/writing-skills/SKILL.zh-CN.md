@@ -9,7 +9,7 @@ description: Use when creating new skills, editing existing skills, or verifying
 
 **编写技能就是将测试驱动开发应用于流程文档。**
 
-**个人技能存放在代理特定的目录中（Claude Code 使用 `~/.claude/skills`，Codex 使用 `~/.codex/skills`）**
+**个人技能存放在代理特定的目录中（通常为 `~/.config/agents/skills` 或由您的 AI 代理配置）**
 
 你编写测试用例（带压力场景的子代理测试），观察它们失败（基线行为），编写技能（文档），观察测试通过（代理遵守），然后重构（关闭漏洞）。
 
@@ -21,7 +21,7 @@ description: Use when creating new skills, editing existing skills, or verifying
 
 ## 什么是技能？
 
-**技能**是经过验证的技术、模式或工具的参考指南。技能帮助未来的 Claude 实例找到并应用有效的方法。
+**技能**是经过验证的技术、模式或工具的参考指南。技能帮助未来的 AI 代理实例找到并应用有效的方法。
 
 **技能是：** 可复用的技术、模式、工具、参考指南
 
@@ -186,11 +186,11 @@ skills/
 
 ## Claude 搜索优化 (CSO)
 
-**对发现至关重要：** 未来的 Claude 需要找到你的技能
+**对发现至关重要：** 未来的代理 需要找到你的技能
 
 ### 1. 丰富的描述字段
 
-**目的：** Claude 读取描述来决定为给定任务加载哪些技能。让它回答："我现在应该阅读这个技能吗？"
+**目的：** 代理读取描述来决定为给定任务加载哪些技能。让它回答："我现在应该阅读这个技能吗？"
 
 **格式：** 以 "Use when..." 开头，聚焦于触发条件
 
@@ -245,7 +245,7 @@ description: Use when using React Router and handling authentication redirects
 
 ### 2. 关键词覆盖
 
-使用 Claude 会搜索的词：
+使用 代理会搜索的词：
 - 错误消息："Hook timed out"、"ENOTEMPTY"、"race condition"
 - 症状："flaky"、"hanging"、"zombie"、"pollution"
 - 同义词："timeout/hang/freeze"、"cleanup/teardown/afterEach"
@@ -360,7 +360,7 @@ digraph when_flowchart {
 - 线性指令 → 编号列表
 - 无语义意义的标签（step1、helper2）
 
-请参阅 @graphviz-conventions.dot 了解 graphviz 样式规则。
+请参阅 graphviz-conventions.dot 了解 graphviz 样式规则。
 
 **为你的人类伙伴可视化：** 使用此目录中的 `render-graphs.js` 将技能的流程图渲染为 SVG：
 ```bash
@@ -600,7 +600,7 @@ description: use when implementing any feature or bugfix, before writing impleme
 
 代理找到新的辩解？添加明确的反驳。重新测试直到防弹。
 
-**测试方法：** 请参阅 @testing-skills-with-subagents.md 了解完整的测试方法：
+**测试方法：** 请参阅 testing-skills-with-subagents.md（完整方法请参阅文件） 了解完整的测试方法：
 - 如何编写压力场景
 - 压力类型（时间、沉没成本、权威、疲惫）
 - 系统地堵塞漏洞
@@ -681,7 +681,7 @@ helper1、helper2、step3、pattern4
 
 ## 发现工作流程
 
-未来的 Claude 如何找到你的技能：
+未来的代理 如何找到你的技能：
 
 1. **遇到问题**（"测试不稳定"）
 3. **找到技能**（描述匹配）

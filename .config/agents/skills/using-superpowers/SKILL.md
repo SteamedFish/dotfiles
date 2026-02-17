@@ -13,9 +13,9 @@ This is not negotiable. This is not optional. You cannot rationalize your way ou
 
 ## How to Access Skills
 
-**In Claude Code:** Use the `Skill` tool. When you invoke a skill, its content is loaded and presented to you—follow it directly. Never use the Read tool on skill files.
+Use the `Skill` tool provided by your AI agent. When you invoke a skill, its content is loaded and presented to you—follow it directly.
 
-**In other environments:** Check your platform's documentation for how skills are loaded.
+Different platforms may have different skill loading mechanisms—check your platform's documentation if the `Skill` tool is not available.
 
 # Using Skills
 

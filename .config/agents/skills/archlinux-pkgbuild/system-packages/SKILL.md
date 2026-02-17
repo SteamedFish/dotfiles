@@ -564,7 +564,7 @@ z     /etc/webapps/appname/database.php    0660 root  http  -   -  # Contains DB
 4. http group can read/write (application can modify config)
 5. Files are NOT world-readable (0660) - protects credentials
 
-**See @config-file-handling.md for detailed security patterns.**
+**See config-file-handling.md for detailed security patterns.**
 
 **PKGBUILD integration:**
 ```bash

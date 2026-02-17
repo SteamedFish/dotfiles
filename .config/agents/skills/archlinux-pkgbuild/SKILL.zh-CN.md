@@ -119,7 +119,7 @@ extra-x86_64-build -- -I ~/custom-dep-1.0-1-x86_64.pkg.tar.zst
 ```
 
 
-有关高级手动 chroot 设置，请参阅 @clean-chroot-reference.zh-CN.md（自定义位置、自定义配置）。
+有关高级手动 chroot 设置，请参阅 clean-chroot-reference.zh-CN.md（自定义位置、自定义配置）。
 
 
 ### 后备方案：直接 makepkg 构建
@@ -259,7 +259,7 @@ done
 
 ### 步骤 3：FHS 合规性和系统软件包位置
 
-**有关详细的 FHS 路径和供应商配置规则**，请参阅本目录中的 **@fhs-and-vendor-config.zh-CN.md**。
+**有关详细的 FHS 路径和供应商配置规则**，请参阅本目录中的 **fhs-and-vendor-config.zh-CN.md**。
 
 **关键快速参考：**
 
@@ -337,7 +337,7 @@ namcap -i *.pkg.tar.zst
 **重要：如果 namcap 报告错误，DO NOT（不要）继续。**
 
 **有关全面的验证程序、错误解释和修复：**
-请参阅 @validation-guide.zh-CN.md
+请参阅 validation-guide.zh-CN.md
 
 ### 步骤 7：测试安装
 
@@ -637,7 +637,7 @@ backup=(
 - 对 group-writable 使用 `0660`，不是 world-readable（安全）
 - 目录可以保持 root:root（只有文件需要组访问）
 
-**详细参考：** 有关以下内容的详细信息，请参阅 @config-file-handling.zh-CN.md：
+**详细参考：** 有关以下内容的详细信息，请参阅 config-file-handling.zh-CN.md：
 - backup=() 规则和 .pacnew 工作流程
 - 敏感配置文件权限（0660 vs 0640 vs 0644）
 - 使用 tmpfiles.d 类型 `z` 进行所有权/权限更改
@@ -888,7 +888,7 @@ namcap *.pkg.tar.zst | grep -i install
 
 ## 高级 Clean Chroot 技术
 
-**有关高级 clean chroot 用法**（tmpfs 构建、自定义依赖、主要重建、不同仓库），请参阅本目录中的 **@clean-chroot-reference.zh-CN.md**。
+**有关高级 clean chroot 用法**（tmpfs 构建、自定义依赖、主要重建、不同仓库），请参阅本目录中的 **clean-chroot-reference.zh-CN.md**。
 
 **快速故障排除：**
 

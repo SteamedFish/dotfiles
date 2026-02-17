@@ -13,7 +13,7 @@ description: Use when starting any conversation - establishes how to find and us
 
 ## 如何访问技能
 
-**在 Claude Code 中：** 使用 `Skill` 工具。当你调用技能时，其内容会被加载并呈现给你——直接遵循它。永远不要使用 Read 工具来读取技能文件。
+**在您的 AI 环境中：** 使用可用的技能调用工具（如 `Skill` 工具）。当您调用技能时，其内容会被加载并呈现给您——直接遵循它。
 
 **在其他环境中：** 查看你所用平台的文档，了解如何加载技能。
 

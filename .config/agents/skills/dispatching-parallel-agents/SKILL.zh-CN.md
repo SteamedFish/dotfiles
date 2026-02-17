@@ -64,7 +64,7 @@ digraph when_to_use {
 ### 3. 并行派遣
 
 ```typescript
-// 在 Claude Code / AI 环境中
+// 在 AI 环境中
 Task("Fix agent-tool-abort.test.ts failures")
 Task("Fix batch-completion-behavior.test.ts failures")
 Task("Fix tool-approval-race-conditions.test.ts failures")

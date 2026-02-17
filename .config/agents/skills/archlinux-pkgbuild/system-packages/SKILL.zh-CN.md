@@ -564,7 +564,7 @@ z     /etc/webapps/appname/database.php    0660 root  http  -   -  # 包含数�
 4. http 组可以读/写（应用可以修改配置）
 5. 文件 NOT（非）全局可读（0660）- 保护凭据
 
-**请参阅 @config-file-handling.zh-CN.md 以获取详细的安全模式。**
+**请参阅 config-file-handling.zh-CN.md 以获取详细的安全模式。**
 
 **PKGBUILD 集成：**
 ```bash
