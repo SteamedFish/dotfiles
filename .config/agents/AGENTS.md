@@ -106,17 +106,19 @@ Design solutions that handle all scenarios gracefully without exceptions.
 
 | Skill | When to Use |
 |-------|-------------|
-| **superpowers/brainstorming** | Before creating features or adding functionality — explore intent and design first |
-| **superpowers/test-driven-development** | When implementing any feature or bugfix — write tests before code |
-| **superpowers/systematic-debugging** | When encountering bugs, test failures, or unexpected behavior |
-| **superpowers/verification-before-completion** | Before claiming work is complete — verify with evidence |
-| **superpowers/writing-plans** | When you have specs for multi-step tasks — create detailed implementation plans |
-| **superpowers/executing-plans** | When you have a written plan to execute in separate session |
-| **superpowers/subagent-driven-development** | When executing plans with independent tasks in current session |
-| **superpowers/using-git-worktrees** | When starting feature work needing isolation from current workspace |
-| **superpowers/requesting-code-review** | When completing major features or before merging |
-| **superpowers/receiving-code-review** | When receiving code review feedback |
-| **superpowers/finishing-a-development-branch** | When implementation complete and need to decide how to integrate |
+| **brainstorming** | Before creating features or adding functionality — explore intent and design first |
+| **test-driven-development** | When implementing any feature or bugfix — write tests before code |
+| **systematic-debugging** | When encountering bugs, test failures, or unexpected behavior |
+| **verification-before-completion** | Before claiming work is complete — verify with evidence |
+| **writing-plans** | When you have specs for multi-step tasks — create detailed implementation plans |
+| **executing-plans** | When you have a written plan to execute in separate session |
+| **subagent-driven-development** | When executing plans with independent tasks in current session |
+| **using-git-worktrees** | When starting feature work needing isolation from current workspace |
+| **requesting-code-review** | When completing major features or before merging |
+| **receiving-code-review** | When receiving code review feedback |
+| **finishing-a-development-branch** | When implementation complete and need to decide how to integrate |
+
+**Note:** Additional specialized skills (domain-specific, meta-skills, advanced techniques) are available through the skill discovery system. Use `skill_find` to search for relevant skills based on your current task.
 
 ### 4.2 Skill Selection
 - Analyze requirements to determine appropriate skills
