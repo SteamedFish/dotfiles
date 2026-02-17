@@ -136,6 +136,53 @@ What goes wrong + fixes
 Concrete results
 ```
 
+## Bilingual Support (English + Chinese)
+
+**Every skill MUST provide a Chinese version for human readers**, but in a **separate file** to avoid consuming AI agent tokens.
+
+### File Naming Convention
+
+Use `$filename.zh-CN.md` pattern for documentation files (markdown only):
+
+```
+skills/
+  skill-name/
+    SKILL.md              # English only (AI agents read this)
+    SKILL.zh-CN.md        # Chinese version (humans read this)
+    example.py            # Code file - English only, no Chinese version needed
+```
+
+### Rules
+
+1. **English documentation**: English only. Never put Chinese content here - AI agents read these files and every token counts.
+2. **Chinese documentation**: Use `SKILL.zh-CN.md` naming pattern. Content must be exact same structure as English but translated to Chinese.
+3. **Program files**: No Chinese versions needed. Keep code, scripts, and executable files in English only.
+4. **Keep in sync**: When modifying SKILL.md, update SKILL.zh-CN.md with the same changes.
+5. **No cross-references**: Do not mention or link to Chinese versions in English files - AI agents should not know about them.
+
+### Example SKILL.zh-CN.md Structure
+
+```markdown
+# Skill Name
+
+## 概述
+技能核心原则的中文说明。
+
+## 何时使用
+- 使用场景1
+- 使用场景2
+
+## 速查参考
+| 方法 | 适用场景 |
+|------|----------|
+| 方法A | 场景1 |
+
+## 常见错误
+常见错误及修复方法的中文说明。
+```
+
+**REMEMBER**: Only markdown documentation files need Chinese versions. Program files (code, scripts) remain English only. Out-of-sync translations are a maintenance bug.
+
 
 ## Claude Search Optimization (CSO)
 
