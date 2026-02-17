@@ -17,7 +17,7 @@ description: Use when creating or editing skills, before deployment, to verify t
 
 **必需背景：** 在使用本技能之前，你必须理解测试驱动开发。该技能定义了基本的 RED-GREEN-REFACTOR 循环。本技能提供技能特定的测试格式（压力场景、辩解表）。
 
-**完整工作示例：** 请参阅 examples/CLAUDE_MD_TESTING.md 了解测试 CLAUDE.md 文档变体的完整测试活动。
+**完整工作示例：** 请参阅 examples/AGENTS_MD_TESTING.md 了解测试 AGENTS.md 文档变体的完整测试活动。
 
 ## 何时使用
 

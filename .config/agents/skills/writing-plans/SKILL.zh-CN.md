@@ -70,7 +70,7 @@ description: Use when you have a spec or requirements for a multi-step task, bef
 ```markdown
 # [功能名称] 实施计划
 
-> **给 Claude：** 必需子技能：使用 executing-plans 逐任务实施此计划。
+> **必需子技能：**使用 executing-plans 逐任务实施此计划。
 
 **目标：** [一句话描述要构建的内容]
 

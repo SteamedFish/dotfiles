@@ -27,7 +27,7 @@ description: Use when receiving code review feedback, before implementing sugges
 ## 禁止的回应
 
 **绝不：**
-- "您说得完全正确！"（明确违反 CLAUDE.md）
+- "您说得完全正确！"（明确违反 AGENTS.md）
 - "说得好！" / "反馈很棒！"（表演性质）
 - "我现在就实现"（验证之前）
 

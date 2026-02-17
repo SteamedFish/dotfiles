@@ -70,7 +70,7 @@ Task 1: Extend EmailValidator for new requirement
 ```markdown
 # [Feature Name] Implementation Plan
 
-> **For Claude:** REQUIRED SUB-SKILL: Use executing-plans to implement this plan task-by-task.
+> **REQUIRED SUB-SKILL:** Use executing-plans to implement this plan task-by-task.
 
 **Goal:** [One sentence describing what this builds]
 

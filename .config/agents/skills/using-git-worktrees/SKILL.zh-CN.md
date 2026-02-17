@@ -27,17 +27,17 @@ ls -d worktrees 2>/dev/null      # 备选
 
 **如果找到：** 使用该目录。如果两者都存在，`.worktrees` 优先。
 
-### 2. 检查 CLAUDE.md
+### 2. 检查 AGENTS.md
 
 ```bash
-grep -i "worktree.*director" CLAUDE.md 2>/dev/null
+grep -i "worktree.*director" AGENTS.md 2>/dev/null
 ```
 
 **如果指定了偏好：** 直接使用，无需询问。
 
 ### 3. 询问用户
 
-如果没有目录存在且 CLAUDE.md 中无偏好设置：
+如果没有目录存在且 AGENTS.md 中无偏好设置：
 
 ```
 未找到 worktree 目录。我应该在哪里创建 worktrees？
@@ -148,7 +148,7 @@ Worktree 准备就绪，位于 <完整路径>
 | `.worktrees/` 存在 | 使用它（验证已被忽略） |
 | `worktrees/` 存在 | 使用它（验证已被忽略） |
 | 两者都存在 | 使用 `.worktrees/` |
-| 两者都不存在 | 检查 CLAUDE.md → 询问用户 |
+| 两者都不存在 | 检查 AGENTS.md → 询问用户 |
 | 目录未被忽略 | 添加到 .gitignore + 提交 |
 | 基线测试期间测试失败 | 报告失败 + 询问 |
 | 没有 package.json/Cargo.toml | 跳过依赖安装 |
@@ -163,7 +163,7 @@ Worktree 准备就绪，位于 <完整路径>
 ### 假设目录位置
 
 - **问题：** 造成不一致，违反项目约定
-- **修复：** 遵循优先级：现有 > CLAUDE.md > 询问
+- **修复：** 遵循优先级：现有 > AGENTS.md > 询问
 
 ### 在测试失败时继续
 
@@ -198,10 +198,10 @@ Worktree 准备就绪，位于 /Users/jesse/myproject/.worktrees/auth
 - 跳过基线测试验证
 - 在测试失败时未经询问就继续
 - 在位置不明确时假设目录位置
-- 跳过 CLAUDE.md 检查
+- 跳过 AGENTS.md 检查
 
 **始终：**
-- 遵循目录优先级：现有 > CLAUDE.md > 询问
+- 遵循目录优先级：现有 > AGENTS.md > 询问
 - 验证项目本地目录已被忽略
 - 自动检测并运行项目设置
 - 验证干净测试基线

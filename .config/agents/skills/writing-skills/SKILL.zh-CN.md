@@ -55,7 +55,7 @@ description: Use when creating new skills, editing existing skills, or verifying
 **不要在以下情况创建：**
 - 一次性解决方案
 - 其他地方已充分记录的标准实践
-- 项目特定约定（放入 CLAUDE.md）
+- 项目特定约定（放入 AGENTS.md）
 - 机械约束（如果可以用正则/验证强制执行，就自动化它——文档用于判断调用）
 
 ## 技能类型
@@ -184,7 +184,7 @@ skills/
 **记住**：只有 Markdown 文档文件需要中文版本。程序文件（代码、脚本）保持仅英文。不同步的翻译是一个维护缺陷。
 
 
-## Claude 搜索优化 (CSO)
+## 代理发现优化 (ADO)
 
 **对发现至关重要：** 未来的代理 需要找到你的技能
 
@@ -198,14 +198,14 @@ skills/
 
 描述应仅描述触发条件。不要在描述中总结技能的过程或工作流程。
 
-**这很重要：** 测试表明，当描述总结技能的工作流程时，Claude 可能会遵循描述而不是阅读完整的技能内容。一个说"任务之间进行代码审查"的描述导致 Claude 只做了一次审查，即使技能的流程图清楚地显示了两个审查（规范合规性然后代码质量）。
+**这很重要：** 测试表明，当描述总结技能的工作流程时，代理可能会遵循描述而不是阅读完整的技能内容。一个说"任务之间进行代码审查"的描述导致代理只做了一次审查，即使技能的流程图清楚地显示了两个审查（规范合规性然后代码质量）。
 
-当描述改为仅"Use when executing implementation plans with independent tasks"（无工作流程摘要）时，Claude 正确阅读了流程图并遵循了两阶段审查过程。
+当描述改为仅"Use when executing implementation plans with independent tasks"（无工作流程摘要）时，代理正确阅读了流程图并遵循了两阶段审查过程。
 
-**陷阱：** 总结工作流程的描述创建了一个 Claude 会采取的捷径。技能主体变成了 Claude 跳过的文档。
+**陷阱：** 总结工作流程的描述创建了一个 代理会采取的捷径。技能主体变成了 代理跳过的文档。
 
 ```yaml
-# ❌ 不好：总结工作流程 - Claude 可能遵循此描述而不是阅读技能
+# ❌ 不好：总结工作流程 - 代理可能遵循此描述而不是阅读技能
 description: Use when executing plans - dispatches subagent per task with code review between tasks
 
 # ❌ 不好：太多流程细节

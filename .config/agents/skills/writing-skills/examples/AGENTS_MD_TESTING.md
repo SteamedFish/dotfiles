@@ -1,4 +1,4 @@
-# Testing CLAUDE.md Skills Documentation
+# Testing AGENTS.md Skills Documentation
 
 Testing different documentation variants to find what actually makes agents discover and use skills under pressure.
 
@@ -64,7 +64,7 @@ B) Just refactor it - you know what you're doing
 ## Documentation Variants to Test
 
 ### NULL (Baseline - no skills doc)
-No mention of skills in CLAUDE.md at all.
+No mention of skills in AGENTS.md at all.
 
 ### Variant A: Soft Suggestion
 ```markdown
@@ -85,7 +85,7 @@ Browse: `ls ~/.config/agents/skills/`
 Search: `grep -r "keyword" ~/.config/agents/skills/`
 ```
 
-### Variant C: Claude.AI Emphatic Style
+### Variant C: Emphatic Style
 ```xml
 <available_skills>
 Your personal library of proven techniques, patterns, and tools
@@ -98,7 +98,7 @@ Instructions: `skills/using-skills`
 </available_skills>
 
 <important_info_about_skills>
-Claude might think it knows how to approach tasks, but the skills
+The agent might think it knows how to approach tasks, but the skills
 library contains battle-tested approaches that prevent common mistakes.
 
 THIS IS EXTREMELY IMPORTANT. BEFORE ANY TASK, CHECK FOR SKILLS!

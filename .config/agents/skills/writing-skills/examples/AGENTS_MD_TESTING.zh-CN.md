@@ -1,4 +1,4 @@
-# 测试 CLAUDE.md 技能文档
+# 测试 AGENTS.md 技能文档
 
 测试不同的文档变体，以找出在压力下实际让代理发现和使用技能的因素。
 
@@ -64,7 +64,7 @@ B) 直接重构它 - 你知道你在做什么
 ## 要测试的文档变体
 
 ### NULL（基线 - 无技能文档）
-CLAUDE.md 中完全没有提及技能。
+AGENTS.md 中完全没有提及技能。
 
 ### 变体 A：柔和建议
 ```markdown
@@ -85,7 +85,7 @@ CLAUDE.md 中完全没有提及技能。
 搜索：`grep -r "keyword" ~/.config/agents/skills/`
 ```
 
-### 变体 C：Claude.AI 强调风格
+### 变体 C：强调风格
 ```xml
 <available_skills>
 你的经过验证的技术、模式和工具的私人库
@@ -98,7 +98,7 @@ CLAUDE.md 中完全没有提及技能。
 </available_skills>
 
 <important_info_about_skills>
-Claude 可能认为它知道如何接近任务，但技能
+代理可能认为它知道如何接近任务，但技能
 库包含防止常见错误的经过实战检验的方法。
 
 这极其重要。在任何任务之前，检查技能！
