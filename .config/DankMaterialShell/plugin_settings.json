@@ -24,5 +24,8 @@
   },
   "desktopCommand": {
     "enabled": true
+  },
+  "dankKDEConnect": {
+    "enabled": true
   }
 }
