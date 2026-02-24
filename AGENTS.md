@@ -9,6 +9,14 @@ Personal Unix/Linux dotfiles. Shell (bash/zsh), Emacs, Neovim, ~40 XDG app confi
 
 **Recent Improvements:**
 
+*2026-02-24:*
+- **Enhanced git workflow in finishing-a-development-branch skill**:
+  - Added mandatory rebase workflow before merging to main/master (clean up commits, hide development noise)
+  - Implemented branch retention policy (mark as merged but keep, user decides cleanup schedule)
+  - Added PR hygiene guidelines (only PR-related commits on PR branch, prevent pollution)
+  - Updated Quick Reference table and Common Mistakes to reflect new workflow
+  - Added comprehensive Red Flags for git best practices
+
 *2026-02-17 (Later):*
 - **Reorganized skills into flat namespace**: Moved all skills from `.config/agents/skills/superpowers/` to `.config/agents/skills/`
 - **Updated all skill cross-references**: Removed `superpowers:` prefix from all skill references (29 updates across 9 files)
