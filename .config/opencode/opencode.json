@@ -9,6 +9,10 @@
     "@tarquinen/opencode-dcp@latest",
     "opencode-pty@latest",
     "@zenobius/opencode-skillful@latest",
+    "@zenobius/opencode-background@latest",
+    "opencode-devcontainers@latest",
+    "opencode-websearch-cited@latest",
+    "@plannotator/opencode@latest",
     "opencode-scheduler@latest"
 
   ]
