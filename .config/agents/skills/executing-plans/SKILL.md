@@ -74,7 +74,10 @@ After all tasks complete and verified:
 - Reference skills when plan says to
 - Between batches: just report and wait
 - Stop when blocked, don't guess
-- Never start implementation on main/master branch without explicit user consent
+- **CRITICAL: NEVER start implementation on main/master branch**
+- **REQUIRED: Use using-git-worktrees to create feature branch before starting**
+- **REQUIRED: Push commits to remote after each commit**
+- **REQUIRED: Only merge to main/master after ALL tests pass**
 
 ## Integration
 

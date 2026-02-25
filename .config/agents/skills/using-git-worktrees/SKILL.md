@@ -199,16 +199,39 @@ Ready to implement auth feature
 - Proceed with failing tests without asking
 - Assume directory location when ambiguous
 - Skip AGENTS.md check
+- **Work directly on main/master branch** (create feature branch instead)
+- **Skip pushing commits to remote** (push after EVERY commit)
+- **Merge to main/master with failing tests** (fix tests first)
+- **Create PR from main/master** (always use separate branch)
 
 **Always:**
 - Follow directory priority: existing > AGENTS.md > ask
 - Verify directory is ignored for project-local
 - Auto-detect and run project setup
 - Verify clean test baseline
+- **Create new branch for all changes** (via `git worktree add -b`)
+- **Push after every commit** (backup + visibility)
+- **Verify tests pass before merging** (keep main/master stable)
+- **Use separate branch for PRs** (prevents later changes from polluting PR)
 
 ## Commit Discipline
 
 Once worktree is ready, follow these commit practices:
+
+### Branching Strategy
+
+**CRITICAL: Always create a new branch for changes. NEVER work directly on main/master unless explicitly approved.**
+
+```bash
+# Worktree already creates a new branch via `git worktree add -b <branch-name>`
+# This is the correct pattern - each feature/fix gets its own branch
+```
+
+**Why mandatory:**
+- Keeps main/master stable and production-ready
+- Allows work-in-progress without blocking others
+- Enables clean PR workflow without pollution from later changes
+- Makes rollback safe (can delete branch without affecting main)
 
 ### Commit Granularity
 
@@ -241,20 +264,47 @@ Once worktree is ready, follow these commit practices:
 
 ### Push After Commit
 
-**If remote exists:**
+**REQUIRED: Push to remote after each commit (if remote exists)**
+
 ```bash
 # Check if remote is configured
 git remote -v
 
-# Push after each commit
+# Push after EACH commit
 git push origin <branch-name>
+
+# First push needs -u flag
+git push -u origin <branch-name>
 ```
 
-**Benefits:**
-- Backs up work immediately
+**Why mandatory:**
+- Backs up work immediately (prevents data loss)
 - Makes progress visible to team
 - Enables early feedback
-- Prevents lost work
+- Creates backup before further changes
+- Allows clean PR creation without later changes polluting the PR
+
+**Frequency: After EVERY commit, not just at end of task.**
+
+### Merge Discipline
+
+**CRITICAL: Only merge to main/master after ALL verification passes:**
+
+1. ✅ All tests passing
+2. ✅ Code review approved (if applicable)
+3. ✅ Build succeeds (if applicable)
+4. ✅ Integration tests pass (if applicable)
+
+**Never merge broken code to main/master.**
+
+### PR Workflow
+
+**When creating Pull Requests:**
+
+1. **Always use a separate branch** (already done by worktree)
+2. **Push branch before creating PR** (not main/master)
+3. **PR from branch → main/master** (never commit directly to main after PR created)
+4. **Benefit:** Later changes on main don't pollute the PR's change set
 
 ### History Management
 

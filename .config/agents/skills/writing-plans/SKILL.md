@@ -71,12 +71,19 @@ Task 1: Extend EmailValidator for new requirement
 # [Feature Name] Implementation Plan
 
 > **REQUIRED SUB-SKILL:** Use executing-plans to implement this plan task-by-task.
+> **CRITICAL:** Work MUST be done on a feature branch, NEVER on main/master.
+> Use using-git-worktrees to create isolated workspace with new branch.
 
 **Goal:** [One sentence describing what this builds]
 
 **Architecture:** [2-3 sentences about approach]
 
 **Tech Stack:** [Key technologies/libraries]
+
+**Git Workflow:**
+- Feature branch: `feature/<feature-name>` (created by worktree)
+- Push after EACH commit: `git push origin <branch-name>`
+- Merge to main/master ONLY after ALL tests pass
 
 ---
 ```
@@ -121,6 +128,8 @@ Expected: PASS
 ```bash
 git add tests/path/test.py src/path/file.py
 git commit -m "feat: add specific feature"
+# REQUIRED: Push to remote after EACH commit
+git push origin <feature-branch>
 ```
 ```
 

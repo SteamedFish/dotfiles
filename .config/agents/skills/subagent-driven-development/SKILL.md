@@ -195,7 +195,7 @@ Done!
 ## Red Flags
 
 **Never:**
-- Start implementation on main/master branch without explicit user consent
+- **Start implementation on main/master branch** (CRITICAL - use using-git-worktrees first)
 - Skip reviews (spec compliance OR code quality)
 - Proceed with unfixed issues
 - Dispatch multiple implementation subagents in parallel (conflicts)
@@ -207,6 +207,7 @@ Done!
 - Let implementer self-review replace actual review (both are needed)
 - **Start code quality review before spec compliance is ✅** (wrong order)
 - Move to next task while either review has open issues
+- **Skip pushing commits after each task** (backup + enables clean PR workflow)
 
 **If subagent asks questions:**
 - Answer clearly and completely

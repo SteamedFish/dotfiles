@@ -71,12 +71,19 @@ description: Use when you have a spec or requirements for a multi-step task, bef
 # [功能名称] 实施计划
 
 > **必需子技能：**使用 executing-plans 逐任务实施此计划。
+> **关键：** 工作必须在功能分支上完成，永远不要在 main/master 上。
+> 使用 using-git-worktrees 创建带有新分支的隔离工作区。
 
 **目标：** [一句话描述要构建的内容]
 
 **架构：** [2-3 句话描述方案]
 
 **技术栈：** [关键技术/库]
+
+**Git 工作流：**
+- 功能分支：`feature/<功能名称>`（由 worktree 创建）
+- 每次提交后推送：`git push origin <分支名称>`
+- 只在所有测试通过后才合并到 main/master
 
 ---
 ```
@@ -121,6 +128,8 @@ def function(input):
 ```bash
 git add tests/path/test.py src/path/file.py
 git commit -m "feat: add specific feature"
+# 必需: 每次提交后推送到远程
+git push origin <功能分支>
 ```
 ```
 
