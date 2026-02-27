@@ -35,18 +35,22 @@ Write robust, portable, dependency-aware shell scripts. **Core principle:** Pref
 - Less error-prone: No memorizing flag meanings
 - Better for scripts: Code is read more often than written
 
-| ❌ Short Options | ✅ Long Options |
-|-----------------|----------------|
-| `mkdir -p "$dir"` | `mkdir --parents "$dir"` |
-| `find . -type f -name "*.log"` | `find . --type f --name "*.log"` |
-| `tar -czf archive.tar.gz files/` | `tar --create --gzip --file=archive.tar.gz files/` |
-| `grep -r -i "pattern" .` | `grep --recursive --ignore-case "pattern" .` |
-| `df -h` | `df --human-readable` |
-| `ls -lh` | `ls --long --human-readable` |
+| ❌ Short Options | ✅ Preferred Style | Notes |
+|-----------------|-------------------|-------|
+| `mkdir -p "$dir"` | `mkdir --parents "$dir"` | GNU extension, but widely available |
+| `find . -type f -name "*.log"` | `find . --type f --name "*.log"` | GNU long options preferred |
+| `tar -czf archive.tar.gz files/` | `tar --create --gzip --file=archive.tar.gz files/` | GNU long options preferred |
+| `grep -r -i "pattern" .` | `grep -r -i "pattern" .` | **POSIX short options** (no GNU long needed) |
+| `df -h` | `df -h` | **POSIX `-h`** (GNU `--human-readable` is extension) |
+| `ls -lh` | `ls -l -h` | **POSIX short options** (GNU `--long` is extension) |
 
 **Exceptions (short options acceptable):**
 - **No long equivalent exists**: `tar -C` (change directory), `find -print0`
 - **Standard idioms universally recognized**: `set -euo pipefail`, `rm -rf`
+- **POSIX standard short option vs GNU-only long option**: Prefer POSIX short for portability
+  - Example: `ls -a -l -h` (POSIX) over `ls --all --long --human-readable` (GNU extensions)
+  - Example: `grep -r -i` (POSIX) over `grep --recursive --ignore-case` (GNU extensions)
+  - Rationale: POSIX options work on Linux, macOS, BSD; GNU long options fail on BSD systems
 
 **NOT exceptions (use long options anyway):**
 - ❌ "This is just a simple one-liner" — One-liners are read and maintained too
@@ -61,9 +65,13 @@ Write robust, portable, dependency-aware shell scripts. **Core principle:** Pref
 
 **Self-check before writing any command:**
 1. Does this command have a `--long` version of the flag I'm about to use?
-2. If YES → Use the long version
-3. If NO → Check `man command` to be absolutely sure
-4. If still NO → Short option is acceptable
+2. If YES → Is the short option POSIX standard and the long option a GNU extension?
+   - Check `man command` on BSD/macOS or look for "GNU extension" notes
+   - Common POSIX short options: `-a`, `-l`, `-h`, `-r`, `-i`, `-n`, `-f`, `-t`
+   - If POSIX short → Use short option for portability
+   - If both GNU → Use long option for readability
+3. If NO long version exists → Short option is acceptable
+4. If unsure → Check `man command` to verify portability
 
 ### 2. Prefer Structured Output Over Text Parsing
 
@@ -219,20 +227,53 @@ fi
 | "Already implemented it, testing is enough" | Testing proves it works now. Doesn't prove it won't break. Structured output is future-proof. |
 | "Adding jq is overhead" | Shell text parsing is more overhead. jq is robust, widely available, purpose-built. |
 
+## POSIX vs GNU Options Quick Reference
+
+**When to use POSIX short options (portable across Linux/BSD/macOS):**
+
+| Command | POSIX Short | GNU Long (avoid) | When to Use Short |
+|---------|------------|------------------|-------------------|
+| `ls` | `-a`, `-l`, `-h`, `-t`, `-r` | `--all`, `--long`, `--human-readable`, `--time`, `--reverse` | Always - POSIX portable |
+| `grep` | `-r`, `-i`, `-E`, `-n`, `-v` | `--recursive`, `--ignore-case`, `--extended-regexp`, `--line-number`, `--invert-match` | Portable scripts |
+| `df` | `-h`, `-T` | `--human-readable`, `--type` | Portable scripts |
+| `ps` | `-e`, `-f`, `-o` | N/A (no long options) | Always - POSIX only |
+| `find` | `-name`, `-type`, `-mtime` | `--name`, `--type`, `--mtime` | Prefer short - widely portable |
+| `tar` | `-c`, `-x`, `-f`, `-z`, `-v` | `--create`, `--extract`, `--file`, `--gzip`, `--verbose` | Prefer long - GNU/BSD both support |
+
+**When to use GNU long options (readability over portability):**
+
+| Command | Use Long When | Example |
+|---------|--------------|---------|
+| `mkdir` | Widely available | `mkdir --parents` over `-p` |
+| `tar` | Both GNU/BSD support | `tar --create --gzip --file` over `-czf` |
+| `find` | GNU-only features | `find --printf` (no POSIX equivalent) |
+| `stat` | Already requiring GNU | `stat --format` (BSD uses `-f` differently) |
+
+**How to check portability:**
+```bash
+# Test on macOS/BSD - if command fails, it's likely GNU-only
+man ls | grep -A 5 -- '--all'  # If no match, likely GNU extension
+
+# Or check for GNU marker
+command --version 2>/dev/null | grep GNU
+```
+
 ## Red Flags - STOP and Reconsider
 
 **If you're about to:**
-- **Use ANY short option** (`-t`, `-n`, `-f`, etc.) → STOP. Check `man command` for long version. Use `--type`, `--name`, `--file` instead.
-- Type "this is urgent" or "emergency" → STOP. That's EXACTLY when you need long options for future debugging.
-- Type "just a simple one-liner" → STOP. One-liners need clarity too. Use long options.
-- Type "wc -l is obvious" → STOP. `wc --lines` is MORE obvious. Use long when it exists.
+- **Use ANY short option** → STOP. Check if it's POSIX standard or GNU-only:
+  - If POSIX standard (like `ls -a`, `grep -r`, `df -h`) → Use short for portability
+  - If GNU-specific → Check `man command` for long version. Use `--type`, `--name`, `--file` instead.
+- Type "this is urgent" or "emergency" → STOP. That's EXACTLY when you need clear, portable code.
+- Type "just a simple one-liner" → STOP. One-liners need clarity too. Choose appropriate option style.
+- Use `--all` or `--long` with ls → STOP. Use POSIX `-a` and `-l` instead (works on Linux/BSD/macOS).
 - Use `grep`/`sed`/`awk`/`cut` on command output → Check if command has `-J`, `--output=`, or `-o` flag first
 - Call external command → Add existence check and installation guide
 - Parse device names with regex → Check if `lsblk`, `blkid`, or `findmnt` already provides the info
 - Assume GNU command exists → Check `--version | grep GNU` or provide BSD alternative
 - Write 10+ lines of custom logic → Search `man` and `apropos` for existing command first
 
-**All of these mean: Read the command's manual page before implementing.**
+**All of these mean: Read the command's manual page and check POSIX vs GNU portability before implementing.**
 
 ## Common Mistakes
 
