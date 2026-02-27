@@ -25,7 +25,47 @@ Write robust, portable, dependency-aware shell scripts. **Core principle:** Pref
 
 ## Core Principles
 
-### 1. Prefer Structured Output Over Text Parsing
+### 1. Prefer Long Options for Readability
+
+**MANDATORY RULE: Use long command-line options (`--option`) instead of short options (`-o`) whenever available. This applies to ALL scripts, regardless of length, urgency, or context.**
+
+**Why:**
+- Self-documenting: `tar --create --gzip --file` is clearer than `tar -czf`
+- Easier maintenance: Future readers understand intent immediately
+- Less error-prone: No memorizing flag meanings
+- Better for scripts: Code is read more often than written
+
+| ❌ Short Options | ✅ Long Options |
+|-----------------|----------------|
+| `mkdir -p "$dir"` | `mkdir --parents "$dir"` |
+| `find . -type f -name "*.log"` | `find . --type f --name "*.log"` |
+| `tar -czf archive.tar.gz files/` | `tar --create --gzip --file=archive.tar.gz files/` |
+| `grep -r -i "pattern" .` | `grep --recursive --ignore-case "pattern" .` |
+| `df -h` | `df --human-readable` |
+| `ls -lh` | `ls --long --human-readable` |
+
+**Exceptions (short options acceptable):**
+- **No long equivalent exists**: `tar -C` (change directory), `find -print0`
+- **Standard idioms universally recognized**: `set -euo pipefail`, `rm -rf`
+
+**NOT exceptions (use long options anyway):**
+- ❌ "This is just a simple one-liner" — One-liners are read and maintained too
+- ❌ "Time pressure / urgent" — Long options take 2 seconds more to type, save hours debugging
+- ❌ "wc -l is unambiguous" — `wc --lines` is clearer. Always prefer long when it exists.
+- ❌ "Editing existing script with short options" — NEW code uses long options, even if old code doesn't
+- ❌ "This is for interactive use" — Write ALL scripts with long options. Interactive shell commands can use short.
+- ❌ "Emergency production issue" — Use long options ESPECIALLY in emergencies. Future debugging needs clarity.
+- ❌ "Keeping it minimal" — Minimal ≠ cryptic. Long options ARE minimal when considering maintenance cost.
+
+**Rule:** If a long option exists, use it. No exceptions for simplicity, time pressure, emergency, or context.
+
+**Self-check before writing any command:**
+1. Does this command have a `--long` version of the flag I'm about to use?
+2. If YES → Use the long version
+3. If NO → Check `man command` to be absolutely sure
+4. If still NO → Short option is acceptable
+
+### 2. Prefer Structured Output Over Text Parsing
 
 Commands often support machine-readable formats (JSON, CSV, null-delimited). **Always check if available.**
 
@@ -48,33 +88,33 @@ Commands often support machine-readable formats (JSON, CSV, null-delimited). **A
 - `-n` or `--noheadings`: Remove headers for clean parsing (lsblk, lvs, pvs)
 - `-o` or `--format`: Custom format strings (ps, date, git)
 
-### 2. Find Existing Commands Before Implementing
+### 3. Find Existing Commands Before Implementing
 
 **Before writing custom logic, search for built-in commands or flags.**
 
 | ❌ Custom Implementation | ✅ Existing Command/Flag |
 |-------------------------|-------------------------|
-| `basename "$partition" \| sed 's/[0-9]*$//'` | `lsblk -no pkname "$partition"` |
+| `basename "$partition" \| sed 's/[0-9]*$//'` | `lsblk --noheadings --output pkname "$partition"` |
 | `echo "$string" \| tr '[:upper:]' '[:lower:]'` | `printf '%s\n' "${string,,}"` (bash 4+) |
-| Loop to count files | `find . -type f -printf '.' \| wc -c` |
-| Parsing /proc/meminfo | `free -b` or `vmstat -s` |
+| Loop to count files | `find . --type f -printf '.' \| wc --bytes` |
+| Parsing /proc/meminfo | `free --bytes` or `vmstat -s` |
 | Custom retry loop | `timeout` + `until`/`while` pattern |
 
 **How to discover:**
 ```bash
 # Read the manual for related commands
-man lsblk  # Look for -o, --output options
-man find   # Check -printf, -print0 options
+man lsblk  # Look for --output options
+man find   # Check --printf, --print0 options
 
 # Search for similar tools
 apropos "list block"
 apropos "partition"
 
 # Check command help for machine-readable options
-command --help | grep -E 'json|output|format|print'
+command --help | grep --extended-regexp 'json|output|format|print'
 ```
 
-### 3. Track and Check Dependencies
+### 4. Track and Check Dependencies
 
 **ALWAYS document required and optional dependencies.**
 
@@ -89,7 +129,7 @@ set -euo pipefail
 
 # Check required dependencies
 for cmd in jq curl lsblk; do
-    if ! command -v "$cmd" &>/dev/null; then
+    if ! command --version "$cmd" &>/dev/null; then
         echo "Error: Required command '$cmd' not found" >&2
         echo "Install with: sudo apt install $cmd" >&2  # Adjust per distro
         exit 1
@@ -97,7 +137,7 @@ for cmd in jq curl lsblk; do
 done
 
 # Check optional dependencies
-if ! command -v notify-send &>/dev/null; then
+if ! command --version notify-send &>/dev/null; then
     echo "Warning: notify-send not found. Desktop notifications disabled." >&2
 fi
 ```
@@ -115,16 +155,16 @@ fi
 - `notify-send` (desktop notifications) - Install: `sudo apt install libnotify-bin`
 ```
 
-### 4. Handle GNU vs BSD Command Variants
+### 5. Handle GNU vs BSD Command Variants
 
 **You don't need POSIX-only scripts. Use GNU features when beneficial, but check and guide installation.**
 
 **GNU-specific features commonly used:**
-- `sed -i` (in-place editing)
-- `find -printf` (custom output format)
-- `grep -P` (Perl regex)
-- `date -d` (relative date parsing)
-- `stat -c` (custom format)
+- `sed --in-place` (in-place editing)
+- `find --printf` (custom output format)
+- `grep --perl-regexp` (Perl regex)
+- `date --date` (relative date parsing)
+- `stat --format` (custom format)
 
 **Pattern for GNU-required scripts:**
 
@@ -135,7 +175,7 @@ fi
 # macOS users: brew install coreutils && export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 
 # Verify GNU version
-if ! stat --version 2>/dev/null | grep -q GNU; then
+if ! stat --version 2>/dev/null | grep --quiet GNU; then
     echo "Error: This script requires GNU stat" >&2
     echo "macOS: brew install coreutils" >&2
     echo "Then add to PATH: export PATH=\"/usr/local/opt/coreutils/libexec/gnubin:\$PATH\"" >&2
@@ -143,16 +183,16 @@ if ! stat --version 2>/dev/null | grep -q GNU; then
 fi
 
 # Now safe to use GNU-specific features
-stat -c '%Y' "$file"  # GNU format specifier
+stat --format='%Y' "$file"  # GNU format specifier
 ```
 
 **Cross-platform approach (when feasible):**
 
 ```bash
 # Detect GNU vs BSD and adapt
-if stat --version 2>/dev/null | grep -q GNU; then
+if stat --version 2>/dev/null | grep --quiet GNU; then
     # GNU stat
-    file_time=$(stat -c '%Y' "$file")
+    file_time=$(stat --format='%Y' "$file")
 else
     # BSD stat (macOS)
     file_time=$(stat -f '%m' "$file")
@@ -165,6 +205,11 @@ fi
 
 | Excuse | Reality |
 |--------|---------|
+| "Short options are faster to type" | 2 seconds saved typing = hours lost debugging. Long options are self-documenting. |
+| "This is just a simple one-liner" | One-liners get read, debugged, modified. Future you needs clarity. Use long options. |
+| "Emergency/urgent/production down" | Emergencies REQUIRE clarity. Future debugging needs readable code. Use long options. |
+| "wc -l / grep -r are unambiguous" | "Unambiguous to me now" ≠ "clear to others later". Use --lines, --recursive. |
+| "Existing script uses short options" | Legacy code stays legacy. NEW code you add uses long options. Don't propagate bad style. |
 | "Regex is simpler than checking for JSON flags" | JSON flags are in `--help`. Reading docs takes 10 seconds. Regex breaks across versions. |
 | "Not worth adding dependency check for common commands" | "Common" varies by environment. 30-second check prevents cryptic production failures. |
 | "User will know to install dependencies" | They won't. Explicit errors with install commands save hours of debugging. |
@@ -177,6 +222,10 @@ fi
 ## Red Flags - STOP and Reconsider
 
 **If you're about to:**
+- **Use ANY short option** (`-t`, `-n`, `-f`, etc.) → STOP. Check `man command` for long version. Use `--type`, `--name`, `--file` instead.
+- Type "this is urgent" or "emergency" → STOP. That's EXACTLY when you need long options for future debugging.
+- Type "just a simple one-liner" → STOP. One-liners need clarity too. Use long options.
+- Type "wc -l is obvious" → STOP. `wc --lines` is MORE obvious. Use long when it exists.
 - Use `grep`/`sed`/`awk`/`cut` on command output → Check if command has `-J`, `--output=`, or `-o` flag first
 - Call external command → Add existence check and installation guide
 - Parse device names with regex → Check if `lsblk`, `blkid`, or `findmnt` already provides the info
