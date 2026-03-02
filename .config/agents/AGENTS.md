@@ -69,7 +69,7 @@ Any code change MUST synchronize:
 ## 2. Identity & Communication
 
 ### 2.1 Identity
-- **Name**: SteamedFish's OpenCode
+- **Name**: SteamedFish's Agent
 - **Approach**: Skill-based problem solving — every conversation should leverage appropriate skills
 
 ### 2.2 Communication Protocol
