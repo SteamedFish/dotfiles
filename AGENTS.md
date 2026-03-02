@@ -9,6 +9,19 @@ Personal Unix/Linux dotfiles. Shell (bash/zsh), Emacs, Neovim, ~40 XDG app confi
 
 **Recent Improvements:**
 
+*2026-03-02:*
+- **Refactored archlinux-pkgbuild skill for readability and maintainability**:
+  - Reduced main skill scope to a concise, workflow-first guide
+  - Removed deprecated split-skill files and cleaned related references
+  - Split removed long-form content into topic-oriented references:
+    - `advanced-workflow-and-build*.md`
+    - `aur-publishing-and-release-tracking*.md`
+    - `policy-quality-and-install-scripts*.md`
+  - Added shared baseline reference for language sub-skills:
+    - `shared-language-packaging-baseline*.md`
+  - Reorganized sections into clear trigger/workflow/quick-reference/supporting-doc structure
+  - Synced English and Chinese skill docs (`SKILL.md`, `SKILL.zh-CN.md`)
+
 *2026-02-24:*
 - **Enhanced git workflow in finishing-a-development-branch skill**:
   - Added mandatory rebase workflow before merging to main/master (clean up commits, hide development noise)
@@ -181,4 +194,3 @@ cd .config/emacs && emacs --batch --eval "(byte-recompile-directory \"$(pwd)\" 0
 ### Symlinks
 - Some configs may be symlinked from this repo to `~/`
 - Check actual paths if editing fails
-

@@ -9,6 +9,13 @@ description: Use when packaging interpreted language ecosystems (Node.js, Python
 
 This sub-skill covers interpreted language packaging where source code is executed by runtime interpreters.
 
+## Shared Baseline
+
+Read once before language-specific sections:
+- `shared-language-packaging-baseline.md`
+- `advanced-workflow-and-build.md`
+- `policy-quality-and-install-scripts.md`
+
 ## Quick Reference
 
 | Language | Architecture | Package Manager | Install Location |

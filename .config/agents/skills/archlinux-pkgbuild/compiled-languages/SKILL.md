@@ -9,6 +9,13 @@ description: Use when packaging compiled language ecosystems (Go, Rust, Haskell,
 
 This sub-skill covers compiled language packaging patterns where source code is transformed into native binaries or bytecode.
 
+## Shared Baseline
+
+Read once before language-specific sections:
+- `shared-language-packaging-baseline.md`
+- `advanced-workflow-and-build.md`
+- `policy-quality-and-install-scripts.md`
+
 ## Quick Reference
 
 | Language | Architecture | Key Tool | Install Location |

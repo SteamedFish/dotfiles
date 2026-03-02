@@ -9,6 +9,13 @@ description: Use when packaging interpreted language ecosystems (Node.js, Python
 
 本子技能涵盖源代码由运行时解释器执行的解释型语言打包。
 
+## 共享基线
+
+进入语言细节前先读一次：
+- `shared-language-packaging-baseline.zh-CN.md`
+- `advanced-workflow-and-build.zh-CN.md`
+- `policy-quality-and-install-scripts.zh-CN.md`
+
 ## 快速参考
 
 | 语言 | 架构 | 包管理器 | 安装位置 |

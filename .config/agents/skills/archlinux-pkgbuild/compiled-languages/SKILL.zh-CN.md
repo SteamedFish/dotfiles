@@ -9,6 +9,13 @@ description: Use when packaging compiled language ecosystems (Go, Rust, Haskell,
 
 本子技能涵盖源代码被转换为本机二进制文件或字节码的编译型语言打包模式。
 
+## 共享基线
+
+进入语言细节前先读一次：
+- `shared-language-packaging-baseline.zh-CN.md`
+- `advanced-workflow-and-build.zh-CN.md`
+- `policy-quality-and-install-scripts.zh-CN.md`
+
 ## 快速参考
 
 | 语言 | 架构 | 关键工具 | 安装位置 |
