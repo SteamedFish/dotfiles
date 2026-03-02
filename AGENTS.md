@@ -10,6 +10,14 @@ Personal Unix/Linux dotfiles. Shell (bash/zsh), Emacs, Neovim, ~40 XDG app confi
 **Recent Improvements:**
 
 *2026-03-02:*
+- **Imported and adapted Claudeception into local skills namespace**:
+  - Imported upstream `blader/Claudeception` into `.config/agents/skills/claudeception`
+  - Converted Claude-specific paths to generic agent paths (`.config/agents/skills`)
+  - Rewrote core `SKILL.md` to match local skill frontmatter conventions
+  - Added Chinese companion doc `SKILL.zh-CN.md`
+  - Added agent-generic README and standardized local skill template
+
+*2026-03-02:*
 - **Refactored archlinux-pkgbuild skill for readability and maintainability**:
   - Reduced main skill scope to a concise, workflow-first guide
   - Removed deprecated split-skill files and cleaned related references

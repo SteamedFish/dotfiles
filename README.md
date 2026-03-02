@@ -13,6 +13,7 @@ Personal dotfiles managed with [yadm](https://yadm.io/).
 - Emacs config - `.config/emacs/`
 - Neovim (LazyVim) - `.config/nvim/`
 - 40+ app configs - `.config/`
+- Agent skills library - `.config/agents/skills/`
 
 ### Quick Start
 ```bash
