@@ -164,7 +164,7 @@ echo "⚠️  For production use, install 'devtools' and rebuild in clean chroot
 | **System locations** | Vendor config to /usr/lib/, NOT /etc/ | /etc/sysusers.d/ → /usr/lib/sysusers.d/ |
 | **File naming** | Use package name in system configs | device.rules → 99-$pkgname.rules |
 | **Dependencies** | List ALL direct deps (no transitives) | Missing runtime library dep |
-| **Architecture** | 'x86_64' or 'any' | Missing arch= field |
+|| **Architecture** | Compiled: 'x86_64 aarch64' (test both), Binary: all available arches | 'x86_64' only when multiple supported |
 | **Checksums** | Use sha256sums or sha512sums | Using md5sums only |
 | **optdepends** | Format: 'pkg: description' | 'pkg' without description |
 | **pkgdesc** | ~80 chars, no package name | "example is a tool..." |
@@ -174,6 +174,8 @@ echo "⚠️  For production use, install 'devtools' and rebuild in clean chroot
 | **Email** | Obfuscate in comments | user@domain.com → user at domain dot com |
 | **Config files** | List in backup=() array | User modifications get overwritten on upgrade |
 | **Desktop files** | GUI apps need .desktop in /usr/share/applications/ | App won't appear in menus |
+|| **Multi-arch** | Compiled packages: provide x86_64 + aarch64 if possible | Single arch without reason |
+|| **Binary arch** | Match upstream binary availability | Claiming arch support without binaries |
 
 ## Step-by-Step Implementation
 
@@ -250,6 +252,69 @@ done
 ```
 
 **Rules:**
+
+### Architecture Support
+
+**For COMPILED packages (building from source):**
+
+Provide both `x86_64` and `aarch64` support when possible:
+
+```bash
+# PKGBUILD for compiled package
+arch=('x86_64' 'aarch64')
+
+# Architecture-specific sources (if needed)
+source_x86_64=("https://example.com/deps-x86_64.tar.gz")
+source_aarch64=("https://example.com/deps-aarch64.tar.gz")
+sha256sums_x86_64=('...')
+sha256sums_aarch64=('...')
+```
+
+**CRITICAL for compiled packages:**
+- You can only test on your current architecture during development
+- **ALWAYS ask the user to test on the OTHER architecture before AUR submission**
+- Include a note in your response: "⚠️ Please test this PKGBUILD on [other-arch] before submitting to AUR"
+- If the user cannot test both architectures, use only the tested arch (e.g., `arch=('x86_64')`)
+
+**For BINARY packages (prebuilt binaries):**
+
+Provide ALL architectures that upstream distributes binaries for:
+
+```bash
+# PKGBUILD for binary package (example: Visual Studio Code)
+arch=('x86_64' 'aarch64' 'armv7h')  # All arches with upstream binaries
+
+# Architecture-specific source URLs
+source_x86_64=("https://update.code.visualstudio.com/latest/linux-x64/stable")
+source_aarch64=("https://update.code.visualstudio.com/latest/linux-arm64/stable")
+source_armv7h=("https://update.code.visualstudio.com/latest/linux-armhf/stable")
+
+# Architecture-specific checksums
+sha256sums_x86_64=('SKIP')  # or actual checksum
+sha256sums_aarch64=('SKIP')
+sha256sums_armv7h=('SKIP')
+```
+
+**Real-world binary package example:**
+- See: https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=visual-studio-code-bin
+- Demonstrates multi-arch binary packaging with arch-specific sources
+
+**Architecture selection rules:**
+
+| Package Type | arch=() Value | When to Use |
+|--------------|---------------|-------------|
+| **Scripts/Interpreted** | `arch=('any')` | Shell scripts, Python, Node.js, pure data packages |
+| **Compiled (source)** | `arch=('x86_64' 'aarch64')` | PREFERRED - test both arches before AUR submission |
+| **Compiled (tested single arch)** | `arch=('x86_64')` | When only one arch tested/available |
+| **Binary (upstream distributes)** | `arch=('x86_64' 'aarch64' ...)` | ALL architectures with upstream binaries |
+| **Binary (single arch only)** | `arch=('x86_64')` | Upstream only provides one arch |
+
+**Testing workflow for multi-arch compiled packages:**
+1. Develop PKGBUILD on your primary architecture (e.g., x86_64)
+2. Build and test: `extra-x86_64-build` or `extra-aarch64-build`
+3. **BEFORE AUR submission**: Ask user to test on other architecture
+4. If user cannot test: Remove untested arch from `arch=()` array
+5. Document architecture limitation in comments if needed
 - Every `depends=()`, `makedepends=()`, and `optdepends=()` entry MUST exist in official repos or AUR
 - Use exact package names (check `pacman -Ss` or `aur.archlinux.org`)
 - For AUR dependencies, document in comments (AUR packages can't auto-install)
@@ -567,6 +632,9 @@ gitlab = "group/project"
 | Self-referencing pkgdesc | Redundant | "Tool for X" not "pkgname is a tool for X" |
 | Missing .desktop file for GUI apps | App won't appear in menus | Install to /usr/share/applications/, validate with desktop-file-validate (see archlinux-pkgbuild/cross-platform sub-skill for examples) |
 | Hardcoded paths in source | Version bump requires edit | Use variables: $pkgname-$pkgver |
+|| Claiming multi-arch support without testing | Package fails on untested architecture | Build and test on ALL arches, or ask user to test before AUR submission |
+|| Binary package with wrong arch list | Package install fails or downloads wrong binary | Match `arch=()` to ALL upstream binary availability |
+|| Using 'any' for compiled packages | Package isn't architecture-independent | Use specific arches for compiled binaries |
 
 ### Warning Signs (CHECK CAREFULLY)
 
