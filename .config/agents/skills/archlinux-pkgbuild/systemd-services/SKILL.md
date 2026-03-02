@@ -1,6 +1,6 @@
 ---
 name: archlinux-pkgbuild/systemd-services
-description: Use when packaging services with systemd integration, service user management, tmpfiles.d configuration, sandboxing requirements, or converting non-systemd init scripts
+description: Use when packaging daemon/service packages requiring systemd integration, DynamicUser vs sysusers.d decisions, tmpfiles.d configuration, sandboxing requirements, or converting non-systemd init scripts - MANDATORY for background services
 ---
 
 # Systemd Services for Arch Packages
@@ -17,19 +17,19 @@ This skill covers systemd-specific packaging concerns:
 
 ## When to Use This Skill
 
-- Packaging daemons/services that need systemd units
-- Services requiring dedicated users or dynamic users
+- **MANDATORY:** Packaging daemons/services that run in the background (MUST provide systemd service file)
+- Services requiring user management decisions (DynamicUser vs sysusers.d)
 - Services needing directory management or automatic cleanup
 - Converting non-systemd init scripts
 - Services requiring comprehensive sandboxing
 - Packages with user-modifiable configuration files in /etc
-
 ## Quick Reference
 
 | Task | Solution | Tool |
 |------|----------|------|
-| Runtime-only service | DynamicUser=yes + RuntimeDirectory= | systemd service |
-| Persistent state service | systemd-sysusers.d + StateDirectory= | /usr/lib/sysusers.d/ |
+| **Background daemon** | **MANDATORY: Create systemd service** | /usr/lib/systemd/system/ |
+| Runtime-only service | **PREFERRED: DynamicUser=yes** + RuntimeDirectory= | systemd service |
+| Persistent state service | Use ONLY when DynamicUser insufficient: systemd-sysusers.d + StateDirectory= | /usr/lib/sysusers.d/ |
 | Directory + automatic cleanup | tmpfiles.d with Age field | /usr/lib/tmpfiles.d/ |
 | Service hardening | Apply sandboxing checklist | systemd service [Service] section |
 | OpenRC conversion | Map directives + add sandboxing | systemd service |
@@ -37,58 +37,115 @@ This skill covers systemd-specific packaging concerns:
 
 ---
 
+## Mandatory Service File for Daemons
+
+**CRITICAL: If the package runs as a background daemon/service, you MUST provide a systemd service file.**
+
+### Decision: Does this package need a service file?
+
+```mermaid
+flowchart TD
+    A{Runs continuously<br/>in background?}
+    B{Upstream provides<br/>systemd service?}
+    C[Use upstream service]
+    D[CREATE service file<br/>MANDATORY]
+    E[No service needed]
+    
+    A -->|YES<br/>daemon/server| B
+    A -->|NO<br/>CLI tool/library| E
+    B -->|YES| C
+    B -->|NO| D
+```
+
+**Examples requiring service files:**
+- Web servers (nginx, apache, caddy)
+- Database servers (postgresql, mysql, mongodb)
+- Message queues (rabbitmq, redis)
+- Background workers (celery, sidekiq)
+- Monitoring agents (prometheus-node-exporter, grafana-agent)
+- System services (cron-like schedulers, log aggregators)
+
+**Examples NOT requiring service files:**
+- Command-line tools invoked manually
+- Libraries providing only APIs
+- Development tools run interactively
+
+**If upstream doesn't provide systemd service:** You MUST create one. See "Converting Non-Systemd Init Scripts" section for guidance.
+
+---
+
 ## Systemd User Management
 
-**When packaging services that need dedicated users, prefer DynamicUser over manual user creation.**
+**When packaging services that need dedicated users, PREFER DynamicUser=yes. Only create static users when DynamicUser is insufficient.**
 
-### Decision: DynamicUser vs sysusers.d
+### Decision: DynamicUser (Preferred) vs sysusers.d
 
 ```mermaid
 flowchart TD
     A{Service needs user?}
-    B{Persistent state/files?}
-    C{Needs specific UID?}
-    D[Use DynamicUser=yes]
-    E[Use systemd-sysusers.d]
+    B{Persistent state/files<br/>created OUTSIDE systemd?}
+    C{Needs specific UID<br/>or pre-existing files?}
+    D[✅ PREFERRED:<br/>DynamicUser=yes]
+    E[Use systemd-sysusers.d<br/>ONLY when necessary]
     F[Run as nobody/root]
     
     A -->|YES| B
     A -->|NO| F
-    B -->|YES<br/>StateDirectory/data| C
-    B -->|NO<br/>only runtime| D
+    B -->|YES<br/>files owned externally| C
+    B -->|NO<br/>systemd manages all| D
     C -->|YES| E
     C -->|NO| D
 ```
 
-**Use DynamicUser=yes when:**
+**✅ PREFERRED: Use DynamicUser=yes when:**
 - Service only needs runtime directories (/run, /tmp, /var/cache)
-- No persistent state across reboots
-- UID can be dynamically allocated
-- Service doesn't need to own files created outside systemd
+- All persistent state managed via StateDirectory=/LogsDirectory=/CacheDirectory=
+- UID can be dynamically allocated (range 61184-65519)
+- Service doesn't interact with files created by external tools
+- **This covers 90%+ of daemon packages**
 
-**Use systemd-sysusers.d when:**
-- Service needs to own persistent files (data, logs across reboots)
-- Specific UID/GID required for file ownership
-- Service interacts with files created by other tools
-- Pre-existing files need ownership assigned during install
+**⚠️ Use systemd-sysusers.d ONLY when DynamicUser is insufficient:**
+- Specific UID/GID required (compliance, NFS, legacy systems)
+- Service interacts with files created by OTHER tools (not systemd-managed)
+- Pre-existing files need ownership assigned during package install
+- Multiple services need to share same UID/GID
+### ✅ PREFERRED: DynamicUser Example
 
-### DynamicUser Example
-
-```bash
-# In systemd service file
+```ini
+# myapp.service - Recommended approach for most daemons
 [Service]
-DynamicUser=yes
-StateDirectory=myapp        # Creates /var/lib/myapp with dynamic UID
-CacheDirectory=myapp        # Creates /var/cache/myapp with dynamic UID
-LogsDirectory=myapp         # Creates /var/log/myapp with dynamic UID
-RuntimeDirectory=myapp      # Creates /run/myapp with dynamic UID
+DynamicUser=yes              # ✅ PREFERRED: Automatic user management
+StateDirectory=myapp         # Creates /var/lib/myapp with dynamic UID (persistent data)
+CacheDirectory=myapp         # Creates /var/cache/myapp with dynamic UID
+LogsDirectory=myapp          # Creates /var/log/myapp with dynamic UID
+RuntimeDirectory=myapp       # Creates /run/myapp with dynamic UID
+
+# All directories automatically:
+# - Created on service start
+# - Correct ownership (dynamic UID)
+# - Correct permissions (0755 by default, override with *DirectoryMode=)
+# - Removed on service stop (RuntimeDirectory only)
 ```
 
-**No .install script needed!** Systemd handles everything.
+**Benefits:**
+- Zero configuration: No .install scripts, no sysusers.d files
+- Automatic cleanup: Directories managed by systemd lifecycle
+- Security: Unpredictable UID, harder to target
 
-### systemd-sysusers.d Example
+**PKGBUILD integration:**
+```bash
+package() {
+    # Just install the service - systemd handles everything
+    install -Dm644 myapp.service "$pkgdir/usr/lib/systemd/system/myapp.service"
+    
+    # No .install script needed!
+    # No sysusers.d needed!
+}
+```
 
-**When DynamicUser is insufficient**, use systemd-sysusers.d:
+### ⚠️ systemd-sysusers.d (Use Only When Necessary)
+
+**ONLY use systemd-sysusers.d when DynamicUser=yes is insufficient:**
 
 ```bash
 # In PKGBUILD

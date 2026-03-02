@@ -1,6 +1,6 @@
 ---
 name: archlinux-pkgbuild/systemd-services
-description: Use when packaging services with systemd integration, service user management, tmpfiles.d configuration, sandboxing requirements, or converting non-systemd init scripts
+description: Use when packaging daemon/service packages requiring systemd integration, DynamicUser vs sysusers.d decisions, tmpfiles.d configuration, sandboxing requirements, or converting non-systemd init scripts - MANDATORY for background services
 ---
 
 # Arch 软件包的 Systemd 服务
@@ -17,78 +17,134 @@ description: Use when packaging services with systemd integration, service user 
 
 ## 何时使用本技能
 
-- 打包需要 systemd 单元的守护进程/服务
-- 需要专用用户或动态用户的服务
+- **必须项：**打包在后台运行的守护进程/服务（必须提供 systemd 服务文件）
+- 需要用户管理决策的服务（DynamicUser 与 sysusers.d 对比）
 - 需要目录管理或自动清理的服务
 - 转换非 systemd 启动脚本
 - 需要全面沙盒化的服务
 - 在 /etc 中具有用户可修改配置文件的软件包
-
 ## 快速参考
 
 | 任务 | 解决方案 | 工具 |
 |------|----------|------|
-| 仅运行时服务 | DynamicUser=yes + RuntimeDirectory= | systemd 服务 |
-| 持久状态服务 | systemd-sysusers.d + StateDirectory= | /usr/lib/sysusers.d/ |
+| **后台守护进程** | **必须项：创建 systemd 服务** | /usr/lib/systemd/system/ |
+| 仅运行时服务 | **推荐：DynamicUser=yes** + RuntimeDirectory= | systemd 服务 |
+| 持久状态服务 | 仅在 DynamicUser 不足时使用：systemd-sysusers.d + StateDirectory= | /usr/lib/sysusers.d/ |
 | 目录 + 自动清理 | 带 Age 字段的 tmpfiles.d | /usr/lib/tmpfiles.d/ |
 | 服务加固 | 应用沙盒化检查清单 | systemd 服务 [Service] 部分 |
 | OpenRC 转换 | 映射指令 + 添加沙盒化 | systemd 服务 |
 | 用户配置文件 | PKGBUILD 中的 backup=() 数组 | PKGBUILD |
+---
+
+## 守护进程的必需服务文件
+
+**关键要求：如果软件包作为后台守护进程/服务运行，您必须提供 systemd 服务文件。**
+
+### 决策：此软件包是否需要服务文件？
+
+```mermaid
+flowchart TD
+    A{持续在后台<br/>运行？}
+    B{上游提供<br/>systemd 服务？}
+    C[使用上游服务]
+    D[创建服务文件<br/>必须项]
+    E[不需要服务]
+    
+    A -->|是<br/>守护进程/服务器| B
+    A -->|否<br/>命令行工具/库| E
+    B -->|是| C
+    B -->|否| D
+```
+
+**需要服务文件的示例：**
+- Web 服务器（nginx、apache、caddy）
+- 数据库服务器（postgresql、mysql、mongodb）
+- 消息队列（rabbitmq、redis）
+- 后台工作进程（celery、sidekiq）
+- 监控代理（prometheus-node-exporter、grafana-agent）
+- 系统服务（类 cron 调度器、日志聚合器）
+
+**不需要服务文件的示例：**
+- 手动调用的命令行工具
+- 仅提供 API 的库
+- 交互式运行的开发工具
+
+**如果上游不提供 systemd 服务：**您必须创建一个。请参阅「转换非 Systemd 启动脚本」部分以获取指导。
 
 ---
 
 ## Systemd 用户管理
 
-**当打包需要专用用户的服务时，优先选择 DynamicUser 而不是手动用户创建。**
+**打包需要专用用户的服务时，优先选择 DynamicUser=yes。仅在 DynamicUser 不足时创建静态用户。**
 
-### 决策：DynamicUser 与 sysusers.d 对比
+### 决策：DynamicUser（推荐）与 sysusers.d 对比
 
 ```mermaid
 flowchart TD
     A{服务需要用户？}
-    B{持久状态/文件？}
-    C{需要特定 UID？}
-    D[使用 DynamicUser=yes]
-    E[使用 systemd-sysusers.d]
+    B{在 systemd 外部<br/>创建持久状态/文件？}
+    C{需要特定 UID<br/>或预先存在的文件？}
+    D[✅ 推荐：<br/>DynamicUser=yes]
+    E[使用 systemd-sysusers.d<br/>仅在必要时]
     F[以 nobody/root 运行]
     
     A -->|是| B
     A -->|否| F
-    B -->|是<br/>StateDirectory/data| C
-    B -->|否<br/>仅运行时| D
+    B -->|是<br/>外部拥有的文件| C
+    B -->|否<br/>systemd 管理全部| D
     C -->|是| E
     C -->|否| D
 ```
 
-**何时使用 DynamicUser=yes：**
+**✅ 推荐：使用 DynamicUser=yes 的情况：**
 - 服务仅需要运行时目录（/run、/tmp、/var/cache）
-- 跨重启无持久状态
-- UID 可以动态分配
-- 服务不需要拥有 systemd 外部创建的文件
+- 所有持久状态通过 StateDirectory=/LogsDirectory=/CacheDirectory= 管理
+- UID 可以动态分配（范围 61184-65519）
+- 服务不与外部工具创建的文件交互
+- **这涵盖了 90%+ 的守护进程软件包**
 
-**何时使用 systemd-sysusers.d：**
-- 服务需要拥有持久文件（跨重启的数据、日志）
-- 文件所有权需要特定的 UID/GID
-- 服务与其他工具创建的文件交互
-- 需要在安装期间分配现有文件的所有权
+**⚠️ 仅在 DynamicUser 不足时使用 systemd-sysusers.d：**
+- 需要特定 UID/GID（合规性、NFS、遗留系统）
+- 服务与其他工具（非 systemd 管理）创建的文件交互
+- 需要在软件包安装期间分配预先存在文件的所有权
+- 多个服务需要共享相同的 UID/GID
+### ✅ 推荐：DynamicUser 示例
 
-### DynamicUser 示例
-
-```bash
-# 在 systemd 服务文件中
+```ini
+# myapp.service - 适用于大多数守护进程的推荐方法
 [Service]
-DynamicUser=yes
-StateDirectory=myapp        # 使用动态 UID 创建 /var/lib/myapp
-CacheDirectory=myapp        # 使用动态 UID 创建 /var/cache/myapp
-LogsDirectory=myapp         # 使用动态 UID 创建 /var/log/myapp
-RuntimeDirectory=myapp      # 使用动态 UID 创建 /run/myapp
+DynamicUser=yes              # ✅ 推荐：自动用户管理
+StateDirectory=myapp         # 使用动态 UID 创建 /var/lib/myapp（持久数据）
+CacheDirectory=myapp         # 使用动态 UID 创建 /var/cache/myapp
+LogsDirectory=myapp          # 使用动态 UID 创建 /var/log/myapp
+RuntimeDirectory=myapp       # 使用动态 UID 创建 /run/myapp
+
+# 所有目录自动：
+# - 在服务启动时创建
+# - 正确的所有权（动态 UID）
+# - 正确的权限（默认 0755，用 *DirectoryMode= 覆盖）
+# - 在服务停止时删除（仅 RuntimeDirectory）
 ```
 
-**不需要 .install 脚本！** Systemd 处理一切。
+**优点：**
+- 零配置：无需 .install 脚本，无需 sysusers.d 文件
+- 自动清理：目录由 systemd 生命周期管理
+- 安全：不可预测的 UID，更难以针对性攻击
 
-### systemd-sysusers.d 示例
+**PKGBUILD 集成：**
+```bash
+package() {
+    # 只需安装服务 - systemd 处理一切
+    install -Dm644 myapp.service "$pkgdir/usr/lib/systemd/system/myapp.service"
+    
+    # 不需要 .install 脚本！
+    # 不需要 sysusers.d！
+}
+```
 
-**当 DynamicUser 不足时**，使用 systemd-sysusers.d：
+### ⚠️ systemd-sysusers.d（仅在必要时使用）
+
+**仅在 DynamicUser=yes 不足时使用 systemd-sysusers.d：**
 
 ```bash
 # 在 PKGBUILD 中
