@@ -7,15 +7,15 @@ pkgdesc="Brief package description (~80 chars, no self-reference)"
 arch=('x86_64') # or ('any') for architecture-independent
 url="https://example.com"
 license=('GPL') # Use SPDX identifiers
-depends=(
+depends=( # Do NOT include packages from 'base' group
 	'dependency1'
 	'dependency2>=1.0'
 )
-makedepends=(
+makedepends=( # Do NOT include packages from 'base-devel' group (assumed during build)
 	'git'
 	'cmake'
 )
-optdepends=(
+optdepends=( # Do NOT include packages from 'base' group
 	'optional-pkg: description of optional feature'
 )
 source=("$pkgname-$pkgver.tar.gz::https://example.com/releases/$pkgname-$pkgver.tar.gz")

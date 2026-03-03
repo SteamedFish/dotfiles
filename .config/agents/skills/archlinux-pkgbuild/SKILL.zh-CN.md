@@ -91,7 +91,7 @@ namcap -i *.pkg.tar.zst
 |---|---|
 | 路径 | 不要装到 `/usr/local`，应安装到 `/usr` |
 | Vendor 配置 | 包自带默认配置放 `/usr/lib`，不是 `/etc` |
-| 依赖 | 只列直接依赖；不要填充传递依赖 |
+| 依赖 | 只列直接依赖；不要填充传递依赖。`depends`/`optdepends` 不得包含 `base` 组的包；`makedepends` 不得包含 `base-devel` 组的包——两个组均被假定已安装 |
 | 校验和 | 用 `sha256sums`/`sha512sums`/`b2sums`；`SKIP` 仅用于 VCS source |
 | `arch=()` | 仅架构无关包可用 `any` |
 | Shell 变量 | 引用 `"$pkgdir"` 与 `"$srcdir"` |

@@ -91,7 +91,7 @@ namcap -i *.pkg.tar.zst
 |---|---|
 | Paths | Never install to `/usr/local`; package files go under `/usr` |
 | Vendor config | Put package-owned defaults in `/usr/lib`, not `/etc` |
-| Dependencies | List direct runtime/build deps only; no transitive padding |
+| Dependencies | List direct runtime/build deps only; no transitive padding. Do not include packages from `base` in `depends`/`optdepends` or `base-devel` in `makedepends` — both groups are assumed present |
 | Checksums | Use `sha256sums`/`sha512sums`/`b2sums`; `SKIP` only for VCS sources |
 | Arch field | `any` only for architecture-independent packages |
 | Shell vars | Quote `"$pkgdir"` and `"$srcdir"` |
