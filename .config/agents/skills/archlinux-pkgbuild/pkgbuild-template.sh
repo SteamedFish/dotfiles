@@ -1,5 +1,5 @@
 #!/bin/bash
-# Maintainer: Your Name <your.email at domain dot com>
+# Maintainer: SteamedFish <steamedfish at hotmail dot com>
 pkgname=example
 pkgver=1.0.0
 pkgrel=1
