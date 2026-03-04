@@ -3,3 +3,4 @@
 .notmuch-config filter=git-crypt diff=git-crypt
 .config/doom/modules/steamedfish/basic/email.el filter=git-crypt diff=git-crypt
 .wakatime.cfg filter=git-crypt diff=git-crypt
+.config/opencode/opencode.json filter=git-crypt diff=git-crypt
