@@ -147,3 +147,34 @@ Design solutions that handle all scenarios gracefully without exceptions.
 - Project-specific tools and commands
 - Technology-specific conventions (language, framework)
 - Project-specific `plan/TODO.md` and `plan/CHANGELOG.md` format details
+
+---
+
+## 5. MCP Tool Usage
+
+When performing research, lookups, or external access, always use the appropriate MCP tool:
+
+| Task | MCP Tool to Use |
+|------|----------------|
+| Access GitHub code, repos, PRs, issues, file contents | **GitHub MCP** + **deepwiki MCP** |
+| Access ArchLinux AUR packages, ArchWiki documentation | **arch-linux MCP** |
+| Access library/framework documentation | **context7 MCP** |
+| Search code or repositories on GitHub | **grep_app MCP** |
+| Search the web for any information | **websearch MCP** |
+
+### 5.1 Tool Selection Rules
+
+- **GitHub / deepwiki**: Use when you need to read GitHub repository contents, browse code, check PRs/issues, or get repo documentation via DeepWiki
+- **arch-linux**: Use for all Arch Linux related queries — AUR package lookup, ArchWiki articles, pacman info, PKGBUILD references
+- **context7**: Use when you need official documentation for libraries, frameworks, or programming languages (resolves library IDs, then queries docs)
+- **grep_app**: Use when you need to search for code patterns or find repositories on GitHub (not browsing a known repo — that's GitHub MCP)
+- **websearch**: Use for general web search, news, blog posts, or any information not covered by the specialized tools above
+
+### 5.2 Priority Order
+
+Prefer specialized MCP tools over general web search:
+1. Specific library docs → **context7** first
+2. GitHub code lookup → **GitHub / deepwiki** first
+3. Arch Linux info → **arch-linux** first
+4. Code search across GitHub → **grep_app** first
+5. Everything else → **websearch**
