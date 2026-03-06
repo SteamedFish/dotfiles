@@ -136,6 +136,41 @@ git push origin master
 
 **Decision rule:** If you have an existing git repository with the required files (PKGBUILD, .SRCINFO, .gitignore, patches, configs), use **Scenario A**. Only use **Scenario B** when starting completely fresh.
 
+## pkgrel Update Policy
+
+`pkgrel` counts how many times the **same upstream version** has been re-packaged. It signals to users that a rebuild is needed without an upstream version bump.
+
+### Rule 1: Never bump pkgrel for unpushed changes
+
+If you made mistakes in a local PKGBUILD that was **never pushed to AUR**, no user has ever installed that version. Bumping `pkgrel` would create a phantom rebuild for a version nobody received.
+
+```
+AUR has 1.7-1. You're working on 1.8 locally.
+You find a mistake in your 1.8 PKGBUILD and fix it.
+→ DO NOT bump pkgrel. Set pkgrel=1 and keep iterating.
+   No one installed your broken local 1.8; there is nothing to increment from.
+```
+
+**Rule:** `pkgrel` only increments when you need to distinguish from a version **already in AUR that users may have installed**.
+
+### Rule 2: Only bump pkgrel when installed users need a rebuild
+
+After pushing a version to AUR (`pkgver-1`), bump `pkgrel` to `pkgver-2` only when users who installed `pkgver-1` have a **broken installation that requires a rebuild**.
+
+| Change | Bump pkgrel? | Reason |
+|--------|-------------|--------|
+| Upstream Python major version upgrade breaks site-packages path | ✅ YES | Users' installed files are in wrong path; rebuild required |
+| Patch a library linking issue that causes runtime crashes | ✅ YES | Installed binaries are broken |
+| Fix `install=` hook that corrupted system state (wrote bad files, ran bad commands) | ✅ YES | Hook actively damaged installed state; cleanup + rebuild needed |
+| Add a forgotten `depends=()` entry | ❌ NO | Users who successfully installed already had that dep (their build would have failed otherwise) |
+| Fix a `makedepends=()` entry | ❌ NO | Build-time only; does not affect installed package |
+| Update pkgdesc, url, license metadata | ❌ NO | Cosmetic; no functional change to installed files |
+| Style/formatting cleanup in PKGBUILD | ❌ NO | No change to what gets installed |
+| Add missing `optdepends=()` entry | ❌ NO | Optional; does not break existing installs |
+| Fix `install=` hook that only printed wrong info | ❌ NO | Hook is informational only; installed files are unaffected |
+
+**Decision test:** Ask — "Do users who successfully installed `pkgver-1` have a broken or suboptimal installation **right now**, without reinstalling?" If yes → bump. If no → don't bump.
+
 ## Tracking Upstream Releases with nvchecker
 
 **nvchecker** automates checking for new upstream releases. Use **pkgctl version** commands for integration.
