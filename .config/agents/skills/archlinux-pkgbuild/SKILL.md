@@ -53,6 +53,15 @@ flowchart TD
 
 ## Quick Reference
 
+### 0. Package split decision
+
+| Scenario | Rule |
+|----------|------|
+| Multiple packages built from **same source** | Use **split packages** in a single PKGBUILD (`pkgbase` + `pkgname=()` array) |
+| Each package comes from **different source** | Create **separate PKGBUILDs**, one per package |
+
+Use `archlinux-pkgbuild/system-packages` for the split-package mechanics (`pkgbase`, `package_name()` functions).
+
 ### 1. Existence check
 
 ```bash

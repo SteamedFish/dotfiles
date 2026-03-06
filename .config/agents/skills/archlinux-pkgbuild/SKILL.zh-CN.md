@@ -53,6 +53,15 @@ flowchart TD
 
 ## 速查
 
+### 0. 包拆分决策
+
+| 场景 | 规则 |
+|------|------|
+| 多个包来自**同一源代码** | 使用**单个 PKGBUILD 中的拆分包**（`pkgbase` + `pkgname=()` 数组） |
+| 每个包来自**不同源代码** | 为每个包创建**独立 PKGBUILD** |
+
+拆分包的具体写法参见 `archlinux-pkgbuild/system-packages`（`pkgbase`、`package_name()` 函数）。
+
 ### 1. 查重
 
 ```bash
