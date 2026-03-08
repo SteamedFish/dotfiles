@@ -101,16 +101,21 @@ backup=(
 ## 安装后脚本（.install 文件）
 
 **使用 .install 文件提供安装后说明、执行设置任务或通知用户手动配置要求。**
+**核心原则：Arch Linux 用户经验丰富。保持输出最简。永远不要说废话。**
 
 ### 何时使用 .install 文件
 
 | 使用场景 | 示例 |
 |----------|---------|
-| 需要复杂配置 | 数据库设置、Web 服务器配置 |
-| 需要手动步骤 | 从模板创建配置文件、设置凭据 |
+| 无上游文档的复杂设置 | 数据库创建、导入架构 |
+| 无法自动化的手动步骤 | 生成密钥、编辑凭据 |
 | 重要警告 | 安全通知、重大更改 |
-| 服务激活 | Systemd 服务启用/启动说明 |
-| 首次设置 | 交互式向导、初始配置 |
+| 上游有文档 → 直接链接 | "参见 https://upstream/install" |
+
+**不要在 .install 中：**
+- 告诉用户 `systemctl start/enable`（包含了 .service 文件时用户自然知道）
+- 重复 pacman 自动执行的步骤（tmpfiles、sysusers、udev 重载）
+- 复述 man page 或上游文档中已有的内容
 
 ### .install 文件结构
 
@@ -194,12 +199,44 @@ install="$pkgname.install"  # 在 optdepends=() 之后添加，在 source=() 之
 
 | 应该 | 不应该 |
 |----|-------|
-| 提供清晰、可操作的说明 | 转储冗长的文档 |
+| 总输出控制在 10 行以内 | 写入论文长度的说明 |
+| 有上游文档时直接链接 | 将上游文档内嵌复制 |
 | 使用 heredoc（cat <<EOF）进行格式化 | 使用多个 echo 语句 |
-| 保持消息简洁（< 30 行） | 写入论文长度的说明 |
 | 区分一次性与升级说明 | 盲目地从 post_upgrade 调用 post_install |
 | 测试 .install 脚本语法错误 | 假设它会工作而不进行测试 |
-| 关注用户 MUST（必须）做什么 | 详细解释软件包内部结构 |
+| 只输出用户必须操作的内容 | 说出 Arch 用户早就知道的废话 |
+
+### 最简原则（重要）
+
+**1. 不要运行 pacman 自动触发的命令**
+Pacman 会自动运行 `systemd-tmpfiles`、`sysusers` 和 `udev` 触发器，不要在 .install 中调用：
+```bash
+# ❌ 错误 — pacman 已经自动执行
+post_install() {
+    systemd-tmpfiles --create
+    udevadm trigger
+}
+```
+
+**2. 不要输出显而易见的 systemd 说明**
+当包提供了 `.service` 文件时，Arch 用户自然知道如何启动它。不要打印：
+```bash
+# ❌ 错误 — 侮辱用户智商
+echo "启动服务：systemctl start myapp"
+echo "开机启动：systemctl enable myapp"
+```
+
+**3. 链接上游文档，不要复制**
+如果上游有详细的设置指南，一行即可：
+```bash
+# ✅ 正确
+cat <<EOF
+==> myapp：需要初始设置 — 参见 https://upstream.example/docs/setup
+EOF
+```
+
+**4. 最小输出 — 只输出用户需要操作的内容**
+每一行打印都是干扰，除非用户需要执行操作。目标：总计 < 10 行。
 
 ### 重要：post_install 与 post_upgrade 的区别
 
@@ -245,73 +282,62 @@ post_upgrade() {
 }
 ```
 
-✅ **正确** - 清晰分离：
+✅ **正确** — 最简、链接优先：
 ```bash
 post_install() {
     cat <<EOF
-1. 创建数据库：createdb myapp
-2. 导入架构：psql myapp < /usr/share/myapp/schema.sql
-3. 配置：编辑 /etc/webapps/myapp/config.php
-4. 启动服务：systemctl start myapp
+==> myapp：需要初始设置
+1. 创建数据库：  sudo -u postgres createdb myapp
+2. 导入架构：    psql myapp < /usr/share/myapp/schema.sql
+3. 编辑配置：    /etc/webapps/myapp/config.php
+4. 完成设置：    http://localhost/myapp/install
+文档：https://github.com/project/wiki/Setup
 EOF
 }
 
 post_upgrade() {
+    # 如无需用户操作可省略
     cat <<EOF
-1. 检查新配置选项（.pacnew 文件）
-2. 运行迁移：myapp-migrate --run
-3. 重启服务：systemctl restart myapp
-变更日志：https://github.com/project/releases
+==> myapp 升级说明
+- 如有，请检查 .pacnew 文件
+- 变更日志：https://github.com/project/releases
 EOF
 }
-```
 
-✅ **可接受** - 当说明真正适用于两者时：
+✅ **可接受** — 当说明真正适用于两者时：
 ```bash
 post_install() {
     cat <<EOF
-在 /etc/myapp/config.yaml 审查配置
-重启服务：systemctl restart myapp
+==> myapp：请检查配置 /etc/myapp/config.yaml
 EOF
 }
 
 post_upgrade() {
-    post_install  # ✅ 可以 - 这些步骤也适用于升级
+    post_install  # ✅ 可以 — 这些步骤也适用于升级
 }
-```
 
-### 示例：Web 应用
+### 示例：Web 应用（最简版）
 
 ```bash
 # webapp.install
 post_install() {
     cat <<EOF
-
-==> Webapp 安装
-==> ====================
-
-1. 创建数据库：
-   $ sudo -u postgres createdb webappdb
-
-2. 配置：
-   $ sudo nano /usr/share/webapps/webapp/config.php
-
-3. 设置 Web 服务器（Apache 示例）：
-   $ sudo ln -s /etc/httpd/conf/extra/webapp.conf /etc/httpd/conf/extra/
-   $ sudo systemctl restart httpd
-
-4. 完成设置：
-   访问：http://localhost/webapp/install
-
-文档：https://webapp.example/docs
-
+==> webapp：需要初始设置
+1. 创建数据库：sudo -u postgres createdb webappdb
+2. 编辑配置：  /usr/share/webapps/webapp/config.php
+3. 链接虚拟主机：sudo ln -s /etc/httpd/conf/extra/webapp.conf /etc/httpd/conf/extra/
+4. 完成安装：  http://localhost/webapp/install
+文档：https://webapp.example/docs/setup
 EOF
 }
 
 post_upgrade() {
-    post_install
+    # 仅在有重大更改或必要迁移时添加
+    cat <<EOF
+==> webapp：请检查 .pacnew 文件
+变更日志：https://webapp.example/releases
+EOF
 }
-```
 
 ### 验证
 

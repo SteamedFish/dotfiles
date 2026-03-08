@@ -101,16 +101,21 @@ backup=(
 ## Post-Install Scripts (.install files)
 
 **Use .install files to provide post-installation instructions, perform setup tasks, or notify users of manual configuration requirements.**
+**Core principle: Arch Linux users are experienced. Keep output minimal. Never state the obvious.**
 
 ### When to Use .install Files
 
 | Use Case | Example |
 |----------|---------|
-| Complex configuration needed | Database setup, web server configuration |
-| Manual steps required | Creating config files from templates, setting up credentials |
-| Important warnings | Security notices, breaking changes |
-| Service activation | Systemd service enable/start instructions |
-| First-time setup | Interactive wizards, initial configuration |
+| Complex setup with no upstream docs | Database creation, schema import |
+| Manual steps that cannot be automated | Generating secrets, editing credentials |
+| Critical warnings | Security notices, breaking changes |
+| Upstream has setup docs | Link to them instead of reproducing |
+
+**Do NOT use .install for:**
+- Telling users to `systemctl start/enable` when a service file is included — they know
+- Steps pacman already performs automatically (tmpfiles, sysusers, udev reload)
+- Repeating information from the man page or upstream docs
 
 ### .install File Structure
 
@@ -194,12 +199,44 @@ install="$pkgname.install"  # Add after optdepends=(), before source=()
 
 | Do | Don't |
 |----|-------|
-| Provide clear, actionable instructions | Dump verbose documentation |
+| Keep total output under 10 lines | Write essay-length instructions |
+| Link to upstream docs for complex setup | Duplicate upstream documentation inline |
 | Use heredoc (cat <<EOF) for formatting | Use multiple echo statements |
-| Keep messages concise (< 30 lines) | Write essay-length instructions |
 | Separate one-time vs upgrade instructions | Call post_install from post_upgrade blindly |
 | Test .install script for syntax errors | Assume it will work without testing |
-| Focus on WHAT user must do | Explain package internals in detail |
+| Only output what user MUST act on | State obvious things Arch users already know |
+
+### Minimalism Rules (CRITICAL)
+
+**1. No redundant pacman-triggered commands**
+Pacman automatically runs `systemd-tmpfiles`, `sysusers`, and `udev` triggers. Never call these in .install:
+```bash
+# ❌ WRONG — pacman already does this
+post_install() {
+    systemd-tmpfiles --create
+    udevadm trigger
+}
+```
+
+**2. No obvious systemd instructions**
+When a package ships a `.service` file, Arch users know how to start it. Never print:
+```bash
+# ❌ WRONG — obvious, unwanted noise
+echo "Start the service: systemctl start myapp"
+echo "Enable on boot:   systemctl enable myapp"
+```
+
+**3. Link upstream docs, don't duplicate them**
+If upstream has a detailed setup guide, one line is enough:
+```bash
+# ✅ CORRECT
+cat <<EOF
+==> myapp: initial setup required — see https://upstream.example/docs/setup
+EOF
+```
+
+**4. Minimal output — only actionable items**
+Every printed line is noise unless the user must act on it. Target < 10 lines total.
 
 ### CRITICAL: post_install vs post_upgrade Distinction
 
@@ -245,73 +282,62 @@ post_upgrade() {
 }
 ```
 
-✅ **CORRECT** - Clear separation:
+✅ **CORRECT** - Minimal, link-first:
 ```bash
 post_install() {
     cat <<EOF
-1. Create database: createdb myapp
-2. Import schema: psql myapp < /usr/share/myapp/schema.sql
-3. Configure: edit /etc/webapps/myapp/config.php
-4. Start service: systemctl start myapp
+==> myapp: initial setup required
+1. Create database:   sudo -u postgres createdb myapp
+2. Import schema:     psql myapp < /usr/share/myapp/schema.sql
+3. Edit config:       /etc/webapps/myapp/config.php
+4. Complete setup:    http://localhost/myapp/install
+Docs: https://github.com/project/wiki/Setup
 EOF
 }
 
 post_upgrade() {
+    # Omit entirely if nothing requires user action
     cat <<EOF
-1. Check for new config options (.pacnew files)
-2. Run migrations: myapp-migrate --run
-3. Restart service: systemctl restart myapp
-Changelog: https://github.com/project/releases
+==> myapp upgrade notes
+- Review .pacnew files if any
+- Changelog: https://github.com/project/releases
 EOF
 }
-```
 
 ✅ **ACCEPTABLE** - When instructions truly apply to both:
 ```bash
 post_install() {
     cat <<EOF
-Review configuration at /etc/myapp/config.yaml
-Restart service: systemctl restart myapp
+==> myapp: review config at /etc/myapp/config.yaml
 EOF
 }
 
 post_upgrade() {
-    post_install  # ✅ OK - these steps apply to upgrades too
+    post_install  # ✅ OK — these steps apply to upgrades too
 }
-```
 
-### Example: Web Application
+### Example: Web Application (Minimal)
 
 ```bash
 # webapp.install
 post_install() {
     cat <<EOF
-
-==> Webapp Installation
-==> ====================
-
-1. Create database:
-   $ sudo -u postgres createdb webappdb
-
-2. Configure:
-   $ sudo nano /usr/share/webapps/webapp/config.php
-
-3. Set up web server (Apache example):
-   $ sudo ln -s /etc/httpd/conf/extra/webapp.conf /etc/httpd/conf/extra/
-   $ sudo systemctl restart httpd
-
-4. Complete setup:
-   Visit: http://localhost/webapp/install
-
-Documentation: https://webapp.example/docs
-
+==> webapp: initial setup required
+1. Create DB:   sudo -u postgres createdb webappdb
+2. Edit config: /usr/share/webapps/webapp/config.php
+3. Link vhost:  sudo ln -s /etc/httpd/conf/extra/webapp.conf /etc/httpd/conf/extra/
+4. Finish:      http://localhost/webapp/install
+Docs: https://webapp.example/docs/setup
 EOF
 }
 
 post_upgrade() {
-    post_install
+    # Only add if there are breaking changes or required migrations
+    cat <<EOF
+==> webapp: check for .pacnew files
+Changelog: https://webapp.example/releases
+EOF
 }
-```
 
 ### Validation
 
