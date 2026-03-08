@@ -315,6 +315,29 @@ RestrictNamespaces=yes          # 阻止命名空间创建
 UMask=0077                      # 限制默认文件权限
 ```
 
+### 资源限制 — 除非上游提供，否则不得添加
+
+**除非上游自己的服务文件中已包含资源限制指令，否则绝对不要添加。**
+
+资源限制是用户偏好，不是安全设置。默认添加它们会：
+- 破坏合法需要更高限制的服务（数据库、Web 服务器等）
+- 覆盖用户自己的调优配置
+- 与沙盒化无关
+
+**除非上游提供，否则禁止添加：**
+```ini
+# 不要随意添加这些指令：
+LimitNOFILE=65536
+LimitNPROC=4096
+LimitMEMLOCK=infinity
+CPUQuota=50%
+MemoryMax=512M
+TasksMax=64
+```
+
+**仅在以下情况下包含资源限制：** 上游自己的 `.service` 文件或文档中明确设置了这些值。
+如果用户需要调整限制，可通过 `systemctl edit myapp.service` 创建 drop-in 文件。
+
 ### 沙盒化决策树
 
 **对于 Web 服务（HTTP/HTTPS）：**

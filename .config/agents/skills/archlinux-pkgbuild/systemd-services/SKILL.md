@@ -316,6 +316,29 @@ RestrictNamespaces=yes          # Block namespace creation
 UMask=0077                      # Restrictive default file permissions
 ```
 
+### Resource Limits — DO NOT Add Unless Upstream Provides Them
+
+**NEVER add resource limit directives unless upstream's own service file already includes them.**
+
+Resource limits are user preferences, not security settings. Adding them by default:
+- Breaks services that legitimately need higher limits (databases, web servers, etc.)
+- Overrides the user's own tuning
+- Is NOT part of sandboxing
+
+**Forbidden unless upstream provides them:**
+```ini
+# DO NOT add these speculatively:
+LimitNOFILE=65536
+LimitNPROC=4096
+LimitMEMLOCK=infinity
+CPUQuota=50%
+MemoryMax=512M
+TasksMax=64
+```
+
+**Only include resource limits when:** upstream's own `.service` file or documentation explicitly sets them.
+If users need to tune limits, they use `systemctl edit myapp.service` drop-ins.
+
 ### Sandboxing Decision Tree
 
 **For web services (HTTP/HTTPS):**
