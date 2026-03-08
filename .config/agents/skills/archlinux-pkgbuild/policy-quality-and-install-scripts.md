@@ -23,6 +23,7 @@ Detailed reference for quality gates, red flags, config-file handling, and .inst
 || Claiming multi-arch support without testing | Package fails on untested architecture | Build and test on ALL arches, or ask user to test before AUR submission |
 || Binary package with wrong arch list | Package install fails or downloads wrong binary | Match `arch=()` to ALL upstream binary availability |
 || Using 'any' for compiled packages | Package isn't architecture-independent | Use specific arches for compiled binaries |
+| Using prebuilt binary blobs in source-available packages | Violates source-build-first policy; introduces unauditable binaries | Identify each blob, check for existing Arch packages, or write a separate source-built PKGBUILD |
 
 ### Warning Signs (CHECK CAREFULLY)
 

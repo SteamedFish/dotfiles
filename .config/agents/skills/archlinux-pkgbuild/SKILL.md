@@ -71,16 +71,38 @@ yay -Ss '^pkgname$'   # or paru -Ss
 
 If official repo has it, do not create duplicate AUR package.
 
-### 2. Build method
+### 2. Source vs binary build strategy
 
-| Method | Use case |
+| Package type | Strategy |
 |---|---|
-| `extra-x86_64-build` (preferred) | AUR submission, dependency correctness |
-| `makepkg -f` (fallback) | Local prototyping only |
-
+| Has buildable source (most packages) | **Build from source — mandatory** |
+| Named `-bin` or upstream ships binaries only | Prebuilt binary acceptable |
+| Closed-source / proprietary | Prebuilt binary acceptable |
 If fallback is used, explicitly warn that dependencies may be incomplete due to non-chroot build.
+**If the build process fetches prebuilt binary blobs** (e.g., npm native addons, Maven artifacts, Electron pre-bundled binaries):
 
-### 3. Validation (required)
+```mermaid
+flowchart TD
+    A[Build step downloads binary blob] --> B{Does an Arch official/AUR pkg exist?}
+    B -->|Yes| C[Add as makedepends, point build to it]
+    B -->|No| D[Write separate PKGBUILD for it]
+    D --> E[Build that pkg from source]
+    E --> F[Add new pkg as makedepends/depends]
+    F --> G[Proceed with main package build]
+    B -->|Unbuildable/proprietary| H[Allow binary exception, document in comment]
+```
+
+**Concrete checks:**
+
+1. Audit every binary fetched during `build()` — look for `.node`, `.so`, `.dll`, `.exe`, `.jar` downloads.
+2. For each: `pacman -Ss '^libname$'` and `yay -Ss`. If found, use existing package.
+3. If not found and source is available: create a separate `libname` PKGBUILD, build it from source, add as `makedepends`.
+4. Patch the build system (`prepare()`) to skip re-downloading: set env vars (`npm_config_cache`, `ELECTRON_SKIP_BINARY_DOWNLOAD=1`, etc.) or replace download calls with symlinks.
+5. Only accept a prebuilt blob when there is genuinely no source available — add a comment explaining why.
+
+### 3. Build method
+
+### 4. Validation (required)
 
 ```bash
 namcap PKGBUILD
@@ -94,7 +116,7 @@ namcap -i PKGBUILD
 namcap -i *.pkg.tar.zst
 ```
 
-### 4. Minimum PKGBUILD quality gates
+### 5. Minimum PKGBUILD quality gates
 
 | Item | Rule |
 |---|---|
@@ -106,13 +128,13 @@ namcap -i *.pkg.tar.zst
 | Shell vars | Quote `"$pkgdir"` and `"$srcdir"` |
 | Config files | User-editable `/etc` files must be in `backup=()` |
 
-### 5. Architecture policy
+### 6. Architecture policy
 
 - Source-built packages: prefer `x86_64` + `aarch64` when both can be validated.
 - Binary packages: only declare architectures that upstream actually publishes.
 - If only one architecture is tested, keep `arch=()` limited to tested architectures.
 
-### 6. AUR finalization
+### 7. AUR finalization
 
 ```bash
 makepkg --printsrcinfo > .SRCINFO
@@ -138,6 +160,9 @@ Ignore build artifacts (`pkg/`, `src/`, `*.pkg.tar.*`, `.BUILDINFO`, `.PKGINFO`,
 - Using `/etc` for vendor defaults that belong in `/usr/lib`.
 - Forgetting to regenerate `.SRCINFO` after dependency/version updates.
 - Declaring unsupported architectures in binary packages.
+- Bundling prebuilt binary blobs instead of building from source (or using an existing Arch package).
+- Using `npm install` / `cargo fetch` / `gradle build` without auditing for binary downloads.
+- Accepting a build that silently downloads `.node`/`.so`/`.exe` files without documenting or replacing them.
 
 ## Resources
 

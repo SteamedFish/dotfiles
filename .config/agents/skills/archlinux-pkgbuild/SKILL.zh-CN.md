@@ -71,16 +71,38 @@ yay -Ss '^pkgname$'   # 或 paru -Ss
 
 官方仓库已存在时，不应再创建重复 AUR 包。
 
-### 2. 构建方式
+### 2. 源码构建 vs 预构建二进制策略
 
-| 方式 | 适用场景 |
+| 包类型 | 策略 |
 |---|---|
-| `extra-x86_64-build`（首选） | AUR 提交、依赖准确性验证 |
-| `makepkg -f`（后备） | 仅限本地原型验证 |
-
+| 有可构建源码（大多数包） | **从源码构建 — 强制要求** |
+| 名称以 `-bin` 结尾或上游仅提供二进制 | 可使用预构建二进制 |
+| 闭源/专有软件 | 可使用预构建二进制 |
 使用后备方案时，必须显式警告：非 chroot 构建可能导致依赖不完整。
+**如果构建过程会拉取预构建二进制 blob**（例如 npm 原生插件、Maven artifacts、Electron 预打包二进制）：
 
-### 3. 验证（必须）
+```mermaid
+flowchart TD
+    A[构建步骤下载二进制 blob] --> B{Arch 官方/AUR 是否已有包？}
+    B -->|有| C[加入 makedepends，指向已有包]
+    B -->|没有| D[为其编写独立 PKGBUILD]
+    D --> E[从源码构建该包]
+    E --> F[将新包加为 makedepends/depends]
+    F --> G[继续构建主包]
+    B -->|无法构建/专有| H[允许二进制例外，添加注释说明原因]
+```
+
+**具体操作步骤：**
+
+1. 审计 `build()` 期间获取的每个二进制文件 — 留意 `.node`、`.so`、`.dll`、`.exe`、`.jar` 下载。
+2. 对每个文件：`pacman -Ss '^libname$'` 和 `yay -Ss`。若已有包，使用现有包。
+3. 若没有现成包且源码可获取：创建独立的 `libname` PKGBUILD，从源码构建，并加为 `makedepends`。
+4. 在 `prepare()` 中修补构建系统以跳过重新下载：设置环境变量（`npm_config_cache`、`ELECTRON_SKIP_BINARY_DOWNLOAD=1` 等）或用符号链接替换下载调用。
+5. 只有在真正没有可用源码时才接受预构建 blob — 并添加注释说明原因。
+
+### 3. 构建方式
+
+### 4. 验证（必须）
 
 ```bash
 namcap PKGBUILD
@@ -94,7 +116,7 @@ namcap -i PKGBUILD
 namcap -i *.pkg.tar.zst
 ```
 
-### 4. PKGBUILD 最低质量门槛
+### 5. PKGBUILD 最低质量门槛
 
 | 项目 | 规则 |
 |---|---|
@@ -106,13 +128,13 @@ namcap -i *.pkg.tar.zst
 | Shell 变量 | 引用 `"$pkgdir"` 与 `"$srcdir"` |
 | 配置文件 | 用户可改的 `/etc` 文件必须进 `backup=()` |
 
-### 5. 架构策略
+### 6. 架构策略
 
 - 源码编译包：能验证时优先 `x86_64` + `aarch64`。
 - 二进制包：只声明上游实际提供的架构。
 - 只测试了单架构时，`arch=()` 只保留已测试架构。
 
-### 6. AUR 收尾
+### 7. AUR 收尾
 
 ```bash
 makepkg --printsrcinfo > .SRCINFO
@@ -138,6 +160,9 @@ makepkg --printsrcinfo > .SRCINFO
 - 把 vendor 默认配置放进 `/etc`，而不是 `/usr/lib`。
 - 修改版本或依赖后忘记更新 `.SRCINFO`。
 - 二进制包声明了上游不存在的架构。
+- 打包时直接使用预构建二进制 blob，而非从源码构建或使用已有 Arch 包。
+- 运行 `npm install` / `cargo fetch` / `gradle build` 时未审计是否存在二进制下载。
+- 放任构建静默下载 `.node`/`.so`/`.exe` 文件，既不记录原因也不替换。
 
 ## 资源
 
