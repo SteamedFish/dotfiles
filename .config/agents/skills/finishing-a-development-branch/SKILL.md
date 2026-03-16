@@ -93,7 +93,7 @@ git rebase -i <base-branch>
 # In the editor:
 # - Squash/fixup related commits
 # - Reorder commits to be logical
-# - Reword commit messages to be clear
+# - Reword commit messages to be clear (follow 50/72 rule: subject ≤50 chars, body lines ≤72 chars)
 # - Result: Clean, atomic commits that tell a story
 
 # STEP 2: Verify tests on rebased branch
