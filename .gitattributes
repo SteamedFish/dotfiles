@@ -1,4 +1,4 @@
-.ssh/config##template filter=git-crypt diff=git-crypt
+.ssh/config##template.j2 filter=git-crypt diff=git-crypt
 .mbsyncrc filter=git-crypt diff=git-crypt
 .notmuch-config filter=git-crypt diff=git-crypt
 .config/doom/modules/steamedfish/basic/email.el filter=git-crypt diff=git-crypt
