@@ -1,0 +1,135 @@
+{
+  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-opencode/master/assets/oh-my-opencode.schema.json",
+  "agents": {
+    "sisyphus": {
+{% if yadm.class == "work" %}
+      "model": "open-webui/claude-opus-4-6",
+{% else %}
+      "model": "github-copilot/claude-opus-4.6",
+{% endif %}
+      "variant": "max"
+    },
+    "oracle": {
+{% if yadm.class == "work" %}
+      "model": "open-webui/gpt-5.4",
+{% else %}
+      "model": "github-copilot/gpt-5.4",
+{% endif %}
+      "variant": "high"
+    },
+    "librarian": {
+{% if yadm.class == "work" %}
+      "model": "open-webui/claude-sonnet-4-6"
+{% else %}
+      "model": "github-copilot/claude-sonnet-4.6"
+{% endif %}
+    },
+    "explore": {
+{% if yadm.class == "work" %}
+      "model": "open-webui/gpt-5.4"
+{% else %}
+      "model": "github-copilot/grok-code-fast-1"
+{% endif %}
+    },
+    "multimodal-looker": {
+{% if yadm.class == "work" %}
+      "model": "open-webui/gemini-3.1-flash-lite-preview"
+{% else %}
+      "model": "github-copilot/gemini-3-flash-preview"
+{% endif %}
+    },
+    "prometheus": {
+{% if yadm.class == "work" %}
+      "model": "open-webui/claude-opus-4-6",
+{% else %}
+      "model": "github-copilot/claude-opus-4.6",
+{% endif %}
+      "variant": "max"
+    },
+    "metis": {
+{% if yadm.class == "work" %}
+      "model": "open-webui/claude-opus-4-6",
+{% else %}
+      "model": "github-copilot/claude-opus-4.6",
+{% endif %}
+      "variant": "max"
+    },
+    "momus": {
+{% if yadm.class == "work" %}
+      "model": "open-webui/gpt-5.4",
+{% else %}
+      "model": "github-copilot/gpt-5.4",
+{% endif %}
+      "variant": "medium"
+    },
+    "atlas": {
+{% if yadm.class == "work" %}
+      "model": "open-webui/claude-sonnet-4-6"
+{% else %}
+      "model": "github-copilot/claude-sonnet-4.6"
+{% endif %}
+    }
+  },
+  "categories": {
+    "visual-engineering": {
+{% if yadm.class == "work" %}
+      "model": "open-webui/gemini-3.1-pro-preview",
+{% else %}
+      "model": "github-copilot/gemini-3.1-pro-preview",
+{% endif %}
+      "variant": "high"
+    },
+    "ultrabrain": {
+{% if yadm.class == "work" %}
+      "model": "open-webui/gpt-5.3-codex",
+{% else %}
+      "model": "github-copilot/gpt-5.4",
+{% endif %}
+      "variant": "xhigh"
+    },
+    "artistry": {
+{% if yadm.class == "work" %}
+      "model": "open-webui/gemini-3.1-pro-preview",
+{% else %}
+      "model": "github-copilot/gemini-3.1-pro-preview",
+{% endif %}
+      "variant": "max"
+    },
+    "quick": {
+{% if yadm.class == "work" %}
+      "model": "open-webui/deepseek-v3.2"
+{% else %}
+      "model": "github-copilot/claude-haiku-4.5"
+{% endif %}
+    },
+    "unspecified-low": {
+{% if yadm.class == "work" %}
+      "model": "open-webui/claude-sonnet-4-6"
+{% else %}
+      "model": "github-copilot/claude-sonnet-4.6"
+{% endif %}
+    },
+    "unspecified-high": {
+{% if yadm.class == "work" %}
+      "model": "open-webui/claude-sonnet-4-6"
+{% else %}
+      "model": "github-copilot/claude-sonnet-4.6"
+{% endif %}
+    },
+    "deep": {
+{% if yadm.class == "work" %}
+      "model": "open-webui/claude-opus-4-6",
+{% else %}
+      "model": "github-copilot/claude-opus-4.6",
+{% endif %}
+      "variant": "max"
+    },
+    "writing": {
+{% if yadm.class == "work" %}
+      "model": "open-webui/gemini-3.1-flash-lite-preview"
+{% else %}
+      "model": "github-copilot/gemini-3-flash-preview"
+{% endif %}
+    }
+  }
+}
