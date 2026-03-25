@@ -1,5 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-opencode/master/assets/oh-my-opencode.schema.json",
+  "disabled_mcps": ["websearch", "context7", "grep_app"],
   "agents": {
     "sisyphus": {
 {% if yadm.class == "work" %}
