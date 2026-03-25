@@ -5,7 +5,7 @@
 {% if yadm.class == "work" %}
       "model": "open-webui/claude-opus-4-6",
 {% else %}
-      "model": "litellm/chatgpt/gpt-5.3-codex",
+      "model": "litellm/moonshot/kimi-k2.5",
 {% endif %}
       "variant": "max"
     },
@@ -21,7 +21,7 @@
 {% if yadm.class == "work" %}
       "model": "open-webui/claude-sonnet-4-6"
 {% else %}
-      "model": "litellm/gemini/gemini-2.5-flash"
+      "model": "litellm/zai/glm-4.7"
 {% endif %}
     },
     "explore": {
@@ -42,7 +42,7 @@
 {% if yadm.class == "work" %}
       "model": "open-webui/claude-opus-4-6",
 {% else %}
-      "model": "litellm/chatgpt/gpt-5.4",
+      "model": "litellm/moonshot/kimi-k2.5",
 {% endif %}
       "variant": "max"
     },
@@ -50,7 +50,7 @@
 {% if yadm.class == "work" %}
       "model": "open-webui/claude-opus-4-6",
 {% else %}
-      "model": "litellm/chatgpt/gpt-5.4",
+      "model": "litellm/moonshot/kimi-k2.5",
 {% endif %}
       "variant": "max"
     },
@@ -58,7 +58,7 @@
 {% if yadm.class == "work" %}
       "model": "open-webui/gpt-5.4",
 {% else %}
-      "model": "litellm/chatgpt/gpt-5.3-codex",
+      "model": "litellm/chatgpt/gpt-5.4",
 {% endif %}
       "variant": "medium"
     },
@@ -66,7 +66,7 @@
 {% if yadm.class == "work" %}
       "model": "open-webui/claude-sonnet-4-6"
 {% else %}
-      "model": "litellm/gemini/gemini-2.5-flash"
+      "model": "litellm/moonshot/kimi-k2.5"
 {% endif %}
     }
   },
@@ -113,7 +113,7 @@
 {% if yadm.class == "work" %}
       "model": "open-webui/claude-sonnet-4-6"
 {% else %}
-      "model": "litellm/chatgpt/gpt-5.3-codex"
+      "model": "litellm/chatgpt/gpt-5.4"
 {% endif %}
     },
     "deep": {
