@@ -29,7 +29,7 @@
 {% if yadm.class == "work" %}
       "model": "open-webui/gpt-5.4"
 {% else %}
-      "model": "litellm/deepseek/deepseek-v3.2"
+      "model": "litellm/deepseek/deepseek-reasoner"
 {% endif %}
     },
     "multimodal-looker": {
@@ -107,7 +107,7 @@
 {% if yadm.class == "work" %}
       "model": "open-webui/claude-sonnet-4-6"
 {% else %}
-      "model": "litellm/deepseek/deepseek-v3.2"
+      "model": "litellm/deepseek/deepseek-reasoner"
 {% endif %}
     },
     "unspecified-high": {
