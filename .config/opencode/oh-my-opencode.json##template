@@ -10,11 +10,19 @@
 {% endif %}
       "variant": "max"
     },
+    "hephaestus": {
+{% if yadm.class == "work" %}
+      "model": "open-webui/gpt-5.4",
+{% else %}
+      "model": "litellm/kimi-for-coding",
+{% endif %}
+      "variant": "medium"
+    },
     "oracle": {
 {% if yadm.class == "work" %}
       "model": "open-webui/gpt-5.4",
 {% else %}
-      "model": "litellm/chatgpt/gpt-5.4",
+      "model": "litellm/kimi-for-coding",
 {% endif %}
       "variant": "high"
     },
@@ -22,21 +30,21 @@
 {% if yadm.class == "work" %}
       "model": "open-webui/claude-sonnet-4-6"
 {% else %}
-      "model": "litellm/zai/glm-4.7"
+      "model": "litellm/kimi-for-coding"
 {% endif %}
     },
     "explore": {
 {% if yadm.class == "work" %}
-      "model": "open-webui/gpt-5.4"
+      "model": "open-webui/deepseek-v3.2"
 {% else %}
-      "model": "litellm/deepseek/deepseek-reasoner"
+      "model": "litellm/kimi-for-coding"
 {% endif %}
     },
     "multimodal-looker": {
 {% if yadm.class == "work" %}
       "model": "open-webui/gemini-3.1-flash-lite-preview"
 {% else %}
-      "model": "litellm/gemini/gemini-3-flash-preview"
+      "model": "litellm/kimi-for-coding"
 {% endif %}
     },
     "prometheus": {
@@ -59,11 +67,40 @@
 {% if yadm.class == "work" %}
       "model": "open-webui/gpt-5.4",
 {% else %}
-      "model": "litellm/chatgpt/gpt-5.4",
+      "model": "litellm/kimi-for-coding",
 {% endif %}
-      "variant": "medium"
+      "variant": "xhigh"
     },
     "atlas": {
+{% if yadm.class == "work" %}
+      "model": "open-webui/claude-sonnet-4-6"
+{% else %}
+      "model": "litellm/kimi-for-coding"
+{% endif %}
+    },
+    "build": {
+{% if yadm.class == "work" %}
+      "model": "open-webui/claude-sonnet-4-6"
+{% else %}
+      "model": "litellm/kimi-for-coding"
+{% endif %}
+    },
+    "plan": {
+{% if yadm.class == "work" %}
+      "model": "open-webui/claude-opus-4-6",
+{% else %}
+      "model": "litellm/kimi-for-coding",
+{% endif %}
+      "variant": "max"
+    },
+    "sisyphus-junior": {
+{% if yadm.class == "work" %}
+      "model": "open-webui/claude-sonnet-4-6"
+{% else %}
+      "model": "litellm/kimi-for-coding"
+{% endif %}
+    },
+    "OpenCode-Builder": {
 {% if yadm.class == "work" %}
       "model": "open-webui/claude-sonnet-4-6"
 {% else %}
@@ -76,15 +113,15 @@
 {% if yadm.class == "work" %}
       "model": "open-webui/gemini-3.1-pro-preview",
 {% else %}
-      "model": "litellm/gemini/gemini-3.1-pro-preview",
+      "model": "litellm/kimi-for-coding",
 {% endif %}
       "variant": "high"
     },
     "ultrabrain": {
 {% if yadm.class == "work" %}
-      "model": "open-webui/gpt-5.3-codex",
+      "model": "open-webui/gpt-5.4",
 {% else %}
-      "model": "litellm/chatgpt/gpt-5.3-codex",
+      "model": "litellm/kimi-for-coding",
 {% endif %}
       "variant": "xhigh"
     },
@@ -92,7 +129,7 @@
 {% if yadm.class == "work" %}
       "model": "open-webui/gemini-3.1-pro-preview",
 {% else %}
-      "model": "litellm/gemini/gemini-3.1-pro-preview",
+      "model": "litellm/kimi-for-coding",
 {% endif %}
       "variant": "max"
     },
@@ -100,28 +137,29 @@
 {% if yadm.class == "work" %}
       "model": "open-webui/deepseek-v3.2"
 {% else %}
-      "model": "litellm/ollama/qwen3.5"
+      "model": "litellm/kimi-for-coding"
 {% endif %}
     },
     "unspecified-low": {
 {% if yadm.class == "work" %}
       "model": "open-webui/claude-sonnet-4-6"
 {% else %}
-      "model": "litellm/deepseek/deepseek-reasoner"
+      "model": "litellm/kimi-for-coding"
 {% endif %}
     },
     "unspecified-high": {
 {% if yadm.class == "work" %}
-      "model": "open-webui/claude-sonnet-4-6"
+      "model": "open-webui/claude-opus-4-6",
 {% else %}
-      "model": "litellm/chatgpt/gpt-5.4"
+      "model": "litellm/kimi-for-coding",
 {% endif %}
+      "variant": "max"
     },
     "deep": {
 {% if yadm.class == "work" %}
       "model": "open-webui/claude-opus-4-6",
 {% else %}
-      "model": "litellm/chatgpt/gpt-5.4",
+      "model": "litellm/kimi-for-coding",
 {% endif %}
       "variant": "max"
     },
@@ -129,7 +167,7 @@
 {% if yadm.class == "work" %}
       "model": "open-webui/gemini-3.1-flash-lite-preview"
 {% else %}
-      "model": "litellm/gemini/gemini-3-flash-preview"
+      "model": "litellm/kimi-for-coding"
 {% endif %}
     }
   }
