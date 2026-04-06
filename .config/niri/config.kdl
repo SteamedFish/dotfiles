@@ -7,6 +7,10 @@
 // Find the full list of options on the wiki:
 // https://yalter.github.io/niri/Configuration:-Input
 input {
+    // Let logind handle the power key (configured to poweroff in logind.conf.d).
+    // Without this, niri intercepts the power key and triggers suspend by default.
+    disable-power-key-handling
+
     keyboard {
         xkb {
             // You can set rules, model, layout, variant and options.
