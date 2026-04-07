@@ -6,7 +6,7 @@
 {% if yadm.class == "work" %}
       "model": "open-webui/claude-opus-4-6",
 {% else %}
-      "model": "litellm/kimi-for-coding",
+      "model": "litellm/github_copilot/claude-opus-4.6",
 {% endif %}
       "variant": "max"
     },
@@ -14,7 +14,7 @@
 {% if yadm.class == "work" %}
       "model": "open-webui/gpt-5.4",
 {% else %}
-      "model": "litellm/kimi-for-coding",
+      "model": "litellm/chatgpt/gpt-5.4",
 {% endif %}
       "variant": "medium"
     },
@@ -22,7 +22,7 @@
 {% if yadm.class == "work" %}
       "model": "open-webui/gpt-5.4",
 {% else %}
-      "model": "litellm/kimi-for-coding",
+      "model": "litellm/chatgpt/gpt-5.4",
 {% endif %}
       "variant": "high"
     },
@@ -30,28 +30,28 @@
 {% if yadm.class == "work" %}
       "model": "open-webui/claude-sonnet-4-6"
 {% else %}
-      "model": "litellm/kimi-for-coding"
+      "model": "litellm/github_copilot/claude-sonnet-4.6"
 {% endif %}
     },
     "explore": {
 {% if yadm.class == "work" %}
       "model": "open-webui/deepseek-v3.2"
 {% else %}
-      "model": "litellm/kimi-for-coding"
+      "model": "litellm/ark/deepseek-v3-2-251201"
 {% endif %}
     },
     "multimodal-looker": {
 {% if yadm.class == "work" %}
       "model": "open-webui/gemini-3.1-flash-lite-preview"
 {% else %}
-      "model": "litellm/kimi-for-coding"
+      "model": "litellm/gemini/gemini-3.1-flash-lite-preview"
 {% endif %}
     },
     "prometheus": {
 {% if yadm.class == "work" %}
       "model": "open-webui/claude-opus-4-6",
 {% else %}
-      "model": "litellm/kimi-for-coding",
+      "model": "litellm/github_copilot/claude-opus-4.6",
 {% endif %}
       "variant": "max"
     },
@@ -59,7 +59,7 @@
 {% if yadm.class == "work" %}
       "model": "open-webui/claude-opus-4-6",
 {% else %}
-      "model": "litellm/kimi-for-coding",
+      "model": "litellm/github_copilot/claude-opus-4.6",
 {% endif %}
       "variant": "max"
     },
@@ -67,7 +67,7 @@
 {% if yadm.class == "work" %}
       "model": "open-webui/gpt-5.4",
 {% else %}
-      "model": "litellm/kimi-for-coding",
+      "model": "litellm/chatgpt/gpt-5.4",
 {% endif %}
       "variant": "xhigh"
     },
@@ -75,21 +75,21 @@
 {% if yadm.class == "work" %}
       "model": "open-webui/claude-sonnet-4-6"
 {% else %}
-      "model": "litellm/kimi-for-coding"
+      "model": "litellm/github_copilot/claude-sonnet-4.6"
 {% endif %}
     },
     "build": {
 {% if yadm.class == "work" %}
       "model": "open-webui/claude-sonnet-4-6"
 {% else %}
-      "model": "litellm/kimi-for-coding"
+      "model": "litellm/github_copilot/claude-sonnet-4.6"
 {% endif %}
     },
     "plan": {
 {% if yadm.class == "work" %}
       "model": "open-webui/claude-opus-4-6",
 {% else %}
-      "model": "litellm/kimi-for-coding",
+      "model": "litellm/github_copilot/claude-opus-4.6",
 {% endif %}
       "variant": "max"
     },
@@ -97,14 +97,14 @@
 {% if yadm.class == "work" %}
       "model": "open-webui/claude-sonnet-4-6"
 {% else %}
-      "model": "litellm/kimi-for-coding"
+      "model": "litellm/github_copilot/claude-sonnet-4.6"
 {% endif %}
     },
     "OpenCode-Builder": {
 {% if yadm.class == "work" %}
       "model": "open-webui/claude-sonnet-4-6"
 {% else %}
-      "model": "litellm/kimi-for-coding"
+      "model": "litellm/github_copilot/claude-sonnet-4.6"
 {% endif %}
     }
   },
@@ -113,7 +113,7 @@
 {% if yadm.class == "work" %}
       "model": "open-webui/gemini-3.1-pro-preview",
 {% else %}
-      "model": "litellm/kimi-for-coding",
+      "model": "litellm/gemini/gemini-3.1-pro-preview",
 {% endif %}
       "variant": "high"
     },
@@ -121,7 +121,7 @@
 {% if yadm.class == "work" %}
       "model": "open-webui/gpt-5.4",
 {% else %}
-      "model": "litellm/kimi-for-coding",
+      "model": "litellm/chatgpt/gpt-5.4",
 {% endif %}
       "variant": "xhigh"
     },
@@ -129,7 +129,7 @@
 {% if yadm.class == "work" %}
       "model": "open-webui/gemini-3.1-pro-preview",
 {% else %}
-      "model": "litellm/kimi-for-coding",
+      "model": "litellm/gemini/gemini-3.1-pro-preview",
 {% endif %}
       "variant": "max"
     },
@@ -137,29 +137,29 @@
 {% if yadm.class == "work" %}
       "model": "open-webui/deepseek-v3.2"
 {% else %}
-      "model": "litellm/kimi-for-coding"
+      "model": "litellm/ark/deepseek-v3-2-251201"
 {% endif %}
     },
     "unspecified-low": {
 {% if yadm.class == "work" %}
       "model": "open-webui/claude-sonnet-4-6"
 {% else %}
-      "model": "litellm/kimi-for-coding"
+      "model": "litellm/github_copilot/claude-sonnet-4.6"
 {% endif %}
     },
     "unspecified-high": {
 {% if yadm.class == "work" %}
       "model": "open-webui/claude-opus-4-6",
 {% else %}
-      "model": "litellm/kimi-for-coding",
+      "model": "litellm/github_copilot/claude-opus-4.6",
 {% endif %}
       "variant": "max"
     },
     "deep": {
 {% if yadm.class == "work" %}
-      "model": "open-webui/claude-opus-4-6",
+      "model": "open-webui/gpt-5.3-codex",
 {% else %}
-      "model": "litellm/kimi-for-coding",
+      "model": "litellm/chatgpt/gpt-5.3-codex",
 {% endif %}
       "variant": "max"
     },
@@ -167,7 +167,7 @@
 {% if yadm.class == "work" %}
       "model": "open-webui/gemini-3.1-flash-lite-preview"
 {% else %}
-      "model": "litellm/kimi-for-coding"
+      "model": "litellm/gemini/gemini-3.1-flash-lite-preview"
 {% endif %}
     }
   }
