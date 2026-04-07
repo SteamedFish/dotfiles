@@ -6,7 +6,7 @@
 {% if yadm.class == "work" %}
       "model": "open-webui/claude-opus-4-6",
 {% else %}
-      "model": "litellm/github_copilot/claude-opus-4.6",
+      "model": "litellm/kimi-for-coding",
 {% endif %}
       "variant": "max"
     },
