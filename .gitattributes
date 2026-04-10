@@ -6,3 +6,4 @@
 .config/opencode/opencode.json##template filter=git-crypt diff=git-crypt
 .config/opencode/opencode-models.json.inc filter=git-crypt diff=git-crypt
 .openviking/ovcli.conf filter=git-crypt diff=git-crypt
+.config/opencode/opencode-mem.jsonc##template filter=git-crypt diff=git-crypt
