@@ -1,0 +1,94 @@
+{
+  // Where SQLite DB + vector index + ONNX model cache are stored
+  "storagePath": "~/.local/share/opencode-mem/data",
+
+  // Override git user.email for cross-machine identity matching
+  // Memories are scoped per user — this ensures the same user identity across machines
+  "userEmailOverride": "steamedfish@hotmail.com",
+
+  // Display name used in memory metadata and Web UI
+  "userNameOverride": "SteamedFish",
+
+  // Local ONNX embedding model — runs in-process on CPU, no GPU/API needed
+  // Converts text to 768-dim vectors for similarity search
+  // Model auto-downloads to storagePath/.cache/ on first run (~130MB)
+  // Other options: Xenova/all-MiniLM-L6-v2 (384d), Xenova/bge-small-en-v1.5 (384d)
+  //
+  // To switch to Ollama qwen3-embedding via litellm, replace embeddingModel with:
+  //   "embeddingModel": "qwen3-embedding",
+  //   "embeddingDimensions": 2048,
+  //   "embeddingApiUrl": "https://your-litellm/",
+  //   "embeddingApiKey": "sk-your-key",
+  // ⚠️ Switching embedding model changes the vector space — all existing memories
+  //    become unsearchable. You must delete storagePath and let opencode-mem rebuild.
+  //    Memories are re-extracted from future conversations, but old ones are lost.
+  "embeddingModel": "Xenova/nomic-embed-text-v1",
+
+  // Web UI for browsing/searching/deleting memories — accessible at http://localhost:4747
+  "webServerEnabled": true,
+  "webServerPort": 4747,
+
+  // Automatically extract memories from conversations without manual tool calls
+  // Uses the LLM (opencodeModel) to identify facts, preferences, decisions worth remembering
+  // Triggers after each assistant response; skips if nothing memorable detected
+  "autoCaptureEnabled": true,
+
+  // Language for auto-capture prompts: "auto" detects from conversation
+  // Can be set to "en", "zh", etc. to force a specific language
+  "autoCaptureLanguage": "auto",
+
+{% if yadm.class == "work" %}
+  // LLM provider for auto-capture memory extraction (must match a key in opencode.json "provider")
+  // Work: use Claude Opus 4.6 via Open WebUI
+  "opencodeProvider": "open-webui",
+  // Model ID within the provider (must match a key in the provider's "models" section)
+  // This model performs: memory extraction, user profile analysis, deduplication
+  "opencodeModel": "claude-opus-4-6",
+{% else %}
+  // LLM provider for auto-capture memory extraction (must match a key in opencode.json "provider")
+  // Home: use Kimi K2.5 for Coding via LiteLLM
+  "opencodeProvider": "litellm",
+  // Model ID within the provider (must match a key in the provider's "models" section)
+  // This model performs: memory extraction, user profile analysis, deduplication
+  "opencodeModel": "kimi-for-coding",
+{% endif %}
+
+  // Show toast notification when auto-capture saves a new memory
+  "showAutoCaptureToasts": true,
+  // Show toast notification when user profile is updated (preferences, patterns)
+  "showUserProfileToasts": true,
+  // Show toast notification on plugin errors (API failures, extraction errors)
+  "showErrorToasts": true,
+
+  // How often (in number of conversations) to re-analyze and update user profile
+  // Profile = aggregated preferences/patterns extracted from all memories
+  // 10 = re-analyze after every 10 sessions
+  "userProfileAnalysisInterval": 10,
+
+  // Max number of memories returned by the memory_search tool per query
+  // Higher = more context but more tokens consumed
+  "maxMemories": 10,
+
+  "compaction": {
+    // Inject relevant memories into context when OpenCode compacts (summarizes) conversation
+    // Ensures important memories survive context window compression
+    "enabled": true,
+    // Max memories injected during compaction — keeps compaction summaries focused
+    "memoryLimit": 10
+  },
+
+  "chatMessage": {
+    // Automatically inject relevant memories at the start of conversations
+    // Searches existing memories using the first user message as query
+    "enabled": true,
+    // Max memories auto-injected into conversation context
+    // 3 = conservative; avoids flooding system prompt with old context
+    "maxMemories": 3,
+    // Don't inject memories that were created in the current session
+    // Prevents circular injection of just-captured information
+    "excludeCurrentSession": true,
+    // When to inject memories: "first" = only on first message, "always" = every message
+    // "first" is cheaper and usually sufficient — memories set the stage once
+    "injectOn": "first"
+  }
+}
