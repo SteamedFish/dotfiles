@@ -13,7 +13,7 @@
     },
     "hephaestus": {
 {% if yadm.class == "work" %}
-      "model": "open-webui/gpt-5.4",
+      "model": "github-copilot/gpt-5.4",
 {% else %}
       "model": "litellm/chatgpt/gpt-5.4",
 {% endif %}
@@ -21,7 +21,7 @@
     },
     "oracle": {
 {% if yadm.class == "work" %}
-      "model": "open-webui/gpt-5.4",
+      "model": "github-copilot/gpt-5.4",
 {% else %}
       "model": "litellm/chatgpt/gpt-5.4",
 {% endif %}
@@ -29,21 +29,21 @@
     },
     "librarian": {
 {% if yadm.class == "work" %}
-      "model": "open-webui/claude-sonnet-4-6"
+      "model": "github-copilot/claude-sonnet-4.6"
 {% else %}
       "model": "litellm/kimi-for-coding"
 {% endif %}
     },
     "explore": {
 {% if yadm.class == "work" %}
-      "model": "open-webui/deepseek-v3.2"
+      "model": "github-copilot/claude-sonnet-4.6"
 {% else %}
       "model": "litellm/kimi-for-coding"
 {% endif %}
     },
     "multimodal-looker": {
 {% if yadm.class == "work" %}
-      "model": "open-webui/gemini-3.1-flash-lite-preview"
+      "model": "github-copilot/gemini-3-flash-preview"
 {% else %}
       "model": "litellm/kimi-for-coding"
 {% endif %}
@@ -68,7 +68,7 @@
     },
     "momus": {
 {% if yadm.class == "work" %}
-      "model": "open-webui/gpt-5.4",
+      "model": "github-copilot/gpt-5.4",
 {% else %}
       "model": "litellm/chatgpt/gpt-5.4",
 {% endif %}
@@ -76,14 +76,14 @@
     },
     "atlas": {
 {% if yadm.class == "work" %}
-      "model": "open-webui/claude-sonnet-4-6"
+      "model": "github-copilot/claude-sonnet-4.6"
 {% else %}
       "model": "litellm/kimi-for-coding"
 {% endif %}
     },
     "build": {
 {% if yadm.class == "work" %}
-      "model": "open-webui/claude-sonnet-4-6"
+      "model": "github-copilot/claude-sonnet-4.6"
 {% else %}
       "model": "litellm/kimi-for-coding"
 {% endif %}
@@ -99,14 +99,14 @@
     },
     "sisyphus-junior": {
 {% if yadm.class == "work" %}
-      "model": "open-webui/claude-sonnet-4-6"
+      "model": "github-copilot/claude-sonnet-4.6"
 {% else %}
       "model": "litellm/kimi-for-coding"
 {% endif %}
     },
     "OpenCode-Builder": {
 {% if yadm.class == "work" %}
-      "model": "open-webui/claude-sonnet-4-6"
+      "model": "github-copilot/claude-sonnet-4.6"
 {% else %}
       "model": "litellm/kimi-for-coding"
 {% endif %}
@@ -115,7 +115,7 @@
   "categories": {
     "visual-engineering": {
 {% if yadm.class == "work" %}
-      "model": "open-webui/gemini-3.1-pro-preview",
+      "model": "github-copilot/gemini-3.1-pro-preview",
 {% else %}
       "model": "litellm/gemini/gemini-3.1-pro-preview",
 {% endif %}
@@ -123,7 +123,7 @@
     },
     "ultrabrain": {
 {% if yadm.class == "work" %}
-      "model": "open-webui/gpt-5.4",
+      "model": "github-copilot/gpt-5.4",
 {% else %}
       "model": "litellm/chatgpt/gpt-5.4",
 {% endif %}
@@ -131,7 +131,7 @@
     },
     "artistry": {
 {% if yadm.class == "work" %}
-      "model": "open-webui/gemini-3.1-pro-preview",
+      "model": "github-copilot/gemini-3.1-pro-preview",
 {% else %}
       "model": "litellm/gemini/gemini-3.1-pro-preview",
 {% endif %}
@@ -139,14 +139,14 @@
     },
     "quick": {
 {% if yadm.class == "work" %}
-      "model": "open-webui/deepseek-v3.2"
+      "model": "github-copilot/claude-sonnet-4.6"
 {% else %}
       "model": "litellm/kimi-for-coding"
 {% endif %}
     },
     "unspecified-low": {
 {% if yadm.class == "work" %}
-      "model": "open-webui/claude-sonnet-4-6"
+      "model": "github-copilot/claude-sonnet-4.6"
 {% else %}
       "model": "litellm/kimi-for-coding"
 {% endif %}
@@ -162,7 +162,7 @@
     },
     "deep": {
 {% if yadm.class == "work" %}
-      "model": "open-webui/gpt-5.3-codex",
+      "model": "github-copilot/gpt-5.3-codex",
 {% else %}
       "model": "litellm/chatgpt/gpt-5.3-codex",
 {% endif %}
@@ -170,7 +170,7 @@
     },
     "writing": {
 {% if yadm.class == "work" %}
-      "model": "open-webui/gemini-3.1-flash-lite-preview"
+      "model": "github-copilot/gemini-3-flash-preview"
 {% else %}
       "model": "litellm/gemini/gemini-3.1-flash-lite-preview"
 {% endif %}
