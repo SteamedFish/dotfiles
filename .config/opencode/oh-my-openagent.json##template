@@ -5,10 +5,11 @@
     "sisyphus": {
 {% if yadm.class == "work" %}
       "model": "open-webui/claude-opus-4-6",
+      "variant": "max"
 {% else %}
       "model": "litellm/kimi-for-coding",
+      "variant": "high"
 {% endif %}
-      "variant": "max"
     },
     "hephaestus": {
 {% if yadm.class == "work" %}
@@ -30,38 +31,40 @@
 {% if yadm.class == "work" %}
       "model": "open-webui/claude-sonnet-4-6"
 {% else %}
-      "model": "litellm/github_copilot/claude-sonnet-4.6"
+      "model": "litellm/kimi-for-coding"
 {% endif %}
     },
     "explore": {
 {% if yadm.class == "work" %}
       "model": "open-webui/deepseek-v3.2"
 {% else %}
-      "model": "litellm/ark/deepseek-v3-2-251201"
+      "model": "litellm/kimi-for-coding"
 {% endif %}
     },
     "multimodal-looker": {
 {% if yadm.class == "work" %}
       "model": "open-webui/gemini-3.1-flash-lite-preview"
 {% else %}
-      "model": "litellm/gemini/gemini-3.1-flash-lite-preview"
+      "model": "litellm/kimi-for-coding"
 {% endif %}
     },
     "prometheus": {
 {% if yadm.class == "work" %}
       "model": "open-webui/claude-opus-4-6",
-{% else %}
-      "model": "litellm/github_copilot/claude-opus-4.6",
-{% endif %}
       "variant": "max"
+{% else %}
+      "model": "litellm/kimi-for-coding",
+      "variant": "high"
+{% endif %}
     },
     "metis": {
 {% if yadm.class == "work" %}
       "model": "open-webui/claude-opus-4-6",
-{% else %}
-      "model": "litellm/github_copilot/claude-opus-4.6",
-{% endif %}
       "variant": "max"
+{% else %}
+      "model": "litellm/kimi-for-coding",
+      "variant": "high"
+{% endif %}
     },
     "momus": {
 {% if yadm.class == "work" %}
@@ -75,36 +78,37 @@
 {% if yadm.class == "work" %}
       "model": "open-webui/claude-sonnet-4-6"
 {% else %}
-      "model": "litellm/github_copilot/claude-sonnet-4.6"
+      "model": "litellm/kimi-for-coding"
 {% endif %}
     },
     "build": {
 {% if yadm.class == "work" %}
       "model": "open-webui/claude-sonnet-4-6"
 {% else %}
-      "model": "litellm/github_copilot/claude-sonnet-4.6"
+      "model": "litellm/kimi-for-coding"
 {% endif %}
     },
     "plan": {
 {% if yadm.class == "work" %}
       "model": "open-webui/claude-opus-4-6",
-{% else %}
-      "model": "litellm/github_copilot/claude-opus-4.6",
-{% endif %}
       "variant": "max"
+{% else %}
+      "model": "litellm/kimi-for-coding",
+      "variant": "high"
+{% endif %}
     },
     "sisyphus-junior": {
 {% if yadm.class == "work" %}
       "model": "open-webui/claude-sonnet-4-6"
 {% else %}
-      "model": "litellm/github_copilot/claude-sonnet-4.6"
+      "model": "litellm/kimi-for-coding"
 {% endif %}
     },
     "OpenCode-Builder": {
 {% if yadm.class == "work" %}
       "model": "open-webui/claude-sonnet-4-6"
 {% else %}
-      "model": "litellm/github_copilot/claude-sonnet-4.6"
+      "model": "litellm/kimi-for-coding"
 {% endif %}
     }
   },
@@ -131,29 +135,30 @@
 {% else %}
       "model": "litellm/gemini/gemini-3.1-pro-preview",
 {% endif %}
-      "variant": "max"
+      "variant": "high"
     },
     "quick": {
 {% if yadm.class == "work" %}
       "model": "open-webui/deepseek-v3.2"
 {% else %}
-      "model": "litellm/ark/deepseek-v3-2-251201"
+      "model": "litellm/kimi-for-coding"
 {% endif %}
     },
     "unspecified-low": {
 {% if yadm.class == "work" %}
       "model": "open-webui/claude-sonnet-4-6"
 {% else %}
-      "model": "litellm/github_copilot/claude-sonnet-4.6"
+      "model": "litellm/kimi-for-coding"
 {% endif %}
     },
     "unspecified-high": {
 {% if yadm.class == "work" %}
       "model": "open-webui/claude-opus-4-6",
-{% else %}
-      "model": "litellm/github_copilot/claude-opus-4.6",
-{% endif %}
       "variant": "max"
+{% else %}
+      "model": "litellm/kimi-for-coding",
+      "variant": "high"
+{% endif %}
     },
     "deep": {
 {% if yadm.class == "work" %}
@@ -161,7 +166,7 @@
 {% else %}
       "model": "litellm/chatgpt/gpt-5.3-codex",
 {% endif %}
-      "variant": "max"
+      "variant": "xhigh"
     },
     "writing": {
 {% if yadm.class == "work" %}
