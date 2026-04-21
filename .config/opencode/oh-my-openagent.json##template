@@ -8,14 +8,22 @@
       "variant": "max"
 {% else %}
       "model": "litellm/kimi-for-coding",
-      "variant": "high"
+      "variant": "high",
+      "fallback_models": [
+        { "model": "litellm/minimax/MiniMax-M2.7" },
+        { "model": "litellm/ark/deepseek-v3-2-251201" }
+      ]
 {% endif %}
     },
     "hephaestus": {
 {% if yadm.class == "work" %}
       "model": "github-copilot/gpt-5.4",
 {% else %}
-      "model": "litellm/chatgpt/gpt-5.4",
+      "model": "litellm/kimi-for-coding",
+      "fallback_models": [
+        { "model": "litellm/minimax/MiniMax-M2.7" },
+        { "model": "litellm/ark/deepseek-v3-2-251201" }
+      ],
 {% endif %}
       "variant": "medium"
     },
@@ -23,7 +31,11 @@
 {% if yadm.class == "work" %}
       "model": "github-copilot/gpt-5.4",
 {% else %}
-      "model": "litellm/chatgpt/gpt-5.4",
+      "model": "litellm/kimi-for-coding",
+      "fallback_models": [
+        { "model": "litellm/minimax/MiniMax-M2.7" },
+        { "model": "litellm/ark/deepseek-v3-2-251201" }
+      ],
 {% endif %}
       "variant": "high"
     },
@@ -31,21 +43,33 @@
 {% if yadm.class == "work" %}
       "model": "github-copilot/claude-sonnet-4.6"
 {% else %}
-      "model": "litellm/kimi-for-coding"
+      "model": "litellm/kimi-for-coding",
+      "fallback_models": [
+        { "model": "litellm/minimax/MiniMax-M2.7" },
+        { "model": "litellm/ark/deepseek-v3-2-251201" }
+      ]
 {% endif %}
     },
     "explore": {
 {% if yadm.class == "work" %}
       "model": "github-copilot/claude-sonnet-4.6"
 {% else %}
-      "model": "litellm/kimi-for-coding"
+      "model": "litellm/kimi-for-coding",
+      "fallback_models": [
+        { "model": "litellm/minimax/MiniMax-M2.7" },
+        { "model": "litellm/ark/deepseek-v3-2-251201" }
+      ]
 {% endif %}
     },
     "multimodal-looker": {
 {% if yadm.class == "work" %}
       "model": "github-copilot/gemini-3-flash-preview"
 {% else %}
-      "model": "litellm/kimi-for-coding"
+      "model": "litellm/kimi-for-coding",
+      "fallback_models": [
+        { "model": "litellm/minimax/MiniMax-M2.7" },
+        { "model": "litellm/ark/deepseek-v3-2-251201" }
+      ]
 {% endif %}
     },
     "prometheus": {
@@ -54,7 +78,11 @@
       "variant": "max"
 {% else %}
       "model": "litellm/kimi-for-coding",
-      "variant": "high"
+      "variant": "high",
+      "fallback_models": [
+        { "model": "litellm/minimax/MiniMax-M2.7" },
+        { "model": "litellm/ark/deepseek-v3-2-251201" }
+      ]
 {% endif %}
     },
     "metis": {
@@ -63,14 +91,22 @@
       "variant": "max"
 {% else %}
       "model": "litellm/kimi-for-coding",
-      "variant": "high"
+      "variant": "high",
+      "fallback_models": [
+        { "model": "litellm/minimax/MiniMax-M2.7" },
+        { "model": "litellm/ark/deepseek-v3-2-251201" }
+      ]
 {% endif %}
     },
     "momus": {
 {% if yadm.class == "work" %}
       "model": "github-copilot/gpt-5.4",
 {% else %}
-      "model": "litellm/chatgpt/gpt-5.4",
+      "model": "litellm/kimi-for-coding",
+      "fallback_models": [
+        { "model": "litellm/minimax/MiniMax-M2.7" },
+        { "model": "litellm/ark/deepseek-v3-2-251201" }
+      ],
 {% endif %}
       "variant": "xhigh"
     },
@@ -78,14 +114,22 @@
 {% if yadm.class == "work" %}
       "model": "github-copilot/claude-sonnet-4.6"
 {% else %}
-      "model": "litellm/kimi-for-coding"
+      "model": "litellm/kimi-for-coding",
+      "fallback_models": [
+        { "model": "litellm/minimax/MiniMax-M2.7" },
+        { "model": "litellm/ark/deepseek-v3-2-251201" }
+      ]
 {% endif %}
     },
     "build": {
 {% if yadm.class == "work" %}
       "model": "github-copilot/claude-sonnet-4.6"
 {% else %}
-      "model": "litellm/kimi-for-coding"
+      "model": "litellm/kimi-for-coding",
+      "fallback_models": [
+        { "model": "litellm/minimax/MiniMax-M2.7" },
+        { "model": "litellm/ark/deepseek-v3-2-251201" }
+      ]
 {% endif %}
     },
     "plan": {
@@ -94,21 +138,33 @@
       "variant": "max"
 {% else %}
       "model": "litellm/kimi-for-coding",
-      "variant": "high"
+      "variant": "high",
+      "fallback_models": [
+        { "model": "litellm/minimax/MiniMax-M2.7" },
+        { "model": "litellm/ark/deepseek-v3-2-251201" }
+      ]
 {% endif %}
     },
     "sisyphus-junior": {
 {% if yadm.class == "work" %}
       "model": "github-copilot/claude-sonnet-4.6"
 {% else %}
-      "model": "litellm/kimi-for-coding"
+      "model": "litellm/kimi-for-coding",
+      "fallback_models": [
+        { "model": "litellm/minimax/MiniMax-M2.7" },
+        { "model": "litellm/ark/deepseek-v3-2-251201" }
+      ]
 {% endif %}
     },
     "OpenCode-Builder": {
 {% if yadm.class == "work" %}
       "model": "github-copilot/claude-sonnet-4.6"
 {% else %}
-      "model": "litellm/kimi-for-coding"
+      "model": "litellm/kimi-for-coding",
+      "fallback_models": [
+        { "model": "litellm/minimax/MiniMax-M2.7" },
+        { "model": "litellm/ark/deepseek-v3-2-251201" }
+      ]
 {% endif %}
     }
   },
@@ -117,7 +173,11 @@
 {% if yadm.class == "work" %}
       "model": "github-copilot/gemini-3.1-pro-preview",
 {% else %}
-      "model": "litellm/gemini/gemini-3.1-pro-preview",
+      "model": "litellm/kimi-for-coding",
+      "fallback_models": [
+        { "model": "litellm/minimax/MiniMax-M2.7" },
+        { "model": "litellm/ark/deepseek-v3-2-251201" }
+      ],
 {% endif %}
       "variant": "high"
     },
@@ -125,7 +185,11 @@
 {% if yadm.class == "work" %}
       "model": "github-copilot/gpt-5.4",
 {% else %}
-      "model": "litellm/chatgpt/gpt-5.4",
+      "model": "litellm/kimi-for-coding",
+      "fallback_models": [
+        { "model": "litellm/minimax/MiniMax-M2.7" },
+        { "model": "litellm/ark/deepseek-v3-2-251201" }
+      ],
 {% endif %}
       "variant": "xhigh"
     },
@@ -133,7 +197,11 @@
 {% if yadm.class == "work" %}
       "model": "github-copilot/gemini-3.1-pro-preview",
 {% else %}
-      "model": "litellm/gemini/gemini-3.1-pro-preview",
+      "model": "litellm/kimi-for-coding",
+      "fallback_models": [
+        { "model": "litellm/minimax/MiniMax-M2.7" },
+        { "model": "litellm/ark/deepseek-v3-2-251201" }
+      ],
 {% endif %}
       "variant": "high"
     },
@@ -141,14 +209,22 @@
 {% if yadm.class == "work" %}
       "model": "github-copilot/claude-sonnet-4.6"
 {% else %}
-      "model": "litellm/kimi-for-coding"
+      "model": "litellm/kimi-for-coding",
+      "fallback_models": [
+        { "model": "litellm/minimax/MiniMax-M2.7" },
+        { "model": "litellm/ark/deepseek-v3-2-251201" }
+      ]
 {% endif %}
     },
     "unspecified-low": {
 {% if yadm.class == "work" %}
       "model": "github-copilot/claude-sonnet-4.6"
 {% else %}
-      "model": "litellm/kimi-for-coding"
+      "model": "litellm/kimi-for-coding",
+      "fallback_models": [
+        { "model": "litellm/minimax/MiniMax-M2.7" },
+        { "model": "litellm/ark/deepseek-v3-2-251201" }
+      ]
 {% endif %}
     },
     "unspecified-high": {
@@ -157,14 +233,22 @@
       "variant": "max"
 {% else %}
       "model": "litellm/kimi-for-coding",
-      "variant": "high"
+      "variant": "high",
+      "fallback_models": [
+        { "model": "litellm/minimax/MiniMax-M2.7" },
+        { "model": "litellm/ark/deepseek-v3-2-251201" }
+      ]
 {% endif %}
     },
     "deep": {
 {% if yadm.class == "work" %}
       "model": "github-copilot/gpt-5.3-codex",
 {% else %}
-      "model": "litellm/chatgpt/gpt-5.3-codex",
+      "model": "litellm/kimi-for-coding",
+      "fallback_models": [
+        { "model": "litellm/minimax/MiniMax-M2.7" },
+        { "model": "litellm/ark/deepseek-v3-2-251201" }
+      ],
 {% endif %}
       "variant": "xhigh"
     },
@@ -172,7 +256,11 @@
 {% if yadm.class == "work" %}
       "model": "github-copilot/gemini-3-flash-preview"
 {% else %}
-      "model": "litellm/gemini/gemini-3.1-flash-lite-preview"
+      "model": "litellm/kimi-for-coding",
+      "fallback_models": [
+        { "model": "litellm/minimax/MiniMax-M2.7" },
+        { "model": "litellm/ark/deepseek-v3-2-251201" }
+      ]
 {% endif %}
     }
   }
