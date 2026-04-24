@@ -201,8 +201,6 @@ git commit -S --amend
 
 ---
 
----
-
 ## CORE PRINCIPLE: MULTIPLE COMMITS BY DEFAULT (NON-NEGOTIABLE)
 
 <critical_warning>
@@ -565,7 +563,9 @@ Execution order: Commit 1 -> Commit 2 -> ...
 **VALIDATION BEFORE EXECUTION:**
 - Each commit has <=4 files (or justified)
 - Each commit message matches detected STYLE + LANGUAGE
-- **Each subject line ≤ 50 characters** ← NEW REQUIREMENT
+- **Each subject line ≤ 50 characters** ← REQUIRED
+- **Each body line ≤ 72 characters** ← REQUIRED
+- **Blank line between subject and body** ← REQUIRED
 - Test files paired with implementation
 - Different directories = different commits (or justified)
 - Total commits >= min_commits
@@ -623,7 +623,7 @@ EXECUTION_PLAN:
       target: <hash>
   new_commits:
     - files: [...]
-      message: "..."  # Must be ≤50 chars subject
+      message: "..."
       level: N
   requires_force_push: true | false
 ```
@@ -736,31 +736,6 @@ system that replaces sessions"
 
 If ANY check fails -> REWRITE message.
 
-### 5.5 Commit Footer & Co-Author
-
-Add Sisyphus attribution to EVERY commit:
-
-1. **Footer in commit body:**
-```
-Ultraworked with [Sisyphus](https://github.com/code-yeongyu/oh-my-opencode)
-```
-
-2. **Co-authored-by trailer:**
-```
-Co-authored-by: Sisyphus <clio-agent@sisyphuslabs.ai>
-```
-
-**Example (both enabled):**
-```bash
-git commit -S -m "feat: add user authentication" \
-  -m "Replace session auth with JWT for horizontal scaling.
-
-- Add /auth/login and /auth/refresh endpoints
-- Store tokens in httpOnly cookies
-
-Ultraworked with [Sisyphus](https://github.com/code-yeongyu/oh-my-opencode)" \
-  -m "Co-authored-by: Sisyphus <clio-agent@sisyphuslabs.ai>"
-```
 </execution>
 
 ---
@@ -867,7 +842,7 @@ Is history messy?
 ### Anti-Patterns (AUTOMATIC FAILURE)
 
 1. **NEVER make one giant commit** - 3+ files MUST be 2+ commits
-2. **NEVER default to semantic commits** - detect from git log first
+2. **NEVER default to semantic style** - detect from git log first
 3. **NEVER separate test from implementation** - same commit always
 4. **NEVER group by file type** - group by feature/module
 5. **NEVER rewrite pushed history** without explicit permission
@@ -1164,6 +1139,18 @@ git log -S "searchString" --since="2024-01-01" --oneline
 git log -S "searchstring" -i --oneline
 ```
 
+**Example Use Cases:**
+```bash
+# When was this function added?
+git log -S "def calculate_discount" --oneline
+
+# When was this constant removed?
+git log -S "MAX_RETRY_COUNT" --all --oneline
+
+# Find who introduced a bug pattern
+git log -S "== None" -- "*.py" --oneline  # Should be "is None"
+```
+
 ### H2.2 Regex Search (git log -G)
 
 **Purpose**: Find commits where diff MATCHES a regex pattern
@@ -1182,6 +1169,15 @@ git log -G "^import\s+requests" -- "*.py" --oneline
 git log -G "TODO|FIXME|HACK" --oneline
 ```
 
+**-S vs -G Difference:**
+```
+-S "foo": Finds commits where COUNT of "foo" changed
+-G "foo": Finds commits where DIFF contains "foo"
+
+Use -S for: "when was X added/removed"
+Use -G for: "what commits touched lines containing X"
+```
+
 ### H2.3 Git Blame
 
 **Purpose**: Line-by-line attribution
@@ -1198,6 +1194,22 @@ git blame -C path/to/file.py
 
 # Ignore whitespace changes
 git blame -w path/to/file.py
+
+# Show email instead of name
+git blame -e path/to/file.py
+
+# Output format for parsing
+git blame --porcelain path/to/file.py
+```
+
+**Reading Blame Output:**
+```
+^abc1234 (Author Name 2024-01-15 10:30:00 +0900 42) code_line_here
+|         |            |                       |    +-- Line content
+|         |            |                       +-- Line number
+|         |            +-- Timestamp
+|         +-- Author
++-- Commit hash (^ means initial commit)
 ```
 
 ### H2.4 Git Bisect (Binary Search for Bugs)
@@ -1205,31 +1217,64 @@ git blame -w path/to/file.py
 **Purpose**: Find exact commit that introduced a bug
 
 ```bash
+# Start bisect session
 git bisect start
-git bisect bad            # Current state is broken
-git bisect good v1.0.0   # Known good state
 
-# Git checkouts middle commit. Test, then:
-git bisect good  # or: git bisect bad
+# Mark current (bad) state
+git bisect bad
 
-# Automated bisect:
+# Mark known good commit (e.g., last release)
+git bisect good v1.0.0
+
+# Git checkouts middle commit. Test it, then:
+git bisect good  # if this commit is OK
+git bisect bad   # if this commit has the bug
+
+# Repeat until git finds the culprit commit
+# Git will output: "abc1234 is the first bad commit"
+
+# When done, return to original state
+git bisect reset
+```
+
+**Automated Bisect (with test script):**
+```bash
+# If you have a test that fails on bug:
+git bisect start
+git bisect bad HEAD
+git bisect good v1.0.0
 git bisect run pytest tests/test_specific.py
 
-git bisect reset  # When done
+# Git runs test on each commit automatically
+# Exits 0 = good, exits 1-127 = bad, exits 125 = skip
 ```
 
 ### H2.5 File History Tracking
 
 ```bash
+# Full history of a file
+git log --oneline -- path/to/file.py
+
+# Follow file across renames
 git log --follow --oneline -- path/to/file.py
+
+# Show actual changes
 git log -p -- path/to/file.py
+
+# Files that no longer exist
 git log --all --full-history -- "**/deleted_file.py"
+
+# Who changed file most
+git shortlog -sn -- path/to/file.py
 ```
 </history_search_exec>
 
 ---
 
 ## PHASE H3: Present Results
+
+<history_results>
+### H3.1 Format Search Results
 
 ```
 SEARCH QUERY: "<what user asked>"
@@ -1240,14 +1285,33 @@ RESULTS:
   Commit       Date           Message
   ---------    ----------     --------------------------------
   abc1234      2024-06-15     feat: add discount calculation
+  def5678      2024-05-20     refactor: extract pricing logic
 
 MOST RELEVANT COMMIT: abc1234
+DETAILS:
+  Author: John Doe <john@example.com>
+  Date: 2024-06-15
+  Files changed: 3
+  
+DIFF EXCERPT (if applicable):
+  + def calculate_discount(price, rate):
+  +     return price * (1 - rate)
+```
+
+### H3.2 Provide Actionable Context
+
+Based on search results, offer relevant follow-ups:
+
+```
+FOUND THAT commit abc1234 introduced the change.
 
 POTENTIAL ACTIONS:
 - View full commit: git show abc1234
 - Revert this commit: git revert abc1234
+- See related commits: git log --ancestry-path abc1234..HEAD
 - Cherry-pick to another branch: git cherry-pick abc1234
 ```
+</history_results>
 
 ---
 
@@ -1273,6 +1337,8 @@ POTENTIAL ACTIONS:
 - Subject line > 50 chars -> SHORTEN
 - Body line > 72 chars -> WRAP
 - No blank line before body -> ADD IT
+- `git commit` without `-S` -> ADD -S FLAG
+- GPG signing fails -> STOP and ask user to unlock GPG agent
 
 ### Rebase Mode
 - Rebase main/master -> NEVER
