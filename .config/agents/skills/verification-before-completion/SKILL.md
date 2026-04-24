@@ -237,7 +237,7 @@ function retry<T>(
 
 
 
-## Common Failures
+## Red Flags - STOP
 
 - Using "should", "probably", "seems to"
 - Expressing satisfaction before verification ("Great!", "Perfect!", "Done!", etc.)

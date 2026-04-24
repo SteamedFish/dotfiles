@@ -13,6 +13,8 @@ Load plan, review critically, execute tasks in batches, report for review betwee
 
 **Announce at start:** "I'm using the executing-plans skill to implement this plan."
 
+**Note:** Tell your human partner that Superpowers works much better with access to subagents. The quality of its work will be significantly higher if run on a platform with subagent support. If subagents are available, use subagent-driven-development instead of this skill.
+
 ## The Process
 
 ### Step 1: Load and Review Plan
