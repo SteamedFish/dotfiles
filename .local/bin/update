@@ -399,8 +399,10 @@ update_vim() {
             cd "$dir" && gitpull
         fi
     done
-    # TODO not working currectly
-    # run vim +SPUpdate +qall
+    # Update LazyVim plugins
+    if [ -n "$(command -v nvim)" ] && [ -f "$HOME/.config/nvim/lua/config/lazy.lua" ]; then
+        run nvim --headless "+Lazy! sync" +qa
+    fi
 }
 
 update_emacs() {
