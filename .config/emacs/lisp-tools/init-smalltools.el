@@ -35,6 +35,8 @@
 
 (leaf aider
   :straight t
+  ;; Disabled because I no longer use Aider, but keep the config for reference.
+  :disabled t
   :doc AI assisted programming in Emacs with Aider
   :url https://github.com/tninja/aider.el
   ;;TODO ensure aider-chat is installed
