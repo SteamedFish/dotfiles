@@ -22,16 +22,27 @@
 (push '(tool-bar-lines . 0)   default-frame-alist)
 (push '(vertical-scroll-bars) default-frame-alist)
 
-(when (featurep 'comp)
+(when (require 'comp nil t)
   (setq native-comp-deferred-compilation (not noninteractive))
-  ;; FIXME: not working
-  (setq native-comp-eln-load-path
-        (remove
-         (expand-file-name
-          (concat user-emacs-directory "eln-cache/"))
-         native-comp-eln-load-path))
-  (add-to-list 'native-comp-eln-load-path
-               (expand-file-name (concat user-emacs-directory ".local/data/eln-cache"))))
+  ;; Keep all native compilation output under my-data-dir.  The default
+  ;; `eln-cache/' location is removed so new GUI sessions do not create it,
+  ;; while system native-lisp directories remain available for builtins.
+  (let ((target-cache (file-name-as-directory
+                       (expand-file-name ".local/data/eln-cache"
+                                         user-emacs-directory)))
+        (user-cache-root (file-name-as-directory user-emacs-directory)))
+    (setq native-comp-eln-load-path
+          (delete-dups
+           (cons target-cache
+                 (delq nil
+                       (mapcar
+                        (lambda (path)
+                          (unless (string-prefix-p
+                                   user-cache-root
+                                   (file-name-as-directory
+                                    (expand-file-name path)))
+                            path))
+                        native-comp-eln-load-path)))))))
 
 ;; Don't resize the frame when font size changes
 (setq frame-inhibit-implied-resize t)
