@@ -59,18 +59,18 @@
     (cond
       (IS-LINUX (when (executable-find "yay")
                   (async-shell-command
-                   (concat "yay "
-                            "--sync "
-                            "--noconfirm "
-                            "--nocleanmenu "
-                            "--nodiffmenu "
-                            "--noeditmenu "
-                            "--noupgrademenu "
-                            "--removemake "
-                            "--cleanafter "
-                            "--noprovides "
-                            "--redownloadall "
-                            "go-impl"))))
+                    (concat "yay "
+                             "--sync "
+                             "--aur "
+                             "--noconfirm "
+                             "--answerclean None "
+                             "--answerdiff None "
+                             "--answeredit None "
+                             "--answerupgrade None "
+                             "--removemake "
+                             "--cleanafter "
+                             "--redownloadall "
+                             "go-impl"))))
       (IS-MAC (async-shell-command
                "GO111MODULE=on go install github.com/josharian/impl@latest"))))
   (unless (executable-find "godoc")
@@ -108,14 +108,14 @@
                   (async-shell-command
                    (concat "yay "
                             "--sync "
+                            "--aur "
                             "--noconfirm "
-                            "--nocleanmenu "
-                            "--nodiffmenu "
-                            "--noeditmenu "
-                            "--noupgrademenu "
+                            "--answerclean None "
+                            "--answerdiff None "
+                            "--answeredit None "
+                            "--answerupgrade None "
                             "--removemake "
                             "--cleanafter "
-                            "--noprovides "
                             "--redownloadall "
                             "gomodifytags"))))
       (IS-MAC
@@ -132,14 +132,14 @@
                  (async-shell-command
                   (concat "yay "
                           "--sync "
+                          "--aur "
                           "--noconfirm "
-                          "--nocleanmenu "
-                          "--nodiffmenu "
-                          "--noeditmenu "
-                          "--noupgrademenu "
+                          "--answerclean None "
+                          "--answerdiff None "
+                          "--answeredit None "
+                          "--answerupgrade None "
                           "--removemake "
                           "--cleanafter "
-                          "--noprovides "
                           "--redownloadall "
                           "gotests"))))
      (IS-MAC
