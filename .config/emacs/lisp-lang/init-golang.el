@@ -27,10 +27,8 @@
   :straight t
   :config
   (unless (executable-find "guru")
-    (cond
-     (IS-LINUX (system-packages-ensure "go-tools"))
-     (IS-MAC (async-shell-command
-              "GO111MODULE=on go install golang.org/x/tools/cmd/guru")))))
+    (async-shell-command
+     "GO111MODULE=on go install golang.org/x/tools/cmd/guru@latest")))
 
 (leaf go-dlv
   :url https://github.com/benma/go-dlv.el
@@ -72,10 +70,8 @@
      (IS-MAC (async-shell-command
               "GO111MODULE=on go install github.com/josharian/impl@latest"))))
   (unless (executable-find "godoc")
-    (cond
-     (IS-LINUX (system-packages-ensure "go-tools"))
-     (IS-MAC (async-shell-command
-              "GO111MODULE=on go install golang.org/x/tools/cmd/godoc")))))
+    (async-shell-command
+     "GO111MODULE=on go install golang.org/x/tools/cmd/godoc@latest")))
 
 (leaf flycheck-golangci-lint
   :url https://github.com/weijiangan/flycheck-golangci-lint

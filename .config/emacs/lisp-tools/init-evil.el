@@ -34,6 +34,8 @@
   (evil-collection-calendar-want-org-bindings . t)
   (evil-collection-outline-bind-tab-p         . nil)
   :config
+  (setq evil-collection-mode-list
+        (delq 'message (copy-sequence evil-collection-mode-list)))
   (evil-collection-init)
   (blackout 'evil-collection-unimpaired-mode))
 

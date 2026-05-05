@@ -23,7 +23,8 @@
   (plantuml-default-exec-mode . 'executable)
   :config
   (add-to-list 'auto-mode-alist    '("\\.plantuml\\'" . plantuml-mode))
-  (add-to-list 'org-src-lang-modes '("plantuml"       . plantuml)))
+  (add-to-list 'org-src-lang-modes '("plantuml"       . plantuml))
+  (setq org-plantuml-jar-path plantuml-jar-path))
 
 (leaf flycheck-plantuml
   :url https://github.com/alexmurray/flycheck-plantuml
@@ -34,9 +35,8 @@
 
 (leaf ob-plantuml
   :comment provided by org-plus-contrib
+  :when IS-GUI
   :require t
-  :setq
-  (org-plantuml-jar-path . plantuml-jar-path)
   :config
   (add-to-list 'org-babel-default-header-args:plantuml
                '(:cmdline . "-charset utf-8")))
