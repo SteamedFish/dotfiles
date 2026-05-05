@@ -91,6 +91,7 @@
 (require 'init-plantuml)
 (require 'init-web)
 (require 'init-debiandev)
+(require 'init-pkgbuild)
 
 (provide 'init)
 ;;; init.el ends here
