@@ -105,6 +105,31 @@ straight.el reaches its interactive prompt path."
                      (string-suffix-p ".el" file))
             (update-emacs--native-compile-file file)))))))
 
+(defun update-emacs--remove-directory-if-present (directory)
+  "Delete DIRECTORY when it exists."
+  (when (file-directory-p directory)
+    (message "Removing old ELN cache %s" directory)
+    (delete-directory directory t)))
+
+(defun update-emacs--remove-old-eln-cache ()
+  "Remove obsolete native compilation cache directories.
+
+Delete the old default `eln-cache/' location and versioned cache
+subdirectories that do not belong to the running Emacs version."
+  (let* ((default-cache (expand-file-name "eln-cache" user-emacs-directory))
+         (active-cache (file-name-as-directory
+                        (expand-file-name ".local/data/eln-cache"
+                                          user-emacs-directory)))
+         (current-version (regexp-quote emacs-version)))
+    (update-emacs--remove-directory-if-present default-cache)
+    (when (file-directory-p active-cache)
+      (dolist (entry (directory-files active-cache t directory-files-no-dot-files-regexp))
+        (when (and (file-directory-p entry)
+                   (not (string-match-p current-version
+                                        (file-name-nondirectory
+                                         (directory-file-name entry)))))
+          (update-emacs--remove-directory-if-present entry))))))
+
 (defun update-emacs--native-compile-loaded-code ()
   "Native-compile code that GUI startup would otherwise compile lazily."
   (when (and (require 'comp nil t)
@@ -122,6 +147,7 @@ straight.el reaches its interactive prompt path."
     ;; Compile only loaded straight.el package files.  Whole-directory native
     ;; compilation can hit disabled packages whose optional files are broken.
     (update-emacs--native-compile-loaded-straight-files)
+    (update-emacs--remove-old-eln-cache)
     (when (fboundp 'native-compile-prune-cache)
       (native-compile-prune-cache))))
 
