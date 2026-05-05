@@ -245,9 +245,8 @@
   (darkroom-mode-hook . mixed-pitch-mode))
 
 (leaf centered-window
-  :url https://github.com/anler/centered-window-mode
   :doc "Global minor mode that centers the text of the window."
-  :straight t
+  :straight (centered-window :host github :repo "nullvec/centered-window-mode")
   :setq
   (cwm-centered-window-width  . 300)
   (cwm-use-vertical-padding   . t)
