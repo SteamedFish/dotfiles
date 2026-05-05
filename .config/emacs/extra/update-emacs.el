@@ -24,6 +24,9 @@
 (declare-function straight-vc-git-fetch-from-remote "straight")
 (declare-function straight-x-pull-all "straight-x")
 
+(defvar straight-base-dir)
+(defvar straight-build-dir)
+
 (defvar update-emacs-straight-fetch-retry-count 3
   "Maximum attempts for straight.el Git fetches during batch updates.")
 
@@ -67,6 +70,61 @@ straight.el reaches its interactive prompt path."
                        #'update-emacs--straight-git-fetch-with-retries))
     (funcall thunk)))
 
+(defun update-emacs--native-compile-directory (directory)
+  "Native-compile DIRECTORY when native compilation is available."
+  (when (and (fboundp 'native-comp-available-p)
+             (native-comp-available-p)
+             (fboundp 'native-compile-directory)
+             (file-directory-p directory))
+    (message "Native-compiling %s" directory)
+    (native-compile-directory directory)))
+
+(defun update-emacs--native-compile-file (file)
+  "Native-compile FILE when it still exists."
+  (when (and (fboundp 'native-compile)
+             (stringp file)
+             (file-exists-p file))
+    (message "Native-compiling %s" file)
+    (native-compile file)))
+
+(defun update-emacs--straight-build-directory ()
+  "Return the active straight.el build directory, or nil if unavailable."
+  (when (and (boundp 'straight-base-dir)
+             (boundp 'straight-build-dir))
+    (expand-file-name (concat "straight/" straight-build-dir)
+                      straight-base-dir)))
+
+(defun update-emacs--native-compile-loaded-straight-files ()
+  "Native-compile straight.el files loaded during this batch startup."
+  (let ((straight-build-directory (update-emacs--straight-build-directory)))
+    (when straight-build-directory
+      (dolist (entry load-history)
+        (let ((file (car entry)))
+          (when (and (stringp file)
+                     (string-prefix-p straight-build-directory file)
+                     (string-suffix-p ".el" file))
+            (update-emacs--native-compile-file file)))))))
+
+(defun update-emacs--native-compile-loaded-code ()
+  "Native-compile code that GUI startup would otherwise compile lazily."
+  (when (and (require 'comp nil t)
+             (fboundp 'native-comp-available-p)
+             (native-comp-available-p))
+    ;; Batch startup disables deferred native compilation to avoid stray async
+    ;; jobs, so compile synchronously here before the next GUI session starts.
+    (dolist (directory (delq nil
+                             (list
+                              (expand-file-name "lisp-core" user-emacs-directory)
+                              (expand-file-name "lisp-theme" user-emacs-directory)
+                              (expand-file-name "lisp-tools" user-emacs-directory)
+                              (expand-file-name "lisp-lang" user-emacs-directory))))
+      (update-emacs--native-compile-directory directory))
+    ;; Compile only loaded straight.el package files.  Whole-directory native
+    ;; compilation can hit disabled packages whose optional files are broken.
+    (update-emacs--native-compile-loaded-straight-files)
+    (when (fboundp 'native-compile-prune-cache)
+      (native-compile-prune-cache))))
+
 (update-emacs--with-straight-fetch-retries
  (lambda ()
    (cond
@@ -93,6 +151,8 @@ straight.el reaches its interactive prompt path."
        (condition-case nil
            (package-menu-execute 'noquery)
          (user-error nil)))))))
+
+(update-emacs--native-compile-loaded-code)
 
 (if (fboundp 'lsp-update-servers)
     (lsp-update-servers))
