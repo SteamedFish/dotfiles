@@ -10,8 +10,7 @@
 
 ;; straight.el bootstrap
 (setq straight-recipes-emacsmirror-use-mirror t
-      straight-repository-branch "develop"
-      straight-disable-compile (or IS-ANDROID IS-TERMUX))
+      straight-repository-branch "develop")
 
 (setq straight-disable-native-compile
       (when (fboundp 'native-comp-available-p)
