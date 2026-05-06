@@ -22,30 +22,39 @@
 (push '(tool-bar-lines . 0)   default-frame-alist)
 (push '(vertical-scroll-bars) default-frame-alist)
 
-(when (and (require 'comp nil t)
-           (fboundp 'native-comp-available-p)
+(when (require 'comp nil t)
+  (if (and (fboundp 'native-comp-available-p)
            (native-comp-available-p)
            (boundp 'native-comp-eln-load-path))
-  (setq native-comp-deferred-compilation (not noninteractive))
-  ;; Keep all native compilation output under my-data-dir.  The default
-  ;; `eln-cache/' location is removed so new GUI sessions do not create it,
-  ;; while system native-lisp directories remain available for builtins.
-  (let ((target-cache (file-name-as-directory
-                       (expand-file-name ".local/data/eln-cache"
-                                         user-emacs-directory)))
-        (user-cache-root (file-name-as-directory user-emacs-directory)))
-    (setq native-comp-eln-load-path
-          (delete-dups
-           (cons target-cache
-                 (delq nil
-                       (mapcar
-                        (lambda (path)
-                          (unless (string-prefix-p
-                                   user-cache-root
-                                   (file-name-as-directory
-                                    (expand-file-name path)))
-                            path))
-                        native-comp-eln-load-path)))))))
+      (progn
+        (setq native-comp-deferred-compilation (not noninteractive))
+        ;; Keep all native compilation output under my-data-dir.  The default
+        ;; `eln-cache/' location is removed so new GUI sessions do not create
+        ;; it, while system native-lisp directories remain available for
+        ;; builtins.
+        (let ((target-cache (file-name-as-directory
+                             (expand-file-name ".local/data/eln-cache"
+                                               user-emacs-directory)))
+              (user-cache-root (file-name-as-directory user-emacs-directory)))
+          (setq native-comp-eln-load-path
+                (delete-dups
+                 (cons target-cache
+                       (delq nil
+                             (mapcar
+                              (lambda (path)
+                                (unless (string-prefix-p
+                                         user-cache-root
+                                         (file-name-as-directory
+                                          (expand-file-name path)))
+                                  path))
+                              native-comp-eln-load-path)))))))
+    ;; Some Emacs builds ship comp.el but cannot load libgccjit.  Disable all
+    ;; implicit native-comp entry points so package update hooks do not try to
+    ;; build trampolines and fail before update_emacs can finish.
+    (setq native-comp-deferred-compilation nil
+          native-comp-jit-compilation nil
+          comp-enable-subr-trampolines nil
+          native-comp-enable-subr-trampolines nil)))
 
 ;; Don't resize the frame when font size changes
 (setq frame-inhibit-implied-resize t)
