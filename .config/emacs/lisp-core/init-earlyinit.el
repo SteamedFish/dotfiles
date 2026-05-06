@@ -22,7 +22,10 @@
 (push '(tool-bar-lines . 0)   default-frame-alist)
 (push '(vertical-scroll-bars) default-frame-alist)
 
-(when (require 'comp nil t)
+(when (and (require 'comp nil t)
+           (fboundp 'native-comp-available-p)
+           (native-comp-available-p)
+           (boundp 'native-comp-eln-load-path))
   (setq native-comp-deferred-compilation (not noninteractive))
   ;; Keep all native compilation output under my-data-dir.  The default
   ;; `eln-cache/' location is removed so new GUI sessions do not create it,
