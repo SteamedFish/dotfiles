@@ -14,10 +14,8 @@
       straight-disable-compile (or IS-ANDROID IS-TERMUX))
 
 (setq straight-disable-native-compile
-      (or IS-ANDROID
-          IS-TERMUX
-          (when (fboundp 'native-comp-available-p)
-            (not (native-comp-available-p)))))
+      (when (fboundp 'native-comp-available-p)
+        (not (native-comp-available-p))))
 
 (setq straight-base-dir my-data-dir)
 (setq straight-build-dir (format "build-%s" emacs-version))
