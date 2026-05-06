@@ -161,10 +161,16 @@
 ;;; Editing tools - Parentheses & Structure editing
 ;;
 
+(defconst my-parinfer-rust-supported-p
+  (and (fboundp 'module-load)
+       (not IS-ANDROID)
+       (not IS-TERMUX))
+  "Whether parinfer-rust-mode can load a supported native module.")
+
 (leaf parinfer-rust-mode
   :url "https://github.com/justinbarclay/parinfer-rust-mode"
   :straight t
-  :when (fboundp 'module-load)
+  :when my-parinfer-rust-supported-p
   :hook emacs-lisp-mode-hook
   :hook lisp-interaction-mode-hook
   :hook clojure-mode-hook
@@ -184,7 +190,7 @@
 (leaf parinfer
   :url "https://github.com/DogLooksGood/parinfer-mode"
   :straight t
-  :unless (fboundp 'module-load)
+  :unless my-parinfer-rust-supported-p
   :hook ((emacs-lisp-mode-hook
           lisp-interaction-mode-hook
           clojure-mode-hook
