@@ -6,6 +6,8 @@
 
 ;;; Code:
 
+(setq load-prefer-newer t)
+
 ;; add to load-path
 (push (expand-file-name "lisp-core"  user-emacs-directory) load-path)
 (push (expand-file-name "lisp-theme" user-emacs-directory) load-path)
@@ -24,7 +26,9 @@
 (defconst IS-ANDROID (eq system-type 'android))
 (defconst IS-TERMUX
   ;; If running inside Android Termux
-  (string-match-p "-linux-android$" system-configuration))
+  (or (string-match-p "-linux-android$" system-configuration)
+      (string-prefix-p "/data/data/com.termux/"
+                       (or (getenv "PREFIX") ""))))
 
 ;; detect if we can run gui
 (defconst IS-GUI
@@ -36,12 +40,12 @@
    (t noninteractive)))
 
 ;; https://marek-g.github.io/posts/tips_and_tricks/emacs_on_android/
-(when IS-ANDROID
+(when (or IS-ANDROID IS-TERMUX)
   ;; Add Termux binaries to PATH environment
   (let ((termuxpath "/data/data/com.termux/files/usr/bin"))
     (setenv "PATH" (concat (getenv "PATH") ":" termuxpath))
     (setq exec-path (append exec-path (list termuxpath)))))
-(when IS-ANDROID
+(when (or IS-ANDROID IS-TERMUX)
   (setq tls-program '("gnutls-cli -p %p %h"
                       "gnutls-cli -p %p %h --protocols ssl3")))
 
