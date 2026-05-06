@@ -47,6 +47,31 @@
   ;; or use aider-transient-menu-2cols / aider-transient-menu-1col, for narrow screen
   (aider-magit-setup-transients)) ;; add aider magit function to magit menu
 
+(leaf ai-code
+  :url https://github.com/tninja/ai-code-interface.el
+  :doc "Unified AI coding interface; configured to use opencode via vterm"
+  :straight (ai-code
+             :host github
+             :repo "tninja/ai-code-interface.el"
+             :files (:defaults "snippets"))
+  :require t
+  :commands (ai-code-menu
+             ai-code-set-backend
+             ai-code-cli-start
+             ai-code-cli-resume
+             ai-code-cli-switch-to-buffer-or-hide
+             ai-code-select-backend
+             ai-code-select-terminal)
+  :bind (("C-c a" . ai-code-menu))
+  :init
+  (customize-set-variable 'ai-code-opencode-program "opencode")
+  (customize-set-variable 'ai-code-backends-infra-terminal-backend 'vterm)
+  :config
+  (require 'ai-code-opencode)
+  (require 'ai-code-backends-infra)
+  (when (executable-find (symbol-value 'ai-code-opencode-program))
+    (ai-code-set-backend 'opencode)))
+
 (leaf copilot
   :url https://github.com/copilot-emacs/copilot.el
   :doc M-x copilot-login
