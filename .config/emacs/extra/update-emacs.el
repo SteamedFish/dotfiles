@@ -26,9 +26,6 @@
 
 (defvar straight-base-dir)
 (defvar straight-build-dir)
-(defvar straight-disable-native-compile)
-(defvar IS-ANDROID)
-(defvar IS-TERMUX)
 
 (defvar update-emacs-straight-fetch-retry-count 3
   "Maximum attempts for straight.el Git fetches during batch updates.")
@@ -73,16 +70,9 @@ straight.el reaches its interactive prompt path."
                        #'update-emacs--straight-git-fetch-with-retries))
     (funcall thunk)))
 
-(defun update-emacs--native-compile-disabled-p ()
-  "Return non-nil when batch native compilation should be skipped."
-  (or (bound-and-true-p IS-ANDROID)
-      (bound-and-true-p IS-TERMUX)
-      (bound-and-true-p straight-disable-native-compile)))
-
 (defun update-emacs--native-compile-directory (directory)
   "Native-compile DIRECTORY when native compilation is available."
-  (when (and (not (update-emacs--native-compile-disabled-p))
-             (fboundp 'native-comp-available-p)
+  (when (and (fboundp 'native-comp-available-p)
              (native-comp-available-p)
              (fboundp 'native-compile-directory)
              (file-directory-p directory))
@@ -91,8 +81,7 @@ straight.el reaches its interactive prompt path."
 
 (defun update-emacs--native-compile-file (file)
   "Native-compile FILE when it still exists."
-  (when (and (not (update-emacs--native-compile-disabled-p))
-             (fboundp 'native-compile)
+  (when (and (fboundp 'native-compile)
              (stringp file)
              (file-exists-p file))
     (message "Native-compiling %s" file)
@@ -143,8 +132,7 @@ subdirectories that do not belong to the running Emacs version."
 
 (defun update-emacs--native-compile-loaded-code ()
   "Native-compile code that GUI startup would otherwise compile lazily."
-  (when (and (not (update-emacs--native-compile-disabled-p))
-             (require 'comp nil t)
+  (when (and (require 'comp nil t)
              (fboundp 'native-comp-available-p)
              (native-comp-available-p))
     ;; Batch startup disables deferred native compilation to avoid stray async
