@@ -12,6 +12,7 @@
 (leaf evil
   :url "https://github.com/emacs-evil/evil"
   :straight t
+  :require t
   :global-minor-mode t
   :pre-setq
   (evil-want-keybinding                . nil)
