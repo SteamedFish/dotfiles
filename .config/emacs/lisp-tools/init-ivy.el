@@ -98,7 +98,7 @@
   :url https://github.com/radian-software/prescient.el
   :straight t
   :pre-setq
-  (prescient-filter-method           . '(literal regexp initialism fuzzy))
+  (prescient-filter-method           . '(literal regexp initialism))
   :setq
   (prescient-sort-full-matches-first . t)
   :global-minor-mode prescient-persist-mode)
