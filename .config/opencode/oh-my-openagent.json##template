@@ -1,6 +1,13 @@
 {
   "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-opencode/master/assets/oh-my-opencode.schema.json",
   "disabled_mcps": ["websearch", "context7", "grep_app"],
+{% if yadm.class != "work" %}
+  "runtime_fallback": {
+    "enabled": true,
+    "timeout_seconds": 30,
+    "retry_on_errors": [402, 429, 503]
+  },
+{% endif %}
   "agents": {
     "sisyphus": {
 {% if yadm.class == "work" %}
@@ -10,6 +17,7 @@
       "model": "litellm/kimi-k3",
       "variant": "high",
       "fallback_models": [
+        { "model": "litellm/opencode-go/glm-5.2" },
         { "model": "litellm/minimax/MiniMax-M3" }
       ]
 {% endif %}
@@ -20,7 +28,7 @@
 {% else %}
       "model": "litellm/kimi-k3",
       "fallback_models": [
-        { "model": "litellm/minimax/MiniMax-M3" }
+        { "model": "litellm/opencode-go/glm-5.2" }
       ],
 {% endif %}
       "variant": "medium"
@@ -31,7 +39,7 @@
 {% else %}
       "model": "litellm/kimi-k3",
       "fallback_models": [
-        { "model": "litellm/minimax/MiniMax-M3" }
+        { "model": "litellm/opencode-go/glm-5.2" }
       ],
 {% endif %}
       "variant": "high"
@@ -40,8 +48,9 @@
 {% if yadm.class == "work" %}
       "model": "github-copilot/claude-sonnet-4.6"
 {% else %}
-      "model": "litellm/kimi-k3",
+      "model": "litellm/opencode-go/deepseek-v4-flash",
       "fallback_models": [
+        { "model": "litellm/opencode-go/glm-5.2" },
         { "model": "litellm/minimax/MiniMax-M3" }
       ]
 {% endif %}
@@ -50,9 +59,10 @@
 {% if yadm.class == "work" %}
       "model": "github-copilot/claude-sonnet-4.6"
 {% else %}
-      "model": "litellm/kimi-k3",
+      "model": "litellm/opencode-go/deepseek-v4-flash",
       "fallback_models": [
-        { "model": "litellm/minimax/MiniMax-M3" }
+        { "model": "litellm/minimax/MiniMax-M3" },
+        { "model": "litellm/deepseek/deepseek-v4-flash" }
       ]
 {% endif %}
     },
@@ -60,9 +70,10 @@
 {% if yadm.class == "work" %}
       "model": "github-copilot/gemini-3-flash-preview"
 {% else %}
-      "model": "litellm/kimi-k3",
+      "model": "litellm/opencode-go/mimo-v2.5",
       "fallback_models": [
-        { "model": "litellm/minimax/MiniMax-M3" }
+        { "model": "litellm/minimax/MiniMax-M3" },
+        { "model": "litellm/kimi-k3" }
       ]
 {% endif %}
     },
@@ -74,7 +85,7 @@
       "model": "litellm/kimi-k3",
       "variant": "high",
       "fallback_models": [
-        { "model": "litellm/minimax/MiniMax-M3" }
+        { "model": "litellm/opencode-go/glm-5.2" }
       ]
 {% endif %}
     },
@@ -83,10 +94,10 @@
       "model": "open-webui/claude-opus-4-6",
       "variant": "max"
 {% else %}
-      "model": "litellm/kimi-k3",
+      "model": "litellm/kimi-for-coding",
       "variant": "high",
       "fallback_models": [
-        { "model": "litellm/minimax/MiniMax-M3" }
+        { "model": "litellm/opencode-go/glm-5.2" }
       ]
 {% endif %}
     },
@@ -94,9 +105,9 @@
 {% if yadm.class == "work" %}
       "model": "github-copilot/gpt-5.4",
 {% else %}
-      "model": "litellm/kimi-k3",
+      "model": "litellm/opencode-go/glm-5.2",
       "fallback_models": [
-        { "model": "litellm/minimax/MiniMax-M3" }
+        { "model": "litellm/kimi-k3", "variant": "high" }
       ],
 {% endif %}
       "variant": "xhigh"
@@ -105,8 +116,9 @@
 {% if yadm.class == "work" %}
       "model": "github-copilot/claude-sonnet-4.6"
 {% else %}
-      "model": "litellm/kimi-k3",
+      "model": "litellm/kimi-for-coding",
       "fallback_models": [
+        { "model": "litellm/opencode-go/glm-5.2" },
         { "model": "litellm/minimax/MiniMax-M3" }
       ]
 {% endif %}
@@ -115,9 +127,9 @@
 {% if yadm.class == "work" %}
       "model": "github-copilot/claude-sonnet-4.6"
 {% else %}
-      "model": "litellm/kimi-k3",
+      "model": "litellm/kimi-for-coding",
       "fallback_models": [
-        { "model": "litellm/minimax/MiniMax-M3" }
+        { "model": "litellm/opencode-go/glm-5.2" }
       ]
 {% endif %}
     },
@@ -129,7 +141,7 @@
       "model": "litellm/kimi-k3",
       "variant": "high",
       "fallback_models": [
-        { "model": "litellm/minimax/MiniMax-M3" }
+        { "model": "litellm/opencode-go/glm-5.2" }
       ]
 {% endif %}
     },
@@ -137,8 +149,9 @@
 {% if yadm.class == "work" %}
       "model": "github-copilot/claude-sonnet-4.6"
 {% else %}
-      "model": "litellm/kimi-k3",
+      "model": "litellm/kimi-for-coding",
       "fallback_models": [
+        { "model": "litellm/opencode-go/glm-5.2" },
         { "model": "litellm/minimax/MiniMax-M3" }
       ]
 {% endif %}
@@ -147,9 +160,9 @@
 {% if yadm.class == "work" %}
       "model": "github-copilot/claude-sonnet-4.6"
 {% else %}
-      "model": "litellm/kimi-k3",
+      "model": "litellm/kimi-for-coding",
       "fallback_models": [
-        { "model": "litellm/minimax/MiniMax-M3" }
+        { "model": "litellm/opencode-go/glm-5.2" }
       ]
 {% endif %}
     }
@@ -159,9 +172,10 @@
 {% if yadm.class == "work" %}
       "model": "github-copilot/gemini-3.1-pro-preview",
 {% else %}
-      "model": "litellm/kimi-k3",
+      "model": "litellm/kimi-for-coding",
       "fallback_models": [
-        { "model": "litellm/minimax/MiniMax-M3" }
+        { "model": "litellm/opencode-go/mimo-v2.5" },
+        { "model": "litellm/kimi-k3", "variant": "high" }
       ],
 {% endif %}
       "variant": "high"
@@ -172,7 +186,7 @@
 {% else %}
       "model": "litellm/kimi-k3",
       "fallback_models": [
-        { "model": "litellm/minimax/MiniMax-M3" }
+        { "model": "litellm/opencode-go/glm-5.2" }
       ],
 {% endif %}
       "variant": "xhigh"
@@ -181,9 +195,9 @@
 {% if yadm.class == "work" %}
       "model": "github-copilot/gemini-3.1-pro-preview",
 {% else %}
-      "model": "litellm/kimi-k3",
+      "model": "litellm/opencode-go/glm-5.2",
       "fallback_models": [
-        { "model": "litellm/minimax/MiniMax-M3" }
+        { "model": "litellm/kimi-k3" }
       ],
 {% endif %}
       "variant": "high"
@@ -192,9 +206,10 @@
 {% if yadm.class == "work" %}
       "model": "github-copilot/claude-sonnet-4.6"
 {% else %}
-      "model": "litellm/kimi-k3",
+      "model": "litellm/opencode-go/deepseek-v4-flash",
       "fallback_models": [
-        { "model": "litellm/minimax/MiniMax-M3" }
+        { "model": "litellm/minimax/MiniMax-M3" },
+        { "model": "litellm/kimi-for-coding" }
       ]
 {% endif %}
     },
@@ -202,9 +217,10 @@
 {% if yadm.class == "work" %}
       "model": "github-copilot/claude-sonnet-4.6"
 {% else %}
-      "model": "litellm/kimi-k3",
+      "model": "litellm/opencode-go/mimo-v2.5",
       "fallback_models": [
-        { "model": "litellm/minimax/MiniMax-M3" }
+        { "model": "litellm/minimax/MiniMax-M3" },
+        { "model": "litellm/kimi-for-coding" }
       ]
 {% endif %}
     },
@@ -213,10 +229,10 @@
       "model": "open-webui/claude-opus-4-6",
       "variant": "max"
 {% else %}
-      "model": "litellm/kimi-k3",
+      "model": "litellm/opencode-go/glm-5.2",
       "variant": "high",
       "fallback_models": [
-        { "model": "litellm/minimax/MiniMax-M3" }
+        { "model": "litellm/kimi-k3" }
       ]
 {% endif %}
     },
@@ -224,9 +240,10 @@
 {% if yadm.class == "work" %}
       "model": "github-copilot/gpt-5.3-codex",
 {% else %}
-      "model": "litellm/kimi-k3",
+      "model": "litellm/opencode-go/glm-5.2",
       "fallback_models": [
-        { "model": "litellm/minimax/MiniMax-M3" }
+        { "model": "litellm/kimi-k3", "variant": "high" },
+        { "model": "litellm/kimi-for-coding" }
       ],
 {% endif %}
       "variant": "xhigh"
@@ -235,9 +252,9 @@
 {% if yadm.class == "work" %}
       "model": "github-copilot/gemini-3-flash-preview"
 {% else %}
-      "model": "litellm/kimi-k3",
+      "model": "litellm/kimi-for-coding",
       "fallback_models": [
-        { "model": "litellm/minimax/MiniMax-M3" }
+        { "model": "litellm/opencode-go/deepseek-v4-flash" }
       ]
 {% endif %}
     }
