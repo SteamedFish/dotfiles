@@ -1,0 +1,30 @@
+{
+    "$schema": "https://raw.githubusercontent.com/Opencode-DCP/opencode-dynamic-context-pruning/master/dcp.schema.json",
+    // Enable or disable the plugin
+    "enabled": true,
+    // Automatically update npm-installed DCP when a newer npm latest is available.
+    // Version-locked plugin specs are not updated.
+    "autoUpdate": true,
+    // Enable debug logging to ~/.config/opencode/logs/dcp/
+    "debug": false,
+    // Unified context compression tool and behavior settings
+    "compress": {
+        // Compression mode: "range" (compress spans into block summaries)
+        // or experimental "message" (compress individual raw messages)
+        "mode": "range",
+        // Permission mode: "allow" (no prompt), "ask" (prompt), "deny" (tool not registered)
+        "permission": "allow",
+        // Show compression content in a chat notification
+        "showCompression": false,
+        // Let active summary tokens extend the effective maxContextLimit
+        "summaryBuffer": true,
+        // Soft upper threshold: above this, DCP keeps injecting strong
+        // compression nudges (based on nudgeFrequency), so compression is
+        // much more likely. Accepts: number or "X%" of model context window.
+        "maxContextLimit": "90%",
+        // Soft lower threshold for reminder nudges: below this, turn/iteration
+        // reminders are off (compression less likely). At/above this, reminders
+        // are on. Accepts: number or "X%" of model context window.
+        "minContextLimit": "50%",
+    },
+}
