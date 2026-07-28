@@ -47,7 +47,6 @@ Maintain a well-organized directory structure:
 **Principles:**
 - **Separation of concerns**: Place code, docs, tests, scripts, input, output in separate subdirectories
 - **Self-explanatory naming**: Directory and file names must clearly indicate their purpose
-- **Document structure**: Define directory/file purposes in project `AGENTS.md`
 
 ### 1.4 Boundary Rules
 - **DO NOT** create or modify files outside the project directory unless explicitly requested
