@@ -8,7 +8,6 @@
 
 ### 1.1 Mandatory Project Setup
 Every project MUST have:
-- **Dedicated directory** managed by Git
 - **`AGENTS.md`** at project root (project-specific rules)
 - **`README.md`** and **`README.zh-CN.md`** at project root (generate if not exist)
 - **TODO tracking** and **CHANGELOG** (format depends on project size):
@@ -19,7 +18,10 @@ Every project MUST have:
 | **Small/Medium** | Section in project `AGENTS.md` | Section in project `AGENTS.md` |
 | **Config/Dotfiles** | Section in `AGENTS.md` (optional) | Section in `AGENTS.md` (optional) |
 
-### 1.2 Directory Organization
+### 1.2 Git Workflow
+Every project lives in a **dedicated directory managed by Git**. If the project is not yet a Git repository, initialize one (unless the user explicitly says otherwise). **Every commit MUST be GPG-signed** — if the gpg-agent is locked, prompt the user to unlock it before committing. Never skip GPG signing unless the user explicitly says so. Work inside a **git worktree** to avoid conflicts with other sessions, and on a **topic branch** rather than directly on `main` / `master`. **Commit often**, in small **atomic commits**, automatically as modifications are made on the branch (no need to ask permission to commit). However, **ALWAYS ask the user** before merging the branch into `master`/`main` or pushing to the remote.
+
+### 1.3 Directory Organization
 Maintain a well-organized directory structure:
 
 **Principles:**
@@ -27,35 +29,12 @@ Maintain a well-organized directory structure:
 - **Self-explanatory naming**: Directory and file names must clearly indicate their purpose
 - **Document structure**: Define directory/file purposes in project `AGENTS.md`
 
-**Recommended structure:**
-```
-project/
-├── AGENTS.md           # Project-specific AI guidelines (may include TODO/CHANGELOG for small projects)
-├── README.md           # English documentation
-├── README.zh-CN.md     # Chinese documentation
-├── plan/               # Planning documents (large projects only)
-│   ├── TODO.md
-│   └── CHANGELOG.md
-├── src/                # Source code
-├── tests/              # Test files
-├── docs/               # Additional documentation
-├── scripts/            # Utility/automation scripts
-├── data/               # Input data (if applicable)
-│   ├── input/
-│   └── output/
-└── tmp/                # Temporary files (add to .gitignore)
-```
-
-**Project AGENTS.md must include:**
-- Directory structure definition for the specific project
-- Purpose of each directory and key files
-- Any deviations from the recommended structure
-
-### 1.3 Boundary Rules
+### 1.4 Boundary Rules
 - **DO NOT** create or modify files outside the project directory unless explicitly requested
 - All project artifacts must remain within the project boundary
+- **Temporary files MUST be placed in `.tmp/`** (and added to `.gitignore`). Do NOT generate temporary files in `/tmp` or any other system directory
 
-### 1.4 Synchronization Requirements
+### 1.5 Synchronization Requirements
 Any code change MUST synchronize:
 1. `AGENTS.md` — if project rules are affected
 2. `TODO` — update task status (in `plan/TODO.md` or project `AGENTS.md`)
@@ -76,105 +55,4 @@ Any code change MUST synchronize:
 - Begin responses with your name followed by a colon
 - Use English for technical reasoning; Chinese for final explanations
 - Be direct, precise, critique approaches not individuals
-
----
-
-## 3. Core Philosophy
-
-### 3.1 Good Taste
-> High-quality code eliminates special cases rather than patching them with conditionals.
-
-Design solutions that handle all scenarios gracefully without exceptions.
-
-### 3.2 Practical Pragmatism
-- Focus on solving real, concrete problems
-- Avoid over-engineering and theoretical perfection
-- Value working solutions over ideal but impractical designs
-
-### 3.3 Simplicity Obsession
-- If code indentation exceeds 3 levels, reconsider the structure
-- Functions should be concise and single-responsibility
-- Complex logic indicates need for better design, not more code
-
----
-
-## 4. Skill-Based Workflow
-
-### 4.1 Available Core Skills
-
-**Use these skills for specific scenarios:**
-
-| Skill | When to Use |
-|-------|-------------|
-| **brainstorming** | Before creating features or adding functionality — explore intent and design first |
-| **test-driven-development** | When implementing any feature or bugfix — write tests before code |
-| **systematic-debugging** | When encountering bugs, test failures, or unexpected behavior |
-| **verification-before-completion** | Before claiming work is complete — verify with evidence |
-| **writing-plans** | When you have specs for multi-step tasks — create detailed implementation plans |
-| **executing-plans** | When you have a written plan to execute in separate session |
-| **subagent-driven-development** | When executing plans with independent tasks in current session |
-| **using-git-worktrees** | When starting feature work needing isolation from current workspace |
-| **requesting-code-review** | When completing major features or before merging |
-| **receiving-code-review** | When receiving code review feedback |
-| **finishing-a-development-branch** | When implementation complete and need to decide how to integrate |
-
-**Note:** Additional specialized skills (domain-specific, meta-skills, advanced techniques) are available through the skill discovery system. Use `skill_find` to search for relevant skills based on your current task.
-
-### 4.2 Skill Selection
-- Analyze requirements to determine appropriate skills
-- Match skill capabilities to problem characteristics
-- Use specialized tools when they provide clear advantages
-
-### 4.3 Constraint Resolution
-- When skill constraints conflict with user requirements, seek clarification
-- Prioritize user needs while respecting skill limitations
-- Document any necessary compromises
-
----
-
-## Notes
-
-### What Belongs Here (Global)
-- Universal coding principles
-- Communication protocols
-- General workflow patterns
-- Project structure requirements
-- Core skill references
-
-### What Belongs in Project AGENTS.md
-- Git remote URLs and repository configuration
-- Project-specific file paths and directory structures
-- Project-specific tools and commands
-- Technology-specific conventions (language, framework)
-- Project-specific `plan/TODO.md` and `plan/CHANGELOG.md` format details
-
----
-
-## 5. MCP Tool Usage
-
-When performing research, lookups, or external access, always use the appropriate MCP tool:
-
-| Task | MCP Tool to Use |
-|------|----------------|
-| Access GitHub code, repos, PRs, issues, file contents | **GitHub MCP** + **deepwiki MCP** |
-| Access ArchLinux AUR packages, ArchWiki documentation | **arch-linux MCP** |
-| Access library/framework documentation | **context7 MCP** |
-| Search code or repositories on GitHub | **grep_app MCP** |
-| Search the web for any information | **websearch MCP** |
-
-### 5.1 Tool Selection Rules
-
-- **GitHub / deepwiki**: Use when you need to read GitHub repository contents, browse code, check PRs/issues, or get repo documentation via DeepWiki
-- **arch-linux**: Use for all Arch Linux related queries — AUR package lookup, ArchWiki articles, pacman info, PKGBUILD references
-- **context7**: Use when you need official documentation for libraries, frameworks, or programming languages (resolves library IDs, then queries docs)
-- **grep_app**: Use when you need to search for code patterns or find repositories on GitHub (not browsing a known repo — that's GitHub MCP)
-- **websearch**: Use for general web search, news, blog posts, or any information not covered by the specialized tools above
-
-### 5.2 Priority Order
-
-Prefer specialized MCP tools over general web search:
-1. Specific library docs → **context7** first
-2. GitHub code lookup → **GitHub / deepwiki** first
-3. Arch Linux info → **arch-linux** first
-4. Code search across GitHub → **grep_app** first
-5. Everything else → **websearch**
+- **Technical terms**: If a term has no established, widely-accepted translation, or if translating it would be misleading, ambiguous, or fail to convey precise meaning (信达雅), keep the term in English as-is
