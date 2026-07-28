@@ -19,7 +19,27 @@ Every project MUST have:
 | **Config/Dotfiles** | Section in `AGENTS.md` (optional) | Section in `AGENTS.md` (optional) |
 
 ### 1.2 Git Workflow
-Every project lives in a **dedicated directory managed by Git**. If the project is not yet a Git repository, initialize one (unless the user explicitly says otherwise). **Every commit MUST be GPG-signed** — if the gpg-agent is locked, prompt the user to unlock it before committing. Never skip GPG signing unless the user explicitly says so. Work inside a **git worktree** to avoid conflicts with other sessions, and on a **topic branch** rather than directly on `main` / `master` — unless the task is very simple (e.g. a one-line bug fix or a small doc tweak), in which case direct edits on `master` are acceptable. **Commit often**, in small **atomic commits**, automatically as modifications are made on the branch (no need to ask permission to commit). However, **ALWAYS ask the user** before merging the branch into `master`/`main` or pushing to the remote.
+
+For every project, **ask the user about the git workflow** and write the agreed workflow into the project's `AGENTS.md`.
+
+#### Common Rules
+*(apply to every project; do not need to be repeated in project AGENTS.md)*
+
+- **Dedicated Git directory** — every project lives in a dedicated directory managed by Git. If the project is not yet a Git repository, initialize one (unless the user explicitly says otherwise)
+- **GPG-signed commits** — every commit MUST be GPG-signed. If the gpg-agent is locked, prompt the user to unlock it before committing. Never skip GPG signing unless the user explicitly says so
+- **Commit often, atomic** — commit often, in small atomic commits, automatically as modifications are made on the branch (no need to ask permission to commit)
+- **Worktree + topic branch** — work inside a git worktree to avoid conflicts with other sessions, and on a topic branch rather than directly on `main` / `master`
+
+#### Project Rules
+*(ask the user and write the chosen rules into project AGENTS.md)*
+
+**Simple personal project** (no co-workers):
+- Automatically merge to `main` / `master` and push to the remote once any function has been verified (either by AI agents, or by the user if automatic tests are not possible)
+- If the task is very simple (e.g. a one-line bug fix or a small doc tweak), direct edits on `master` are acceptable
+
+**Sensitive, multi-user project**:
+- ALWAYS ask the user before merging the branch into `master` / `main` or pushing to the remote
+- Always work on branches, even for very simple tasks
 
 ### 1.3 Directory Organization
 Maintain a well-organized directory structure:
