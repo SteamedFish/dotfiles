@@ -19,7 +19,7 @@ Every project MUST have:
 | **Config/Dotfiles** | Section in `AGENTS.md` (optional) | Section in `AGENTS.md` (optional) |
 
 ### 1.2 Git Workflow
-Every project lives in a **dedicated directory managed by Git**. If the project is not yet a Git repository, initialize one (unless the user explicitly says otherwise). **Every commit MUST be GPG-signed** — if the gpg-agent is locked, prompt the user to unlock it before committing. Never skip GPG signing unless the user explicitly says so. Work inside a **git worktree** to avoid conflicts with other sessions, and on a **topic branch** rather than directly on `main` / `master`. **Commit often**, in small **atomic commits**, automatically as modifications are made on the branch (no need to ask permission to commit). However, **ALWAYS ask the user** before merging the branch into `master`/`main` or pushing to the remote.
+Every project lives in a **dedicated directory managed by Git**. If the project is not yet a Git repository, initialize one (unless the user explicitly says otherwise). **Every commit MUST be GPG-signed** — if the gpg-agent is locked, prompt the user to unlock it before committing. Never skip GPG signing unless the user explicitly says so. Work inside a **git worktree** to avoid conflicts with other sessions, and on a **topic branch** rather than directly on `main` / `master` — unless the task is very simple (e.g. a one-line bug fix or a small doc tweak), in which case direct edits on `master` are acceptable. **Commit often**, in small **atomic commits**, automatically as modifications are made on the branch (no need to ask permission to commit). However, **ALWAYS ask the user** before merging the branch into `master`/`main` or pushing to the remote.
 
 ### 1.3 Directory Organization
 Maintain a well-organized directory structure:
@@ -34,7 +34,12 @@ Maintain a well-organized directory structure:
 - All project artifacts must remain within the project boundary
 - **Temporary files MUST be placed in `.tmp/`** (and added to `.gitignore`). Do NOT generate temporary files in `/tmp` or any other system directory
 
-### 1.5 Synchronization Requirements
+### 1.5 Dependencies & Tooling
+- You may freely install any **project-local** dependencies you need (e.g. `npm` modules, Python `venv`/`pip` packages, `cargo` crates, `bundle` gems, `go` modules, etc.) inside the project folder
+- For **system-level** packages (`apt`, `pacman`, `brew`, `dnf`, `apk`, `zypper`, etc.), **ALWAYS ask the user first** — never install them on your own
+- If you need any external tool to complete the task (linters, formatters, test runners, package managers, build tools, etc.), **ALWAYS ask the user to install it**. Never skip tests, code-quality checks, or other required steps simply because a tool is missing
+
+### 1.6 Synchronization Requirements
 Any code change MUST synchronize:
 1. `AGENTS.md` — if project rules are affected
 2. `TODO` — update task status (in `plan/TODO.md` or project `AGENTS.md`)
