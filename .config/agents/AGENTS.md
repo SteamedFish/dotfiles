@@ -41,24 +41,20 @@ For every project, **ask the user about the git workflow** and write the agreed 
 - ALWAYS ask the user before merging the branch into `master` / `main` or pushing to the remote
 - Always work on branches, even for very simple tasks
 
-### 1.3 Directory Organization
-Maintain a well-organized directory structure:
+### 1.3 Project Layout
+Maintain a well-organized project directory:
 
-**Principles:**
-- **Separation of concerns**: Place code, docs, tests, scripts, input, output in separate subdirectories
-- **Self-explanatory naming**: Directory and file names must clearly indicate their purpose
+- **Separation of concerns** — place code, docs, tests, scripts, input, output in separate subdirectories
+- **Self-explanatory naming** — directory and file names must clearly indicate their purpose
+- **Stay within the project** — DO NOT create or modify files outside the project directory unless explicitly requested. All project artifacts must remain within the project boundary
+- **Temporary files in `.tmp/`** — add to `.gitignore`. Do NOT generate temporary files in `/tmp` or any other system directory
 
-### 1.4 Boundary Rules
-- **DO NOT** create or modify files outside the project directory unless explicitly requested
-- All project artifacts must remain within the project boundary
-- **Temporary files MUST be placed in `.tmp/`** (and added to `.gitignore`). Do NOT generate temporary files in `/tmp` or any other system directory
-
-### 1.5 Dependencies & Tooling
+### 1.4 Dependencies & Tooling
 - You may freely install any **project-local** dependencies you need (e.g. `npm` modules, Python `venv`/`pip` packages, `cargo` crates, `bundle` gems, `go` modules, etc.) inside the project folder
 - For **system-level** packages (`apt`, `pacman`, `brew`, `dnf`, `apk`, `zypper`, etc.), **ALWAYS ask the user first** — never install them on your own
 - If you need any external tool to complete the task (linters, formatters, test runners, package managers, build tools, etc.), **ALWAYS ask the user to install it**. Never skip tests, code-quality checks, or other required steps simply because a tool is missing
 
-### 1.6 Synchronization Requirements
+### 1.5 Synchronization Requirements
 Any code change MUST synchronize:
 1. `AGENTS.md` — if project rules are affected
 2. `TODO` — update task status (in `plan/TODO.md` or project `AGENTS.md`)
