@@ -34,12 +34,14 @@ For every project, **ask the user about the git workflow** and write the agreed 
 *(ask the user and write the chosen rules into project AGENTS.md)*
 
 **Simple personal project** (no co-workers):
-- Automatically merge to `main` / `master` and push to the remote once any function has been verified (either by AI agents, or by the user if automatic tests are not possible)
-- If the task is very simple (e.g. a one-line bug fix or a small doc tweak), direct edits on `master` are acceptable
+- **Auto-merge & push** — merge to `main` / `master` and push to the remote once any function is verified (by AI agents, or by the user if automatic tests are not possible)
+- **Direct edits on `master`** — acceptable for very simple tasks (e.g. one-line bug fix or small doc tweak)
+- **Commit scope** — commit everything worth committing, including project-level `AGENTS.md`, `plan/`, `CHANGELOG`, `TODO`, and personal configs such as `.opencode/`
 
 **Sensitive, multi-user project**:
-- ALWAYS ask the user before merging the branch into `master` / `main` or pushing to the remote
-- Always work on branches, even for very simple tasks
+- **ALWAYS ask before merge/push** — never merge into `master` / `main` or push to the remote without explicit user approval
+- **Always work on branches** — even for very simple tasks; no direct edits on `master`
+- **Restricted commit scope** — do NOT add untracked personal or project-meta files (e.g. `.opencode/`, planning notes, scratchpads) unless they're already tracked by Git or the user explicitly asks
 
 ### 1.3 Project Layout
 Maintain a well-organized project directory:
