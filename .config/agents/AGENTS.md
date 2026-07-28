@@ -47,7 +47,7 @@ Maintain a well-organized project directory:
 - **Separation of concerns** — place code, docs, tests, scripts, input, output in separate subdirectories
 - **Self-explanatory naming** — directory and file names must clearly indicate their purpose
 - **Stay within the project** — DO NOT create or modify files outside the project directory unless explicitly requested. All project artifacts must remain within the project boundary
-- **Temporary files in `.tmp/`** — add to `.gitignore`. Do NOT generate temporary files in `/tmp` or any other system directory
+- **All temporary work in `.tmp/`** — covers BOTH generated artifacts (e.g. compile intermediates) AND any scratch work you do as an agent (e.g. cloning a repo to examine code, probe scripts, intermediate analysis files). Add `.tmp/` to `.gitignore`. NEVER use `/tmp` or any other system directory for any temporary work
 
 ### 1.4 Dependencies & Tooling
 - You may freely install any **project-local** dependencies you need (e.g. `npm` modules, Python `venv`/`pip` packages, `cargo` crates, `bundle` gems, `go` modules, etc.) inside the project folder
