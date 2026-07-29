@@ -6,8 +6,5 @@
     "compress": {
         "maxContextLimit": "90%",
         "minContextLimit": "50%"
-    },
-    "qualityGate": {
-        "enabled": true
     }
 }
