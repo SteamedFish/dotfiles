@@ -5,6 +5,9 @@
     "$schema": "https://raw.githubusercontent.com/ranxianglei/opencode-acp/master/dcp.schema.json",
     "compress": {
         "maxContextLimit": "90%",
-        "minContextLimit": "50%"
+        "minContextLimit": "50%",
+        "modelMinLimits": {
+            "litellm/kimi-k3-256k": "75%"
+        }
     }
 }
