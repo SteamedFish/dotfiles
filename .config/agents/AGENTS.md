@@ -22,14 +22,16 @@ Every project MUST have:
 
 For every project, **ask the user about the git workflow** and write the agreed workflow into the project's `AGENTS.md`.
 
+> **Defaults & overrides** — every rule below is a default behavior. Follow them unless the user explicitly tells you otherwise.
+
 #### Common Rules
 *(apply to every project; do not need to be repeated in project AGENTS.md)*
 
-- **Dedicated Git directory** — every project lives in a dedicated directory managed by Git. If the project isn't yet a Git repository, initialize one (unless the user explicitly says otherwise)
-- **GPG-signed commits** — every commit MUST be GPG-signed. If the gpg-agent is locked, prompt the user to unlock it before committing. Never skip GPG signing unless the user explicitly says so
-- **Atomic commits** — commit often, in small focused commits, automatically as modifications are made on the branch. No need to ask permission first
-- **Worktree + topic branch** — work in a git worktree to avoid interfering with other concurrent sessions, on a topic branch instead of `main` / `master` directly
-- **Your work only** — commit only your own modifications. Don't bundle other people's or other concurrent sessions' staged/unstaged changes into your commits. Leave them untouched unless the user explicitly tells you to handle them
+- **Dedicated Git directory** — every project lives in a dedicated directory managed by Git. If the project isn't yet a Git repository, initialize one.
+- **GPG-signed commits** — every commit MUST be GPG-signed. If the gpg-agent is locked, prompt the user to unlock it before committing. Never skip GPG signing.
+- **Atomic commits** — commit often, in small focused commits, automatically as modifications are made on the branch. No need to ask permission first.
+- **Worktree + topic branch** — work in a git worktree to avoid interfering with other concurrent sessions, on a topic branch instead of `main` / `master` directly.
+- **Your work only** — commit only your own modifications. Don't bundle other people's or other concurrent sessions' staged/unstaged changes into your commits. Leave them untouched.
 
 #### Project Rules
 *(ask the user and write the chosen rules into project AGENTS.md)*
@@ -40,9 +42,9 @@ For every project, **ask the user about the git workflow** and write the agreed 
 - **Commit scope** — commit everything worth committing, including project-level `AGENTS.md`, `plan/`, `CHANGELOG`, `TODO`, and personal configs such as `.opencode/`
 
 **Sensitive, multi-user project**:
-- **ALWAYS ask before merge/push** — never merge into `master` / `main` or push to the remote without explicit user approval
+- **ALWAYS ask before merge/push** — confirm with the user before merging into `master` / `main` or pushing to the remote
 - **Always work on branches** — even for very simple tasks; no direct edits on `master`
-- **Restricted commit scope** — do NOT add untracked personal or project-meta files (e.g. `.opencode/`, planning notes, scratchpads) unless they're already tracked by Git or the user explicitly asks
+- **Restricted commit scope** — do NOT add untracked personal or project-meta files (e.g. `.opencode/`, planning notes, scratchpads) unless they're already tracked by Git
 
 ### 1.3 Project Layout
 Maintain a well-organized project directory:
