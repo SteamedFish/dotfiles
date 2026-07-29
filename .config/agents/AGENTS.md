@@ -25,10 +25,11 @@ For every project, **ask the user about the git workflow** and write the agreed 
 #### Common Rules
 *(apply to every project; do not need to be repeated in project AGENTS.md)*
 
-- **Dedicated Git directory** — every project lives in a dedicated directory managed by Git. If the project is not yet a Git repository, initialize one (unless the user explicitly says otherwise)
+- **Dedicated Git directory** — every project lives in a dedicated directory managed by Git. If the project isn't yet a Git repository, initialize one (unless the user explicitly says otherwise)
 - **GPG-signed commits** — every commit MUST be GPG-signed. If the gpg-agent is locked, prompt the user to unlock it before committing. Never skip GPG signing unless the user explicitly says so
-- **Commit often, atomic** — commit often, in small atomic commits, automatically as modifications are made on the branch (no need to ask permission to commit)
-- **Worktree + topic branch** — work inside a git worktree to avoid conflicts with other sessions, and on a topic branch rather than directly on `main` / `master`
+- **Atomic commits** — commit often, in small focused commits, automatically as modifications are made on the branch. No need to ask permission first
+- **Worktree + topic branch** — work in a git worktree to avoid interfering with other concurrent sessions, on a topic branch instead of `main` / `master` directly
+- **Your work only** — commit only your own modifications. Don't bundle other people's or other concurrent sessions' staged/unstaged changes into your commits. Leave them untouched unless the user explicitly tells you to handle them
 
 #### Project Rules
 *(ask the user and write the chosen rules into project AGENTS.md)*
