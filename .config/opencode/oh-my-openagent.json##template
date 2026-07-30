@@ -18,8 +18,6 @@
       "variant": "high",
       "fallback_models": [
         { "model": "litellm/opencode-go/glm-5.2" },
-        { "model": "litellm/opencode-go/deepseek-v4-flash" },
-        { "model": "litellm/opencode-go/mimo-v2.5" },
         { "model": "litellm/minimax/MiniMax-M3" },
         { "model": "litellm/deepseek/deepseek-v4-flash" }
       ]
@@ -31,11 +29,8 @@
       "variant": "medium"
 {% else %}
       "model": "litellm/kimi-k3",
-      "variant": "high",
       "fallback_models": [
         { "model": "litellm/opencode-go/glm-5.2" },
-        { "model": "litellm/opencode-go/deepseek-v4-flash" },
-        { "model": "litellm/opencode-go/mimo-v2.5" },
         { "model": "litellm/minimax/MiniMax-M3" }
       ]
 {% endif %}
@@ -47,8 +42,6 @@
       "model": "litellm/kimi-k3-256k",
       "fallback_models": [
         { "model": "litellm/opencode-go/glm-5.2" },
-        { "model": "litellm/opencode-go/deepseek-v4-flash" },
-        { "model": "litellm/opencode-go/mimo-v2.5" },
         { "model": "litellm/minimax/MiniMax-M3" }
       ],
 {% endif %}
@@ -60,8 +53,6 @@
 {% else %}
       "model": "litellm/opencode-go/deepseek-v4-flash",
       "fallback_models": [
-        { "model": "litellm/opencode-go/glm-5.2" },
-        { "model": "litellm/opencode-go/mimo-v2.5" },
         { "model": "litellm/minimax/MiniMax-M3" },
         { "model": "litellm/deepseek/deepseek-v4-flash" }
       ]
@@ -98,8 +89,6 @@
       "variant": "high",
       "fallback_models": [
         { "model": "litellm/opencode-go/glm-5.2" },
-        { "model": "litellm/opencode-go/deepseek-v4-flash" },
-        { "model": "litellm/opencode-go/mimo-v2.5" },
         { "model": "litellm/minimax/MiniMax-M3" }
       ]
 {% endif %}
@@ -113,8 +102,6 @@
       "variant": "high",
       "fallback_models": [
         { "model": "litellm/opencode-go/glm-5.2" },
-        { "model": "litellm/opencode-go/deepseek-v4-flash" },
-        { "model": "litellm/opencode-go/mimo-v2.5" },
         { "model": "litellm/minimax/MiniMax-M3" }
       ]
 {% endif %}
@@ -128,8 +115,6 @@
       "variant": "max",
       "fallback_models": [
         { "model": "litellm/opencode-go/glm-5.2" },
-        { "model": "litellm/opencode-go/deepseek-v4-flash" },
-        { "model": "litellm/opencode-go/mimo-v2.5" },
         { "model": "litellm/minimax/MiniMax-M3" },
         { "model": "litellm/deepseek/deepseek-v4-flash" }
       ]
@@ -142,8 +127,6 @@
       "model": "litellm/kimi-k3-256k",
       "fallback_models": [
         { "model": "litellm/opencode-go/glm-5.2" },
-        { "model": "litellm/opencode-go/deepseek-v4-flash" },
-        { "model": "litellm/opencode-go/mimo-v2.5" },
         { "model": "litellm/minimax/MiniMax-M3" },
         { "model": "litellm/deepseek/deepseek-v4-flash" }
       ]
@@ -156,8 +139,6 @@
       "model": "litellm/kimi-k3-256k",
       "fallback_models": [
         { "model": "litellm/opencode-go/glm-5.2" },
-        { "model": "litellm/opencode-go/deepseek-v4-flash" },
-        { "model": "litellm/opencode-go/mimo-v2.5" },
         { "model": "litellm/minimax/MiniMax-M3" }
       ]
 {% endif %}
@@ -171,8 +152,6 @@
       "variant": "high",
       "fallback_models": [
         { "model": "litellm/opencode-go/glm-5.2" },
-        { "model": "litellm/opencode-go/deepseek-v4-flash" },
-        { "model": "litellm/opencode-go/mimo-v2.5" },
         { "model": "litellm/minimax/MiniMax-M3" },
         { "model": "litellm/deepseek/deepseek-v4-flash" }
       ]
@@ -185,8 +164,6 @@
       "model": "litellm/kimi-k3-256k",
       "fallback_models": [
         { "model": "litellm/opencode-go/glm-5.2" },
-        { "model": "litellm/opencode-go/deepseek-v4-flash" },
-        { "model": "litellm/opencode-go/mimo-v2.5" },
         { "model": "litellm/minimax/MiniMax-M3" },
         { "model": "litellm/deepseek/deepseek-v4-flash" }
       ]
@@ -199,8 +176,6 @@
       "model": "litellm/kimi-k3-256k",
       "fallback_models": [
         { "model": "litellm/opencode-go/glm-5.2" },
-        { "model": "litellm/opencode-go/deepseek-v4-flash" },
-        { "model": "litellm/opencode-go/mimo-v2.5" },
         { "model": "litellm/minimax/MiniMax-M3" }
       ]
 {% endif %}
@@ -214,7 +189,6 @@
       "model": "litellm/kimi-k3-256k",
       "fallback_models": [
         { "model": "litellm/opencode-go/glm-5.2" },
-        { "model": "litellm/opencode-go/mimo-v2.5" },
         { "model": "litellm/minimax/MiniMax-M3" },
         { "model": "litellm/deepseek/deepseek-v4-flash" }
       ],
@@ -230,8 +204,6 @@
       "variant": "max",
       "fallback_models": [
         { "model": "litellm/opencode-go/glm-5.2" },
-        { "model": "litellm/opencode-go/deepseek-v4-flash" },
-        { "model": "litellm/opencode-go/mimo-v2.5" },
         { "model": "litellm/minimax/MiniMax-M3" }
       ]
 {% endif %}
@@ -243,8 +215,6 @@
       "model": "litellm/kimi-k3-256k",
       "fallback_models": [
         { "model": "litellm/opencode-go/glm-5.2" },
-        { "model": "litellm/opencode-go/deepseek-v4-flash" },
-        { "model": "litellm/opencode-go/mimo-v2.5" },
         { "model": "litellm/minimax/MiniMax-M3" },
         { "model": "litellm/deepseek/deepseek-v4-flash" }
       ],
@@ -283,8 +253,6 @@
       "variant": "high",
       "fallback_models": [
         { "model": "litellm/opencode-go/glm-5.2" },
-        { "model": "litellm/opencode-go/deepseek-v4-flash" },
-        { "model": "litellm/opencode-go/mimo-v2.5" },
         { "model": "litellm/minimax/MiniMax-M3" },
         { "model": "litellm/deepseek/deepseek-v4-flash" }
       ]
@@ -299,8 +267,6 @@
       "variant": "max",
       "fallback_models": [
         { "model": "litellm/opencode-go/glm-5.2" },
-        { "model": "litellm/opencode-go/deepseek-v4-flash" },
-        { "model": "litellm/opencode-go/mimo-v2.5" },
         { "model": "litellm/minimax/MiniMax-M3" }
       ]
 {% endif %}
@@ -312,7 +278,6 @@
       "model": "litellm/kimi-k3-256k",
       "fallback_models": [
         { "model": "litellm/opencode-go/glm-5.2" },
-        { "model": "litellm/opencode-go/deepseek-v4-flash" },
         { "model": "litellm/minimax/MiniMax-M3" }
       ]
 {% endif %}
