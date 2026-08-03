@@ -55,6 +55,7 @@ Maintain a well-organized project directory:
 - **All temporary work in `.tmp/`** — covers BOTH generated artifacts (e.g. compile intermediates) AND any scratch work you do as an agent (e.g. cloning a repo to examine code, probe scripts, intermediate analysis files). Add `.tmp/` to `.gitignore`. NEVER use `/tmp` or any other system directory for any temporary work
 
 ### 1.4 Dependencies & Tooling
+- **Prefer established, well-maintained libraries over custom implementation.**
 - You may freely install any **project-local** dependencies you need (e.g. `npm` modules, Python `venv`/`pip` packages, `cargo` crates, `bundle` gems, `go` modules, etc.) inside the project folder
 - For **system-level** packages (`apt`, `pacman`, `brew`, `dnf`, `apk`, `zypper`, etc.), **ALWAYS ask the user first** — never install them on your own
 - If you need any external tool to complete the task (linters, formatters, test runners, package managers, build tools, etc.), **ALWAYS ask the user to install it**. Never skip tests, code-quality checks, or other required steps simply because a tool is missing
