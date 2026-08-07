@@ -732,15 +732,75 @@ update_npx() {
 }
 
 update_uvx() {
-    # uvx revalidates registry metadata per HTTP cache rules, so
-    # `uvx pkg@latest` stays reasonably fresh on its own — no upgrade
-    # action needed. What's missing is hygiene: `uv cache prune` drops
-    # dangling cache entries and stale cached environments while keeping
-    # live ones, so there is no re-download penalty on the next uvx run.
+    # uvx revalidates `pkg@latest` against PyPI on EVERY run (verified:
+    # conditional GET per invocation), so versions never go stale — but
+    # the run right after a new release pays the wheel download. Pre-
+    # refresh each cached tool's @latest environment so the download
+    # happens now:
+    #     uvx --from <pkg>@latest --refresh --quiet python -c pass
+    # `python` exists in every uvx env, so nothing tool-specific is
+    # executed (important: MCP servers would otherwise start and hang).
+    # --refresh re-resolves and rebuilds the env ONLY when the
+    # resolution moved.
+    #
+    # Cached envs live in <uv-cache>/environments-v2/<interp>/<spec>/.
+    # The original spec string is hashed, but @latest and plain `pkg`
+    # share one env while pinned specs get their own (verified) — so
+    # refreshing @latest never disturbs pinned environments. Tools are
+    # identified by dist-info dirs providing console_scripts.
+    #
+    # Then `uv cache prune` for hygiene. Verified prune behavior: it
+    # deletes the ephemeral environments but KEEPS the wheels/archives,
+    # so the env rebuild it forces on the next uvx run takes ~2ms
+    # (hardlink from cache) — the only real cost anywhere in uvx is the
+    # wheel download, which the refresh above has already paid. Order
+    # matters: refresh first (download new wheels), prune second.
     if [ -z "$(command -v uv)" ]; then
         return
     fi
+    local cache_dir env_root
+    cache_dir="$(uv cache dir 2>/dev/null)"
+    env_root="$cache_dir/environments-v2"
+    local refreshed=0 failed=0 seen="" env dist pkg
+
+    if [ -d "$env_root" ]; then
+        for env in "$env_root"/*/*/; do
+            [ -d "$env" ] || continue
+            for dist in "$env"lib/*/site-packages/*.dist-info; do
+                [ -f "$dist/entry_points.txt" ] || continue
+                grep -q '^\[console_scripts\]' "$dist/entry_points.txt" || continue
+                # "<name>-<version>.dist-info": PEP 440 versions never
+                # contain '-', and names have '-' rewritten to '_' — so
+                # stripping from the LAST '-' recovers the name, and uv
+                # normalizes '_' back to '-' when resolving.
+                pkg="$(basename "$dist" .dist-info)"
+                pkg="${pkg%-*}"
+                [ -n "$pkg" ] || continue
+                case " $seen " in
+                *" $pkg "*) continue ;;
+                *) seen="$seen $pkg" ;;
+                esac
+                if timeout 120 uvx --from "$pkg@latest" --refresh --quiet python -c "pass" >/dev/null 2>&1; then
+                    refreshed=$((refreshed + 1))
+                else
+                    print_error "Failed to refresh uvx env: $pkg"
+                    failed=$((failed + 1))
+                fi
+            done
+        done
+    fi
+
     run uv cache prune
+
+    if [ "$refreshed" -gt 0 ]; then
+        print_info "Refreshed $refreshed uvx tools to @latest (wheels cached — next run rebuilds in ms)"
+    fi
+    if [ "$failed" -gt 0 ]; then
+        print_error "$failed uvx refreshes failed"
+    fi
+    if [ "$refreshed" -eq 0 ] && [ "$failed" -eq 0 ]; then
+        print_success "No cached uvx tools to refresh"
+    fi
 }
 
 self_update() {
