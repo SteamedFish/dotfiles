@@ -569,6 +569,180 @@ update_opencode() {
     fi
 }
 
+update_bunx() {
+    # bunx internals (verified):
+    #   - Each executed spec gets a working dir in TMPDIR:
+    #       bunx-<uid>-cowsay@latest/package.json  → {"cowsay": "^1.6.0"}
+    #       bunx-<uid>-cowsay@1.5.0/package.json   → {"cowsay": "1.5.0"}
+    #       bunx-<uid>-@scope/pkg@latest/package.json
+    #     The recorded range preserves intent: ^/~ from @latest, exact
+    #     version from a pinned spec.
+    #   - Package content lives in bun's global install cache:
+    #       <cache>/<pkg>@<version>@@@<n>/   (hardlink source)
+    #     Unlike apt's dead .deb archives these are LIVE installations —
+    #     clearing them (bun pm cache rm) makes the next opencode MCP
+    #     startup pay a full re-download. So we never clear; we:
+    #       1. pre-fetch @latest versions of range-tracked tools into the
+    #          global cache, so the next bunx run (which re-resolves the
+    #          registry every time) finds files already present
+    #       2. prune superseded versions of THOSE SAME PACKAGES ONLY —
+    #          other packages may be pinned by project bun.lock files
+    #   - The TMPDIR working dirs are ephemeral (tmp cleaner / reboot);
+    #     the tool list simply reflects recently used bunx tools.
+    if [ -z "$(command -v bun)" ] || ! command -v jq >/dev/null 2>&1; then
+        return
+    fi
+    local have_npm=false
+    command -v npm >/dev/null 2>&1 && have_npm=true
+
+    # `bun pm cache` prints the real cache path (bunfig/env can relocate
+    # it) but requires a package.json in cwd — hence the scratch dir,
+    # which doubles as the pre-fetch vehicle below.
+    local scratch cache
+    scratch="$(mktemp -d)"
+    echo '{}' >"$scratch/package.json"
+    cache="$(cd "$scratch" && bun pm cache 2>/dev/null)"
+    if [ -z "$cache" ] || [ ! -d "$cache" ]; then
+        rm -rf -- "$scratch"
+        return
+    fi
+
+    local tmp_root="${TMPDIR:-/tmp}"
+    local uid
+    uid="$(id -u)"
+    local range_pkgs="" pinned_pvs="" pkgfile pkg range
+
+    while IFS= read -r pkgfile; do
+        while IFS=$'\t' read -r pkg range; do
+            [ -n "$pkg" ] || continue
+            case "$range" in
+            "^"* | "~"*)
+                case " $range_pkgs " in
+                *" $pkg "*) ;;                       # already listed
+                *) range_pkgs="$range_pkgs $pkg" ;;
+                esac
+                ;;
+            *)
+                pinned_pvs="$pinned_pvs $pkg@$range" # explicit pin — keep
+                ;;
+            esac
+        done < <(jq -r '.dependencies // {} | to_entries[] | "\(.key)\t\(.value)"' "$pkgfile" 2>/dev/null)
+    done < <(find "$tmp_root" -maxdepth 3 -type f -path "*/bunx-$uid-*/package.json" 2>/dev/null)
+
+    local warmed=0 pruned=0 warmed_pvs="" latest_v entry v
+
+    # Pre-fetch latest for range-tracked tools (skip if already cached).
+    if $have_npm; then
+        for pkg in $range_pkgs; do
+            latest_v="$(timeout 10 npm view "$pkg" version 2>/dev/null || echo "")"
+            [ -z "$latest_v" ] && continue
+            if [ -d "$cache" ] && compgen -G "$cache/$pkg@$latest_v@@@*" >/dev/null; then
+                warmed_pvs="$warmed_pvs $pkg@$latest_v"
+                continue
+            fi
+            print_status "Pre-fetching: $pkg@$latest_v"
+            if (cd "$scratch" && timeout 90 bun add --exact "$pkg@$latest_v" >/dev/null 2>&1); then
+                print_success "Cached: $pkg@$latest_v"
+                warmed=$((warmed + 1))
+                warmed_pvs="$warmed_pvs $pkg@$latest_v"
+            fi
+        done
+    fi
+
+    # Prune superseded versions of touched packages; keep warmed latest
+    # and explicitly pinned versions.
+    for pkg in $range_pkgs $(printf '%s' "$pinned_pvs" | tr ' ' '\n' | sed 's/@[^@]*$//' | sort -u); do
+        for entry in "$cache/$pkg"@*@@@*/; do
+            [ -d "$entry" ] || continue
+            # basename would strip the @scope/ prefix — strip the full
+            # "<cache>/<pkg>@" prefix and the "@@@<n>/" suffix instead.
+            v="${entry#"$cache/$pkg"@}"
+            v="${v%@@@*/}"
+            case " $warmed_pvs$pinned_pvs " in
+            *" $pkg@$v "*) continue ;;
+            esac
+            run rm -rf -- "$entry"
+            pruned=$((pruned + 1))
+        done
+    done
+    rm -rf -- "$scratch"
+
+    if [ "$warmed" -gt 0 ]; then
+        print_info "Pre-fetched $warmed bunx packages at latest version"
+    fi
+    if [ "$pruned" -gt 0 ]; then
+        print_info "Pruned $pruned superseded bunx cache versions"
+    fi
+    if [ "$warmed" -eq 0 ] && [ "$pruned" -eq 0 ]; then
+        print_success "bunx cache already up to date and clean"
+    fi
+}
+
+update_npx() {
+    # npx caches every executed spec in <npm-cache>/_npx/<content-hash>/
+    # and NEVER re-resolves afterwards — `npx pkg@latest` keeps running
+    # the first version it ever installed (verified: zero registry
+    # requests on cached runs, even with --prefer-online).
+    #
+    # These are LIVE installs npx executes from, not dead archives, so we
+    # upgrade in place rather than clear: the original spec tag is lost
+    # (npm exec records the resolved range, e.g. "^1.6.0"), so entries
+    # whose recorded range starts with ^ or ~ are moved to @latest via
+    # `npm install` inside the cache entry; entries pinned to an exact
+    # version signal explicit pin intent and are left alone. The cache
+    # stays warm — no re-download penalty on the next npx/MCP startup.
+    if [ -z "$(command -v npm)" ] || ! command -v jq >/dev/null 2>&1; then
+        return
+    fi
+    local npm_cache npx_cache
+    npm_cache="$(npm config get cache 2>/dev/null)"
+    npx_cache="$npm_cache/_npx"
+    if [ -z "$npm_cache" ] || [ ! -d "$npx_cache" ]; then
+        return
+    fi
+
+    local upgraded=0 failed=0
+    local entry pkg range
+    for entry in "$npx_cache"/*/; do
+        [ -f "$entry/package.json" ] || continue
+        while IFS=$'\t' read -r pkg range; do
+            [ -n "$pkg" ] || continue
+            case "$range" in
+            "^"* | "~"*) ;;                       # semver range → safe to move
+            *) continue ;;                        # exact pin → respect intent
+            esac
+            if (cd "$entry" && timeout 120 npm install --no-audit --no-fund "$pkg@latest" >/dev/null 2>&1); then
+                upgraded=$((upgraded + 1))
+            else
+                print_error "Failed to upgrade npx cache: $pkg"
+                failed=$((failed + 1))
+            fi
+        done < <(jq -r '.dependencies // {} | to_entries[] | "\(.key)\t\(.value)"' "$entry/package.json" 2>/dev/null)
+    done
+
+    if [ "$upgraded" -gt 0 ]; then
+        print_info "Refreshed $upgraded npx cache packages to @latest (in place, cache stays warm)"
+    fi
+    if [ "$failed" -gt 0 ]; then
+        print_error "$failed npx cache upgrades failed"
+    fi
+    if [ "$upgraded" -eq 0 ] && [ "$failed" -eq 0 ]; then
+        print_success "npx cache empty or all entries pinned"
+    fi
+}
+
+update_uvx() {
+    # uvx revalidates registry metadata per HTTP cache rules, so
+    # `uvx pkg@latest` stays reasonably fresh on its own — no upgrade
+    # action needed. What's missing is hygiene: `uv cache prune` drops
+    # dangling cache entries and stale cached environments while keeping
+    # live ones, so there is no re-download penalty on the next uvx run.
+    if [ -z "$(command -v uv)" ]; then
+        return
+    fi
+    run uv cache prune
+}
+
 self_update() {
     if [ -n "$(command -v yadm)" ]; then
         print_info "Updating ${CYAN}yadm${RESET}"
@@ -777,6 +951,9 @@ update() {
         run_update update_ollama "Ollama"
         run_update update_optools "Optools"
         run_update update_opencode "OpenCode"
+        run_update update_bunx "bunx"
+        run_update update_npx "npx"
+        run_update update_uvx "uvx"
         run_update update_grafana "Grafana"
         run_update update_mastodon "Mastodon"
         ;;
@@ -795,6 +972,9 @@ update() {
         run_update update_emacs "Emacs"
         run_update update_optools "Optools"
         run_update update_opencode "OpenCode"
+        run_update update_bunx "bunx"
+        run_update update_npx "npx"
+        run_update update_uvx "uvx"
         run_update update_go "Go"
         ;;
     cygwin*)
