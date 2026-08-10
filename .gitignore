@@ -5,3 +5,9 @@
 *.~undo-tree~
 bin/auth.conf
 .git-credentials
+.omo/codegraph/
+.omo/lsp-daemon/
+.omo/runtime/
+.omo/run-continuation/
+.omo/migration-backup-*/
+.omo/*.bak.*
