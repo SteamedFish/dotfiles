@@ -94,7 +94,6 @@
         "sisyphus": {
           "models": [
             { "model": "litellm/kimi-k3", "reasoning": "high" },
-            { "model": "opencode-go/glm-5.2" },
             { "model": "minimax/MiniMax-M3" },
             { "model": "deepseek/deepseek-v4-pro" }
           ]
@@ -102,7 +101,6 @@
         "hephaestus": {
           "models": [
             "litellm/kimi-k3",
-            { "model": "opencode-go/glm-5.2" },
             { "model": "minimax/MiniMax-M3" },
             { "model": "deepseek/deepseek-v4-pro" }
           ]
@@ -110,7 +108,6 @@
         "oracle": {
           "models": [
             { "model": "litellm/kimi-k3-256k", "reasoning": "high" },
-            { "model": "opencode-go/glm-5.2" },
             { "model": "minimax/MiniMax-M3" },
             { "model": "deepseek/deepseek-v4-pro" }
           ]
@@ -118,7 +115,6 @@
         "prometheus": {
           "models": [
             { "model": "litellm/kimi-k3-256k", "reasoning": "high" },
-            { "model": "opencode-go/glm-5.2" },
             { "model": "minimax/MiniMax-M3" },
             { "model": "deepseek/deepseek-v4-pro" }
           ]
@@ -126,7 +122,6 @@
         "momus": {
           "models": [
             { "model": "litellm/kimi-k3-256k", "reasoning": "max" },
-            { "model": "opencode-go/glm-5.2" },
             { "model": "minimax/MiniMax-M3" },
             { "model": "deepseek/deepseek-v4-pro" }
           ]
@@ -134,7 +129,6 @@
         "plan": {
           "models": [
             { "model": "litellm/kimi-k3-256k", "reasoning": "high" },
-            { "model": "opencode-go/glm-5.2" },
             { "model": "minimax/MiniMax-M3" },
             { "model": "deepseek/deepseek-v4-pro" }
           ]
@@ -143,7 +137,6 @@
           "models": [
             { "model": "litellm/kimi-k3-256k", "reasoning": "high" },
             { "model": "minimax/MiniMax-M3" },
-            { "model": "opencode-go/glm-5.2" },
             { "model": "deepseek/deepseek-v4-flash" }
           ]
         },
@@ -151,7 +144,6 @@
           "models": [
             "litellm/kimi-k3-256k",
             { "model": "minimax/MiniMax-M3" },
-            { "model": "opencode-go/glm-5.2" },
             { "model": "deepseek/deepseek-v4-flash" }
           ]
         },
@@ -159,7 +151,6 @@
           "models": [
             "litellm/kimi-k3-256k",
             { "model": "minimax/MiniMax-M3" },
-            { "model": "opencode-go/glm-5.2" },
             { "model": "deepseek/deepseek-v4-flash" }
           ]
         },
@@ -247,7 +238,6 @@
         "ultrabrain": {
           "models": [
             { "model": "litellm/kimi-k3-256k", "reasoning": "max" },
-            { "model": "opencode-go/glm-5.2" },
             { "model": "minimax/MiniMax-M3" },
             { "model": "deepseek/deepseek-v4-pro" }
           ]
@@ -255,7 +245,6 @@
         "deep": {
           "models": [
             { "model": "litellm/kimi-k3-256k", "reasoning": "max" },
-            { "model": "opencode-go/glm-5.2" },
             { "model": "minimax/MiniMax-M3" },
             { "model": "deepseek/deepseek-v4-pro" }
           ]
@@ -263,7 +252,6 @@
         "unspecified-high": {
           "models": [
             { "model": "litellm/kimi-k3-256k", "reasoning": "high" },
-            { "model": "opencode-go/glm-5.2" },
             { "model": "minimax/MiniMax-M3" },
             { "model": "deepseek/deepseek-v4-pro" }
           ]
@@ -272,7 +260,6 @@
           "models": [
             { "model": "litellm/kimi-k3-256k", "reasoning": "high" },
             { "model": "minimax/MiniMax-M3" },
-            { "model": "opencode-go/glm-5.2" },
             { "model": "deepseek/deepseek-v4-flash" }
           ]
         },
@@ -280,7 +267,6 @@
           "models": [
             "litellm/kimi-k3-256k",
             { "model": "minimax/MiniMax-M3" },
-            { "model": "opencode-go/glm-5.2" },
             { "model": "deepseek/deepseek-v4-flash" }
           ]
         },
