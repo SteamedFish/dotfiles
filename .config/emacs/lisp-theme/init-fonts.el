@@ -9,6 +9,19 @@
 
 ;;; Code:
 
+(defun my-font-installed-p (family)
+  "Return non-nil when FAMILY is registered with fontconfig.
+
+Batch-safe alternative to `find-font', which always returns nil in
+`--batch' / noninteractive mode (no GUI font backend), which would make font
+\"skip-if-installed\" checks useless during `update emacs'."
+  (and (executable-find "fc-list")
+       (let ((case-fold-search t)
+             (out (shell-command-to-string
+                   (concat "fc-list | grep -i "
+                           (shell-quote-argument family)))))
+         (string-match-p (regexp-quote family) out))))
+
 (leaf mac-win
   :tag "builtin"
   :when (eq window-system 'mac)
@@ -23,12 +36,11 @@
   :config
   (let* ((fonts-alist
           (cond
-           (IS-LINUX '(("Rec Mono Duotone"     . "ttf-recursive-nerd")
-                       ("Sarasa Mono SC"       . "ttf-sarasa-gothic")
-                       ("Victor Mono"          . "ttf-victor-mono-nerd")
-                       ("VictorMono Nerd Font" . "ttf-victor-mono-nerd")
-                       ("Noto Sans Symbols"    . "noto-fonts")
-                       ("Noto Color Emoji"     . "noto-fonts-emoji")))
+           (IS-LINUX '(("RecMonoDuotone Nerd Font" . "ttf-recursive-nerd")
+                       ("Sarasa Mono SC"           . "ttf-sarasa-gothic")
+                       ("VictorMono Nerd Font"     . "ttf-victor-mono-nerd")
+                       ("Noto Sans Symbols"        . "noto-fonts")
+                       ("Noto Color Emoji"         . "noto-fonts-emoji")))
            (IS-MAC   '(("Rec Mono Duotone"     . "font-recursive-code")
                        ("Recursive"            . "font-recursive")
                        ("Victor Mono"          . "font-victor-mono")
@@ -41,7 +53,7 @@
            (t        '(())))))
 
     (cl-loop for (key . value) in fonts-alist
-             unless (find-font (font-spec :name key))
+             unless (my-font-installed-p key)
              do (system-packages-ensure value))))
 
 
@@ -50,13 +62,13 @@
   :when IS-GUI
   :unless noninteractive ;; `set-fontset-font' will cause segfault in noninteractive mode
   :config
-  (set-face-attribute 'default nil :font (font-spec :family "Rec Mono Duotone" :size 14))
+  (set-face-attribute 'default nil :font (font-spec :family "RecMonoDuotone Nerd Font" :size 14))
   (cond
    (IS-LINUX
     (set-face-font 'variable-pitch "Recursive Sans Casual Static"))
    (IS-MAC
     (set-face-font 'variable-pitch "Recursive")))
-  (set-face-font 'fixed-pitch "Rec Mono Duotone")
+  (set-face-font 'fixed-pitch "RecMonoDuotone Nerd Font")
   (let ((chinese-font (cond
                        (IS-MAC "Hiragino Sans GB")
                        (t "Noto Sans CJK SC"))))
@@ -110,7 +122,7 @@
   :url "https://github.com/domtronn/all-the-icons.el"
   :straight t
   :config
-  (unless (or (find-font (font-spec :name "all-the-icons")) noninteractive)
+  (unless (or (my-font-installed-p "all-the-icons") noninteractive)
     (all-the-icons-install-fonts)))
 
 (leaf mixed-pitch
