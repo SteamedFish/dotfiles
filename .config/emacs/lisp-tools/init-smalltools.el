@@ -76,7 +76,15 @@
   :url https://github.com/copilot-emacs/copilot.el
   :doc M-x copilot-login
   :straight t
-  :hook (prog-mode-hook . copilot-mode)
+  ;; Only enable copilot-mode once the LSP server is actually installed.
+  ;; On a fresh machine `copilot-install-server' installs asynchronously, so
+  ;; enabling it unconditionally on prog-mode-hook would try to start a
+  ;; missing server and throw "package @github/copilot-language-server is not
+  ;; installed" in every leaf block processing a prog-mode buffer.
+  :hook (prog-mode-hook . (lambda ()
+                            (when (file-exists-p
+                                   (concat my-data-dir "data/copilot/bin/copilot-language-server"))
+                              (copilot-mode 1))))
   :config
   (unless (file-exists-p (concat my-data-dir "data/copilot/bin/copilot-language-server"))
     (copilot-install-server)))
