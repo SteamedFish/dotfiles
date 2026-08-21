@@ -23,14 +23,12 @@
   :config
   (let* ((fonts-alist
           (cond
-           (IS-LINUX '(("Rec Mono Duotone"     . "ttf-recursive")
+           (IS-LINUX '(("Rec Mono Duotone"     . "ttf-recursive-nerd")
                        ("Sarasa Mono SC"       . "ttf-sarasa-gothic")
-                       ("Victor Mono"          . "ttf-victor-mono")
+                       ("Victor Mono"          . "ttf-victor-mono-nerd")
                        ("VictorMono Nerd Font" . "ttf-victor-mono-nerd")
                        ("Noto Sans Symbols"    . "noto-fonts")
-                       ("Noto Color Emoji"     . "noto-fonts-emoji")
-                       ("HanaMinA"             . "ttf-hanazono")
-                       ("Symbola"              . "ttf-symbola")))
+                       ("Noto Color Emoji"     . "noto-fonts-emoji")))
            (IS-MAC   '(("Rec Mono Duotone"     . "font-recursive-code")
                        ("Recursive"            . "font-recursive")
                        ("Victor Mono"          . "font-victor-mono")
