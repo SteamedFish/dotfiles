@@ -68,7 +68,24 @@
        (setq ispell-personal-dictionary
              (concat my-data-dir "etc/"))))
     (`hunspell
-     (setq ispell-program-name "hunspell"))
+     (setq ispell-program-name "hunspell")
+     ;; The hunspell binary alone isn't enough: Emacs needs a dictionary
+     ;; (.aff/.dic files), otherwise flyspell fails with "Can't find
+     ;; Hunspell dictionary with a .aff affix file".  Auto-install a
+     ;; dictionary via the system package manager.
+     (unless (cl-some (lambda (dir)
+                        (and (file-directory-p dir)
+                             (directory-files dir nil "\\.aff\\'" t)))
+                      (list "/usr/share/hunspell"
+                            "/usr/local/share/hunspell"
+                            "/opt/homebrew/share/hunspell"
+                            "/usr/share/myspell"))
+       (system-packages-install
+        (pcase system-packages-package-manager
+          ('apt    "hunspell-en-us")
+          ('pacman "hunspell-en_us")
+          ('brew   "hunspell")
+          (_       "hunspell")))))
     (`enchant
      (setq ispell-program-name "enchant-2"))
     (_ (system-packages-ensure "aspell"))))

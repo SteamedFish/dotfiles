@@ -42,8 +42,11 @@
   (load bootstrap-file nil 'nomessage))
 
 ;;; prevent emacs's builtin org from being loaded
-(straight-register-package 'org)
-(straight-register-package 'org-contrib)
+;;; `straight-use-package' both registers AND builds/loads the newer Org
+;;; immediately, so no other package can pull in the builtin Org first
+;;; (avoids "Org version mismatch").
+(straight-use-package 'org)
+(straight-use-package 'org-contrib)
 
 ;;; bootstrap leaf.el
 
@@ -78,7 +81,24 @@
           system-packages-use-sudo        nil))
   (when IS-TERMUX
     (setq system-packages-package-manager 'apt
-          system-packages-use-sudo        nil)))
+          system-packages-use-sudo        nil))
+  ;; Run package-manager commands via plain shell `sudo' instead of TRAMP's
+  ;; `/sudo::'.  TRAMP's sudo method needs an interactive password prompt,
+  ;; which is unavailable in `--batch' (noninteractive) mode, so `update emacs'
+  ;; failed with "exited abnormally with code 1" for every package-manager
+  ;; install regardless of package state.  This box has passwordless sudo
+  ;; (`sudo -n -v' succeeds), so a bare `sudo' works even in batch.
+  (advice-add 'system-packages--run-command :around
+              #'(lambda (orig-fun &rest fn-args)
+                  (if (and system-packages-use-sudo
+                           (executable-find "sudo"))
+                      (let* ((action  (nth 0 fn-args))
+                             (pack    (nth 1 fn-args))
+                             (extra   (nth 2 fn-args))
+                             (command (system-packages-get-command action pack extra)))
+                        (async-shell-command (concat "sudo " command)
+                                             "*system-packages*"))
+                    (apply orig-fun fn-args)))))
 
 (leaf blackout
   :url https://github.com/radian-software/blackout)

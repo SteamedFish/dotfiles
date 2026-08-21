@@ -24,10 +24,13 @@
   :url https://github.com/emacs-lsp/lsp-pyright
   :straight t
   ;;:ensure-system-package pyright
-  :config
-  (unless (file-exists-p
-           (concat lsp-server-install-dir "npm/pyright/bin/pyright"))
-    (lsp-install-server nil 'pyright)))
+  ;; No eager server install here: lsp-pyright registers a client with a
+  ;; `:download-server-fn', so the pyright server is auto-downloaded on first
+  ;; activation (when a Python buffer triggers lsp-mode).  Trying to call
+  ;; `lsp-install-server' during this :config / batch install fails because the
+  ;; pyright client isn't in `lsp-clients' yet ("Wrong type argument:
+  ;; lsp--client, nil").)
+  )
 
 (leaf anaconda-mode
   :url https://github.com/pythonic-emacs/anaconda-mode
