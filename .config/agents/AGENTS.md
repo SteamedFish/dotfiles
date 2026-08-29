@@ -57,8 +57,10 @@ Maintain a well-organized project directory:
 ### 1.4 Dependencies & Tooling
 - **Prefer established, well-maintained libraries over custom implementation.**
 - You may freely install any **project-local** dependencies you need (e.g. `npm` modules, Python `venv`/`pip` packages, `cargo` crates, `bundle` gems, `go` modules, etc.) inside the project folder
-- For **system-level** packages (`apt`, `pacman`, `brew`, `dnf`, `apk`, `zypper`, etc.), **ALWAYS ask the user first** — never install them on your own
-- If you need any external tool to complete the task (linters, formatters, test runners, package managers, build tools, etc.), **ALWAYS ask the user to install it**. Never skip tests, code-quality checks, or other required steps simply because a tool is missing
+- **NEVER install ANYTHING outside the project folder on your own** — ALWAYS ask the user to install it. This covers system-level packages, language toolchains, and CLI tools installed anywhere in `$HOME` (e.g. `~/.local/bin`, `~/.cargo/bin`)
+  - **DON'T**: run installer scripts such as `curl -LsSf https://astral.sh/uv/install.sh | sh` to install `uv`
+  - **DO**: ask the user to install `uv` from the system package manager, e.g. `pacman -S uv`
+- If you need any external tool to complete the task (linters, formatters, test runners, package managers, build tools, etc.), **ALWAYS ask the user to install it** (via the system package manager such as `apt`, `pacman`, `brew`, `dnf`, `apk`, `zypper`, etc.). Never skip tests, code-quality checks, or other required steps simply because a tool is missing
 
 ### 1.5 Synchronization Requirements
 Any code change MUST synchronize:
