@@ -21,179 +21,164 @@
     "agents": {
 {% if yadm.class == "work" %}
         "sisyphus": {
-          "models": [
-            { "model": "open-webui/claude-opus-4-6", "reasoning": "max" }
-          ]
+          "model": "open-webui/claude-opus-4-6",
+          "reasoning": "max"
         },
         "hephaestus": {
-          "models": [
-            { "model": "github-copilot/gpt-5.4", "reasoning": "medium" }
-          ]
+          "model": "github-copilot/gpt-5.4",
+          "reasoning": "medium"
         },
         "oracle": {
-          "models": [
-            { "model": "github-copilot/gpt-5.4", "reasoning": "high" }
-          ]
+          "model": "github-copilot/gpt-5.4",
+          "reasoning": "high"
         },
         "librarian": {
-          "models": [
-            "github-copilot/claude-sonnet-4.6"
-          ]
+          "model": "github-copilot/claude-sonnet-4.6"
         },
         "explore": {
-          "models": [
-            "github-copilot/claude-sonnet-4.6"
-          ]
+          "model": "github-copilot/claude-sonnet-4.6"
         },
         "multimodal-looker": {
-          "models": [
-            "github-copilot/gemini-3-flash-preview"
-          ]
+          "model": "github-copilot/gemini-3-flash-preview"
         },
         "prometheus": {
-          "models": [
-            { "model": "open-webui/claude-opus-4-6", "reasoning": "max" }
-          ]
+          "model": "open-webui/claude-opus-4-6",
+          "reasoning": "max"
         },
         "metis": {
-          "models": [
-            { "model": "open-webui/claude-opus-4-6", "reasoning": "max" }
-          ]
+          "model": "open-webui/claude-opus-4-6",
+          "reasoning": "max"
         },
         "momus": {
-          "models": [
-            { "model": "github-copilot/gpt-5.4", "reasoning": "xhigh" }
-          ]
+          "model": "github-copilot/gpt-5.4",
+          "reasoning": "xhigh"
         },
         "atlas": {
-          "models": [
-            "github-copilot/claude-sonnet-4.6"
-          ]
+          "model": "github-copilot/claude-sonnet-4.6"
         },
         "build": {
-          "models": [
-            "github-copilot/claude-sonnet-4.6"
-          ]
+          "model": "github-copilot/claude-sonnet-4.6"
         },
         "plan": {
-          "models": [
-            { "model": "open-webui/claude-opus-4-6", "reasoning": "max" }
-          ]
+          "model": "open-webui/claude-opus-4-6",
+          "reasoning": "max"
         },
         "sisyphus-junior": {
-          "models": [
-            "github-copilot/claude-sonnet-4.6"
-          ]
+          "model": "github-copilot/claude-sonnet-4.6"
         },
         "OpenCode-Builder": {
-          "models": [
-            "github-copilot/claude-sonnet-4.6"
-          ]
+          "model": "github-copilot/claude-sonnet-4.6"
         }
 {% else %}
         "sisyphus": {
-          "models": [
-            { "model": "litellm/kimi-k3", "reasoning": "high" },
+          "model": "litellm/kimi-k3",
+          "reasoning": "high",
+          "fallback_models": [
             { "model": "opencode-go/deepseek-v4-flash" },
             { "model": "minimax/MiniMax-M3" },
             { "model": "deepseek/deepseek-v4-pro" }
           ]
         },
         "hephaestus": {
-          "models": [
-            "litellm/kimi-k3",
+          "model": "litellm/kimi-k3",
+          "fallback_models": [
             { "model": "opencode-go/deepseek-v4-flash" },
             { "model": "minimax/MiniMax-M3" },
             { "model": "deepseek/deepseek-v4-pro" }
           ]
         },
         "oracle": {
-          "models": [
-            { "model": "litellm/kimi-k3-256k", "reasoning": "high" },
+          "model": "litellm/kimi-k3-256k",
+          "reasoning": "high",
+          "fallback_models": [
             { "model": "opencode-go/deepseek-v4-flash" },
             { "model": "minimax/MiniMax-M3" },
             { "model": "deepseek/deepseek-v4-pro" }
           ]
         },
         "prometheus": {
-          "models": [
-            { "model": "litellm/kimi-k3-256k", "reasoning": "high" },
+          "model": "litellm/kimi-k3-256k",
+          "reasoning": "high",
+          "fallback_models": [
             { "model": "opencode-go/deepseek-v4-flash" },
             { "model": "minimax/MiniMax-M3" },
             { "model": "deepseek/deepseek-v4-pro" }
           ]
         },
         "momus": {
-          "models": [
-            { "model": "litellm/kimi-k3-256k", "reasoning": "max" },
+          "model": "litellm/kimi-k3-256k",
+          "reasoning": "max",
+          "fallback_models": [
             { "model": "opencode-go/deepseek-v4-flash" },
             { "model": "minimax/MiniMax-M3" },
             { "model": "deepseek/deepseek-v4-pro" }
           ]
         },
         "plan": {
-          "models": [
-            { "model": "litellm/kimi-k3-256k", "reasoning": "high" },
+          "model": "litellm/kimi-k3-256k",
+          "reasoning": "high",
+          "fallback_models": [
             { "model": "opencode-go/deepseek-v4-flash" },
             { "model": "minimax/MiniMax-M3" },
             { "model": "deepseek/deepseek-v4-pro" }
           ]
         },
         "metis": {
-          "models": [
-            { "model": "litellm/kimi-k3-256k", "reasoning": "high" },
+          "model": "litellm/kimi-k3-256k",
+          "reasoning": "high",
+          "fallback_models": [
             { "model": "opencode-go/deepseek-v4-flash" },
             { "model": "minimax/MiniMax-M3" },
             { "model": "deepseek/deepseek-v4-flash" }
           ]
         },
         "atlas": {
-          "models": [
-            "litellm/kimi-k3-256k",
+          "model": "litellm/kimi-k3-256k",
+          "fallback_models": [
             { "model": "opencode-go/deepseek-v4-flash" },
             { "model": "minimax/MiniMax-M3" },
             { "model": "deepseek/deepseek-v4-flash" }
           ]
         },
         "sisyphus-junior": {
-          "models": [
-            "litellm/kimi-k3-256k",
+          "model": "litellm/kimi-k3-256k",
+          "fallback_models": [
             { "model": "opencode-go/deepseek-v4-flash" },
             { "model": "minimax/MiniMax-M3" },
             { "model": "deepseek/deepseek-v4-flash" }
           ]
         },
         "build": {
-          "models": [
-            "litellm/opencode-go/deepseek-v4-flash",
+          "model": "litellm/opencode-go/deepseek-v4-flash",
+          "fallback_models": [
             { "model": "minimax/MiniMax-M3" },
             { "model": "deepseek/deepseek-v4-flash" }
           ]
         },
         "OpenCode-Builder": {
-          "models": [
-            "litellm/opencode-go/deepseek-v4-flash",
+          "model": "litellm/opencode-go/deepseek-v4-flash",
+          "fallback_models": [
             { "model": "minimax/MiniMax-M3" },
             { "model": "deepseek/deepseek-v4-flash" }
           ]
         },
         "librarian": {
-          "models": [
-            "litellm/opencode-go/deepseek-v4-flash",
+          "model": "litellm/opencode-go/deepseek-v4-flash",
+          "fallback_models": [
             { "model": "minimax/MiniMax-M3" },
             { "model": "deepseek/deepseek-v4-flash" }
           ]
         },
         "explore": {
-          "models": [
-            "litellm/opencode-go/deepseek-v4-flash",
+          "model": "litellm/opencode-go/deepseek-v4-flash",
+          "fallback_models": [
             { "model": "minimax/MiniMax-M3" },
             { "model": "deepseek/deepseek-v4-flash" }
           ]
         },
         "multimodal-looker": {
-          "models": [
-            "litellm/kimi-k3-256k",
+          "model": "litellm/kimi-k3-256k",
+          "fallback_models": [
             { "model": "minimax/MiniMax-M3" },
             { "model": "opencode-go/mimo-v2.5" },
             { "model": "locez/gpt-5.6-luna" }
