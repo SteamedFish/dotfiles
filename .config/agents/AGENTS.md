@@ -79,3 +79,14 @@ Any code change MUST synchronize:
 - **Language** — English for technical reasoning; Chinese for final explanations
 - **Tone** — direct, precise; critique approaches, not individuals
 - **Technical terms** — keep in English when no established translation exists, or translating would be misleading, ambiguous, or fail to convey precise meaning (信达雅)
+
+---
+
+## 3. Anti-Phantom-Write Discipline
+
+Context-compression plugins (e.g. opencode-acp) replace raw tool outputs with model-written summaries. Any "done" claim without fresh tool evidence is **unverified** — phantom commits, phantom edits, and phantom installs have all been observed in the wild (see route-patrol incident 2026-09-11).
+
+1. **Evidence before claims** — never declare a commit / file write / install "done" from memory or from a compressed summary. Re-verify in the same turn with a read-only command (`git log -1`, `git cat-file -t <hash>`, `stat`, re-read the file) and cite that output.
+2. **Verify subagent reports against disk** — before relaying or building on a subagent's completion report, confirm the claimed artifacts actually exist (commit visible via `git cat-file`, files present, plausible mtimes).
+3. **Reviews use live diffs only** — review from `git show` / `git diff` output produced in the current turn; never cite historical line numbers or hashes carried in summaries.
+4. **Post-compression reset** — after any context-compression event, treat all prior "completed" states as unverified until re-checked on disk.
