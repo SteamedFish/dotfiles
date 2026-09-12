@@ -8,9 +8,10 @@
 //   上下文稳定压在 50% 以内。
 // - 注意 minContextLimit 只管 turn/iteration 提醒；growth nudge 的地板
 //   是 minNudgeContextPercent（默认 5%，曾在 5.6% 用量就触发压缩）。
-// - kimi-k3-256k / gpt-5.6-luna 实测满窗口质量仍可保障，对它们只需
-//   避免溢出 100%：90% 起提醒、95% 强 nudge，全局默认的
-//   emergencyThresholdPercent=98% 兜底强制压缩（该键不支持按模型覆盖）。
+// - kimi-k3-256k / gpt-5.6-luna / qwen3.8-27b(-cuda) 实测满窗口质量仍可
+//   保障（qwen3.8-27b 窗口仅 131072），对它们只需避免溢出 100%：90% 起
+//   提醒、95% 强 nudge，全局默认的 emergencyThresholdPercent=98% 兜底
+//   强制压缩（该键不支持按模型覆盖）。
 // - modelMinLimits 已被官方标记弃用，迁移至 compress.providers。
 {
     "$schema": "https://raw.githubusercontent.com/ranxianglei/opencode-acp/master/dcp.schema.json",
@@ -27,6 +28,16 @@
                         "minNudgeContextPercent": 90
                     },
                     "locez/gpt-5.6-luna": {
+                        "maxContextLimit": "95%",
+                        "minContextLimit": "90%",
+                        "minNudgeContextPercent": 90
+                    },
+                    "strix/qwen3.8-27b": {
+                        "maxContextLimit": "95%",
+                        "minContextLimit": "90%",
+                        "minNudgeContextPercent": 90
+                    },
+                    "strix/qwen3.8-27b-cuda": {
                         "maxContextLimit": "95%",
                         "minContextLimit": "90%",
                         "minNudgeContextPercent": 90
