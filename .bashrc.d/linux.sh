@@ -56,7 +56,8 @@ for i in /home/linuxbrew/.linuxbrew $HOME/.linuxbrew /snap /opt/puppetlabs/bin; 
 done
 unset i
 
-if [ -n "$(command -v systemctl)" ]; then
+# user manager socket exists only when pam_systemd created a logind session (disabled e.g. on PiKVM)
+if [ -n "$(command -v systemctl)" ] && [ -S "${XDG_RUNTIME_DIR:-}/systemd/private" ]; then
     # This will not affect systemd services started before PATH is imported.
     systemctl --user import-environment PATH
 fi
