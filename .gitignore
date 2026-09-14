@@ -11,3 +11,4 @@ bin/auth.conf
 .omo/run-continuation/
 .omo/migration-backup-*/
 .omo/*.bak.*
+.tmp/
