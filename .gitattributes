@@ -8,3 +8,4 @@
 .openviking/ovcli.conf filter=git-crypt diff=git-crypt
 .honcho/config.json filter=git-crypt diff=git-crypt
 .config/opencode/opencode-mem.jsonc##template filter=git-crypt diff=git-crypt
+.config/opencode/litellm-token##template filter=git-crypt diff=git-crypt
