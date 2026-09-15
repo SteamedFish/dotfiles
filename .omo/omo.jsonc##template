@@ -74,7 +74,7 @@
           "model": "litellm/kimi-k3",
           "reasoning": "high",
           "fallback_models": [
-            { "model": "opencode-go/deepseek-flash" },
+            { "model": "opencode-go/deepseek-v4.1-flash" },
             { "model": "minimax/MiniMax-M3" },
             { "model": "deepseek/deepseek-v4-pro" }
           ]
@@ -82,7 +82,7 @@
         "hephaestus": {
           "model": "litellm/kimi-k3",
           "fallback_models": [
-            { "model": "opencode-go/deepseek-flash" },
+            { "model": "opencode-go/deepseek-v4.1-flash" },
             { "model": "minimax/MiniMax-M3" },
             { "model": "deepseek/deepseek-v4-pro" }
           ]
@@ -91,7 +91,7 @@
           "model": "litellm/kimi-k3-256k",
           "reasoning": "high",
           "fallback_models": [
-            { "model": "opencode-go/deepseek-flash" },
+            { "model": "opencode-go/deepseek-v4.1-flash" },
             { "model": "minimax/MiniMax-M3" },
             { "model": "deepseek/deepseek-v4-pro" }
           ]
@@ -100,7 +100,7 @@
           "model": "litellm/kimi-k3-256k",
           "reasoning": "high",
           "fallback_models": [
-            { "model": "opencode-go/deepseek-flash" },
+            { "model": "opencode-go/deepseek-v4.1-flash" },
             { "model": "minimax/MiniMax-M3" },
             { "model": "deepseek/deepseek-v4-pro" }
           ]
@@ -109,7 +109,7 @@
           "model": "litellm/kimi-k3-256k",
           "reasoning": "max",
           "fallback_models": [
-            { "model": "opencode-go/deepseek-flash" },
+            { "model": "opencode-go/deepseek-v4.1-flash" },
             { "model": "minimax/MiniMax-M3" },
             { "model": "deepseek/deepseek-v4-pro" }
           ]
@@ -118,7 +118,7 @@
           "model": "litellm/kimi-k3-256k",
           "reasoning": "high",
           "fallback_models": [
-            { "model": "opencode-go/deepseek-flash" },
+            { "model": "opencode-go/deepseek-v4.1-flash" },
             { "model": "minimax/MiniMax-M3" },
             { "model": "deepseek/deepseek-v4-pro" }
           ]
@@ -127,7 +127,7 @@
           "model": "litellm/kimi-k3-256k",
           "reasoning": "high",
           "fallback_models": [
-            { "model": "opencode-go/deepseek-flash" },
+            { "model": "opencode-go/deepseek-v4.1-flash" },
             { "model": "minimax/MiniMax-M3" },
             { "model": "deepseek/deepseek-v4-flash" }
           ]
@@ -135,7 +135,7 @@
         "atlas": {
           "model": "litellm/kimi-k3-256k",
           "fallback_models": [
-            { "model": "opencode-go/deepseek-flash" },
+            { "model": "opencode-go/deepseek-v4.1-flash" },
             { "model": "minimax/MiniMax-M3" },
             { "model": "deepseek/deepseek-v4-flash" }
           ]
@@ -143,34 +143,34 @@
         "sisyphus-junior": {
           "model": "litellm/kimi-k3-256k",
           "fallback_models": [
-            { "model": "opencode-go/deepseek-flash" },
+            { "model": "opencode-go/deepseek-v4.1-flash" },
             { "model": "minimax/MiniMax-M3" },
             { "model": "deepseek/deepseek-v4-flash" }
           ]
         },
         "build": {
-          "model": "litellm/opencode-go/deepseek-flash",
+          "model": "litellm/opencode-go/deepseek-v4.1-flash",
           "fallback_models": [
             { "model": "minimax/MiniMax-M3" },
             { "model": "deepseek/deepseek-v4-flash" }
           ]
         },
         "OpenCode-Builder": {
-          "model": "litellm/opencode-go/deepseek-flash",
+          "model": "litellm/opencode-go/deepseek-v4.1-flash",
           "fallback_models": [
             { "model": "minimax/MiniMax-M3" },
             { "model": "deepseek/deepseek-v4-flash" }
           ]
         },
         "librarian": {
-          "model": "litellm/opencode-go/deepseek-flash",
+          "model": "litellm/opencode-go/deepseek-v4.1-flash",
           "fallback_models": [
             { "model": "minimax/MiniMax-M3" },
             { "model": "deepseek/deepseek-v4-flash" }
           ]
         },
         "explore": {
-          "model": "litellm/opencode-go/deepseek-flash",
+          "model": "litellm/opencode-go/deepseek-v4.1-flash",
           "fallback_models": [
             { "model": "minimax/MiniMax-M3" },
             { "model": "deepseek/deepseek-v4-flash" }
@@ -232,7 +232,7 @@
         "ultrabrain": {
           "models": [
             { "model": "litellm/kimi-k3-256k", "reasoning": "max" },
-            { "model": "opencode-go/deepseek-flash" },
+            { "model": "opencode-go/deepseek-v4.1-flash" },
             { "model": "minimax/MiniMax-M3" },
             { "model": "deepseek/deepseek-v4-pro" }
           ]
@@ -240,7 +240,7 @@
         "deep": {
           "models": [
             { "model": "litellm/kimi-k3-256k", "reasoning": "max" },
-            { "model": "opencode-go/deepseek-flash" },
+            { "model": "opencode-go/deepseek-v4.1-flash" },
             { "model": "minimax/MiniMax-M3" },
             { "model": "deepseek/deepseek-v4-pro" }
           ]
@@ -248,7 +248,7 @@
         "unspecified-high": {
           "models": [
             { "model": "litellm/kimi-k3-256k", "reasoning": "high" },
-            { "model": "opencode-go/deepseek-flash" },
+            { "model": "opencode-go/deepseek-v4.1-flash" },
             { "model": "minimax/MiniMax-M3" },
             { "model": "deepseek/deepseek-v4-pro" }
           ]
@@ -256,7 +256,7 @@
         "artistry": {
           "models": [
             { "model": "litellm/kimi-k3-256k", "reasoning": "high" },
-            { "model": "opencode-go/deepseek-flash" },
+            { "model": "opencode-go/deepseek-v4.1-flash" },
             { "model": "minimax/MiniMax-M3" },
             { "model": "deepseek/deepseek-v4-flash" }
           ]
@@ -264,7 +264,7 @@
         "writing": {
           "models": [
             "litellm/kimi-k3-256k",
-            { "model": "opencode-go/deepseek-flash" },
+            { "model": "opencode-go/deepseek-v4.1-flash" },
             { "model": "minimax/MiniMax-M3" },
             { "model": "deepseek/deepseek-v4-flash" }
           ]
@@ -279,14 +279,14 @@
         },
         "quick": {
           "models": [
-            "litellm/opencode-go/deepseek-flash",
+            "litellm/opencode-go/deepseek-v4.1-flash",
             { "model": "minimax/MiniMax-M3" },
             { "model": "deepseek/deepseek-v4-flash" }
           ]
         },
         "unspecified-low": {
           "models": [
-            "litellm/opencode-go/deepseek-flash",
+            "litellm/opencode-go/deepseek-v4.1-flash",
             { "model": "minimax/MiniMax-M3" },
             { "model": "deepseek/deepseek-v4-flash" }
           ]
