@@ -12,3 +12,4 @@ bin/auth.conf
 .omo/migration-backup-*/
 .omo/*.bak.*
 .tmp/
+/opencode.json
