@@ -32,7 +32,7 @@
           "litellm/kimi-k3-256k",
           "litellm/opencode-go/glm-5.3-flash",
           "litellm/minimax/MiniMax-M3",
-          "litellm/locez/gpt-5.6-luna"
+          { "id": "litellm/locez/gpt-5.6-luna", "variant": "max" }
         ],
         "variant": "high"
       },
@@ -81,7 +81,7 @@
           "litellm/kimi-for-coding",
           "litellm/opencode-go/mimo-v2.5",
           "litellm/minimax/MiniMax-M3",
-          "litellm/locez/gpt-5.6-luna"
+          { "id": "litellm/locez/gpt-5.6-luna", "variant": "max" }
         ]
       },
       // Council synthesis model; councillors configured below.
