@@ -1,0 +1,118 @@
+// oh-my-opencode-slim configuration
+// Design notes:
+// - Fallback chains hold AT MOST ONE model per billing pool: pool exhaustion
+//   is pool-wide, so a second model from the same pool never helps.
+//   Chain order: kimi pool -> opencode-go pool -> minimax pool (all
+//   subscription) -> pay-per-token (deepseek/*, locez/*).
+// - opencode-go: only cheap models are used (<= $0.15/$0.6); known
+//   pool-drainers (glm-5.2, qwen3.7-max, kimi-k2.7-code, hy4-preview) avoided.
+//   glm-5.3-flash is the strongest non-drainer in the pool.
+// - kimi pool drains fastest on kimi-k3, slower on kimi-k3-256k, slowest on
+//   kimi-for-coding: orchestrator/oracle get k3-256k, the fixer workhorse
+//   gets kimi-for-coding.
+// - All home models share the single "litellm" provider, so
+//   providerConcurrency cannot distinguish pools; the chains do that job.
+// - strix/* excluded (slow, no SLA, small context); opencode-zen free models
+//   excluded from chains (inconsistent quality), still usable via /model.
+// - Built-in MCPs context7/gh_grep disabled: the litellm MCP server already
+//   exposes context7-* and grep_app-searchGitHub (same grep.app upstream).
+{
+  "$schema": "https://unpkg.com/oh-my-opencode-slim@latest/oh-my-opencode-slim.schema.json",
+{% if yadm.class == "work" %}
+  "preset": "work",
+{% else %}
+  "preset": "home",
+{% endif %}
+  "disabled_mcps": ["context7", "gh_grep"],
+  "presets": {
+    "home": {
+      // Main session. Best judgment; k3-256k balances quality vs pool drain.
+      "orchestrator": {
+        "model": [
+          "litellm/kimi-k3-256k",
+          "litellm/opencode-go/glm-5.3-flash",
+          "litellm/minimax/MiniMax-M3",
+          "litellm/locez/gpt-5.6-luna"
+        ],
+        "variant": "high"
+      },
+      // Hardest reasoning: architecture, debugging of last resort.
+      "oracle": {
+        "model": [
+          "litellm/kimi-k3-256k",
+          "litellm/opencode-go/glm-5.3-flash",
+          "litellm/minimax/MiniMax-M3",
+          "litellm/deepseek/deepseek-v4-pro"
+        ],
+        "variant": "max"
+      },
+      // Implementation workhorse, biggest token consumer.
+      // kimi-for-coding: 2nd-best quality, 1M context, slowest pool drain.
+      "fixer": {
+        "model": [
+          "litellm/kimi-for-coding",
+          "litellm/opencode-go/glm-5.3-flash",
+          "litellm/minimax/MiniMax-M3",
+          "litellm/deepseek/deepseek-flash"
+        ],
+        "variant": "high"
+      },
+      // Fast codebase reconnaissance: cheap and quick.
+      "explorer": {
+        "model": [
+          "litellm/opencode-go/glm-5.3-flash",
+          "litellm/minimax/MiniMax-M3",
+          "litellm/deepseek/deepseek-v4-flash"
+        ]
+      },
+      // Docs / OSS code lookup: cheapest tier. Uses litellm MCP context7/grep_app.
+      "librarian": {
+        "model": [
+          "litellm/opencode-go/deepseek-v4.1-flash",
+          "litellm/minimax/MiniMax-M3",
+          "litellm/deepseek/deepseek-flash"
+        ]
+      },
+      // UI/UX, needs vision: kimi-for-coding is multimodal.
+      "designer": {
+        "model": [
+          "litellm/kimi-for-coding",
+          "litellm/opencode-go/mimo-v2.5",
+          "litellm/minimax/MiniMax-M3",
+          "litellm/locez/gpt-5.6-luna"
+        ]
+      },
+      // Council synthesis model; councillors configured below.
+      "council": {
+        "model": "litellm/kimi-k3-256k",
+        "variant": "high"
+      }
+    },
+    "work": {
+      // Mapped from the previous oh-my-openagent work config.
+      "orchestrator": { "model": "open-webui/claude-opus-4-6", "variant": "max" },
+      "oracle": { "model": "github-copilot/gpt-5.4", "variant": "high" },
+      "fixer": { "model": "github-copilot/claude-sonnet-4.6" },
+      "explorer": { "model": "github-copilot/claude-sonnet-4.6" },
+      "librarian": { "model": "github-copilot/claude-sonnet-4.6" },
+      "designer": { "model": "github-copilot/gemini-3.1-pro-preview", "variant": "high" },
+      "council": { "model": "github-copilot/gpt-5.4", "variant": "high" }
+    }
+  },
+  "council": {
+    "default_preset": "default",
+    "presets": {
+      "default": {
+{% if yadm.class == "work" %}
+        "alpha": { "model": "github-copilot/gpt-5.4", "variant": "high" },
+        "beta": { "model": "open-webui/claude-opus-4-6", "variant": "high" }
+{% else %}
+        // Diversity over strength: one per family/pool.
+        "alpha": { "model": "litellm/kimi-for-coding", "variant": "high" },
+        "beta": { "model": "litellm/locez/gpt-5.6-luna", "variant": "high" },
+        "gamma": { "model": "litellm/deepseek/deepseek-v4-pro" }
+{% endif %}
+      }
+    }
+  }
+}
