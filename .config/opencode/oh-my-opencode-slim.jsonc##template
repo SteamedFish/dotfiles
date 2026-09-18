@@ -37,6 +37,8 @@
         "variant": "high"
       },
       // Hardest reasoning: architecture, debugging of last resort.
+      // NB: "high" is the ceiling — litellm catalog models only expose
+      // low/medium/high (only locez/gpt-5.6-luna declares xhigh/max).
       "oracle": {
         "model": [
           "litellm/kimi-k3-256k",
@@ -44,7 +46,7 @@
           "litellm/minimax/MiniMax-M3",
           "litellm/deepseek/deepseek-v4-pro"
         ],
-        "variant": "max"
+        "variant": "high"
       },
       // Implementation workhorse, biggest token consumer.
       // kimi-for-coding: 2nd-best quality, 1M context, slowest pool drain.
@@ -90,7 +92,7 @@
     },
     "work": {
       // Mapped from the previous oh-my-openagent work config.
-      "orchestrator": { "model": "open-webui/claude-opus-4-6", "variant": "max" },
+      "orchestrator": { "model": "open-webui/claude-opus-4-6", "variant": "high" },
       "oracle": { "model": "github-copilot/gpt-5.4", "variant": "high" },
       "fixer": { "model": "github-copilot/claude-sonnet-4.6" },
       "explorer": { "model": "github-copilot/claude-sonnet-4.6" },
