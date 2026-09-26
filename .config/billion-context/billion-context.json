@@ -1,45 +1,108 @@
 {
     "compress": {
         "maxContextLimit": "50%",
-        "emergencyThresholdPercent": "98%"
+        "emergencyThresholdPercent": "95%",
+        "nudgeGrowthTokens": 250000,
+        "outputHeadroomMaxPct": "25%"
     },
     "providers": {
         "https://litellm.steamedfish.org": {
             "models": {
-                "kimi-k3-256k": {
+                "strix/qwen3.8-27b-cuda": {
                     "compress": {
-                        "maxContextLimit": "95%",
-                        "emergencyThresholdPercent": "98%",
-                        "preserveRecentMessages": 2
+                        "maxContextLimit": "80%",
+                        "emergencyThresholdPercent": "90%",
+                        "nudgeGrowthTokens": 32768,
+                        "preserveRecentMessages": 2,
+                        "preserveRecentTokens": 3000
                     }
                 },
-                "locez/gpt-5.6-luna": {
+                "minimax/MiniMax-M2": {
                     "compress": {
-                        "maxContextLimit": "95%",
-                        "emergencyThresholdPercent": "98%",
+                        "maxContextLimit": "80%",
+                        "emergencyThresholdPercent": "90%",
+                        "nudgeGrowthTokens": 51200
+                    }
+                },
+                "minimax/MiniMax-M2.1": {
+                    "compress": {
+                        "maxContextLimit": "80%",
+                        "emergencyThresholdPercent": "90%",
+                        "nudgeGrowthTokens": 51200
+                    }
+                },
+                "minimax/MiniMax-M2.5": {
+                    "compress": {
+                        "maxContextLimit": "80%",
+                        "emergencyThresholdPercent": "90%",
+                        "nudgeGrowthTokens": 51200
+                    }
+                },
+                "minimax/MiniMax-M2.5-highspeed": {
+                    "compress": {
+                        "maxContextLimit": "80%",
+                        "emergencyThresholdPercent": "90%",
+                        "nudgeGrowthTokens": 51200
+                    }
+                },
+                "minimax/MiniMax-M2.7": {
+                    "compress": {
+                        "maxContextLimit": "80%",
+                        "emergencyThresholdPercent": "90%",
+                        "nudgeGrowthTokens": 51200
+                    }
+                },
+                "minimax/MiniMax-M2.7-highspeed": {
+                    "compress": {
+                        "maxContextLimit": "80%",
+                        "emergencyThresholdPercent": "90%",
+                        "nudgeGrowthTokens": 51200
+                    }
+                },
+                "opencode-go/hy3": {
+                    "compress": {
+                        "maxContextLimit": "80%",
+                        "emergencyThresholdPercent": "90%",
+                        "nudgeGrowthTokens": 64000
+                    }
+                },
+                "kimi-for-coding-highspeed": {
+                    "compress": {
+                        "maxContextLimit": "80%",
+                        "emergencyThresholdPercent": "90%",
+                        "nudgeGrowthTokens": 65536
+                    }
+                },
+                "kimi-k3-256k": {
+                    "compress": {
+                        "maxContextLimit": "80%",
+                        "emergencyThresholdPercent": "90%",
+                        "nudgeGrowthTokens": 65536,
                         "preserveRecentMessages": 2
                     }
                 },
                 "strix/qwen3.8-27b-uncensored": {
                     "compress": {
-                        "maxContextLimit": "95%",
-                        "emergencyThresholdPercent": "98%",
+                        "maxContextLimit": "80%",
+                        "emergencyThresholdPercent": "90%",
+                        "nudgeGrowthTokens": 65536,
                         "preserveRecentMessages": 2
                     }
                 },
                 "strix/qwen3.8-flash-next-uncensored": {
                     "compress": {
-                        "maxContextLimit": "95%",
-                        "emergencyThresholdPercent": "98%",
+                        "maxContextLimit": "80%",
+                        "emergencyThresholdPercent": "90%",
+                        "nudgeGrowthTokens": 65536,
                         "preserveRecentMessages": 2
                     }
                 },
-                "strix/qwen3.8-27b-cuda": {
+                "locez/gpt-5.6-luna": {
                     "compress": {
-                        "maxContextLimit": "85%",
-                        "emergencyThresholdPercent": "98%",
-                        "preserveRecentMessages": 2,
-                        "preserveRecentTokens": 3000
+                        "maxContextLimit": "80%",
+                        "emergencyThresholdPercent": "90%",
+                        "nudgeGrowthTokens": 68000,
+                        "preserveRecentMessages": 2
                     }
                 }
             }
