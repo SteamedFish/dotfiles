@@ -13,3 +13,8 @@ bin/auth.conf
 .omo/*.bak.*
 .tmp/
 /opencode.json
+
+# rendered/secret runtime products (never commit)
+.config/opencode/service.json
+.config/opencode/opencode.jsonc
+.config/opencode/litellm-token
