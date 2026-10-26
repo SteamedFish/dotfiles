@@ -3,8 +3,10 @@
 .notmuch-config filter=git-crypt diff=git-crypt
 .config/doom/modules/steamedfish/basic/email.el filter=git-crypt diff=git-crypt
 .wakatime.cfg filter=git-crypt diff=git-crypt
-.config/opencode/opencode.jsonc##template filter=git-crypt diff=git-crypt
-.config/opencode/opencode-models.json.inc filter=git-crypt diff=git-crypt
+.config/opencode/opencode.jsonc filter=git-crypt diff=git-crypt
+.config/opencode/oh-my-opencode-slim.jsonc filter=git-crypt diff=git-crypt
+.config/opencode/litellm-token filter=git-crypt diff=git-crypt
+.config/opencode/work-token filter=git-crypt diff=git-crypt
+.config/billion-context/billion-context.json filter=git-crypt diff=git-crypt
 .openviking/ovcli.conf filter=git-crypt diff=git-crypt
 .honcho/config.json filter=git-crypt diff=git-crypt
-.config/opencode/litellm-token##template filter=git-crypt diff=git-crypt

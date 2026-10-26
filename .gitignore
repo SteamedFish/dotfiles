@@ -16,5 +16,3 @@ bin/auth.conf
 
 # rendered/secret runtime products (never commit)
 .config/opencode/service.json
-.config/opencode/opencode.jsonc
-.config/opencode/litellm-token
