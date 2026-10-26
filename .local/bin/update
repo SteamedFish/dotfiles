@@ -895,26 +895,198 @@ update_doom() {
     done
 }
 
+# ---------------------------------------------------------------------------
+# VCS project updater for ~/work.
+#
+# Walks ~/work to arbitrary depth. A directory that is a supported VCS
+# repository (git, git-svn, svn) is updated in place and NOT descended
+# into, so nested checkouts / submodules are never updated twice. Plain
+# directories are recursed into; hidden directories and symlinks are
+# skipped.
+#
+# SAFETY: the script runs under `set -e` and run() swallows command
+# failures (it returns 0 even when the command failed), so every
+# safety-relevant git call below is made DIRECTLY in an `if` condition —
+# never through run() — and its real exit status decides control flow.
+#
+# git: refresh ALL remote branches and tags first
+# (fetch --all --prune --tags --force), then update strictly according
+# to the current branch's upstream:
+#   - ahead>0 (local commits not on upstream, pushed or not): NEVER
+#     reset/rebase/rewrite. Diverged (ahead>0 AND behind>0) -> report
+#     the full path and skip, preserving every local commit. Ahead-only
+#     -> left untouched.
+#   - ahead==0 AND behind>0: fast-forward via `merge --ff-only`, letting
+#     git itself refuse when uncommitted local changes would be
+#     clobbered; on failure the repo is reported with its FULL PATH and
+#     skipped — nothing is ever reset/cleaned/stashed away.
+#   - ahead==0 AND behind==0: up to date, nothing to do.
+#   - no upstream / detached HEAD / fetch failure: reported with the
+#     full path, scan continues with the next repository.
+# submodules: never checked out/updated automatically — a parent update
+# must not move a submodule past its local commits or modifications.
+# The parent's `git fetch --all --tags` already refreshes branch/tag
+# visibility; submodule content is left entirely to the user.
+# git-svn: dirty tracked tree -> report full path and skip; clean ->
+# fetch + rebase (untracked files don't block git-svn rebase).
+# svn: `svn update` merges around local edits and never discards them.
+# ---------------------------------------------------------------------------
+
+# True for a normal checkout (`.git` dir), a submodule/worktree checkout
+# (`.git` file). Bare repositories are not updated here.
+_optools_is_git_repo() {
+    { [ -d "$1/.git" ] || [ -f "$1/.git" ]; } &&
+        [ "$(git -C "$1" rev-parse --is-bare-repository 2>/dev/null)" = "false" ]
+}
+
+# git-svn checkouts carry svn/.metadata inside their git dir. Resolve the
+# git dir to an ABSOLUTE path: --git-path prints a path relative to the
+# repo, which would be tested against the caller's cwd, not the repo.
+_optools_is_git_svn_repo() {
+    _optools_is_git_repo "$1" || return 1
+    local gitdir
+    if ! gitdir="$(git -C "$1" rev-parse --absolute-git-dir 2>/dev/null)"; then
+        return 1
+    fi
+    [ -f "$gitdir/svn/.metadata" ]
+}
+
+_optools_is_svn_repo() {
+    [ -d "$1/.svn" ] && command -v svn >/dev/null 2>&1
+}
+
+# Tracked worktree + index clean. Untracked files are allowed: they never
+# block a ff-only merge, git-svn rebase, or svn update.
+_optools_git_tree_clean() {
+    git -C "$1" diff --quiet --ignore-submodules 2>/dev/null &&
+        git -C "$1" diff --cached --quiet --ignore-submodules 2>/dev/null
+}
+
+_optools_update_git_repo() {
+    local repo="$1"
+    local c_repo="${CYAN}${repo}${RESET}"
+
+    # Refresh every remote branch and all tags before deciding anything,
+    # so an update never runs against stale remote-tracking refs.
+    if ! git -C "$repo" fetch --all --prune --tags --force; then
+        print_error "Fetch failed in ${c_repo} — skipping"
+        return 1
+    fi
+
+    # Detached HEAD: nothing sane to update against; the fetch above
+    # still refreshed all remote refs.
+    if ! git -C "$repo" symbolic-ref -q HEAD >/dev/null 2>&1; then
+        print_info "Detached HEAD in ${c_repo} — fetched only, skipping update"
+        return 0
+    fi
+
+    local upstream
+    if ! upstream="$(git -C "$repo" rev-parse --abbrev-ref --symbolic-full-name '@{u}' 2>/dev/null)" || [ -z "$upstream" ]; then
+        print_info "No upstream configured in ${c_repo} — fetched only, skipping update"
+        return 0
+    fi
+
+    local counts ahead behind
+    if ! counts="$(git -C "$repo" rev-list --left-right --count HEAD..."$upstream" 2>/dev/null)"; then
+        print_error "Failed to compare with upstream ${upstream} in ${c_repo} — skipping"
+        return 1
+    fi
+    ahead="${counts%%$'\t'*}"
+    behind="${counts##*$'\t'}"
+
+    # HARD RULE: commits that are not on upstream (ahead>0) are never
+    # destroyed — no reset, no rebase, no force-push mirroring — even
+    # when the remote was force-pushed and the tree is clean.
+    if [ "$ahead" -gt 0 ] && [ "$behind" -gt 0 ]; then
+        print_error "Diverged from upstream ${upstream} in ${c_repo} — ${ahead} local commit(s) not on upstream; skipped to preserve them"
+        return 1
+    fi
+    if [ "$ahead" -gt 0 ]; then
+        print_info "Ahead of upstream ${upstream} in ${c_repo} — ${ahead} unpushed commit(s), left untouched"
+        return 0
+    fi
+    if [ "$behind" -eq 0 ]; then
+        print_success "Already up to date: ${c_repo}"
+        return 0
+    fi
+
+    # ahead==0 AND behind>0: fast-forward only. merge --ff-only lets git
+    # itself refuse when uncommitted local changes would be clobbered;
+    # on failure the changes (and the repo) are left exactly as they are.
+    if git -C "$repo" merge --ff-only "$upstream" >/dev/null 2>&1; then
+        print_success "Fast-forwarded ${c_repo}"
+        return 0
+    fi
+    print_error "Local changes in ${c_repo} would be overwritten by fast-forward — skipped (nothing was reset, cleaned or stashed)"
+    return 1
+}
+
+_optools_update_git_svn_repo() {
+    local repo="$1"
+    local c_repo="${CYAN}${repo}${RESET}"
+
+    # git svn rebase requires a clean tracked tree; without it we cannot
+    # guarantee the local changes survive, so report and skip.
+    if ! _optools_git_tree_clean "$repo"; then
+        print_error "Local changes in ${c_repo} — git-svn fetch/rebase skipped (changes preserved)"
+        return 1
+    fi
+    if ! git -C "$repo" svn fetch; then
+        print_error "git svn fetch failed in ${c_repo} — skipping"
+        return 1
+    fi
+    if ! git -C "$repo" svn rebase; then
+        print_error "git svn rebase failed in ${c_repo} — skipping"
+        return 1
+    fi
+    print_success "Updated (git-svn): ${c_repo}"
+    return 0
+}
+
+_optools_update_svn_repo() {
+    local repo="$1"
+    local c_repo="${CYAN}${repo}${RESET}"
+    # svn update merges around local edits and never discards them.
+    if ! svn update --non-interactive "$repo"; then
+        print_error "svn update failed in ${c_repo} — skipping"
+        return 1
+    fi
+    print_success "Updated (svn): ${c_repo}"
+    return 0
+}
+
+# A repository is updated and not descended into; anything else is
+# recursed into. A failed repo must not abort the scan (set -e).
+_optools_visit_dir() {
+    local dir="$1"
+    if _optools_is_git_svn_repo "$dir"; then
+        _optools_update_git_svn_repo "$dir"
+    elif _optools_is_git_repo "$dir"; then
+        _optools_update_git_repo "$dir"
+    elif _optools_is_svn_repo "$dir"; then
+        _optools_update_svn_repo "$dir"
+    else
+        _optools_scan_dir "$dir"
+    fi
+}
+
+_optools_scan_dir() {
+    local dir="$1" entry
+    # The `*` glob skips hidden directories by itself; symlinks are
+    # skipped so directory loops and duplicate checkouts are impossible.
+    for entry in "$dir"/*; do
+        [ -e "$entry" ] || continue
+        [ -d "$entry" ] || continue
+        [ -L "$entry" ] && continue
+        _optools_visit_dir "$entry" || true
+    done
+}
+
 update_optools() {
-    local _DIR="work"
-    if [ -d "$HOME/${_DIR}" ]; then
-        print_info "Updating work projects in ${CYAN}~/${_DIR}${RESET}"
-        for _PROJECT in "$HOME/${_DIR}"/*; do
-            if [ -d "${_PROJECT}" ]; then
-                local project_name
-                project_name="$(basename "${_PROJECT}")"
-                print_info "  ${CYAN}${project_name}${RESET}"
-                
-                if [ -f "${_PROJECT}/.git/svn/.metadata" ]; then
-                    cd "${_PROJECT}"
-                    run git svn fetch
-                elif [ -d "${_PROJECT}/.git" ]; then
-                    cd "${_PROJECT}"
-                    run git pull
-                    run git submodule update --remote --recursive
-                fi
-            fi
-        done
+    local root="$HOME/work"
+    if [ -d "$root" ]; then
+        print_info "Updating work projects under ${CYAN}${root}${RESET}"
+        _optools_scan_dir "$root"
     fi
 }
 
