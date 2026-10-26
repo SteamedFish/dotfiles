@@ -54,3 +54,5 @@
 [difftool "difftastic"]
     # See `man git-difftool` for a description of MERGED, LOCAL and REMOTE.
     cmd = difft "$MERGED" "$LOCAL" "abcdef1" "100644" "$REMOTE" "abcdef2" "100644"
+[include]
+	path = ~/.config/git/config.local
