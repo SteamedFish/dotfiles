@@ -373,200 +373,31 @@ update_rust() {
 }
 
 update_opencode() {
-    # -------------------------------------------------------------------------
-    # OpenCode plugin upgrader.
+    # OpenCode V2 manages its own plugins: `opencode plugin check` reports
+    # outdated plugins and `opencode plugin update` re-resolves and
+    # upgrades them in place. The binary itself is updated by pacman, so
+    # we do not touch it here, and we no longer hand-manage the plugin
+    # cache (V1's ~/.cache/opencode/packages is gone in V2).
     #
-    # OpenCode resolves plugin specs on first install and caches each one as
-    # a literal directory under $XDG_CACHE_HOME/opencode/packages/<spec>/.
-    # Once cached, it never re-resolves — so "pkg@latest" stays pinned to
-    # whatever version was "latest" the first time opencode ran, and git
-    # URLs stay pinned to whichever commit HEAD pointed at on first clone.
-    # There is no `opencode plugin upgrade` command.
-    #
-    # OpenCode's own Npm.add() short-circuits when the cache is already
-    # populated — it never re-installs an existing entry. So the only way
-    # to upgrade a cached plugin is to either delete the cache (force next
-    # startup to re-resolve) or to run the install ourselves in place.
-    #
-    # We use the in-place route: `cd <cache-dir> && bun add --exact
-    # <pkg>@<target>`. This uses the same tool (bun) and the same lockfile
-    # format that opencode itself uses, and `--exact` keeps the pinned
-    # "pkg": "1.2.3" dependency style opencode writes on a clean install.
-    #
-    # NOTE: `bun update <pkg>` does NOT work here — opencode's cached
-    # package.json pins exact versions, and `bun update` only moves within
-    # the range declared in package.json, so it is always a silent no-op.
-    # `bun add` re-resolves the requested target explicitly.
-    #
-    # Git specs (`pkg@git+https://...`) cannot be upgraded in place: bun
-    # pins git dependencies to a commit hash in bun.lock and neither
-    # `bun update` nor `bun add` re-resolves the branch HEAD. For those we
-    # always clear the cache so the next opencode startup re-clones.
-    #
-    # The cache write does NOT affect a running opencode process — its
-    # loaded modules stay in memory until restart. If bun isn't available
-    # or the add fails (network, conflict), we fall back to clearing the
-    # cache (next opencode startup re-resolves and re-fetches). After every
-    # bun add we verify the installed version actually matches the target
-    # before claiming success.
-    #
-    # We query `npm view` to detect outdated entries so we don't force an
-    # unnecessary upgrade on every plugin at every run. On
-    # registry-unreachable we skip silently — never upgrade what we
-    # can't verify.
-    # -------------------------------------------------------------------------
-
-    # Silent skip when there's nothing to act on. Missing jq / config / cache
-    # all bail with no output — this function is part of a broad `update`
-    # sweep and must not surface errors for absent optional tooling.
-    if ! command -v jq >/dev/null 2>&1; then
-        return 0
-    fi
-    if [ ! -f "$HOME/.config/opencode/opencode.json" ]; then
+    # run() swallows command failures (it always returns 0 after logging),
+    # so a non-zero `plugin check` exit code (e.g. when it is merely
+    # informational) is harmless under set -e and never aborts the sweep.
+    if ! command -v opencode >/dev/null 2>&1; then
         return 0
     fi
 
-    local cache_root="$HOME/.cache/opencode/packages"
-    if [ ! -d "$cache_root" ]; then
+    # The plugin CLI requires OpenCode V2; silently skip older installations.
+    local opencode_version
+    if ! opencode_version=$(opencode --version 2>/dev/null); then
         return 0
     fi
+    case "$opencode_version" in
+        "opencode v2."* | 2.*) ;;
+        *) return 0 ;;
+    esac
 
-    local plugins
-    if ! plugins=$(jq -r '.plugin[]? // empty' "$HOME/.config/opencode/opencode.json" 2>/dev/null); then
-        return 0
-    fi
-    if [ -z "$plugins" ]; then
-        return 0
-    fi
-
-    # Optional tools: bun for in-place upgrade, npm for version comparison.
-    local have_bun=false have_npm=false
-    command -v bun >/dev/null 2>&1 && have_bun=true
-    command -v npm >/dev/null 2>&1 && have_npm=true
-
-    local spec upgraded=0 cleared=0 up_to_date=0
-    while IFS= read -r spec; do
-        [ -z "$spec" ] && continue
-
-        # Path-style specs (./foo, ~/bar, file://..., /abs/path) point at
-        # source trees opencode resolves at startup. They have no cache entry.
-        case "$spec" in
-        /* | ./* | ../* | ~/* | file://*) continue ;;
-        esac
-
-        # Normalize the cache path the same way opencode does on the JS side:
-        # Node's path.join collapses "://" to ":/", so a git spec like
-        # "superpowers@git+https://github.com/.../x.git" caches as
-        # "<cache>/superpowers@git+https:/github.com/.../x.git" rather than
-        # the literal-string form. We replicate that here so [ -d ] and rm
-        # resolve to the real directory opencode actually created.
-        local cache_path="$cache_root/$(printf '%s' "$spec" | sed 's|://|:/|g')"
-
-        if [ ! -d "$cache_path" ]; then
-            continue
-        fi
-
-        # Split the spec into package name and version spec, scope-aware:
-        #   "pkg"                  → pkg="pkg",  version=""
-        #   "pkg@1.2.3"            → pkg="pkg",  version="1.2.3"
-        #   "@scope/pkg"           → pkg="@scope/pkg", version=""
-        #   "@scope/pkg@latest"    → pkg="@scope/pkg", version="latest"
-        #   "pkg@git+https://..."  → pkg="pkg",  version="git+https://..."
-        # A naive ${spec%@*} breaks on a bare scoped spec ("@scope/pkg"
-        # would yield an empty name), so the leading scope "@" must be
-        # skipped before looking for the version separator.
-        local pkg version_spec=""
-        if [[ "$spec" == @* ]]; then
-            local rest="${spec#@}"
-            if [[ "$rest" == *@* ]]; then
-                pkg="@${rest%@*}"
-                version_spec="${rest##*@}"
-            else
-                pkg="$spec"
-            fi
-        elif [[ "$spec" == *@* ]]; then
-            pkg="${spec%@*}"
-            version_spec="${spec##*@}"
-        else
-            pkg="$spec"
-        fi
-
-        local installed_v="?"
-        if [ -f "$cache_path/node_modules/$pkg/package.json" ]; then
-            installed_v=$(jq -r '.version // "?"' "$cache_path/node_modules/$pkg/package.json" 2>/dev/null)
-        fi
-
-        # Git specs: bun pins git dependencies to a commit in bun.lock and
-        # neither `bun update` nor `bun add` re-resolves the branch HEAD —
-        # in-place upgrade is impossible. Clear the cache so the next
-        # opencode startup re-clones at the current HEAD.
-        if [[ "$version_spec" == git+* ]]; then
-            print_status "Refreshing: $spec (git, installed $installed_v)"
-            rm -rf -- "$cache_path"
-            cleared=$((cleared + 1))
-            continue
-        fi
-
-        # Resolve the target version: explicit for pinned specs, registry
-        # lookup for "latest" / unspecified. On registry-unreachable skip
-        # silently — never upgrade what we can't verify.
-        local target=""
-        if [ -n "$version_spec" ] && [ "$version_spec" != "latest" ]; then
-            target="$version_spec"
-        else
-            if ! $have_npm; then
-                continue
-            fi
-            target=$(timeout 10 npm view "$pkg" version 2>/dev/null || echo "")
-            if [ -z "$target" ]; then
-                continue
-            fi
-        fi
-
-        if [ "$installed_v" = "$target" ]; then
-            up_to_date=$((up_to_date + 1))
-            continue
-        fi
-
-        # Try in-place upgrade via bun first; fall back to cache-clear if
-        # bun isn't installed, the add fails, or the result doesn't match
-        # the target. `bun update` is useless here (it respects the pinned
-        # exact version in the cached package.json and no-ops), so we use
-        # `bun add --exact pkg@target` which re-resolves explicitly while
-        # keeping opencode's exact-pin dependency style.
-        if $have_bun; then
-            print_status "Upgrading: $spec ($installed_v → $target)"
-            if (cd "$cache_path" && timeout 90 bun add --exact "$pkg@$target" >/dev/null 2>&1); then
-                local new_v="?"
-                if [ -f "$cache_path/node_modules/$pkg/package.json" ]; then
-                    new_v=$(jq -r '.version // "?"' "$cache_path/node_modules/$pkg/package.json" 2>/dev/null)
-                fi
-                if [ "$new_v" = "$target" ]; then
-                    print_success "Upgraded: $spec → $new_v"
-                    upgraded=$((upgraded + 1))
-                    continue
-                fi
-                print_info "bun add left $pkg at $new_v (want $target) — falling back to cache clear"
-            else
-                print_info "bun add failed for $spec — falling back to cache clear"
-            fi
-        fi
-
-        # Fallback: clear the cache so opencode re-fetches on next startup.
-        print_status "Refreshing: $spec ($installed_v → $target)"
-        rm -rf -- "$cache_path"
-        cleared=$((cleared + 1))
-    done <<<"$plugins"
-
-    if [ "$upgraded" -gt 0 ]; then
-        print_info "Upgraded $upgraded plugins in-place — restart OpenCode to load new versions"
-    fi
-    if [ "$cleared" -gt 0 ]; then
-        print_info "Cleared $cleared cache entries — restart OpenCode to fetch"
-    fi
-    if [ "$up_to_date" -gt 0 ] && [ "$upgraded" -eq 0 ] && [ "$cleared" -eq 0 ]; then
-        print_success "All $up_to_date OpenCode plugins already up to date"
-    fi
+    run opencode plugin check
+    run opencode plugin update
 }
 
 update_bunx() {
