@@ -10,6 +10,7 @@
 | 文件 | 加密 | 作用 |
 |------|------|------|
 | `.config/opencode/opencode.jsonc` | git-crypt | 全局主配置。定义 `work` provider（公司内部 proxy）及全部模型 metadata；home 模型由 litellm wellknown provider 自动发现 |
+| `.config/opencode/cli.json` | 明文 | OpenCode V2 的 **TUI 侧**配置（V2 不再读 `tui.json`）。只声明"带终端 UI"的插件：omo-slim（`/preset` 流程 + 更新 badge）与 goal 插件（`/goal` 侧栏/命令面板 + 中文界面） |
 | `.config/opencode/oh-my-opencode-slim.jsonc` | git-crypt | 全局默认 `preset: home`；含 home/work 两套 preset 的 fallback 链 |
 | `.config/opencode/litellm-token` | git-crypt | litellm（home 模型池）API key 的源副本；实际生效凭证在 `~/.local/share/opencode/auth.json` |
 | `.config/opencode/work-token` | git-crypt | work proxy API key，被 opencode.jsonc 以 `{file:~/.config/opencode/work-token}` 引用 |
@@ -29,6 +30,11 @@
 - omo-slim 项目级 `.opencode/oh-my-opencode-slim.jsonc` deep-merge 覆盖用户级；`OH_MY_OPENCODE_SLIM_PRESET` 环境变量优先级最高（不要全局 export）。fallback 链对 429/quota/auth/5xx/网络错误自动推进。session 在首个受管 prompt 前捕获 snapshot，改配置只影响新 session。
 - `litellm-token` 文件本身无运行时消费者，只是凭证的加密源副本；改 key 后要同步更新 `~/.local/share/opencode/auth.json`（`opencode auth login`）。
 - billion-context 配置中 `providers` 的 key 必须以 `http(s)://` 开头才是路由；1M 窗口模型用全局默认 50%/95%，≤262k 窗口模型才加 80%/90% per-model override。
+- goal 插件（`@prevalentware/opencode-goal-plugin`）在 V2 需要**两处**声明：`opencode.jsonc` 的 `plugins` 负责 server 侧（命令 + 工具 + 状态），`cli.json` 的 `plugins` 负责 TUI 侧（侧栏指示器、命令面板、界面语言）。任一处写 `{package, options}` 对象形式即可；`options` 只在各自那侧生效，所以 `locale` 两边都要写才会全中文。
+- `cli.json` 的 `plugins` 只放**带 `./tui` 导出**的包（判断依据：包 `package.json` 的 `exports`）。判断错方向会有害：server-only 的包（如 billion-context，只有 `.`/`./server`/`./dsh`/`./client`）写进去等于把 server 代码塞进 TUI 进程。当前 cli.json 里是 omo-slim（TUI 侧提供 `/preset` 流程与更新 badge）和 goal 插件；终端侧已加载的插件可在 TUI 里用 `/plugins` 查看，`opencode plugin check` 的 `Server`/`TUI` 两段分别对应这两个文件。
+- 插件条目必须带 `@latest`（如 `@prevalentware/opencode-goal-plugin@latest`）：`opencode plugin update` 按声明 spec 重新解析，写死版本号就永远不会升级。`opencode plugin check` 先看有没有新版；新增但未安装的条目会在 `plugin update` 时被安装（实测 v2.1.3 用 `opencode plugin update` 即完成 billion-context 0.1.208→0.1.209 与 goal 插件首装）。
+- `opencode plugin update` / `check` 只认全局配置与项目配置里的声明，`--print-logs` 可用于看解析失败原因；`opencode debug config` 可确认 `plugins` 数组是否被正确解析（排除静默丢弃）。
+- goal 插件选项（服务器的 `options`，默认值见上游 README）：`max_auto_turns` 默认 25、`default_token_budget` 默认不设、`max_goal_duration_seconds` 默认不设（=无时限）。`max_auto_turns` 的 zod 约束只有 `.int().positive()`，没有上限，因此可写 1e6；`default_token_budget` 直接 `??` 取值，校验无上限，可写 1e9。`max_no_progress_turns`/`max_prompt_failures`/`no_progress_token_threshold` 是防死循环保险丝，**不要设 0**（0 不是"无限"，会立即触发暂停），只适度放宽。
 
 ## 模型选型原则
 
@@ -37,6 +43,10 @@
 - work 计费口径：kimi 类按 Kimi Allegro、step 类按 step plan max、GLM 类按 GLM plan、deepseek 类按官方 API。
 - Kimi K2 系列（kimi-for-coding 的 canonical k2.8-preview）2026 年底官方下线，届时 home 链需迁移。
 - work proxy 模型清单以加密后的 opencode.jsonc 内注释为准。
+
+## 变更记录
+
+- **2026-10-29**：新增 goal 插件 `@prevalentware/opencode-goal-plugin@latest`（`/goal` 长任务模式）。server 侧在 `opencode.jsonc` 用 `{package, options}` 声明（`locale: zh-CN`、`max_auto_turns: 1e6`、`default_token_budget: 1e9` ≈ 无上限，`max_goal_duration_seconds` 留空即无时限；保险丝 `max_no_progress_turns: 4`、`max_prompt_failures: 10`、`max_task_block_seconds: 7200`）；新建 `cli.json` 声明 TUI 侧，并顺带启用 omo-slim 的 `/preset`。均已 `opencode plugin update` 实装（goal 0.1.84），`plugin check` Server/TUI 两侧 current。仓库根 `AGENTS.md` 已删除。
 
 ## 迁移步骤（从旧机器/旧配置升级）
 
