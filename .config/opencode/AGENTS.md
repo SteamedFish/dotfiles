@@ -19,7 +19,7 @@
 ## 使用规则
 
 1. **home/个人项目**：只用 `litellm/*` 模型（个人购买）。全局配置默认即是。
-2. **work 项目**：在仓库根放 `.opencode/oh-my-opencode-slim.jsonc`（内容 `{"preset": "work"}`），fallback 链 work/* 优先、litellm/* 兜底（work 用量耗尽时自动切换）；再放 `.opencode/opencode.jsonc` 覆盖 `agents.title.model` 为 work provider 下的本地自部署模型（具体模型名见加密后的 opencode.jsonc）及 council preset。
+2. **work 项目**：在仓库根放 `.opencode/oh-my-opencode-slim.jsonc`（内容 `{"preset": "work"}`），fallback 链 work/* 优先、litellm/* 兜底（work 限流/额度耗尽时自动切换）。注意 `fallback`（重试次数/间隔）是**顶层**配置、对两套 preset 同时生效，没有 per-preset 覆盖；要 work 专属值只能在该项目文件里 deep-merge 覆盖顶层 fallback；再放 `.opencode/opencode.jsonc` 覆盖 `agents.title.model` 为 work provider 下的本地自部署模型（具体模型名见加密后的 opencode.jsonc）及 council preset。
 3. **home 项目禁止使用 `work/*` 模型**（公司资源不得用于个人项目）。
 
 ## 关键实现细节（踩坑记录）
@@ -30,6 +30,13 @@
 - omo-slim 项目级 `.opencode/oh-my-opencode-slim.jsonc` deep-merge 覆盖用户级；`OH_MY_OPENCODE_SLIM_PRESET` 环境变量优先级最高（不要全局 export）。fallback 链对 429/quota/auth/5xx/网络错误自动推进。session 在首个受管 prompt 前捕获 snapshot，改配置只影响新 session。
 - `litellm-token` 文件本身无运行时消费者，只是凭证的加密源副本；改 key 后要同步更新 `~/.local/share/opencode/auth.json`（`opencode auth login`）。
 - billion-context 配置中 `providers` 的 key 必须以 `http(s)://` 开头才是路由；1M 窗口模型用全局默认 50%/95%，≤262k 窗口模型才加 80%/90% per-model override。
+- **omo-slim fallback 的真实语义**（v3.0.6 + opencode v2 host，读 dist 源码 + 日志确认）：
+  - v2 host 上只有 retry-hook steering 生效（日志 `v2 replay fallback disabled (no atomic per-turn model switch); retry-hook steering active`），`fallback.initialRetryDelayMs` 被**忽略**（日志 `retry hook ignores initial delay`）。
+  - `fallback.maxRetries` 是**一次 descent 内共享**的同模型重试预算，不随换模型重置，只在成功 step / 新用户轮 / 删除 session 时清零。因此**只有链头能吃重试**（1+maxRetries 次），其后每个条目都只试 1 次。想"多试几次"不是调大 maxRetries，而是让链头足够可靠。
+  - `sessionTried` 是 Set，按 `provider/model` 字符串去重，链里重复同一 id 无效（含不同 variant）。所以"a b c a b c"在单个 step 内**做不到**；能实现的是"每个成功 step 重置一次 descent"，即跨 step 反复走 a→b→c。`continuationPolicy: retry-primary` 保证降级后下一个 step 仍先试 primary。
+  - fallback 配置只有**顶层**（schema 无 per-preset / per-agent 覆盖），要 work 专属调参只能改工作 preset 的链，或在工作仓库 `.opencode/oh-my-opencode-slim.jsonc` 里 deep-merge 覆盖顶层 fallback。
+- **work proxy 限流是硬上限**：按**用户**约 14 请求/分钟（滑动窗口，所有模型共用，本地自部署模型也计入），超限秒回 429 `user requests-per-minute limit exceeded`，约 60s 才恢复；模型 ID 清单见加密后的 `opencode.jsonc`。推论：① 429 时换模型没有意义（同一用户额度）；② 链内 work 条目多于 2 个等于白烧配额；③ agentic 并发（explorer 尤其）必然溢出限流，溢出部分交给 home 才是正确行为，别指望配置能"压住不降级"。
+- **项目级 `.opencode/opencode.jsonc` 的顶层 `"model"` 也会咬人**：工作仓库上层的项目级配置曾写死一个已从代理下线的模型，导致其下所有新 session 一开就 404。改 work 模型清单时要连项目级默认 model、council 席位一起 grep（`grep -rn "work/" --include=*.jsonc <工作目录>`）。
 - goal 插件（`@prevalentware/opencode-goal-plugin`）在 V2 需要**两处**声明：`opencode.jsonc` 的 `plugins` 负责 server 侧（命令 + 工具 + 状态），`cli.json` 的 `plugins` 负责 TUI 侧（侧栏指示器、命令面板、界面语言）。任一处写 `{package, options}` 对象形式即可；`options` 只在各自那侧生效，所以 `locale` 两边都要写才会全中文。
 - `cli.json` 的 `plugins` 只放**带 `./tui` 导出**的包（判断依据：包 `package.json` 的 `exports`）。判断错方向会有害：server-only 的包（如 billion-context，只有 `.`/`./server`/`./dsh`/`./client`）写进去等于把 server 代码塞进 TUI 进程。当前 cli.json 里是 omo-slim（TUI 侧提供 `/preset` 流程与更新 badge）和 goal 插件；终端侧已加载的插件可在 TUI 里用 `/plugins` 查看，`opencode plugin check` 的 `Server`/`TUI` 两段分别对应这两个文件。
 - 插件条目必须带 `@latest`（如 `@prevalentware/opencode-goal-plugin@latest`）：`opencode plugin update` 按声明 spec 重新解析，写死版本号就永远不会升级。`opencode plugin check` 先看有没有新版；新增但未安装的条目会在 `plugin update` 时被安装（实测 v2.1.3 用 `opencode plugin update` 即完成 billion-context 0.1.208→0.1.209 与 goal 插件首装）。
@@ -46,6 +53,18 @@
 
 ## 变更记录
 
+- **2026-10-29（work 链实测修正）**：直连探活 work proxy 后发现三处硬伤并修正：
+  ① 链头/council 席位/项目级默认 model 里引用了一个**已从代理下线**的模型（404 `model_not_found`），
+  每一步都白烧一次请求或直接报错 —— 已从所有链、席位与项目级配置里移除，并从 `opencode.jsonc`
+  的 metadata 中删除；② 某个别名模型实际路由到其 256k 变体的后端（metadata 里写成 1M，已改回
+  262144，超长请求会失败）；③ 有两个模型 ID 直连恒 429（group 内无账号），另有一个别名模型的
+  后端是别的模型 —— 这些不许进链。另查明网关按**用户**限流 ~14 请求/分钟（所有模型共用，
+  超限秒 429、约 60s 恢复），所以"多换几个模型重试"对 429 无效。据此重排 work preset：
+  链内 work 条目压到 ≤2、链头换成现役可靠模型、explorer 只留 1 个免费本地条目（它请求量最大，
+  是烧光限流额度、把 orchestrator/fixer 挤到 home 的主因）；`fallback.maxRetries` 3→2
+  （同模型重试各烧一个配额，429 不会在几秒内恢复），`retryDelayMs` 500→3000，显式固定
+  `continuationPolicy: retry-primary`（每个成功 step 后回 primary，下一步重新给 work 机会）。
+  具体模型 ID 一律以加密后的 `opencode.jsonc` 注释为准。
 - **2026-10-29**：新增 goal 插件 `@prevalentware/opencode-goal-plugin@latest`（`/goal` 长任务模式）。server 侧在 `opencode.jsonc` 用 `{package, options}` 声明（`locale: zh-CN`、`max_auto_turns: 1e6`、`default_token_budget: 1e9` ≈ 无上限，`max_goal_duration_seconds` 留空即无时限；保险丝 `max_no_progress_turns: 4`、`max_prompt_failures: 10`、`max_task_block_seconds: 7200`）；新建 `cli.json` 声明 TUI 侧，并顺带启用 omo-slim 的 `/preset`。均已 `opencode plugin update` 实装（goal 0.1.84），`plugin check` Server/TUI 两侧 current。仓库根 `AGENTS.md` 已删除。
 
 ## 迁移步骤（从旧机器/旧配置升级）
