@@ -10,7 +10,7 @@
 | 文件 | 加密 | 作用 |
 |------|------|------|
 | `.config/opencode/opencode.jsonc` | git-crypt | 全局主配置。定义 `work` provider（公司内部 proxy）及全部模型 metadata；home 模型由 litellm wellknown provider 自动发现 |
-| `.config/opencode/cli.json` | 明文 | OpenCode V2 的 **TUI 侧**配置（V2 不再读 `tui.json`）。只声明"带终端 UI"的插件：omo-slim（`/preset` 流程 + 更新 badge）与 goal 插件（`/goal` 侧栏/命令面板 + 中文界面） |
+| `.config/opencode/cli.json` | 明文 | OpenCode V2 的 **TUI 侧**配置（V2 不再读 `tui.json`）。只声明"带终端 UI"的插件：目前只有 omo-slim（`/preset` 流程 + 更新 badge）；goal 已改用 opencode 内置实现，无需在此声明 |
 | `.config/opencode/oh-my-opencode-slim.jsonc` | git-crypt | 全局默认 `preset: home`；含 home/work 两套 preset 的 fallback 链 |
 | `.config/opencode/litellm-token` | git-crypt | litellm（home 模型池）API key 的源副本；实际生效凭证在 `~/.local/share/opencode/auth.json` |
 | `.config/opencode/work-token` | git-crypt | work proxy API key，被 opencode.jsonc 以 `{file:~/.config/opencode/work-token}` 引用 |
@@ -37,11 +37,11 @@
   - fallback 配置只有**顶层**（schema 无 per-preset / per-agent 覆盖），要 work 专属调参只能改工作 preset 的链，或在工作仓库 `.opencode/oh-my-opencode-slim.jsonc` 里 deep-merge 覆盖顶层 fallback。
 - **work proxy 限流是硬上限**：按**用户**约 14 请求/分钟（滑动窗口，所有模型共用，本地自部署模型也计入），超限秒回 429 `user requests-per-minute limit exceeded`，约 60s 才恢复；模型 ID 清单见加密后的 `opencode.jsonc`。推论：① 429 时换模型没有意义（同一用户额度）；② 链内 work 条目多于 2 个等于白烧配额；③ agentic 并发（explorer 尤其）必然溢出限流，溢出部分交给 home 才是正确行为，别指望配置能"压住不降级"。
 - **项目级 `.opencode/opencode.jsonc` 的顶层 `"model"` 也会咬人**：工作仓库上层的项目级配置曾写死一个已从代理下线的模型，导致其下所有新 session 一开就 404。改 work 模型清单时要连项目级默认 model、council 席位一起 grep（`grep -rn "work/" --include=*.jsonc <工作目录>`）。
-- goal 插件（`@prevalentware/opencode-goal-plugin`）在 V2 需要**两处**声明：`opencode.jsonc` 的 `plugins` 负责 server 侧（命令 + 工具 + 状态），`cli.json` 的 `plugins` 负责 TUI 侧（侧栏指示器、命令面板、界面语言）。任一处写 `{package, options}` 对象形式即可；`options` 只在各自那侧生效，所以 `locale` 两边都要写才会全中文。
-- `cli.json` 的 `plugins` 只放**带 `./tui` 导出**的包（判断依据：包 `package.json` 的 `exports`）。判断错方向会有害：server-only 的包（如 billion-context，只有 `.`/`./server`/`./dsh`/`./client`）写进去等于把 server 代码塞进 TUI 进程。当前 cli.json 里是 omo-slim（TUI 侧提供 `/preset` 流程与更新 badge）和 goal 插件；终端侧已加载的插件可在 TUI 里用 `/plugins` 查看，`opencode plugin check` 的 `Server`/`TUI` 两段分别对应这两个文件。
+- **goal 用 opencode 内置实现**（v2.2.1 引入，`packages/core/src/plugin/goal.ts`）：命令 `/goal <objective>` 与 `/goal pause|resume|clear`，TUI 状态行 + Desktop composer pill，状态存 `~/.local/share/opencode/opencode.db` 的 `kv` 表（key = `plugin:` + `opencode.goal` 的 UTF-16 hex + `:session:<ses_id>`，按 session 独立，子代理/分叉不继承）。**完全不可配置**：config schema 无 goal 字段、源码不读 config，行为由硬编码常量决定 —— `MAX_OBJECTIVE=4000`、`MAX_ROUNDS=50`、`MAX_STALLS=3`、`WAIT_LIMIT=30min`（空转即 paused）。裁判用当前 session 的模型（`ctx.session.generate`，每轮多一次请求，吃限流配额，无独立裁判模型可配）；`/goal resume` 把 `rounds` 重置为 1、保留 `maxRounds`，所以 50 轮上限靠手动 resume 续窗。界面仅英文。
+- `cli.json` 的 `plugins` 只放**带 `./tui` 导出**的包（判断依据：包 `package.json` 的 `exports`）。判断错方向会有害：server-only 的包（如 billion-context，只有 `.`/`./server`/`./dsh`/`./client`）写进去等于把 server 代码塞进 TUI 进程。当前 cli.json 里只有 omo-slim（TUI 侧提供 `/preset` 流程与更新 badge）；终端侧已加载的插件可在 TUI 里用 `/plugins` 查看，`opencode plugin check` 的 `Server`/`TUI` 两段分别对应这两个文件。
 - 插件条目必须带 `@latest`（如 `@prevalentware/opencode-goal-plugin@latest`）：`opencode plugin update` 按声明 spec 重新解析，写死版本号就永远不会升级。`opencode plugin check` 先看有没有新版；新增但未安装的条目会在 `plugin update` 时被安装（实测 v2.1.3 用 `opencode plugin update` 即完成 billion-context 0.1.208→0.1.209 与 goal 插件首装）。
 - `opencode plugin update` / `check` 只认全局配置与项目配置里的声明，`--print-logs` 可用于看解析失败原因；`opencode debug config` 可确认 `plugins` 数组是否被正确解析（排除静默丢弃）。
-- goal 插件选项（服务器的 `options`，默认值见上游 README）：`max_auto_turns` 默认 25、`default_token_budget` 默认不设、`max_goal_duration_seconds` 默认不设（=无时限）。`max_auto_turns` 的 zod 约束只有 `.int().positive()`，没有上限，因此可写 1e6；`default_token_budget` 直接 `??` 取值，校验无上限，可写 1e9。`max_no_progress_turns`/`max_prompt_failures`/`no_progress_token_threshold` 是防死循环保险丝，**不要设 0**（0 不是"无限"，会立即触发暂停），只适度放宽。
+- **goal 插件已卸载**（`@prevalentware/opencode-goal-plugin`，2026-10-29 装、2026-10-31 卸）：它在 V2 需要两处声明（`opencode.jsonc` 管 server 侧命令/工具/状态，`cli.json` 管 TUI 侧侧栏与语言），但内置 `/goal` 出现后两者抢同一命令名 —— 插件 V2 setup 会先 `context.command.list()` 快照、重名直接 `continue`，于是**内置赢**，插件只剩 `/pause_goal`、`/resume_goal` 与 14 个工具，而模型手里的 goal 工具操作的是插件的 `goals.json`，与内置 goal 状态互不相通（模型看不到用户 `/goal` 建的目标，`get_goal` 返回 null）。上游 README 自 0.1.85 起也建议 2.2.1+ 用户改用内置。若将来要恢复：两处都要写 `{package, options}` 对象（`locale` 各侧独立生效），并设 `command_name: "pgoal"` 避开内置命令名（改名后 `history/status/edit/replace/stop` 子命令才会完整注册回来）；注意 `max_no_progress_turns`/`max_prompt_failures` 写 0 会被 `positiveIntegerOrNull2(0) → null` 静默回退默认值（2 / 3），**不是**"立即暂停"，真正 0=无上限的只有 `max_task_block_seconds`。
 
 ## 模型选型原则
 
@@ -65,7 +65,8 @@
   （同模型重试各烧一个配额，429 不会在几秒内恢复），`retryDelayMs` 500→3000，显式固定
   `continuationPolicy: retry-primary`（每个成功 step 后回 primary，下一步重新给 work 机会）。
   具体模型 ID 一律以加密后的 `opencode.jsonc` 注释为准。
-- **2026-10-29**：新增 goal 插件 `@prevalentware/opencode-goal-plugin@latest`（`/goal` 长任务模式）。server 侧在 `opencode.jsonc` 用 `{package, options}` 声明（`locale: zh-CN`、`max_auto_turns: 1e6`、`default_token_budget: 1e9` ≈ 无上限，`max_goal_duration_seconds` 留空即无时限；保险丝 `max_no_progress_turns: 4`、`max_prompt_failures: 10`、`max_task_block_seconds: 7200`）；新建 `cli.json` 声明 TUI 侧，并顺带启用 omo-slim 的 `/preset`。均已 `opencode plugin update` 实装（goal 0.1.84），`plugin check` Server/TUI 两侧 current。仓库根 `AGENTS.md` 已删除。
+- **2026-10-31（卸载 goal 插件，改用内置 `/goal`）**：opencode v2.2.1 起内置 `/goal`（裁判循环）。实测本机 v2.2.4 的 `opencode api get /api/command` 返回三条：`goal`（内置描述）、`pause_goal`/`resume_goal`（插件中文描述），即插件 V2 setup 的防重名快照让内置赢、插件退让。两套状态互不相通（内置存 `opencode.db` 的 kv，插件存 `~/.local/share/opencode-goal-plugin/goals.json`），而模型侧的 goal 工具（`get_goal`/`update_goal_plan` 等 14 个）全部来自插件，导致"用户敲 `/goal`、模型操作另一套目标"的错位；上游 README 自 0.1.85 起亦建议 2.2.1+ 用户改用内置。据此从 `opencode.jsonc` 与 `cli.json` 两处移除插件声明。内置 goal 经查**零配置项**（config schema 无 goal 字段、源码不读 config，常量全硬编码），故不再新增配置；插件状态文件 `goals.json`（v3，12 目标/4 归档）保留作历史，未删除。
+- **2026-10-29**：新增 goal 插件 `@prevalentware/opencode-goal-plugin@latest`（`/goal` 长任务模式）。server 侧在 `opencode.jsonc` 用 `{package, options}` 声明（`locale: zh-CN`、`max_auto_turns: 1e6`、`default_token_budget: 1e9` ≈ 无上限，`max_goal_duration_seconds` 留空即无时限；保险丝 `max_no_progress_turns: 4`、`max_prompt_failures: 10`、`max_task_block_seconds: 7200`）；新建 `cli.json` 声明 TUI 侧，并顺带启用 omo-slim 的 `/preset`。均已 `opencode plugin update` 实装（goal 0.1.84），`plugin check` Server/TUI 两侧 current。仓库根 `AGENTS.md` 已删除。（2026-10-31 已卸载，见上条）
 
 ## 迁移步骤（从旧机器/旧配置升级）
 

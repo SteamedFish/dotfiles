@@ -1,12 +1,6 @@
 {
   "$schema": "https://opencode.ai/v2/cli.json",
   "plugins": [
-    "oh-my-opencode-slim@latest",
-    {
-      "package": "@prevalentware/opencode-goal-plugin@latest",
-      "options": {
-        "locale": "zh-CN"
-      }
-    }
+    "oh-my-opencode-slim@latest"
   ]
 }
