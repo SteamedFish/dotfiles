@@ -36,6 +36,17 @@
   - `sessionTried` 是 Set，按 `provider/model` 字符串去重，链里重复同一 id 无效（含不同 variant）。所以"a b c a b c"在单个 step 内**做不到**；能实现的是"每个成功 step 重置一次 descent"，即跨 step 反复走 a→b→c。`continuationPolicy: retry-primary` 保证降级后下一个 step 仍先试 primary。
   - fallback 配置只有**顶层**（schema 无 per-preset / per-agent 覆盖），要 work 专属调参只能改工作 preset 的链，或在工作仓库 `.opencode/oh-my-opencode-slim.jsonc` 里 deep-merge 覆盖顶层 fallback。
 - **work proxy 限流是硬上限**：按**用户**约 14 请求/分钟（滑动窗口，所有模型共用，本地自部署模型也计入），超限秒回 429 `user requests-per-minute limit exceeded`，约 60s 才恢复；模型 ID 清单见加密后的 `opencode.jsonc`。推论：① 429 时换模型没有意义（同一用户额度）；② 链内 work 条目多于 2 个等于白烧配额；③ agentic 并发（explorer 尤其）必然溢出限流，溢出部分交给 home 才是正确行为，别指望配置能"压住不降级"。
+- **404 / 400 是"确定性错误"，不参与 fallback**（omo-slim v3.0.6 `dist/server/index.js` 实证）：
+  `failoverScope()` 只认 401/402/403/429/500/502/503/504、`provider.{rate-limit,quota,auth,internal}`
+  类型、传输层错误（ECONNREFUSED/ENOTFOUND/ETIMEDOUT…）与 `upstream error`+瞬时标记；
+  `hasDeterministic4xx()` 明确把 400-499（除 408/429）判为确定性错误。所以模型从代理下线时网关返回
+  `404 {"error":{"message":"Model \"X\" is not supported by any configured account in this group","type":"model_not_found"}}`，
+  opencode 归类为 `AI.Error.InvalidRequest`，session 直接 `Failed to drain Session` 退出 ——
+  同模型重试与换模型都不会发生（日志里连 `[foreground-fallback]` 都没有）。litellm 对未知模型同样返回
+  404 `model_not_found` / `invalid_request_error` → 同理。**结论：链里每个 model id 必须真实存在，
+  404 不是降级能兜住的**；改 work 或 litellm 模型清单后必须逐个核对 live `/v1/models`
+  （鉴权：`~/.local/share/opencode/auth.json` 里的 `token` 字段，`key` 字段不是 Bearer key）。
+  另：子代理（fixer/designer 等）用的是自己链，所以一条链里挂了死模型，表现就是"调 sub-agent 直接报错退出"。
 - **项目级 `.opencode/opencode.jsonc` 的顶层 `"model"` 也会咬人**：工作仓库上层的项目级配置曾写死一个已从代理下线的模型，导致其下所有新 session 一开就 404。改 work 模型清单时要连项目级默认 model、council 席位一起 grep（`grep -rn "work/" --include=*.jsonc <工作目录>`）。
 - **goal 用 opencode 内置实现**（v2.2.1 引入，`packages/core/src/plugin/goal.ts`）：命令 `/goal <objective>` 与 `/goal pause|resume|clear`，TUI 状态行 + Desktop composer pill，状态存 `~/.local/share/opencode/opencode.db` 的 `kv` 表（key = `plugin:` + `opencode.goal` 的 UTF-16 hex + `:session:<ses_id>`，按 session 独立，子代理/分叉不继承）。**完全不可配置**：config schema 无 goal 字段、源码不读 config，行为由硬编码常量决定 —— `MAX_OBJECTIVE=4000`、`MAX_ROUNDS=50`、`MAX_STALLS=3`、`WAIT_LIMIT=30min`（空转即 paused）。裁判用当前 session 的模型（`ctx.session.generate`，每轮多一次请求，吃限流配额，无独立裁判模型可配）；`/goal resume` 把 `rounds` 重置为 1、保留 `maxRounds`，所以 50 轮上限靠手动 resume 续窗。界面仅英文。
 - `cli.json` 的 `plugins` 只放**带 `./tui` 导出**的包（判断依据：包 `package.json` 的 `exports`）。判断错方向会有害：server-only 的包（如 billion-context，只有 `.`/`./server`/`./dsh`/`./client`）写进去等于把 server 代码塞进 TUI 进程。当前 cli.json 里只有 omo-slim（TUI 侧提供 `/preset` 流程与更新 badge）；终端侧已加载的插件可在 TUI 里用 `/plugins` 查看，`opencode plugin check` 的 `Server`/`TUI` 两段分别对应这两个文件。
@@ -53,6 +64,16 @@
 
 ## 变更记录
 
+- **2026-11-02（aitopia kimi 系彻底移除）**：live `/v1/models` 复核发现 aitopia 的
+  kimi 系（`kimi-for-coding` / `k3` / `k3-256k`）已全部从代理下线（调用 404），且长期
+  极不稳定 → 从 `opencode.jsonc` 的 provider metadata 与 `oh-my-opencode-slim.jsonc`
+  的所有 fallback 链、council 席位中彻底删除。替代方案按"真实后端"而非"模型名"挑选
+  （逐个直连实测 200）：`work/glm-5.3-flash`（后端 step-5-preview，1M ctx，多模态，
+  1-6s）接 orchestrator/oracle/designer(视觉) 与 council 合成；`work/deepseek-v4.1-flash-economy`
+  （后端同为 step-5-preview，384k 输出）接 fixer；council 三席分散到 step / deepseek-v4-flash /
+  本地 qwen 三个后端。同时证实 `deepseek-v4-flash` 已恢复可用且是代理上唯一的真 deepseek
+  路由（原"恒 429 / 已被 economy 取代"的记录失效，metadata 去掉 deprecated）；work 每条链
+  work 条目降到 1 个。项目级 `~/work/aitopia/.opencode/opencode.jsonc` 的默认 model 同步换掉。
 - **2026-10-29（work 链实测修正）**：直连探活 work proxy 后发现三处硬伤并修正：
   ① 链头/council 席位/项目级默认 model 里引用了一个**已从代理下线**的模型（404 `model_not_found`），
   每一步都白烧一次请求或直接报错 —— 已从所有链、席位与项目级配置里移除，并从 `opencode.jsonc`
