@@ -28,7 +28,7 @@ _setup_bat_aliases() {
     # shellcheck disable=SC2139
     alias cat="$bat_cmd"
     export MANPAGER="$bat_cmd --paging=auto -plman --theme 'Monokai Extended'"
-    if [ "$(basename "$SHELL")" = "zsh" ]; then
+    if [ -n "$ZSH_VERSION" ]; then
         # shellcheck disable=SC2139
         alias -g -- --help="--help 2>&1 | $bat_cmd --language=help --style=plain"
     fi
@@ -58,7 +58,7 @@ elif [ -n "$(command -v dstat)" ]; then
 fi
 
 if [ -n "$(command -v direnv)" ]; then
-    if [ "$(basename "$SHELL")" = "zsh" ]; then
+    if [ -n "$ZSH_VERSION" ]; then
         eval "$(direnv hook zsh)"
     elif [ -n "$BASH" ]; then
         eval "$(direnv hook bash)"
@@ -70,7 +70,7 @@ if [ -n "$(command -v nerdctl)" ]; then
 fi
 
 if [ -n "$(command -v zoxide)" ]; then
-    if [ "$(basename "$SHELL")" = "zsh" ]; then
+    if [ -n "$ZSH_VERSION" ]; then
         eval "$(zoxide init --cmd cd zsh)"
     elif [ -n "$BASH" ]; then
         eval "$(zoxide init --cmd cd bash)"
@@ -78,7 +78,7 @@ if [ -n "$(command -v zoxide)" ]; then
 fi
 
 if [ -n "$(command -v atuin)" ]; then
-    if [ "$(basename "$SHELL")" = "zsh" ]; then
+    if [ -n "$ZSH_VERSION" ]; then
         eval "$(atuin init zsh --disable-up-arrow)"
     elif [ -n "$BASH" ]; then
         eval "$(atuin init bash --disable-up-arrow)"
@@ -86,7 +86,7 @@ if [ -n "$(command -v atuin)" ]; then
 fi
 
 #if [ -n "$(command -v easytier-cli)" ]; then
-#    if [ "$(basename "$SHELL")" = "zsh" ]; then
+#    if [ -n "$ZSH_VERSION" ]; then
 #        eval "$(easytier-cli gen-autocomplete zsh)"
 #    elif [ -n "$BASH" ]; then
 #        eval "$(easytier-cli gen-autocomplete bash)"
