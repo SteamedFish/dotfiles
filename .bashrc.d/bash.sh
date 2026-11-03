@@ -43,5 +43,10 @@ if [ -n "$BASH_VERSION" ] && [ -z "$BASH_COMPLETION" ]; then
     fi
 fi
 
+# kubecolor borrows kubectl's completion function when available
+if [ -n "$(command -v kubecolor)" ] && declare -F __start_kubectl >/dev/null 2>&1; then
+    complete -o default -F __start_kubectl kubecolor
+fi
+
 # shellcheck disable=1090
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash

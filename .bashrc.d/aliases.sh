@@ -69,6 +69,13 @@ if [ -n "$(command -v nerdctl)" ]; then
     alias docker="nerdctl"
 fi
 
+# kubecolor: colorizes kubectl output and shells out to the real kubectl.
+# Only wrap when both exist; kubecolor itself bypasses aliases (PATH lookup),
+# and passes through non-tty / exec / plugin invocations unmodified.
+if [ -n "$(command -v kubecolor)" ] && [ -n "$(command -v kubectl)" ]; then
+    alias kubectl='kubecolor'
+fi
+
 if [ -n "$(command -v zoxide)" ]; then
     if [ -n "$ZSH_VERSION" ]; then
         eval "$(zoxide init --cmd cd zsh)"
