@@ -94,5 +94,19 @@ if [ -f "$HOME/.zinit/bin/zinit.zsh" ]; then
 
 fi
 
+# kubecolor borrows kubectl's completion. zsh expands `kubectl` (alias) before
+# dispatch, so the completion for `kubecolor` itself must be registered.
+# compdef only exists after compinit, which zinit loads later (wait), so defer
+# to the first precmd that can see kubectl's completion.
+if (( $+commands[kubecolor] )); then
+    _register_kubecolor_completion() {
+        (( ${+_comps[kubectl]} )) || return 0
+        (( ${+_comps[kubecolor]} )) || compdef kubecolor=kubectl
+        add-zsh-hook -d precmd _register_kubecolor_completion
+    }
+    autoload -Uz add-zsh-hook
+    add-zsh-hook precmd _register_kubecolor_completion
+fi
+
 # shellcheck disable=1090
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
