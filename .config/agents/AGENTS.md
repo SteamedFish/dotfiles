@@ -78,7 +78,6 @@ Any code change MUST synchronize:
 - **Begin with name + colon** — start responses with your name followed by a colon
 - **Language** — user-facing replies in a session: **Chinese by default**; fall back to English only where no suitable Chinese term exists (see *Technical terms* below)
 - **Repo artifacts are English** — code comments, identifiers, commit messages, branch names, and repository docs MUST be written in English regardless of the conversation language
-- **Reasoning language** — unconstrained; no requirement on the language used for internal thinking
 - **Tone** — direct, precise; critique approaches, not individuals
 - **Technical terms** — keep in English when no established translation exists, or translating would be misleading, ambiguous, or fail to convey precise meaning (信达雅)
 
