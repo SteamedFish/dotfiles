@@ -33,7 +33,8 @@
 - **omo-slim fallback 的真实语义**（v3.0.6 + opencode v2 host，读 dist 源码 + 日志确认）：
   - v2 host 上只有 retry-hook steering 生效（日志 `v2 replay fallback disabled (no atomic per-turn model switch); retry-hook steering active`），`fallback.initialRetryDelayMs` 被**忽略**（日志 `retry hook ignores initial delay`）。
   - `fallback.maxRetries` 是**一次 descent 内共享**的同模型重试预算，不随换模型重置，只在成功 step / 新用户轮 / 删除 session 时清零。因此**只有链头能吃重试**（1+maxRetries 次），其后每个条目都只试 1 次。想"多试几次"不是调大 maxRetries，而是让链头足够可靠。
-    在 v2 host 上它实际由 `absorbHostRetry()` 消费：宿主自己判定可重试（429/5xx，带 13-44s 退避）时，插件**吸收**这次重试、不换模型，预算耗尽才切换 —— 所以调大 maxRetries = 让同一个模型多扛几次宿主重试，这正是"偶发抖动别急着换模型"的开关。实测 2026-11-04（14 天日志）：776 次吸收到 attempt1、191 次在 attempt2 后耗尽、仅 174 次真正换模型。
+    在 v2 host 上它实际由 `absorbHostRetry()` 消费：宿主自己判定可重试（429/5xx）时，插件**吸收**这次重试、不换模型，预算耗尽才切换 —— 所以调大 maxRetries = 让同一个模型多扛几次宿主重试，这正是"偶发抖动别急着换模型"的开关。实测 2026-11-04（14 天日志）：776 次吸收到 attempt1、191 次在 attempt2 后耗尽、仅 174 次真正换模型。
+    **重试间隔由宿主退避决定，不由配置决定**（实测 223 次间隔：p25 4.1s / 中位 8.9s / p75 23s / p90 35s / p99 54s / 峰值 88.6s，29% 在 5s 内）；`retryDelayMs` 只作用于插件自己发起的切换，改它不会改变宿主重试节奏。累计等待 ≈ N × 上述间隔。
   - `sessionTried` 是 Set，按 `provider/model` 字符串去重，链里重复同一 id 无效（含不同 variant）。所以"a b c a b c"在单个 step 内**做不到**；能实现的是"每个成功 step 重置一次 descent"，即跨 step 反复走 a→b→c。`continuationPolicy: retry-primary` 保证降级后下一个 step 仍先试 primary。
   - fallback 配置只有**顶层**（schema 无 per-preset / per-agent 覆盖），要 work 专属调参只能改工作 preset 的链，或在工作仓库 `.opencode/oh-my-opencode-slim.jsonc` 里 deep-merge 覆盖顶层 fallback。
 - **work proxy 限流是硬上限**：按**用户**约 14 请求/分钟（滑动窗口，所有模型共用，本地自部署模型也计入），超限秒回 429 `user requests-per-minute limit exceeded`，约 60s 才恢复；模型 ID 清单见加密后的 `opencode.jsonc`。推论：① 429 时换模型没有意义（同一用户额度）；② 链内 work 条目多于 2 个等于白烧配额；③ agentic 并发（explorer 尤其）必然溢出限流，溢出部分交给 home 才是正确行为，别指望配置能"压住不降级"。
@@ -65,6 +66,11 @@
 
 ## 变更记录
 
+- **2026-11-04（二调：maxRetries 4→8，并摸清等待时间归属）**：复盘 223 次宿主重试的实际间隔——
+  p25 4.1s / 中位 8.9s / p75 23s / p90 35s / p99 54s / 峰值 88.6s（29% ≤5s）——证实**重试节奏由
+  宿主退避决定，omo-slim 只决定"容忍几次"**；`retryDelayMs` 只作用于插件自己发起的切换，
+  与宿主重试无关。据此再降到"宁可等不要切"：`maxRetries` 8 ⇒ 累计等待中位 ~70s、p90 ~4.7min、
+  p99 ~7min（每次尝试自身的耗时另计；若宿主先行放弃重试，再大的 N 也是空转）。
 - **2026-11-04（降低 aitopia 抖动导致的换模型频率）**：日志统计（14 天）显示换模型主要来自
   work proxy：explorer 在 `work/aitopia-local` 上 385 次、`work/glm-5.3-flash` 上 192 次，
   orchestrator 145 次，全部被归类为 rate-limit 类可重试错误；1869 次"可故障转移错误"里只有
