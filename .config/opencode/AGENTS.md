@@ -38,7 +38,13 @@
   - `sessionTried` 是 Set，按 `provider/model` 字符串去重，链里重复同一 id 无效（含不同 variant）。所以"a b c a b c"在单个 step 内**做不到**；能实现的是"每个成功 step 重置一次 descent"，即跨 step 反复走 a→b→c。`continuationPolicy: retry-primary` 保证降级后下一个 step 仍先试 primary。
   - fallback 配置只有**顶层**（schema 无 per-preset / per-agent 覆盖），要 work 专属调参只能改工作 preset 的链，或在工作仓库 `.opencode/oh-my-opencode-slim.jsonc` 里 deep-merge 覆盖顶层 fallback。
 - **work proxy 限流是硬上限**（管理员 2026-11-05 确认）：按**用户** **15 请求/分钟 + 10 并发**（所有模型共用，本地自部署模型也计入），超限秒回 429 `user requests-per-minute limit exceeded`，约 60s 才恢复；模型 ID 清单见加密后的 `opencode.jsonc`。推论：① 429 时换模型没有意义（同一用户额度）；② 15 rpm ≈ 每 4 秒 1 条，而一个 agent 的普通 step 是 5-30s 一条（3-10 rpm），**两个活跃 agent 就顶线**，所以卡脖子的是 rpm，不是 10 并发；③ 链内 work 条目多于 2 个等于白烧配额；④ agentic 并发（explorer 尤其）必然溢出，高频/并发 agent 必须走 home。
-- **把 work 流量压到 1 条并发的做法（备选，当前未启用）**：oma-slim 只有"后台任务准入器"，前台不排队。若要压：`backgroundJobs.concurrency.providerConcurrency: {"work": 1}`（后台任务并发）+ `backgroundJobs.sameProviderPolicy: {"work": "foreground"}`（父/子都在 work 时改前台执行，父等子 → 串行）+ `maxSessionsPerAgent: 1`。代价是 work 上的后台 lane 不再并行。**默认不启用**：原则是 work 优先、home 只在 work 不可用时兜底，压流量不等于把活推给 home。
+- **把 work 限制成双并发、home 不限（已启用）**：`backgroundJobs.concurrency.providerConcurrency: {"work": 2}`。
+  分级 rule 是 model > provider > default，且 `defaultConcurrency` 缺省 0 = 无限，所以 home 不受限。
+  任务启动时按解析到的模型定档；一旦被 fallback 切到 litellm，`backgroundTaskConcurrency.migrateTask()`
+  会重新定档 → 立刻让出 work 名额、转入不限流的 home 池，这就是"work 双并发、回落后可多并发"的实现方式。
+  注意两点：① 准入器只管**后台**任务，orchestrator 自己与前台子任务走前台路径不排队，work 实际峰值
+  ≈ 2（后台）+ 1（主会话）；② 不要同时开 `sameProviderPolicy.work="foreground"`，那会把 work 后台任务
+  改成前台串行，等于降到 1 并发。
 - **404 / 400 是"确定性错误"，不参与 fallback**（omo-slim v3.0.6 `dist/server/index.js` 实证）：
   `failoverScope()` 只认 401/402/403/429/500/502/503/504、`provider.{rate-limit,quota,auth,internal}`
   类型、传输层错误（ECONNREFUSED/ENOTFOUND/ETIMEDOUT…）与 `upstream error`+瞬时标记；
@@ -67,14 +73,15 @@
 
 ## 变更记录
 
-- **2026-11-05（网关真实配额 + 一次被撤回的改动）**：管理员确认 work 网关是 **15 请求/分钟 + 10 并发**
+- **2026-11-05（网关真实配额 + 被撤回的改动 + work 双并发）**：管理员确认 work 网关是 **15 请求/分钟 + 10 并发**
   （此前按 ~14 rpm 的经验值算）。15 rpm ≈ 每 4 秒 1 条，一个 agent 的普通 step 就是 5-30s 一条，
   所以**两个活跃 agent 即顶线**，卡脖子的是 rpm 而非并发数。留下的改动：opencode.jsonc 给 work
   provider 显式设超时（总 30min / 等头 10min / 片段 15min，属防御性，日志里其实没有超时记录）；
   文档把 14 rpm 全部更新为 15 rpm + 10 并发。
   **已撤回的改动**：曾把 explorer 整条移到 home 并加 `backgroundJobs` 串行化 work，被用户否掉 ——
-  **原则是 work 优先、home 只在 work 不可用时兜底，不能因为 429 就把活推给 home**。串行化方案
-  作为备选记录在踩坑条目里，默认不启用。
+  **原则是 work 优先、home 只在 work 不可用时兜底，不能因为 429 就把活推给 home**。
+  **随后按用户要求改为只限 work**：`backgroundJobs.concurrency.providerConcurrency: {"work": 2}`
+  （work 双并发、home 不限；回落到 home 的任务会自动让出 work 名额）。
 - **2026-11-04（二调：maxRetries 2→10，并摸清等待时间归属）**：复盘 223 次宿主重试的实际间隔——
   p25 4.1s / 中位 8.9s / p75 23s / p90 35s / p99 54s / 峰值 88.6s（29% ≤5s）——证实**重试节奏由
   宿主退避决定，omo-slim 只决定"容忍几次"**；`retryDelayMs` 只作用于插件自己发起的切换，
