@@ -37,7 +37,8 @@
     **重试间隔由宿主退避决定，不由配置决定**（实测 223 次间隔：p25 4.1s / 中位 8.9s / p75 23s / p90 35s / p99 54s / 峰值 88.6s，29% 在 5s 内）；`retryDelayMs` 只作用于插件自己发起的切换，改它不会改变宿主重试节奏。累计等待 ≈ N × 上述间隔。
   - `sessionTried` 是 Set，按 `provider/model` 字符串去重，链里重复同一 id 无效（含不同 variant）。所以"a b c a b c"在单个 step 内**做不到**；能实现的是"每个成功 step 重置一次 descent"，即跨 step 反复走 a→b→c。`continuationPolicy: retry-primary` 保证降级后下一个 step 仍先试 primary。
   - fallback 配置只有**顶层**（schema 无 per-preset / per-agent 覆盖），要 work 专属调参只能改工作 preset 的链，或在工作仓库 `.opencode/oh-my-opencode-slim.jsonc` 里 deep-merge 覆盖顶层 fallback。
-- **work proxy 限流是硬上限**：按**用户**约 14 请求/分钟（滑动窗口，所有模型共用，本地自部署模型也计入），超限秒回 429 `user requests-per-minute limit exceeded`，约 60s 才恢复；模型 ID 清单见加密后的 `opencode.jsonc`。推论：① 429 时换模型没有意义（同一用户额度）；② 链内 work 条目多于 2 个等于白烧配额；③ agentic 并发（explorer 尤其）必然溢出限流，溢出部分交给 home 才是正确行为，别指望配置能"压住不降级"。
+- **work proxy 限流是硬上限**（管理员 2026-11-05 确认）：按**用户** **15 请求/分钟 + 10 并发**（所有模型共用，本地自部署模型也计入），超限秒回 429 `user requests-per-minute limit exceeded`，约 60s 才恢复；模型 ID 清单见加密后的 `opencode.jsonc`。推论：① 429 时换模型没有意义（同一用户额度）；② 15 rpm ≈ 每 4 秒 1 条，而一个 agent 的普通 step 是 5-30s 一条（3-10 rpm），**两个活跃 agent 就顶线**，所以卡脖子的是 rpm，不是 10 并发；③ 链内 work 条目多于 2 个等于白烧配额；④ agentic 并发（explorer 尤其）必然溢出，高频/并发 agent 必须走 home。
+- **把 work 流量压到 1 条并发**的做法（omo-slim 只有"后台任务准入器"，前台不排队）：`backgroundJobs.concurrency.providerConcurrency: {"work": 1}` 限制后台任务并发；`backgroundJobs.sameProviderPolicy: {"work": "foreground"}` 把"父/子都在 work"的后台任务改前台执行（父等子 → 串行）；`maxSessionsPerAgent: 1` 限制每 agent 的后台会话数。三者叠加后 work 侧并发 ≈ orchestrator 自己那一条。
 - **404 / 400 是"确定性错误"，不参与 fallback**（omo-slim v3.0.6 `dist/server/index.js` 实证）：
   `failoverScope()` 只认 401/402/403/429/500/502/503/504、`provider.{rate-limit,quota,auth,internal}`
   类型、传输层错误（ECONNREFUSED/ENOTFOUND/ETIMEDOUT…）与 `upstream error`+瞬时标记；
@@ -66,6 +67,16 @@
 
 ## 变更记录
 
+- **2026-11-05（按网关真实配额重构 work 用量）**：管理员确认 work 网关是 **15 请求/分钟 + 10 并发**
+  （此前按 ~14 rpm 的经验值算）。15 rpm ≈ 每 4 秒 1 条，而一个 agent 的普通 step 就是 5-30s 一条，
+  所以**两个活跃 agent 即顶线**，真正卡脖子的是 rpm 而非 10 并发。据此：
+  ① work preset 的 explorer 链整条移到 home（opencode-go/deepseek-v4.1-flash →
+  minimax/M3.1-Flash → deepseek/deepseek-flash），它请求量最大且并发侦察，是 429 主因；
+  ② 新增 `backgroundJobs` 把 work 后台流量压到 1 条并发：`concurrency.providerConcurrency.work=1`
+  ＋`sameProviderPolicy.work="foreground"`（父/子都在 work 的子任务改前台执行 → 子跑父等，不叠加）
+  ＋`maxSessionsPerAgent=1`；③ opencode.jsonc 给 work provider 显式设超时
+  （总 30min / 等头 10min / 片段 15min，日志里其实没有超时记录，纯属防御）。
+  保留 `maxRetries: 10`：并发压住后 429 应稀有，真偶发时等待才划算。
 - **2026-11-04（二调：maxRetries 2→10，并摸清等待时间归属）**：复盘 223 次宿主重试的实际间隔——
   p25 4.1s / 中位 8.9s / p75 23s / p90 35s / p99 54s / 峰值 88.6s（29% ≤5s）——证实**重试节奏由
   宿主退避决定，omo-slim 只决定"容忍几次"**；`retryDelayMs` 只作用于插件自己发起的切换，
@@ -95,7 +106,7 @@
   每一步都白烧一次请求或直接报错 —— 已从所有链、席位与项目级配置里移除，并从 `opencode.jsonc`
   的 metadata 中删除；② 某个别名模型实际路由到其 256k 变体的后端（metadata 里写成 1M，已改回
   262144，超长请求会失败）；③ 有两个模型 ID 直连恒 429（group 内无账号），另有一个别名模型的
-  后端是别的模型 —— 这些不许进链。另查明网关按**用户**限流 ~14 请求/分钟（所有模型共用，
+  后端是别的模型 —— 这些不许进链。另查明网关按**用户**限流（现在确认为 15 请求/分钟 + 10 并发，所有模型共用，
   超限秒 429、约 60s 恢复），所以"多换几个模型重试"对 429 无效。据此重排 work preset：
   链内 work 条目压到 ≤2、链头换成现役可靠模型、explorer 只留 1 个免费本地条目（它请求量最大，
   是烧光限流额度、把 orchestrator/fixer 挤到 home 的主因）；`fallback.maxRetries` 3→2
