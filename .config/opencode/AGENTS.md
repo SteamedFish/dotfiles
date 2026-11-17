@@ -73,6 +73,20 @@
 
 ## 变更记录
 
+- **2026-11-18（AA v5.0.1 复核 opencode-go 池；GLM-5.3-Flash 仍不进链）**：用户提出 GLM-5.3-Flash
+  降价后是否该进配置。结论：**不加**，只更新注释。依据：
+  ① Artificial Analysis 已换 v5.0.1 指数，旧注释里的 AA 45/42 全部作废 —— 实测
+  `DeepSeek V4.1 Flash 1017` = 32.6（Max）/ 28.6（High），`GLM-5.3-Flash` = 27.8，
+  `Kimi K3.1 Pro` = 46.5（全站第一，TB4 67.2%），`MiniMax-M3.1-Flash` = 29.1，
+  `MiMo-V2.6-Flash` = 26.7。GLM 速度 57 tok/s / TTFT 86s，deepseek 177 tok/s / 40s（High 19s）。
+  ② **网关 allowance 倍率是模型级的**（实测 litellm 响应 `usage.opencode`）：
+  deepseek-v4.1-flash **0.6×** list（0.15/0.60/cache 0.003 → 有效 0.09/0.36/0.0018），
+  glm-5.3-flash 1.0×（0.15/0.50/cache 0.03），qwen3.8-flash 2×，deepseek-v4-pro 4×，
+  hy3/longcat-2.0/mimo-v2.6-flash 1×；muse-spark-1.3-contributor 本区 `RegionError`。
+  ③ 池额度整池共享 → 每条链只留一个 opencode-go 代表，同池加第二个零收益
+  （用户再次确认该前提）。结论：GLM 降价后仍是"更贵且更弱"，只在 designer 保留
+  （池内唯一 video/pdf 输入；deepseek 也支持 image，纯看图不需要它）。
+  本次仅改注释，未动任何 fallback 链。
 - **2026-11-05（网关真实配额 + 被撤回的改动 + work 双并发）**：管理员确认 work 网关是 **15 请求/分钟 + 10 并发**
   （此前按 ~14 rpm 的经验值算）。15 rpm ≈ 每 4 秒 1 条，一个 agent 的普通 step 就是 5-30s 一条，
   所以**两个活跃 agent 即顶线**，卡脖子的是 rpm 而非并发数。留下的改动：opencode.jsonc 给 work
