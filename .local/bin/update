@@ -210,9 +210,22 @@ update_linux_system() {
         elif [ -n "$(command -v etc-update)" ]; then
             run sudo etc-update
         fi
-        # run "${PACMAN_CMD}" -Scc --noconfirm
-        # this will exit with SIGPIPE error, we pass a true here
-        yes | run "${PACMAN_CMD}" -Scc || true
+        # Clean the package cache, but keep the two newest versions of each
+        # package so a broken upgrade can still be rolled back offline.
+        # Do NOT use `pacman -Scc` here: it wipes the packages we just
+        # installed, and it trips over the empty download-XXXXXX sandbox
+        # dirs that pacman 7.1 leaks (pacman#297, yay#2737).
+        if [ -n "$(command -v paccache)" ]; then
+            run sudo paccache -rk2
+            run sudo paccache -ruk0
+        else
+            run sudo pacman -Sc --noconfirm
+        fi
+        # Prune leaked download sandboxes older than an hour, so a
+        # concurrent pacman download is never touched.
+        run sudo find /var/cache/pacman/pkg /var/lib/pacman/sync \
+            -mindepth 1 -maxdepth 1 -type d -name 'download-*' \
+            -mmin +60 -exec rm -rf {} +
     elif [[ -f /etc/debian_version ]]; then
         run sudo apt update
         run sudo apt upgrade
