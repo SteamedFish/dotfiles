@@ -73,6 +73,21 @@
 
 ## 变更记录
 
+- **2026-11-18（二评：GLM-5.3 月额度提到 $200，仍不进链）**：OpenCode Go 把 **GLM-5.3（旗舰，非 Flash）**
+  的 go 月额度提到 **$200**（Go Plus $400；官方 console 显示 2,640 req/5h，
+  `/inference/go/v1/models` 的 `go.monthly_usage.go=200` 一致）。据此复评：
+  ① **allowance 倍率 = 60 / 该模型 go 月额度($)** —— 四点实测吻合（deepseek-v4.1-flash 100→0.6×、
+  glm-5.3-flash 60→1×、qwen3.8-flash 30→2×、deepseek-v4-pro 15→4×），倍率只乘 list。
+  ② GLM-5.3 有效价 = 1.4/4.4/cache 0.26 × 0.3 = **0.42/1.32/cache 0.078**；
+  AA v5.0.1 31.7 ≈ deepseek 32.6，但速度 89 vs 177 tok/s、贵 2.3×（高峰）/4.7×（非高峰）、
+  缓存读贵 22-43×，AA 每任务 $1.50 vs $0.36（同为高峰口径），TB4 更好（0.419 vs 0.338）
+  但 FrontierCode 更差（0.216 vs 0.285）；且纯文本、无 image。→ 不换代表，不进链。
+  ③ 新事实：**deepseek-v4.1-flash 有高峰 ×2**（周一至五 01-04 / 06-10 UTC = 北京 09-12 / 14-18），
+  即白天有效价 0.18/0.72/cache 0.0036，非高峰 0.09/0.36/cache 0.0018；高峰时 GLM-Flash 的
+  in/out 反而略低，但缓存读仍贵 8×，agentic 每步仍 deepseek 便宜。
+  ④ **本机 litellm 尚无 `opencode-go/glm-5.3`**（`/v1/models` 无此 id，调用 404
+  `model_not_found`），需等 route-patrol `models_sync` 每日 02:30 同步；404 是确定性错误、
+  不参与 fallback，上线前不要写进链。本次仍只改注释，未动 fallback 链。
 - **2026-11-18（AA v5.0.1 复核 opencode-go 池；GLM-5.3-Flash 仍不进链）**：用户提出 GLM-5.3-Flash
   降价后是否该进配置。结论：**不加**，只更新注释。依据：
   ① Artificial Analysis 已换 v5.0.1 指数，旧注释里的 AA 45/42 全部作废 —— 实测
